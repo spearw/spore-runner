@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://bib5t3cy8av85"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/Upgrade.gd" id="1_582sl"]
+
+[resource]
+script = ExtResource("1_582sl")
+id = "swift_bracer_unlock"
+display_name = "Bracer of Swiftness"
+description = "Increase fire rate of all weapons by 20%"
+type = 1
+target_class_name = "SwiftBracerArtifact"
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

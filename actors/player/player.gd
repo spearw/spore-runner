@@ -8,6 +8,7 @@ signal health_changed(current_health, max_health)
 signal died
 signal experience_changed(current_xp, required_xp)
 signal leveled_up(new_level)
+signal stats_changed
 
 @export var stats: PlayerStats
 @onready var artifacts_node: Node = $Artifacts
@@ -52,6 +53,24 @@ func get_modified_move_speed() -> float:
 			final_speed = artifact.modify_speed(final_speed)
 	return final_speed
 	
+## Calculates the total projectile bonus from all equipped artifacts.
+## @return: int - The number of extra projectiles to add.
+func get_global_projectile_bonus() -> int:
+	var bonus = 0
+	for artifact in artifacts_node.get_children():
+		if artifact.has_method("get_projectile_bonus"):
+			bonus += artifact.get_projectile_bonus()
+	return bonus
+
+## Calculates the total fire rate multiplier from all equipped artifacts.
+## @return: float - The final multiplier for timer wait_time (e.g., 0.8 for 20% faster).
+func get_global_firerate_modifier() -> float:
+	var modifier = 1.0 # Start with no modification
+	for artifact in artifacts_node.get_children():
+		if artifact.has_method("get_firerate_modifier"):
+			modifier *= artifact.get_firerate_modifier()
+	return modifier
+	
 ## Adds experience to the player and checks for level-up conditions.
 ## @param amount: int - The amount of experience to add.
 func add_experience(amount: int) -> void:
@@ -85,6 +104,9 @@ func take_damage(amount: int) -> void:
 	# Check for death condition.
 	if current_health <= 0:
 		die()
+		
+func notify_stats_changed():
+	stats_changed.emit()
 
 ## Handles the player's death sequence.
 func die() -> void:

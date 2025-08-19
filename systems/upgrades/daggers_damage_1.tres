@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://imgvcskg7a5r"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/Upgrade.gd" id="1_i4imh"]
+
+[resource]
+script = ExtResource("1_i4imh")
+id = "daggers_damage_1"
+display_name = "Sharpened Blades"
+description = "Increases dagger damage by 5"
+type = 2
+target_class_name = "DaggersWeapon"
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

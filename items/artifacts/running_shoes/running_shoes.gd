@@ -8,5 +8,10 @@ extends Node
 ## Applies this artifact's modification to a base speed value.
 ## @param base_speed: float - The incoming speed value.
 ## @return: float - The modified speed value.
+var level = 1
 func modify_speed(base_speed: float) -> float:
-	return base_speed * speed_multiplier
+	# Speed increases by 10% per level
+	return base_speed * (speed_multiplier**level)
+
+func upgrade_artifact():
+	level += 1

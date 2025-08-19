@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4jvsnxhbtq87"]
+
+[ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="1_ghot6"]
+
+[node name="TargetingComponent" type="Node"]
+script = ExtResource("1_ghot6")

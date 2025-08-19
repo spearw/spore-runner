@@ -7,12 +7,14 @@ extends Node
 
 var player_equipment: Node2D = null
 var player_artifacts: Node2D = null
+var player: Node2D = null
 
 ## Store reference to the player's equipment and artifacts.
 ## @param player: Node - The player node instance that is registering itself.
 func register_player(player: Node) -> void:
 	# Check if the player and its children are valid before storing them.
 	if is_instance_valid(player) and player.has_node("Equipment") and player.has_node("Artifacts"):
+		self.player = player
 		self.player_equipment = player.get_node("Equipment")
 		self.player_artifacts = player.get_node("Artifacts")
 		print("UpgradeManager: Player registered successfully.")
@@ -65,27 +67,57 @@ func apply_upgrade(upgrade: Upgrade) -> void:
 		return
 	match upgrade.id:
 		"daggers_unlock":
-			var scene = load("res://items/weapons/dagger/daggers.tscn")
-			var new_equipment = scene.instantiate()
-			new_equipment.name = upgrade.target_class_name
+			var scene = load("res://items/weapons/dagger/daggers_weapon.tscn")
+			var new_equipment = create_weapon(scene.instantiate(), upgrade)
 			player_equipment.add_child(new_equipment)
 			
 		"player_speed_1":
 			var scene = load("res://items/artifacts/running_shoes/running_shoes.tscn")
-			var new_artifact = scene.instantiate()
-			new_artifact.name = upgrade.target_class_name
+			var new_artifact = create_artifact(scene.instantiate(), upgrade)
 			player_artifacts.add_child(new_artifact)
+			
+		"tome_of_duplication_unlock":
+			var scene = load("res://items/artifacts/tome_of_duplication/tome_of_duplication.tscn")
+			var new_artifact = create_artifact(scene.instantiate(), upgrade)
+			player_artifacts.add_child(new_artifact)
+			
+		"swift_bracer_unlock":
+			var scene = load("res://items/artifacts/swift_bracer/swift_bracer.tscn")
+			var new_artifact = create_artifact(scene.instantiate(), upgrade)
+			player_artifacts.add_child(new_artifact)
+			
+		"player_speed_2":
+			var item = player_artifacts.get_node(upgrade.target_class_name)
+			if item:
+				item.upgrade_artifact()
+				
+		"daggers_damage_1":
+			var weapon = player_equipment.get_node(upgrade.target_class_name)
+			if weapon:
+				weapon.projectile_damage += 5
 			
 		"spike_ring_unlock":
 			var scene = load("res://items/weapons/spike_ring/spike_ring_weapon.tscn")
-			var new_equipment = scene.instantiate()
-			new_equipment.name = upgrade.target_class_name
+			var new_equipment = create_weapon(scene.instantiate(), upgrade)
 			player_equipment.add_child(new_equipment)
-
+			
 		"spike_ring_count_1":
 			var weapon = player_equipment.get_node(upgrade.target_class_name)
 			if weapon:
-				weapon.projectile_count += 4
+				weapon.base_projectile_count += 4
 		
 		_:
 			printerr("UpgradeManager: Unknown upgrade ID: ", upgrade.id)
+			
+	if is_instance_valid(player):
+		player.notify_stats_changed()
+			
+func create_weapon(weapon, upgrade):
+	weapon.name = upgrade.target_class_name
+	weapon.get_node("WeaponStatsComponent").player = self.player
+	weapon.get_node("FireRateTimer").set_meta("base_wait_time", 2.0)
+	return weapon
+	
+func create_artifact(artifact, upgrade):
+	artifact.name = upgrade.target_class_name
+	return artifact

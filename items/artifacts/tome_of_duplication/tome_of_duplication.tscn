@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://blnvjmprud8u4"]
+
+[ext_resource type="Script" uid="uid://cocghxubhfkd" path="res://items/artifacts/tome_of_duplication/tome_of_duplication.gd" id="1_twkai"]
+
+[node name="TomeOfDuplication" type="Node"]
+script = ExtResource("1_twkai")
