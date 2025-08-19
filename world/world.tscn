@@ -1,0 +1,38 @@
+[gd_scene load_steps=13 format=3 uid="uid://bdcbnkahhxu6b"]
+
+[ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_ov2xu"]
+[ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="2_mad0u"]
+[ext_resource type="PackedScene" uid="uid://dulw5xigdffvi" path="res://actors/player/player.tscn" id="3_ocfjn"]
+[ext_resource type="Script" uid="uid://fhk1ou3boos2" path="res://world/enemy_spawner.gd" id="4_dqqhb"]
+[ext_resource type="PackedScene" uid="uid://bjpvtmn8ptm1n" path="res://actors/enemies/brute/brute.tscn" id="5_b2suy"]
+[ext_resource type="Script" uid="uid://cdevlwpbk7w8g" path="res://systems/upgrade_manager.gd" id="6_h8lre"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/Upgrade.gd" id="7_ysn08"]
+[ext_resource type="Resource" uid="uid://deynodmipwbdh" path="res://systems/upgrades/daggers_unlock.tres" id="8_m0cxt"]
+[ext_resource type="Resource" uid="uid://ei4vnjeiqilo" path="res://systems/upgrades/player_speed_1.tres" id="9_j34ew"]
+[ext_resource type="Resource" uid="uid://c64jci32lqc3" path="res://systems/upgrades/spike_ring_unlock.tres" id="10_p2iis"]
+[ext_resource type="Resource" uid="uid://cg64e0ifhkfb7" path="res://systems/upgrades/spike_ring_count_1.tres" id="11_aysyn"]
+[ext_resource type="PackedScene" uid="uid://cbw5xw2x3ghy3" path="res://systems/dev_console/dev_console.tscn" id="12_mad0u"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_ov2xu")
+
+[node name="LevelUpUI" parent="." instance=ExtResource("2_mad0u")]
+process_mode = 3
+
+[node name="Player" parent="." instance=ExtResource("3_ocfjn")]
+position = Vector2(360, 279)
+
+[node name="EnemySpawner" type="Node" parent="."]
+script = ExtResource("4_dqqhb")
+enemy_scene = ExtResource("5_b2suy")
+
+[node name="Timer" type="Timer" parent="EnemySpawner"]
+autostart = true
+
+[node name="UpgradeManager" type="Node" parent="."]
+script = ExtResource("6_h8lre")
+upgrade_pool = Array[ExtResource("7_ysn08")]([ExtResource("8_m0cxt"), ExtResource("9_j34ew"), ExtResource("10_p2iis"), ExtResource("11_aysyn")])
+
+[node name="DevConsole" parent="." instance=ExtResource("12_mad0u")]
+
+[connection signal="timeout" from="EnemySpawner/Timer" to="EnemySpawner" method="spawn_enemy"]

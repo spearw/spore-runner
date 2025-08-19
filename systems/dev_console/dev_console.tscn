@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbw5xw2x3ghy3"]
+
+[ext_resource type="Script" uid="uid://ce1qgmmvj6x8a" path="res://systems/dev_console/dev_console.gd" id="1_oxfpo"]
+
+[node name="DevConsole" type="Node2D"]
+script = ExtResource("1_oxfpo")

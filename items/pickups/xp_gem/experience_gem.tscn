@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6g8t0tg7ccfi"]
+
+[ext_resource type="Script" uid="uid://73rylxfslhag" path="res://items/pickups/xp_gem/experience_gem.gd" id="1_7arep"]
+[ext_resource type="Texture2D" uid="uid://ckalkilyyx2r7" path="res://items/pickups/xp_gem/xp_gem.png" id="1_qqtk7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7arep"]
+radius = 18.0
+
+[node name="ExperienceGem" type="Area2D"]
+collision_layer = 8
+script = ExtResource("1_7arep")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_qqtk7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7arep")

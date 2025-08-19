@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct1o670bpbrau"]
+
+[ext_resource type="Script" uid="uid://n0xaycflmw4v" path="res://items/weapons/spike_ring/spike_ring_weapon.gd" id="1_b2ytv"]
+[ext_resource type="PackedScene" uid="uid://bk8tg713q1ypd" path="res://items/weapons/spike_ring/spike_projectile.tscn" id="2_5culu"]
+
+[node name="SpikeRingWeapon" type="Node2D"]
+script = ExtResource("1_b2ytv")
+projectile_scene = ExtResource("2_5culu")
+metadata/_custom_type_script = "uid://n0xaycflmw4v"
+
+[node name="FireRateTimer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwo8ttfa451xp"]
+
+[ext_resource type="Script" uid="uid://bearrkscqjgvx" path="res://items/weapons/dagger/daggers_projectile.gd" id="1_jei3u"]
+[ext_resource type="Texture2D" uid="uid://i2kb57y5gfgj" path="res://items/weapons/dagger/dagger.png" id="2_v23ki"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qxf0c"]
+radius = 2.0
+height = 14.0
+
+[node name="projectile" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_jei3u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_qxf0c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_v23ki")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

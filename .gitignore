@@ -1,0 +1,14 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+*.translation
+
+# User-specific files
+export_presets.cfg
+
+# Exported game files
+builds/
+*.pck
+*.zip
+*.exe
+*.dmg

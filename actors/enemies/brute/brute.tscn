@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjpvtmn8ptm1n"]
+
+[ext_resource type="Script" uid="uid://b4c4seddr04t5" path="res://actors/enemies/brute/brute.gd" id="1_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://b7j6lpov6dfsd" path="res://actors/enemies/brute/brute.png" id="1_7k104"]
+[ext_resource type="PackedScene" uid="uid://b6g8t0tg7ccfi" path="res://items/pickups/xp_gem/experience_gem.tscn" id="2_qi2p4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7k104"]
+radius = 22.0
+height = 50.0
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_4gyqm")
+experience_gem_scene = ExtResource("2_qi2p4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7k104")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemy"]]
+shape = SubResource("CapsuleShape2D_7k104")

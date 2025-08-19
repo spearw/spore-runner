@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://divtus20vmop4"]
+
+[ext_resource type="Script" uid="uid://d28sd1lkd3cdw" path="res://items/weapons/dagger/daggers.gd" id="1_6gvp5"]
+[ext_resource type="PackedScene" uid="uid://bwo8ttfa451xp" path="res://items/weapons/dagger/daggers_projectile.tscn" id="2_71i1o"]
+
+[node name="daggers" type="Node2D"]
+script = ExtResource("1_6gvp5")
+projectile_scene = ExtResource("2_71i1o")
+metadata/_custom_type_script = "uid://d28sd1lkd3cdw"
+
+[node name="FireRateTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
