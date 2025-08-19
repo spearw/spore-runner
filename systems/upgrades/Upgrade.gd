@@ -21,3 +21,9 @@ enum UpgradeType {
 # For UNLOCK types, this is the class name of the item to check for duplicates.
 # For UPGRADE types, this is the class name of the item this upgrade applies to.
 @export var target_class_name: String
+# For UNLOCK types, this is the scene that should be instanced.
+@export var scene_to_unlock: PackedScene
+
+# For UPGRADE types, these fields describe the change.
+@export var property_to_modify: String # e.g., "base_projectile_count"
+@export var value_modifier: float # e.g., 4.0 or 5.0

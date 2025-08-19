@@ -61,54 +61,39 @@ func get_upgrade_choices(count: int) -> Array[Upgrade]:
 
 ## Applies the logic for a given upgrade.
 func apply_upgrade(upgrade: Upgrade) -> void:
-	# Do not attempt to apply an upgrade if the player hasn't been registered yet.
 	if not player_equipment or not player_artifacts:
 		printerr("UpgradeManager: Cannot apply upgrade, player has not been registered.")
 		return
-	match upgrade.id:
-		"daggers_unlock":
-			var scene = load("res://items/weapons/dagger/daggers_weapon.tscn")
-			var new_equipment = create_weapon(scene.instantiate(), upgrade)
-			player_equipment.add_child(new_equipment)
-			
-		"player_speed_1":
-			var scene = load("res://items/artifacts/running_shoes/running_shoes.tscn")
-			var new_artifact = create_artifact(scene.instantiate(), upgrade)
-			player_artifacts.add_child(new_artifact)
-			
-		"tome_of_duplication_unlock":
-			var scene = load("res://items/artifacts/tome_of_duplication/tome_of_duplication.tscn")
-			var new_artifact = create_artifact(scene.instantiate(), upgrade)
-			player_artifacts.add_child(new_artifact)
-			
-		"swift_bracer_unlock":
-			var scene = load("res://items/artifacts/swift_bracer/swift_bracer.tscn")
-			var new_artifact = create_artifact(scene.instantiate(), upgrade)
-			player_artifacts.add_child(new_artifact)
-			
-		"player_speed_2":
-			var item = player_artifacts.get_node(upgrade.target_class_name)
-			if item:
-				item.upgrade_artifact()
-				
-		"daggers_damage_1":
-			var weapon = player_equipment.get_node(upgrade.target_class_name)
-			if weapon:
-				weapon.projectile_damage += 5
-			
-		"spike_ring_unlock":
-			var scene = load("res://items/weapons/spike_ring/spike_ring_weapon.tscn")
-			var new_equipment = create_weapon(scene.instantiate(), upgrade)
-			player_equipment.add_child(new_equipment)
-			
-		"spike_ring_count_1":
-			var weapon = player_equipment.get_node(upgrade.target_class_name)
-			if weapon:
-				weapon.base_projectile_count += 4
-		
-		_:
-			printerr("UpgradeManager: Unknown upgrade ID: ", upgrade.id)
-			
+
+	match upgrade.type:
+		Upgrade.UpgradeType.UNLOCK_WEAPON:
+			if upgrade.scene_to_unlock:
+				var new_weapon = create_weapon(upgrade.scene_to_unlock.instantiate(), upgrade)
+				player_equipment.add_child(new_weapon)
+			else:
+				printerr("Unlock upgrade '%s' is missing a scene!" % upgrade.id)
+
+		Upgrade.UpgradeType.UNLOCK_ARTIFACT:
+			if upgrade.scene_to_unlock:
+				var new_artifact = create_artifact(upgrade.scene_to_unlock.instantiate(), upgrade)
+				player_artifacts.add_child(new_artifact)
+			else:
+				printerr("Unlock upgrade '%s' is missing a scene!" % upgrade.id)
+
+		Upgrade.UpgradeType.UPGRADE:
+			# Find the target item based on its name.
+			var target_item = player_equipment.get_node_or_null(upgrade.target_class_name)
+			if not target_item:
+				target_item = player_artifacts.get_node_or_null(upgrade.target_class_name)
+
+			if target_item:
+				# Use set() to modify the property by its string name.
+				var current_value = target_item.get(upgrade.property_to_modify)
+				target_item.set(upgrade.property_to_modify, current_value + upgrade.value_modifier)
+			else:
+				printerr("Upgrade failed: Could not find item '%s' to upgrade." % upgrade.target_class_name)
+
+	# Notify the player that stats may have changed.
 	if is_instance_valid(player):
 		player.notify_stats_changed()
 			

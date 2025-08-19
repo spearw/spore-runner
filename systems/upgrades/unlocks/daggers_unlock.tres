@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://deynodmipwbdh"]
+
+[ext_resource type="PackedScene" uid="uid://divtus20vmop4" path="res://items/weapons/dagger/daggers_weapon.tscn" id="1_gyqjc"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_iqyrl"]
+
+[resource]
+script = ExtResource("2_iqyrl")
+id = "daggers_unlock"
+display_name = "Daggers"
+description = "Fires quickly."
+type = 0
+target_class_name = "DaggersWeapon"
+scene_to_unlock = ExtResource("1_gyqjc")
+property_to_modify = ""
+value_modifier = 0.0
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

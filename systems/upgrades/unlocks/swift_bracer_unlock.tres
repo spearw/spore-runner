@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://bib5t3cy8av85"]
+
+[ext_resource type="PackedScene" uid="uid://dvld04rkuxoxk" path="res://items/artifacts/swift_bracer/swift_bracer.tscn" id="1_m0lic"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_no4fj"]
+
+[resource]
+script = ExtResource("2_no4fj")
+id = "swift_bracer_unlock"
+display_name = "Bracer of Swiftness"
+description = "Increase fire rate of all weapons by 20%"
+type = 1
+target_class_name = "SwiftBracerArtifact"
+scene_to_unlock = ExtResource("1_m0lic")
+property_to_modify = ""
+value_modifier = 0.0
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

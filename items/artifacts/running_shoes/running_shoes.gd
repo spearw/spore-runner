@@ -12,6 +12,3 @@ var level = 1
 func modify_speed(base_speed: float) -> float:
 	# Speed increases by 10% per level
 	return base_speed * (speed_multiplier**level)
-
-func upgrade_artifact():
-	level += 1

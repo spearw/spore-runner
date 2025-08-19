@@ -30,7 +30,9 @@ func _on_fire_rate_timer_timeout():
 		
 		# Set the projectile's stats from the weapon's stats.
 		projectile.damage = self.base_projectile_damage
-		projectile.direction = Vector2.RIGHT.rotated(current_angle)
+		var fire_direction = Vector2.RIGHT.rotated(current_angle)
+		projectile.direction = fire_direction
+		projectile.rotation = fire_direction.angle()
 		
 		get_tree().current_scene.add_child(projectile)
 		projectile.global_position = self.global_position

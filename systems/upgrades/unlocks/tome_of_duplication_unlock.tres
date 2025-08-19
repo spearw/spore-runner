@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://bvqb5l5r7b4iy"]
+
+[ext_resource type="PackedScene" uid="uid://blnvjmprud8u4" path="res://items/artifacts/tome_of_duplication/tome_of_duplication.tscn" id="1_ry06e"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_jtwnu"]
+
+[resource]
+script = ExtResource("2_jtwnu")
+id = "tome_of_duplication_unlock"
+display_name = "Tome of Duplication"
+description = "All projectile weapons fire +1 projectile."
+type = 1
+target_class_name = "TomeOfDuplicationArtifact"
+scene_to_unlock = ExtResource("1_ry06e")
+property_to_modify = ""
+value_modifier = 0.0
+metadata/_custom_type_script = "uid://d0ibxieicws6j"
