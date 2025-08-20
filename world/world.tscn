@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bdcbnkahhxu6b"]
+[gd_scene load_steps=22 format=3 uid="uid://bdcbnkahhxu6b"]
 
 [ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="2_mad0u"]
@@ -20,6 +20,7 @@
 [ext_resource type="Resource" uid="uid://2gi3bo0o1klx" path="res://systems/spawner/spawn_timelines/test_timeline/tank_5_seconds.tres" id="19_3ljsx"]
 [ext_resource type="Resource" uid="uid://bvr2bn71y6omq" path="res://systems/spawner/spawn_timelines/test_timeline/swamer_steady_10_seconds.tres" id="20_aysyn"]
 [ext_resource type="PackedScene" uid="uid://cvo8y06lxkaq8" path="res://ui/hud/hud.tscn" id="20_p2iis"]
+[ext_resource type="Texture2D" uid="uid://cnsh16hskpn1v" path="res://ui/textures/texture_01.png" id="21_aysyn"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_ov2xu")
@@ -28,7 +29,6 @@ script = ExtResource("1_ov2xu")
 process_mode = 3
 
 [node name="Player" parent="." instance=ExtResource("3_ocfjn")]
-position = Vector2(360, 279)
 
 [node name="UpgradeManager" type="Node" parent="."]
 script = ExtResource("6_h8lre")
@@ -40,3 +40,17 @@ upgrade_pool = Array[ExtResource("7_ysn08")]([ExtResource("8_m0cxt"), ExtResourc
 
 [node name="EnemySpawner" parent="." instance=ExtResource("15_j34ew")]
 spawn_timeline = Array[ExtResource("16_p2iis")]([ExtResource("17_aysyn"), ExtResource("18_o1net"), ExtResource("19_3ljsx"), ExtResource("20_aysyn")])
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1024, 1024)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+modulate = Color(0, 0.501961, 0, 1)
+texture_repeat = 2
+position = Vector2(-2048, -2048)
+texture = ExtResource("21_aysyn")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4096, 4096)

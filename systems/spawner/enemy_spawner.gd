@@ -13,7 +13,7 @@ var run_timer: float = 0.0
 var active_event_cooldowns: Dictionary = {}
 # A copy of the timeline that can safely remove events as they are processed.
 var pending_events: Array[SpawnEvent]
-var spawn_radius: float = 450.0
+var spawn_radius: float = 1024.0
 
 var player_node: Node2D
 
