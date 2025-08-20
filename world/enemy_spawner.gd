@@ -6,6 +6,9 @@ extends Node
 # The enemy scene to be instantiated. This is set from the editor.
 @export var enemy_scene: PackedScene
 
+# List of enemies to spawn
+@export var enemy_stats_pool: Array[EnemyStats]
+
 # The radius in pixels from the player at which enemies will spawn.
 @export var spawn_radius: float = 450.0
 
@@ -32,9 +35,14 @@ func spawn_enemy() -> void:
 	# Guard clause: Do not attempt to spawn if the player node is not valid.
 	if not is_instance_valid(player_node):
 		return
+		
+	var random_stats = enemy_stats_pool.pick_random()
+	if not random_stats: return
 
-	# Instantiate the provided enemy scene.
+	# Instantiate the enemy scene.
 	var enemy_instance = enemy_scene.instantiate()
+	# Assign the stats to the new instance.
+	enemy_instance.stats = random_stats
 
 	# Determine a random spawn position.
 	var random_angle = randf_range(0, TAU) # TAU is 2 * PI

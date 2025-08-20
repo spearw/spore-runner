@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjpvtmn8ptm1n"]
+
+[ext_resource type="Script" uid="uid://b4c4seddr04t5" path="res://actors/enemies/enemy.gd" id="1_i3vid"]
+[ext_resource type="PackedScene" uid="uid://bvjckw4le1mr3" path="res://ui/damage_number/damage_number.tscn" id="2_smojp"]
+[ext_resource type="Texture2D" uid="uid://b7j6lpov6dfsd" path="res://actors/enemies/enemy_types/brute/brute.png" id="3_dluy2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7k104"]
+radius = 22.0
+height = 50.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1bop1"]
+load_path = "res://.godot/imported/health_bar_texture.png-aaad8e65b491f39a131c7da8b4b6cc5e.ctex"
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_i3vid")
+damage_number_scene = ExtResource("2_smojp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_dluy2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemies"]]
+shape = SubResource("CapsuleShape2D_7k104")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+z_index = 1
+offset_left = -15.0
+offset_top = -32.0
+offset_right = 15.0
+offset_bottom = -28.0
+value = 100.0
+texture_under = SubResource("CompressedTexture2D_1bop1")
+texture_progress = SubResource("CompressedTexture2D_1bop1")
+tint_under = Color(1, 0.377991, 0.31005, 1)
+tint_over = Color(0.00172501, 0.611483, 0.871481, 1)
+tint_progress = Color(1.1407e-05, 0.897686, 7.70092e-07, 1)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7j6lpov6dfsd"
-path="res://.godot/imported/enemy.png-6198b8224c504de777494f834beb1e2b.ctex"
+uid="uid://dwn7hj0nsqvok"
+path="res://.godot/imported/swarmer.png-359a573701f494b73ffda342d709b8f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/enemies/enemy/enemy.png"
-dest_files=["res://.godot/imported/enemy.png-6198b8224c504de777494f834beb1e2b.ctex"]
+source_file="res://actors/enemies/enemy_types/swarmer/swarmer.png"
+dest_files=["res://.godot/imported/swarmer.png-359a573701f494b73ffda342d709b8f5.ctex"]
 
 [params]
 

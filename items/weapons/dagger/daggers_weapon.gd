@@ -6,7 +6,7 @@ extends Node2D
 @export var projectile_scene: PackedScene
 var base_projectile_count: int = 1
 var base_projectile_damage: int = 10
-var base_interval: float = 2.0
+var base_interval: float = 1.5
 
 # --- Component References ---
 @onready var targeting_component: TargetingComponent = $TargetingComponent

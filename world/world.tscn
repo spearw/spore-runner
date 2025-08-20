@@ -1,14 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://bdcbnkahhxu6b"]
+[gd_scene load_steps=20 format=3 uid="uid://bdcbnkahhxu6b"]
 
 [ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="2_mad0u"]
 [ext_resource type="PackedScene" uid="uid://dulw5xigdffvi" path="res://actors/player/player.tscn" id="3_ocfjn"]
 [ext_resource type="Script" uid="uid://fhk1ou3boos2" path="res://world/enemy_spawner.gd" id="4_dqqhb"]
-[ext_resource type="PackedScene" uid="uid://bjpvtmn8ptm1n" path="res://actors/enemies/enemy/enemy.tscn" id="5_b2suy"]
+[ext_resource type="PackedScene" uid="uid://bjpvtmn8ptm1n" path="res://actors/enemies/enemy.tscn" id="5_b2suy"]
 [ext_resource type="Script" uid="uid://cdevlwpbk7w8g" path="res://systems/upgrade_manager.gd" id="6_h8lre"]
+[ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="6_j34ew"]
+[ext_resource type="Resource" uid="uid://c53cpmq5w2pwg" path="res://actors/enemies/enemy_types/brute/brute.tres" id="7_p2iis"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="7_ysn08"]
+[ext_resource type="Resource" uid="uid://bfvy3wl5xjfc6" path="res://actors/enemies/enemy_types/swarmer/swarmer.tres" id="8_aysyn"]
 [ext_resource type="Resource" uid="uid://deynodmipwbdh" path="res://systems/upgrades/unlocks/daggers_unlock.tres" id="8_m0cxt"]
 [ext_resource type="Resource" uid="uid://ei4vnjeiqilo" path="res://systems/upgrades/unlocks/player_speed_1.tres" id="9_j34ew"]
+[ext_resource type="Resource" uid="uid://b7o4xc2lowkku" path="res://actors/enemies/enemy_types/tank/tank.tres" id="9_o1net"]
 [ext_resource type="Resource" uid="uid://c64jci32lqc3" path="res://systems/upgrades/unlocks/spike_ring_unlock.tres" id="10_p2iis"]
 [ext_resource type="Resource" uid="uid://cg64e0ifhkfb7" path="res://systems/upgrades/upgrades/spike_ring_count_1.tres" id="11_aysyn"]
 [ext_resource type="Resource" uid="uid://bib5t3cy8av85" path="res://systems/upgrades/unlocks/swift_bracer_unlock.tres" id="12_dqqhb"]
@@ -28,6 +32,7 @@ position = Vector2(360, 279)
 [node name="EnemySpawner" type="Node" parent="."]
 script = ExtResource("4_dqqhb")
 enemy_scene = ExtResource("5_b2suy")
+enemy_stats_pool = Array[ExtResource("6_j34ew")]([ExtResource("7_p2iis"), ExtResource("8_aysyn"), ExtResource("9_o1net")])
 
 [node name="Timer" type="Timer" parent="EnemySpawner"]
 autostart = true
