@@ -6,6 +6,17 @@
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_xmswo")
 
+[node name="DamageFlash" type="ColorRect" parent="."]
+z_index = -1
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.419608, 0.419608, 0)
+
 [node name="ExperienceBar" type="TextureProgressBar" parent="."]
 custom_minimum_size = Vector2(600, 20)
 anchors_preset = 7

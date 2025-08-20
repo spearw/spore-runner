@@ -9,6 +9,7 @@ signal died
 signal experience_changed(current_xp, required_xp)
 signal leveled_up(new_level)
 signal stats_changed
+signal took_damage
 
 @export var stats: PlayerStats
 @onready var artifacts_node: Node = $Artifacts
@@ -112,6 +113,7 @@ func take_damage(amount: int) -> void:
 	
 	# Emit the signal to notify listeners (like the UI) of the health change.
 	health_changed.emit(current_health, max_health)
+	took_damage.emit()
 	
 	# Check for death condition.
 	if current_health <= 0:
