@@ -6,7 +6,7 @@
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_xmswo")
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+[node name="ExperienceBar" type="TextureProgressBar" parent="."]
 custom_minimum_size = Vector2(600, 20)
 anchors_preset = 7
 anchor_left = 0.5
@@ -22,6 +22,21 @@ texture_under = ExtResource("2_4d6w6")
 texture_progress = ExtResource("2_4d6w6")
 tint_under = Color(0, 0.317373, 0.317373, 1)
 tint_progress = Color(0, 1, 1, 1)
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+custom_minimum_size = Vector2(600, 20)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 20.0
+offset_right = 300.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture_under = ExtResource("2_4d6w6")
+texture_progress = ExtResource("2_4d6w6")
+tint_under = Color(0.549684, 1.40782e-06, 4.33177e-07, 1)
+tint_progress = Color(0, 0.501961, 0, 1)
 
 [node name="Label" type="Label" parent="."]
 offset_left = 760.0
