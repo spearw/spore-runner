@@ -40,3 +40,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		var xp_needed = player.experience_to_next_level - player.current_experience
 		player.add_experience(xp_needed)
 		get_viewport().set_input_as_handled()
+		
+	if event.is_action_pressed("dev_kill_all"):
+		print("DEV: Killing all enemies.")
+		# Get an array of all nodes currently in the "enemies" group.
+		var all_enemies = get_tree().get_nodes_in_group("enemies")
+		
+		# Loop through the array and call the die() method on each one.
+		for enemy in all_enemies:
+			# Check if the enemy is valid and has the die method before calling.
+			if is_instance_valid(enemy) and enemy.has_method("die"):
+				enemy.die()
+				
+		get_viewport().set_input_as_handled()

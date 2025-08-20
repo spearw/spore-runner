@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvo8y06lxkaq8"]
+
+[ext_resource type="Script" uid="uid://cmlh5vdjiumsh" path="res://ui/hud/hud.gd" id="1_xmswo"]
+[ext_resource type="Texture2D" uid="uid://cy1u8el4h7184" path="res://ui/textures/xp_bar_texture.png" id="2_4d6w6"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_xmswo")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+custom_minimum_size = Vector2(600, 20)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_under = ExtResource("2_4d6w6")
+texture_progress = ExtResource("2_4d6w6")
+tint_under = Color(0, 0.317373, 0.317373, 1)
+tint_progress = Color(0, 1, 1, 1)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 760.0
+offset_top = 1040.0
+offset_right = 800.0
+offset_bottom = 1063.0

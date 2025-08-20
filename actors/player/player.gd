@@ -13,7 +13,7 @@ signal stats_changed
 @export var stats: PlayerStats
 @onready var artifacts_node: Node = $Artifacts
 @onready var upgrade_manager: Node = get_tree().get_root().get_node("World/UpgradeManager")
-
+@onready var pickup_area_shape: CollisionShape2D = $PickupArea/CollisionShape2D
 
 var max_health: int
 var current_health: int
@@ -34,6 +34,9 @@ func _ready() -> void:
 		for upgrade in stats.starting_upgrades:
 			upgrade_manager.apply_upgrade(upgrade)
 
+	# Initial stats update.
+	notify_stats_changed()
+
 ## Called every physics frame for movement updates.
 ## @param delta: float - The time elapsed since the last physics frame.
 func _physics_process(delta: float) -> void:
@@ -41,6 +44,7 @@ func _physics_process(delta: float) -> void:
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = direction * move_speed
 	move_and_slide()
+
 	
 ## Calculates the final move speed after applying all artifact modifiers.
 ## @return: float - The final calculated move speed.
@@ -52,6 +56,14 @@ func get_modified_move_speed() -> float:
 		if artifact.has_method("modify_speed"):
 			final_speed = artifact.modify_speed(final_speed)
 	return final_speed
+	
+## Calculates the final pickup radius after applying all artifact modifiers.
+func get_modified_pickup_radius() -> float:
+	var final_radius = stats.base_pickup_radius
+	for artifact in artifacts_node.get_children():
+		if artifact.has_method("modify_pickup_radius"):
+			final_radius = artifact.modify_pickup_radius(final_radius)
+	return final_radius
 	
 ## Calculates the total projectile bonus from all equipped artifacts.
 ## @return: int - The number of extra projectiles to add.
@@ -107,6 +119,7 @@ func take_damage(amount: int) -> void:
 		
 func notify_stats_changed():
 	stats_changed.emit()
+	pickup_area_shape.shape.radius = get_modified_pickup_radius()
 
 ## Handles the player's death sequence.
 func die() -> void:

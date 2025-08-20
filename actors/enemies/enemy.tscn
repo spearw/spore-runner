@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjpvtmn8ptm1n"]
+[gd_scene load_steps=7 format=3 uid="uid://bjpvtmn8ptm1n"]
 
 [ext_resource type="Script" uid="uid://b4c4seddr04t5" path="res://actors/enemies/enemy.gd" id="1_i3vid"]
 [ext_resource type="PackedScene" uid="uid://bvjckw4le1mr3" path="res://ui/damage_number/damage_number.tscn" id="2_smojp"]
 [ext_resource type="Texture2D" uid="uid://b7j6lpov6dfsd" path="res://actors/enemies/enemy_types/brute/brute.png" id="3_dluy2"]
+[ext_resource type="PackedScene" uid="uid://b6g8t0tg7ccfi" path="res://items/pickups/experience_gem/experience_gem.tscn" id="3_smojp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7k104"]
 radius = 22.0
@@ -16,6 +17,7 @@ collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_i3vid")
 damage_number_scene = ExtResource("2_smojp")
+experience_gem_scene = ExtResource("3_smojp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_dluy2")

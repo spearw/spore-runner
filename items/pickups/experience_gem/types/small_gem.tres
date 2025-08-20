@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ExperienceGemStats" load_steps=3 format=3 uid="uid://mte760o2hl0i"]
+
+[ext_resource type="Script" uid="uid://cjeoe2nx75ikm" path="res://items/pickups/experience_gem/experience_gem_stats.gd" id="1_1vtbo"]
+[ext_resource type="Texture2D" uid="uid://ckalkilyyx2r7" path="res://items/pickups/experience_gem/types/experience_gem.png" id="2_1vtbo"]
+
+[resource]
+script = ExtResource("1_1vtbo")
+experience_value = 20
+texture = ExtResource("2_1vtbo")
+scale = Vector2(0.5, 0.5)
+metadata/_custom_type_script = "uid://cjeoe2nx75ikm"

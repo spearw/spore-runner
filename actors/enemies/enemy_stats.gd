@@ -17,5 +17,5 @@ extends Resource
 @export var modulate: Color = Color.WHITE
 
 # --- Loot ---
-# The gem scene this enemy drops.
-@export var experience_gem_scene: PackedScene
+# The stats for the gem this enemy drops.
+@export var experience_gem_stats: ExperienceGemStats

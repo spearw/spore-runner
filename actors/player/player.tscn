@@ -1,12 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://dulw5xigdffvi"]
+[gd_scene load_steps=6 format=3 uid="uid://dulw5xigdffvi"]
 
-[ext_resource type="Texture2D" uid="uid://bvr2l3q0qpvyf" path="res://actors/player/wiz.png" id="1_4flbx"]
+[ext_resource type="Texture2D" uid="uid://bvr2l3q0qpvyf" path="res://actors/player/characters/default/default.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dg0ibawosy3ih" path="res://actors/player/player.gd" id="1_onrkg"]
-[ext_resource type="Resource" uid="uid://berxcvx2dhox3" path="res://actors/player/stats/default_player_stats.tres" id="2_sweqy"]
+[ext_resource type="Resource" uid="uid://berxcvx2dhox3" path="res://actors/player/characters/default/default_player_stats.tres" id="2_sweqy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_onrkg"]
 radius = 16.0
 height = 60.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ax26v"]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_onrkg")
@@ -21,3 +23,8 @@ shape = SubResource("CapsuleShape2D_onrkg")
 [node name="Equipment" type="Node2D" parent="."]
 
 [node name="Artifacts" type="Node2D" parent="."]
+
+[node name="PickupArea" type="Area2D" parent="." groups=["player_pickup_area"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_ax26v")

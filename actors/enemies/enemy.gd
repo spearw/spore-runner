@@ -7,6 +7,7 @@ signal health_changed(current_health, max_health)
 # Import stats
 @export var stats: EnemyStats
 @export var damage_number_scene: PackedScene
+@export var experience_gem_scene: PackedScene
 
 # --- Node References ---
 @onready var sprite: Sprite2D = $Sprite2D
@@ -60,18 +61,17 @@ func update_health_bar(current: int, max_val: int):
 	health_bar.max_value = max_val
 	health_bar.value = current
 	# Show the bar only when the enemy has taken damage.
-	print("HEALTH!")
-	print(current)
 	health_bar.visible = current < max_val
 
 ## Handles the enemy's death sequence.
 func die() -> void:
 	# Drop experience
-	if stats.experience_gem_scene:
-		var gem_instance = stats.experience_gem_scene.instantiate()
+	if stats.experience_gem_stats:
+		# Spawn the generic gem scene.
+		var gem_instance = experience_gem_scene.instantiate()
+		gem_instance.stats = stats.experience_gem_stats
 		get_tree().current_scene.add_child(gem_instance)
 		gem_instance.global_position = self.global_position
-	# Remove scene
 	queue_free()
 
 func _physics_process(delta: float):
