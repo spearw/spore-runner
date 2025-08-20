@@ -38,7 +38,7 @@ func _on_player_health_changed(current_health: int, max_health: int):
 	health_bar.max_value = max_health
 	health_bar.value = current_health
 	
-# # Handle screen flash when player takes damage
+## Handle screen flash when player takes damage
 func _on_player_took_damage():
 	if tween:
 		tween.kill() # Abort the previous animation.
@@ -47,6 +47,6 @@ func _on_player_took_damage():
 	damage_flash.color.a = 0.4 
 	damage_flash.modulate.a = 0.4 
 	
-	# 2. Now, create the tween to animate it BACK to zero.
+	# Create the tween to animate it to zero.
 	tween.tween_property(damage_flash, "modulate:a", 0.0, 0.3)\
 		.set_trans(Tween.TRANS_SINE)
