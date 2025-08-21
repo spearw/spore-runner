@@ -15,6 +15,7 @@ extends Resource
 @export var scale: Vector2 = Vector2(1.0, 1.0)
 # A color to tint the sprite.
 @export var modulate: Color = Color.WHITE
+@export var behavior_scene: PackedScene
 
 # --- Loot ---
 # The stats for the gem this enemy drops.

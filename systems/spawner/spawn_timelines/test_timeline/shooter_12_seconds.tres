@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpawnEvent" load_steps=3 format=3 uid="uid://cbk48mj2ynvh8"]
+
+[ext_resource type="Resource" uid="uid://cwpkepnxytuy3" path="res://actors/enemies/enemy_types/shooter/shooter.tres" id="1_0vbw7"]
+[ext_resource type="Script" uid="uid://cafxbvye36ocx" path="res://systems/spawner/spawn_event.gd" id="2_mvo3c"]
+
+[resource]
+script = ExtResource("2_mvo3c")
+time_start = 0
+time_end = 80
+enemy_stats = ExtResource("1_0vbw7")
+quantity = 1
+interval = 12.0
+is_burst = false
+metadata/_custom_type_script = "uid://cafxbvye36ocx"

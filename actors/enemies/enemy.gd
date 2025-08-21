@@ -17,6 +17,7 @@ signal health_changed(current_health, max_health)
 # --- Runtime Variables ---
 var current_health: int
 var player_node: Node2D
+var behavior: EnemyBehavior = null
 
 func _ready() -> void:
 	player_node = get_tree().get_first_node_in_group("player")
@@ -26,6 +27,10 @@ func _ready() -> void:
 		printerr("Enemy spawned without EnemyStats resource! Deleting self.")
 		queue_free()
 		return
+		
+	if stats.behavior_scene:
+		self.behavior = stats.behavior_scene.instantiate()
+		add_child(self.behavior)
 		
 	# Apply stats from the resource.
 	current_health = stats.max_health
@@ -74,28 +79,24 @@ func die() -> void:
 		gem_instance.global_position = self.global_position
 	queue_free()
 
+
 func _physics_process(delta: float):
-	if player_node:
-		var direction: Vector2 = (player_node.global_position - self.global_position).normalized()
-		# Use stats.speed instead of a local variable.
-		velocity = direction * stats.speed
-	else:
-		velocity = Vector2.ZERO
-	move_and_slide()
-	
-	# After moving, check for collisions.
-	# get_slide_collision_count() returns the number of collisions this frame.
+	# Pass to imported behavior
+	if is_instance_valid(behavior):
+		behavior.process_behavior(delta, self)
+		
+	# Check for collision
 	for i in range(get_slide_collision_count()):
-		# get_slide_collision(i) returns a KinematicCollision2D object.
 		var collision = get_slide_collision(i)
-		# get_collider() returns the node collided with.
+		if not collision: continue
+		
 		var collided_object = collision.get_collider()
 		
-		# Check if the object is valid and is in the "player" group.
+		# Check if the object is the player.
 		if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
-			# Call the player's damage function.
+			# Call the player's damage function, using this enemy's damage stat.
 			collided_object.take_damage(stats.damage)
-			
-			# Destroy self after dealing damage.
-			queue_free()
-			break
+			# The normal enemy dies on contact.
+			# This prevents dealing damage every single frame.
+			die()
+			return

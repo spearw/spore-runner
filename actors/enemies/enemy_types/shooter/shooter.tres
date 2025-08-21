@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://cwpkepnxytuy3"]
+
+[ext_resource type="PackedScene" uid="uid://np8hsandn71t" path="res://actors/enemies/behaviors/shoot/shoot_behavior.tscn" id="1_37k1l"]
+[ext_resource type="Resource" uid="uid://c7ttwmrsaxqss" path="res://items/pickups/experience_gem/types/medium_gem.tres" id="2_wat6f"]
+[ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_5uev6"]
+[ext_resource type="Texture2D" uid="uid://bvbxnuahiaeu7" path="res://actors/enemies/enemy_types/shooter/shooter.png" id="4_37k1l"]
+
+[resource]
+script = ExtResource("3_5uev6")
+max_health = 30
+speed = 100.0
+damage = 40
+texture = ExtResource("4_37k1l")
+scale = Vector2(1, 1)
+modulate = Color(1, 1, 1, 1)
+behavior_scene = ExtResource("1_37k1l")
+experience_gem_stats = ExtResource("2_wat6f")
+metadata/_custom_type_script = "uid://b7tpycat8da2s"

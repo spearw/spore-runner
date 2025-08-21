@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://np8hsandn71t"]
+
+[ext_resource type="Script" uid="uid://dfnkm5k8sfllk" path="res://shoot_behavior.gd" id="1_tber6"]
+[ext_resource type="PackedScene" uid="uid://c6a5o5q5usrxq" path="res://actors/enemies/enemy_types/shooter/enemy_projectile.tscn" id="2_ioups"]
+
+[node name="ShootBehavior" type="Node"]
+script = ExtResource("1_tber6")
+enemy_projectile_scene = ExtResource("2_ioups")
+
+[node name="FireRateTimer" type="Timer" parent="."]
