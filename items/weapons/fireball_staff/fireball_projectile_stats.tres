@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=3 format=3 uid="uid://bmppsbvnm3mbe"]
+
+[ext_resource type="Script" uid="uid://dm4u2phuyptno" path="res://systems/projectiles/projectile_stats.gd" id="1_sy8ug"]
+[ext_resource type="Texture2D" uid="uid://ckk8hpqbf48os" path="res://items/weapons/fireball_staff/fireball.png" id="2_pjg5b"]
+
+[resource]
+script = ExtResource("1_sy8ug")
+damage = 25
+speed = 150.0
+lifetime = 5.0
+texture = ExtResource("2_pjg5b")
+scale = Vector2(0.5, 0.5)
+metadata/_custom_type_script = "uid://dm4u2phuyptno"

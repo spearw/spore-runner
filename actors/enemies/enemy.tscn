@@ -37,3 +37,5 @@ texture_progress = SubResource("CompressedTexture2D_1bop1")
 tint_under = Color(1, 0.377991, 0.31005, 1)
 tint_over = Color(0.00172501, 0.611483, 0.871481, 1)
 tint_progress = Color(1.1407e-05, 0.897686, 7.70092e-07, 1)
+
+[node name="Equipment" type="Node2D" parent="."]

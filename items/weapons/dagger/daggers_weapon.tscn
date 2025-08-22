@@ -1,21 +1,22 @@
 [gd_scene load_steps=5 format=3 uid="uid://divtus20vmop4"]
 
 [ext_resource type="Script" uid="uid://d28sd1lkd3cdw" path="res://items/weapons/dagger/daggers_weapon.gd" id="1_jas4t"]
-[ext_resource type="PackedScene" uid="uid://bwo8ttfa451xp" path="res://items/weapons/dagger/daggers_projectile.tscn" id="2_glwvr"]
+[ext_resource type="Resource" uid="uid://cvxkoyv5e4l6j" path="res://items/weapons/dagger/dagger_projectile_stats.tres" id="2_umv4o"]
 [ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="3_glwvr"]
 [ext_resource type="PackedScene" uid="uid://bi2e3pkfcknbt" path="res://systems/components/weapon_stats_component.tscn" id="4_umv4o"]
 
 [node name="daggers" type="Node2D"]
 script = ExtResource("1_jas4t")
-projectile_scene = ExtResource("2_glwvr")
+projectile_stats = ExtResource("2_umv4o")
 metadata/_custom_type_script = "uid://d28sd1lkd3cdw"
 
 [node name="FireRateTimer" type="Timer" parent="."]
 wait_time = 2.0
-autostart = true
 
 [node name="TargetingComponent" type="Node" parent="."]
 script = ExtResource("3_glwvr")
 metadata/_custom_type_script = "uid://5nf8qiekyyrw"
 
 [node name="WeaponStatsComponent" parent="." instance=ExtResource("4_umv4o")]
+
+[connection signal="timeout" from="FireRateTimer" to="." method="_on_fire_rate_timer_timeout"]

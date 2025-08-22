@@ -16,6 +16,8 @@ extends Resource
 # A color to tint the sprite.
 @export var modulate: Color = Color.WHITE
 @export var behavior_scene: PackedScene
+# The weapon scenes to automatically equip to this enemy on spawn.
+@export var weapon_scenes: Array[PackedScene]
 
 # --- Loot ---
 # The stats for the gem this enemy drops.

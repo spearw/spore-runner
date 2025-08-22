@@ -6,7 +6,7 @@ class_name SpikeRingWeapon extends Node2D
 # --- Base Properties ---
 var base_projectile_count: int = 8
 var base_projectile_damage: int = 15
-var base_interval: float = 4.0
+@export var base_fire_rate: float = 4.0
 
 # --- Component References ---
 @onready var stats_component: WeaponStatsComponent = $WeaponStatsComponent

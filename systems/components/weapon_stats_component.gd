@@ -1,46 +1,57 @@
 ## weapon_stats_component.gd
-## A component that connects a weapon to the player and handles stat updates.
+## Connects a weapon to its owner (Player or Enemy) and handles stat updates.
 class_name WeaponStatsComponent
 extends Node
 
-# --- References ---
-var weapon # A reference to the parent weapon node
-var timer # Reference to weapon timer
-var player: Node:
-	set(new_player):
-		if is_instance_valid(player) and player.has_signal("stats_changed"):
-			player.stats_changed.disconnect(update_stats)
-		player = new_player
-		if is_instance_valid(player) and player.has_signal("stats_changed"):
-			player.stats_changed.connect(update_stats)
+var weapon # Reference to the parent weapon node
+var user: Node: # The entity that owns this weapon (Player or Enemy)
+	set(new_user):
+		# Disconnect from old owner's signals if they exist
+		if is_instance_valid(user) and user.has_signal("stats_changed"):
+			user.stats_changed.disconnect(update_stats)
+		
+		user = new_user
+		
+		# Connect to new owner's signals if they exist (only players have this)
+		if is_instance_valid(user) and user.has_signal("stats_changed"):
+			user.stats_changed.connect(update_stats)
 
 func _ready():
-	# Get a reference to the parent node this component is attached to.
 	weapon = get_parent()
-	timer = weapon.get_node("FireRateTimer")
-	timer.set_meta("base_wait_time", weapon.base_interval)
 
-## This function is the heart of the component. It updates the parent weapon's stats.
 func update_stats():
-	if not is_instance_valid(player) or not is_instance_valid(weapon):
-		return
-	print("%s stats" % weapon.name)
+	if not is_instance_valid(owner) or not is_instance_valid(weapon): return
 
-	# Update Fire Rate (if the weapon has a timer)
-	if weapon.has_node("FireRateTimer"):
-		var base_wait_time = timer.get_meta("base_wait_time")
-		var modifier = player.get_global_firerate_modifier()
-		timer.wait_time = base_wait_time * modifier
-		print("Fire rate: %s seconds" % timer.wait_time)
-
+	# Only players have global modifiers, so we check for the method.
+	if owner.has_method("get_global_firerate_modifier"):
+		if weapon.has_node("FireRateTimer"):
+			var timer = weapon.get_node("FireRateTimer")
+			var base_wait_time = timer.get_meta("base_wait_time", 2.0)
+			var modifier = owner.get_global_firerate_modifier()
+			timer.wait_time = base_wait_time * modifier
 	
-	
+	print("%s stats updated!" % weapon.name)
 
-## Public function for the weapon to get its final projectile count
+# This function also needs to check if the owner is a player
 func get_final_projectile_count() -> int:
-	if not is_instance_valid(player) or not "base_projectile_count" in weapon:
-		return 1 # Return a safe default
+	if not is_instance_valid(weapon) or not "base_projectile_count" in weapon: return 1
 
 	var final_count = weapon.base_projectile_count
-	final_count += player.get_global_projectile_bonus()
+	if is_instance_valid(owner) and owner.has_method("get_global_projectile_bonus"):
+		final_count += owner.get_global_projectile_bonus()
 	return final_count
+	
+## Determines the allegiance of projectiles based on the weapon's user.
+## @return: Projectile.Allegiance - The allegiance enum value.
+func get_projectile_allegiance() -> Projectile.Allegiance:
+	if is_instance_valid(user):
+		# If the user is in the "player" group, allegiance is PLAYER.
+		if user.is_in_group("player"):
+			return Projectile.Allegiance.PLAYER
+		# If the user is in the "enemies" group, allegiance is ENEMY.
+		if user.is_in_group("enemies"):
+			return Projectile.Allegiance.ENEMY
+	
+	# Default fallback. This projectile won't hit anything important.
+	printerr("WeaponStatsComponent: Could not determine allegiance for user!")
+	return Projectile.Allegiance.NONE 

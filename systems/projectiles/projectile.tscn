@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlntn7hlrn2ao"]
+
+[ext_resource type="Script" uid="uid://c3c143xj0f5uh" path="res://systems/projectiles/projectile.gd" id="1_f4ufi"]
+
+[node name="Projectile" type="Area2D"]
+script = ExtResource("1_f4ufi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="LifetimeTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

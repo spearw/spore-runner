@@ -1,14 +1,14 @@
-## daggers_weapon.gd
-class_name DaggersWeapon
+## shotgun_weapon.gd
+class_name ShotgunWeapon
 extends Node2D
 
 # --- Base Properties ---
 @export var projectile_stats: ProjectileStats
 # Generic projectile scene
 const GENERIC_PROJECTILE_SCENE = preload("res://systems/projectiles/projectile.tscn")
-var base_projectile_count: int = 1
-@export var base_fire_rate: float = 1.5
-var spread_angle_degrees: float = 10.0
+var base_projectile_count: int = 8
+@export var base_fire_rate: float = 3.0
+var spread_angle_degrees: float = 30.0
 
 # --- Component References ---
 @onready var targeting_component: TargetingComponent = $TargetingComponent
@@ -23,7 +23,7 @@ func _ready():
 func fire():
 	if not projectile_stats: return
 	
-	var fire_direction = targeting_component.get_fire_direction(self.global_position, last_fire_direction, stats_component.get_projectile_allegiance())
+	var fire_direction = targeting_component.get_fire_direction(self.global_position, last_fire_direction)
 	var final_projectile_count = stats_component.get_final_projectile_count()
 	
 	for i in range(final_projectile_count):
@@ -42,12 +42,5 @@ func fire():
 		
 		get_tree().current_scene.add_child(projectile)
 		projectile.global_position = self.global_position
-		
-		if i < final_projectile_count - 1:
-			await get_tree().create_timer(0.08).timeout
 			
 	last_fire_direction = fire_direction
-
-
-func _on_fire_rate_timer_timeout() -> void:
-	pass # Replace with function body.

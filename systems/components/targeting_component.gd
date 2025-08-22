@@ -5,7 +5,8 @@ extends Node
 
 enum TargetingMode {
 	NONE,
-	NEAREST
+	NEAREST,
+	SELF
 	# Add more modes here later
 }
 
@@ -14,8 +15,8 @@ enum TargetingMode {
 ## Finds the closest enemy node to a given position.
 ## @param origin_pos: Vector2 - The position to measure distance from.
 ## @return: Node2D - The closest enemy node, or null if none are found.
-func find_closest_enemy(origin_pos: Vector2) -> Node2D:
-	var enemies = get_tree().get_nodes_in_group("enemies")
+func find_closest_entity(origin_pos: Vector2, group: String) -> Node2D:
+	var enemies = get_tree().get_nodes_in_group(group)
 	if enemies.is_empty():
 		return null
 
@@ -34,18 +35,23 @@ func find_closest_enemy(origin_pos: Vector2) -> Node2D:
 ## @param origin_pos: Vector2 - The position the projectile will fire from.
 ## @param fallback_direction: Vector2 - A direction to use if no target is found.
 ## @return: Vector2 - The calculated normalized direction vector.
-func get_fire_direction(origin_pos: Vector2, fallback_direction: Vector2) -> Vector2:
+func get_fire_direction(origin_pos: Vector2, fallback_direction: Vector2, weapon_allegiance: int) -> Vector2:
 	var fire_direction = fallback_direction
-	var target_enemy = null
+	var target = null
 
 	match targeting_mode:
 		TargetingMode.NEAREST:
-			target_enemy = find_closest_enemy(origin_pos)
-			if is_instance_valid(target_enemy):
-				fire_direction = (target_enemy.global_position - origin_pos).normalized()
-		
+			# weapon_allegiance 0 is player weapon
+			var target_group = "enemies" if weapon_allegiance == 0 else "player"
+			target = find_closest_entity(origin_pos, target_group)
+		TargetingMode.SELF:
+			# weapon_allegiance 0 is player weapon
+			var target_group = "player" if weapon_allegiance == 0 else "enemies"
+			target = find_closest_entity(origin_pos, target_group)
 		TargetingMode.NONE:
-			# In this case, the weapon's own logic provides the fallback.
 			pass
+			
+	if is_instance_valid(target):
+		fire_direction = (target.global_position - origin_pos).normalized()
 	
 	return fire_direction

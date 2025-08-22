@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=3 format=3 uid="uid://bm60l0uekjv1o"]
+
+[ext_resource type="Script" uid="uid://dm4u2phuyptno" path="res://systems/projectiles/projectile_stats.gd" id="1_flk3h"]
+[ext_resource type="Texture2D" uid="uid://v26hjalg5pu" path="res://items/weapons/shotgun/pellet.png" id="2_qpc7y"]
+
+[resource]
+script = ExtResource("1_flk3h")
+damage = 5
+speed = 400.0
+lifetime = 1.0
+texture = ExtResource("2_qpc7y")
+scale = Vector2(0.1, 0.1)
+metadata/_custom_type_script = "uid://dm4u2phuyptno"

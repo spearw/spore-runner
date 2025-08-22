@@ -9,7 +9,6 @@ radius = 18.0
 [node name="ExperienceGem" type="Area2D" groups=["gems"]]
 collision_layer = 8
 script = ExtResource("1_7arep")
-experience_value = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_qqtk7")

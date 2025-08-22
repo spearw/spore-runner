@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckk8hpqbf48os"
-path="res://.godot/imported/fireball.png-6c0dcbaf68621108b46d3ff5a4763a63.ctex"
+uid="uid://v26hjalg5pu"
+path="res://.godot/imported/pellet.png-49f06ca4aba6ebbf715e4e5718c229e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/enemies/enemy_types/shooter/fireball.png"
-dest_files=["res://.godot/imported/fireball.png-6c0dcbaf68621108b46d3ff5a4763a63.ctex"]
+source_file="res://items/weapons/shotgun/pellet.png"
+dest_files=["res://.godot/imported/pellet.png-49f06ca4aba6ebbf715e4e5718c229e3.ctex"]
 
 [params]
 

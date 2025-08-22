@@ -31,6 +31,19 @@ func _ready() -> void:
 	if stats.behavior_scene:
 		self.behavior = stats.behavior_scene.instantiate()
 		add_child(self.behavior)
+	
+	# Equip weapon
+	if stats.weapon_scenes:
+		var equipment_node = get_node("Equipment")
+		for weapon_scene in stats.weapon_scenes:
+			var new_weapon = weapon_scene.instantiate()
+			# The weapon needs to know who its user is.
+			var stats_comp = new_weapon.get_node("WeaponStatsComponent")
+			if stats_comp:
+				stats_comp.user = self
+			
+			equipment_node.add_child(new_weapon)
+
 		
 	# Apply stats from the resource.
 	current_health = stats.max_health
@@ -42,6 +55,14 @@ func _ready() -> void:
 	health_changed.connect(update_health_bar)
 	update_health_bar(current_health, stats.max_health)
 	health_bar.visible = false
+	
+## Tells all equipped weapons to fire once.
+func fire_weapons():
+	var equipment = get_node_or_null("Equipment")
+	if equipment:
+		for weapon in equipment.get_children():
+			if weapon.has_method("fire"):
+				weapon.fire()
 	
 ## Reduces the enemy's health and handles the consequences.
 ## @param amount: int - The amount of damage to inflict.

@@ -70,6 +70,7 @@ func apply_upgrade(upgrade: Upgrade) -> void:
 			if upgrade.scene_to_unlock:
 				var new_weapon = create_weapon(upgrade.scene_to_unlock.instantiate(), upgrade)
 				player_equipment.add_child(new_weapon)
+				#start_weapon_timer(new_weapon.get_node_or_null("FireRateTimer"), new_weapon.base_fire_rate)
 			else:
 				printerr("Unlock upgrade '%s' is missing a scene!" % upgrade.id)
 
@@ -99,8 +100,17 @@ func apply_upgrade(upgrade: Upgrade) -> void:
 			
 func create_weapon(weapon, upgrade):
 	weapon.name = upgrade.target_class_name
-	weapon.get_node("WeaponStatsComponent").player = self.player
-	weapon.get_node("FireRateTimer").set_meta("base_wait_time", 2.0)
+	var stats_comp = weapon.get_node("WeaponStatsComponent")
+	stats_comp.user = self.player
+	var timer = weapon.get_node_or_null("FireRateTimer")
+	if timer:
+		# Set its base fire rate.
+		timer.set_meta("base_wait_time", weapon.base_fire_rate)
+		timer.wait_time = weapon.base_fire_rate
+		# autostart starts timer the instant its in the world. 
+		# start() does not work until after in the world.
+		timer.autostart = true
+
 	return weapon
 	
 func create_artifact(artifact, upgrade):

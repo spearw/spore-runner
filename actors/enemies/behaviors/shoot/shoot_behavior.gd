@@ -41,18 +41,12 @@ func process_behavior(delta: float, host: CharacterBody2D) -> void:
 	host.move_and_slide()
 
 func _on_firerate_timer_timeout():
-	# This function needs the 'host' reference, which we don't have in a signal callback.
-	# So we get it from the parent.
 	var host = get_parent()
-	if not is_instance_valid(host) or not is_instance_valid(host.player_node): return
+	if not is_instance_valid(host): return
 	
-	# Fire the projectile
-	var projectile = enemy_projectile_scene.instantiate()
-	var fire_direction = (host.player_node.global_position - host.global_position).normalized()
-	projectile.rotation = fire_direction.angle()
-	projectile.direction = fire_direction
-	get_tree().current_scene.add_child(projectile)
-	projectile.global_position = host.global_position
+	# Tell the host to fire whatever weapons it has.
+	if host.has_method("fire_weapons"):
+		host.fire_weapons()
 	
 	# Switch back to chasing state.
 	current_state = State.CHASING
