@@ -117,7 +117,7 @@ func _physics_process(delta: float):
 		if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
 			# Call the player's damage function, using this enemy's damage stat.
 			collided_object.take_damage(stats.damage)
-			# The normal enemy dies on contact.
-			# This prevents dealing damage every single frame.
-			die()
+			# The normal enemy is deleted on contact.
+			# This prevents dealing damage every single frame and dropping xp.
+			queue_free()
 			return
