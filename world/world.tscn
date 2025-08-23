@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bdcbnkahhxu6b"]
+[gd_scene load_steps=24 format=3 uid="uid://bdcbnkahhxu6b"]
 
 [ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="2_mad0u"]
@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://cg64e0ifhkfb7" path="res://systems/upgrades/upgrades/spike_ring_count_1.tres" id="11_aysyn"]
 [ext_resource type="Resource" uid="uid://bib5t3cy8av85" path="res://systems/upgrades/unlocks/swift_bracer_unlock.tres" id="12_dqqhb"]
 [ext_resource type="PackedScene" uid="uid://cbw5xw2x3ghy3" path="res://systems/dev_console/dev_console.tscn" id="12_mad0u"]
+[ext_resource type="Resource" uid="uid://of54uih30ise" path="res://systems/upgrades/unlocks/fireball_staff_unlock.tres" id="13_3ljsx"]
 [ext_resource type="Resource" uid="uid://bvqb5l5r7b4iy" path="res://systems/upgrades/unlocks/tome_of_duplication_unlock.tres" id="13_b2suy"]
 [ext_resource type="Resource" uid="uid://b8y1u7wm4bi06" path="res://systems/upgrades/upgrades/player_speed_2.tres" id="14_b2suy"]
 [ext_resource type="PackedScene" uid="uid://uaiyj5jeo46l" path="res://systems/spawner/enemy_spawner.tscn" id="15_j34ew"]
@@ -33,7 +34,7 @@ process_mode = 3
 
 [node name="UpgradeManager" type="Node" parent="."]
 script = ExtResource("6_h8lre")
-upgrade_pool = Array[ExtResource("7_ysn08")]([ExtResource("8_m0cxt"), ExtResource("9_j34ew"), ExtResource("10_p2iis"), ExtResource("11_aysyn"), ExtResource("12_dqqhb"), ExtResource("13_b2suy"), ExtResource("14_b2suy")])
+upgrade_pool = Array[ExtResource("7_ysn08")]([ExtResource("8_m0cxt"), ExtResource("9_j34ew"), ExtResource("10_p2iis"), ExtResource("11_aysyn"), ExtResource("12_dqqhb"), ExtResource("13_b2suy"), ExtResource("14_b2suy"), ExtResource("13_3ljsx")])
 
 [node name="DevConsole" parent="." instance=ExtResource("12_mad0u")]
 

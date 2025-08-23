@@ -3,9 +3,10 @@
 extends CanvasLayer
 
 @onready var xp_bar: TextureProgressBar = $ExperienceBar
-@onready var level_label: Label = $Label
+@onready var level_label: Label = $LevelLabel
 @onready var health_bar: TextureProgressBar = $HealthBar
 @onready var damage_flash: ColorRect = $DamageFlash
+@onready var time_label: Label = $GameTimer
 
 var tween
 
@@ -50,3 +51,12 @@ func _on_player_took_damage():
 	# Create the tween to animate it to zero.
 	tween.tween_property(damage_flash, "modulate:a", 0.0, 0.3)\
 		.set_trans(Tween.TRANS_SINE)
+		
+## Formats seconds into a MM:SS string and updates the label.
+func update_time(seconds: float):
+	# floori ensures we only get whole seconds.
+	var total_seconds = floori(seconds)
+	var minutes = total_seconds / 60
+	var remaining_seconds = total_seconds % 60
+	# The "%02d" format specifier ensures there's a leading zero for single-digit numbers.
+	time_label.text = "%02d:%02d" % [minutes, remaining_seconds]

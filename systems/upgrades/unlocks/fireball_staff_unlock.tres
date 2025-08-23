@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://of54uih30ise"]
+
+[ext_resource type="PackedScene" uid="uid://bs1xgub1sjuhs" path="res://items/weapons/fireball_staff/fireball_staff_weapon.tscn" id="1_1ckj8"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_jiv36"]
+
+[resource]
+script = ExtResource("1_jiv36")
+id = "fireball_staff_unlock"
+display_name = "Fireball Staff"
+description = "Fires slow moving fireballs"
+type = 0
+target_class_name = "FireballStaff"
+scene_to_unlock = ExtResource("1_1ckj8")
+property_to_modify = ""
+value_modifier = 0.0
+metadata/_custom_type_script = "uid://d0ibxieicws6j"
