@@ -33,7 +33,12 @@ func _ready() -> void:
 	# Grant starting items
 	if stats and stats.starting_upgrades:
 		for upgrade in stats.starting_upgrades:
-			upgrade_manager.apply_upgrade(upgrade)
+			# Apply base rarity to starting upgrades to manager can infer type
+			var upgrade_package = {
+				"upgrade": upgrade,
+				"rarity": upgrade.rarity 
+			}
+			upgrade_manager.apply_upgrade(upgrade_package)
 
 	# Initial stats update.
 	notify_stats_changed()
@@ -65,6 +70,14 @@ func get_modified_pickup_radius() -> float:
 		if artifact.has_method("modify_pickup_radius"):
 			final_radius = artifact.modify_pickup_radius(final_radius)
 	return final_radius
+	
+## Calculates the final luck after applying all artifact modifiers.
+func get_modified_luck() -> float:
+	var final_luck = stats.base_luck
+	for artifact in artifacts_node.get_children():
+		if artifact.has_method("modify_luck"):
+			final_luck = artifact.modify_pickup_radius(final_luck)
+	return final_luck
 	
 ## Calculates the total projectile bonus from all equipped artifacts.
 ## @return: int - The number of extra projectiles to add.

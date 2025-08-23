@@ -8,4 +8,7 @@
 script = ExtResource("1_p3pic")
 base_move_speed = 150.0
 starting_upgrades = Array[ExtResource("2_vry41")]([ExtResource("3_arynk")])
+max_health = 100
+base_pickup_radius = 100.0
+base_luck = 1.0
 metadata/_custom_type_script = "uid://nwbrj5ockot1"

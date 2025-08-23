@@ -23,7 +23,7 @@ func _ready():
 func fire():
 	if not projectile_stats: return
 	
-	var fire_direction = targeting_component.get_fire_direction(self.global_position, last_fire_direction)
+	var fire_direction = targeting_component.get_fire_direction(self.global_position, last_fire_direction, stats_component.get_projectile_allegiance())
 	var final_projectile_count = stats_component.get_final_projectile_count()
 	
 	for i in range(final_projectile_count):

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://btc5l6uhsaoqk"]
+
+[ext_resource type="PackedScene" uid="uid://cmsiho67xk03p" path="res://items/weapons/shotgun/shotgun_weapon.tscn" id="1_rx5xk"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_rb8oe"]
+
+[resource]
+script = ExtResource("2_rb8oe")
+id = "shotgun_unlock"
+display_name = "Shotgun"
+description = "Devastating at close range"
+type = 0
+target_class_name = "ShotgunWeapon"
+scene_to_unlock = ExtResource("1_rx5xk")
+rarity = 1
+property_to_modify = ""
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

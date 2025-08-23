@@ -1,14 +1,15 @@
 [gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://b8y1u7wm4bi06"]
 
-[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_2qepc"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_kcm0e"]
 
 [resource]
-script = ExtResource("1_2qepc")
+script = ExtResource("1_kcm0e")
 id = "player_speed_2"
 display_name = "Running Shoes II"
-description = "Increase movement speed by an additional 10%"
+description = "Increase movement speed"
 type = 2
 target_class_name = "RunningShoesArtifact"
+rarity = 0
 property_to_modify = "level"
-value_modifier = 1.0
+rarity_values = Array[float]([0.05, 0.1, 0.15, 0.25])
 metadata/_custom_type_script = "uid://d0ibxieicws6j"

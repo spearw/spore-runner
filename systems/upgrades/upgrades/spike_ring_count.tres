@@ -1,14 +1,15 @@
 [gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://cg64e0ifhkfb7"]
 
-[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_7it1r"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_gvgat"]
 
 [resource]
-script = ExtResource("1_7it1r")
+script = ExtResource("1_gvgat")
 id = "spike_ring_count_1"
 display_name = "Spike Count"
-description = "Increase number of spikes by 4"
+description = "Increase number of spikes"
 type = 2
 target_class_name = "SpikeRingWeapon"
+rarity = 0
 property_to_modify = "base_projectile_count"
-value_modifier = 4.0
+rarity_values = Array[float]([2.0, 3.0, 4.0, 6.0])
 metadata/_custom_type_script = "uid://d0ibxieicws6j"
