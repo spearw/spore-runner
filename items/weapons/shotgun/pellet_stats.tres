@@ -9,5 +9,5 @@ damage = 5
 speed = 400.0
 lifetime = 1.0
 texture = ExtResource("2_qpc7y")
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.2, 0.2)
 metadata/_custom_type_script = "uid://dm4u2phuyptno"

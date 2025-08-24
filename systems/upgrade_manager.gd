@@ -84,11 +84,15 @@ func get_upgrade_choices(count: int) -> Array[Dictionary]:
 				continue
 
 		var chosen_upgrade = potential_upgrades.pick_random()
+		# Ensure rarity value is correct even in case of fallback
+		var rarity = chosen_rarity_enum
+		if chosen_upgrade.type == Upgrade.UpgradeType.UNLOCK_WEAPON or chosen_upgrade.type == Upgrade.UpgradeType.UNLOCK_ARTIFACT:
+			rarity = chosen_upgrade.rarity
 		
 		# Package the results
 		final_choices.append({
 			"upgrade": chosen_upgrade,
-			"rarity": chosen_rarity_enum
+			"rarity": rarity
 		})
 		
 		# Remove the choice from the pool for this round to avoid duplicates
@@ -211,10 +215,11 @@ func get_nested_property(target_object: Object, property_path: String):
 	var current_object = target_object
 	
 	for part in path_parts:
-		if current_object.has_method("get") and current_object.get(part):
+		if current_object and current_object.has_method("get") and current_object.get(part) != null:
 			current_object = current_object.get(part)
 		else:
-			printerr("Invalid path '%s' on object %s" % [property_path, target_object])
+			printerr("Invalid path part '%s' in '%s' on object %s" % [part, property_path, target_object])
 			return null
 			
+	# After the loop, current_object holds the final value.
 	return current_object
