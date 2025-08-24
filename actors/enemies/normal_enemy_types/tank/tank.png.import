@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwn7hj0nsqvok"
-path="res://.godot/imported/swarmer.png-359a573701f494b73ffda342d709b8f5.ctex"
+uid="uid://crmv6juqfeplt"
+path="res://.godot/imported/tank.png-f287b8c1b40a1050b74f374d39f87a9b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/enemies/enemy_types/swarmer/swarmer.png"
-dest_files=["res://.godot/imported/swarmer.png-359a573701f494b73ffda342d709b8f5.ctex"]
+source_file="res://actors/enemies/normal_enemy_types/tank/tank.png"
+dest_files=["res://.godot/imported/tank.png-f287b8c1b40a1050b74f374d39f87a9b.ctex"]
 
 [params]
 

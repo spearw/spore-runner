@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=3 format=3 uid="uid://dpwqwjahbacgk"]
+
+[ext_resource type="Script" uid="uid://dm4u2phuyptno" path="res://systems/projectiles/projectile_stats.gd" id="1_lc25k"]
+[ext_resource type="Texture2D" uid="uid://d1r8kbqc0b88w" path="res://items/weapons/spike_ring/spike.png" id="2_q3hn2"]
+
+[resource]
+script = ExtResource("1_lc25k")
+damage = 15
+speed = 250.0
+lifetime = 4.0
+texture = ExtResource("2_q3hn2")
+scale = Vector2(0.5, 0.5)
+metadata/_custom_type_script = "uid://dm4u2phuyptno"

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crmv6juqfeplt"
-path="res://.godot/imported/tank.png-2d187be09580659d3a66a55f2930a4db.ctex"
+uid="uid://bvbxnuahiaeu7"
+path="res://.godot/imported/shooter.png-b07a6bbd651c710058ca4ca961108522.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/enemies/enemy_types/tank/tank.png"
-dest_files=["res://.godot/imported/tank.png-2d187be09580659d3a66a55f2930a4db.ctex"]
+source_file="res://actors/enemies/normal_enemy_types/shooter/shooter.png"
+dest_files=["res://.godot/imported/shooter.png-b07a6bbd651c710058ca4ca961108522.ctex"]
 
 [params]
 

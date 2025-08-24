@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cbnjlufg6s0n4"]
 
-[ext_resource type="Texture2D" uid="uid://ckk8hpqbf48os" path="res://items/weapons/fireball_staff/fireball.png" id="2_hirx2"]
+[ext_resource type="Texture2D" uid="uid://ckk8hpqbf48os" path="res://items/weapons/fireball_staff/fireball.png" id="1_j1fa3"]
 
 [sub_resource type="GDScript" id="GDScript_ioups"]
 script/source = "## projectile.gd
@@ -33,7 +33,7 @@ collision_layer = 16
 script = SubResource("GDScript_ioups")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_hirx2")
+texture = ExtResource("1_j1fa3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_0l6fx")

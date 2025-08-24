@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=2 format=3 uid="uid://bxlnbwklstwrq"]
+
+[ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="1_iuged"]
+
+[resource]
+script = ExtResource("1_iuged")
+max_health = 1000
+speed = 50.0
+damage = 100
+scale = Vector2(1, 1)
+modulate = Color(1, 1, 1, 1)
+weapon_scenes = Array[PackedScene]([])
+metadata/_custom_type_script = "uid://b7tpycat8da2s"
