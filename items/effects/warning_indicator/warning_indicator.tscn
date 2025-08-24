@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch2xenva56c83"]
+
+[ext_resource type="Texture2D" uid="uid://b1wxkc5er4faq" path="res://items/effects/warning_indicator/warning_indicator.png" id="1_5onno"]
+[ext_resource type="Script" uid="uid://fqv1qp3m8h4s" path="res://items/effects/warning_indicator/indicator.gd" id="2_4xxcs"]
+
+[node name="WarningIndicator" type="Sprite2D"]
+z_index = -1
+texture = ExtResource("1_5onno")
+script = ExtResource("2_4xxcs")

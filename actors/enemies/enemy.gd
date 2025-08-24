@@ -10,7 +10,8 @@ signal health_changed(current_health, max_health)
 @export var experience_gem_scene: PackedScene
 
 # --- Node References ---
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var health_bar: TextureProgressBar = $TextureProgressBar
 
@@ -47,10 +48,12 @@ func _ready() -> void:
 		
 	# Apply stats from the resource.
 	current_health = stats.max_health
-	sprite.texture = stats.texture
-	sprite.scale = stats.scale
-	sprite.modulate = stats.modulate
+	# Apply the animation library to the sprite node.
+	animated_sprite.sprite_frames = stats.sprite_frames
+	# Apply the scale to the enemy's root node so all children scale together.
+	self.scale = stats.scale
 	collision_shape.scale = stats.scale
+	animated_sprite.play("move")
 	
 	health_changed.connect(update_health_bar)
 	update_health_bar(current_health, stats.max_health)
@@ -102,9 +105,21 @@ func die() -> void:
 
 
 func _physics_process(delta: float):
-	# Pass to imported behavior
 	if is_instance_valid(behavior):
 		behavior.process_behavior(delta, self)
+		
+	# Only change animation if we are not in the middle of a special animation (like "fire").
+	if animation_player.is_playing():
+		return # Let the AnimationPlayer finish its job.
+		
+	if velocity.length() > 0.1:
+		animated_sprite.play("move")
+	else:
+		# Play idle animation, if one exists
+		animated_sprite.play("idle")
+		animated_sprite.stop()
+		animated_sprite.frame = 0
+
 		
 	# Check for collision
 	for i in range(get_slide_collision_count()):
@@ -121,3 +136,15 @@ func _physics_process(delta: float):
 			# This prevents dealing damage every single frame and dropping xp.
 			queue_free()
 			return
+
+
+## Plays a one-shot animation via the AnimationPlayer.
+func play_one_shot_animation(anim_name: String):
+	# The AnimationPlayer will take control, play the animation, and then release control.
+	animation_player.play(anim_name)
+
+## Called when a one-shot animation is finished.
+func _on_animation_finished():
+	# Return control to the physics process logic.
+	# The next frame, the velocity check will take over again.
+	pass

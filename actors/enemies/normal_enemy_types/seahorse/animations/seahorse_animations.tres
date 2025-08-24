@@ -1,0 +1,26 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://5psmt1jj745a"]
+
+[ext_resource type="Texture2D" uid="uid://bw5m3gsfnw0t3" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_0.png" id="1_u2ri2"]
+[ext_resource type="Texture2D" uid="uid://cpieauukemelw" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_1.png" id="2_0urac"]
+[ext_resource type="Texture2D" uid="uid://h4lj3iugf3ao" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_2.png" id="3_1xmv2"]
+[ext_resource type="Texture2D" uid="uid://w1yg8qtarl6e" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_3.png" id="4_588sf"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_u2ri2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_0urac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1xmv2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_588sf")
+}],
+"loop": true,
+"name": &"move",
+"speed": 8.0
+}]

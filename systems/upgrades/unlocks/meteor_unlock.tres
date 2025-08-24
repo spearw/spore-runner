@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://ol07gqdxxoj7"]
+
+[ext_resource type="PackedScene" uid="uid://ncj0fb7g32mn" path="res://items/weapons/meteor/meteor_weapon.tscn" id="1_73sqe"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_hlkge"]
+
+[resource]
+script = ExtResource("1_hlkge")
+id = "meteor_unlock"
+display_name = "Meteor Strike"
+description = "Meteors rain from the sky."
+type = 0
+target_class_name = "meteor_unlock"
+scene_to_unlock = ExtResource("1_73sqe")
+rarity = 0
+property_to_modify = ""
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

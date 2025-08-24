@@ -30,13 +30,12 @@ func find_closest_entity(origin_pos: Vector2, group: String) -> Node2D:
 			closest_enemy = enemy
 			
 	return closest_enemy
-
-## Calculates a fire direction based on the current targeting mode.
+	
+## Finds a target based on the current targeting mode.
 ## @param origin_pos: Vector2 - The position the projectile will fire from.
-## @param fallback_direction: Vector2 - A direction to use if no target is found.
-## @return: Vector2 - The calculated normalized direction vector.
-func get_fire_direction(origin_pos: Vector2, fallback_direction: Vector2, weapon_allegiance: int) -> Vector2:
-	var fire_direction = fallback_direction
+## @param weapon_allegiance - The allegiance of the weapon.
+## @return: target - The found target.
+func find_target(origin_pos: Vector2, weapon_allegiance: int):
 	var target = null
 
 	match targeting_mode:
@@ -50,6 +49,16 @@ func get_fire_direction(origin_pos: Vector2, fallback_direction: Vector2, weapon
 			target = find_closest_entity(origin_pos, target_group)
 		TargetingMode.NONE:
 			pass
+	return target
+
+## Calculates a fire direction based on the current targeting mode.
+## @param origin_pos: Vector2 - The position the projectile will fire from.
+## @param fallback_direction: Vector2 - A direction to use if no target is found.
+## @return: Vector2 - The calculated normalized direction vector.
+func get_fire_direction(origin_pos: Vector2, fallback_direction: Vector2, weapon_allegiance: int) -> Vector2:
+	var fire_direction = fallback_direction
+
+	var target = find_target(origin_pos, weapon_allegiance)
 			
 	if is_instance_valid(target):
 		fire_direction = (target.global_position - origin_pos).normalized()

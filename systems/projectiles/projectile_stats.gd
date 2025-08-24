@@ -12,3 +12,11 @@ extends Resource
 # --- Visuals ---
 @export var texture: Texture2D
 @export var scale: Vector2 = Vector2(1.0, 1.0)
+
+# --- AoE Properties ---
+# If true, this projectile is an area-of-effect explosion, not a moving bullet.
+@export var is_aoe: bool = false
+# The visual effect to play for the explosion animation.
+@export var aoe_effect_sprite: Texture2D
+@export var aoe_effect_scale: Vector2 = Vector2(1.5, 1.5)
+@export var aoe_effect_duration: float = 0.4

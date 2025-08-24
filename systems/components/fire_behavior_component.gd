@@ -7,13 +7,18 @@ extends Node
 enum FirePattern {
 	FORWARD,      # Fires all projectiles in a single targeted direction.
 	SPREAD,       # Fires all projectiles in a cone towards a target.
-	NOVA          # Fires all projectiles in a 360-degree circle (dumbfire).
+	NOVA,         # Fires all projectiles in a 360-degree circle (dumbfire).
+	AIMED_AOE,    # Fires exactly on targeted enemy with small delay
 }
 
 # --- Configurable Properties ---
 @export var pattern: FirePattern = FirePattern.FORWARD
 @export var spread_angle_degrees: float = 30.0 # Only used for SPREAD pattern
 @export var burst_delay: float = 0.08 # Delay between shots in a burst
+
+# Only for AoE attacks
+@export var aoe_warning_scene: PackedScene
+@export var aoe_delay: float = 1.0
 
 # --- References (set at runtime) ---
 var weapon # The parent weapon node
@@ -66,13 +71,37 @@ func fire():
 				# Add burst delay to NOVA for a ripple effect.
 				if i < final_projectile_count - 1 and burst_delay > 0:
 					await get_tree().create_timer(burst_delay).timeout
+					
+		FirePattern.AIMED_AOE:
+			# For AoE, the "projectile count" is how many meteors we drop.
+			for i in range(final_projectile_count):
+				# Get a target position. We can reuse our targeting component!
+				# Find a target, but default to a random position near the owner if none are found.
+				var target_node = targeting_comp.find_target(weapon.global_position, allegiance)
+				var target_position = weapon.global_position + Vector2(randf_range(-150, 150), randf_range(-150, 150))
+				if is_instance_valid(target_node):
+					target_position = target_node.global_position
+
+				# Spawn the warning indicator at the target position.
+				if aoe_warning_scene: 
+					var warning = aoe_warning_scene.instantiate()
+					get_tree().current_scene.add_child(warning)
+					warning.global_position = target_position
+					
+				# Wait for the delay.
+				await get_tree().create_timer(aoe_delay).timeout
+				
+				# Spawn a configured "projectile" that will act as the explosion.
+				_spawn_projectile(projectile_stats, allegiance, Vector2.ZERO, target_position)
 
 ## Helper function to handle the actual creation of a single projectile.
-func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, p_direction: Vector2):
+func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, p_direction: Vector2, p_position: Vector2 = weapon.global_position):
 	var projectile = GENERIC_PROJECTILE_SCENE.instantiate()
 	projectile.stats = p_stats
 	projectile.allegiance = p_allegiance
 	projectile.direction = p_direction
 	projectile.rotation = p_direction.angle()
 	get_tree().current_scene.add_child(projectile)
-	projectile.global_position = weapon.global_position
+	projectile.global_position = p_position # On firing entity, unless AoE attack
+	
+	

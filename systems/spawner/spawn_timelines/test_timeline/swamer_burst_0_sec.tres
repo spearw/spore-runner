@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpawnEvent" load_steps=3 format=3 uid="uid://bmsi31r75i0mq"]
+
+[ext_resource type="Resource" uid="uid://bfvy3wl5xjfc6" path="res://actors/enemies/normal_enemy_types/seahorse/seahorse.tres" id="1_jemmq"]
+[ext_resource type="Script" uid="uid://cafxbvye36ocx" path="res://systems/spawner/spawn_event.gd" id="2_mfvxl"]
+
+[resource]
+script = ExtResource("2_mfvxl")
+time_start = 0
+time_end = 0
+enemy_stats = ExtResource("1_jemmq")
+quantity = 40
+interval = 0.0
+is_burst = true
+metadata/_custom_type_script = "uid://cafxbvye36ocx"

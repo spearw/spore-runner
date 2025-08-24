@@ -9,8 +9,7 @@ extends Resource
 @export var damage: int = 10
 
 # --- Visuals ---
-# The texture the enemy's sprite will use.
-@export var texture: Texture2D
+@export var sprite_frames: SpriteFrames
 # The scale of the sprite.
 @export var scale: Vector2 = Vector2(1.0, 1.0)
 # A color to tint the sprite.

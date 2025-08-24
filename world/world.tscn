@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bdcbnkahhxu6b"]
+[gd_scene load_steps=23 format=3 uid="uid://bdcbnkahhxu6b"]
 
 [ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="2_mad0u"]
@@ -17,14 +17,11 @@
 [ext_resource type="Resource" uid="uid://bvqb5l5r7b4iy" path="res://systems/upgrades/unlocks/tome_of_duplication_unlock.tres" id="13_b2suy"]
 [ext_resource type="Resource" uid="uid://b8y1u7wm4bi06" path="res://systems/upgrades/upgrades/player_speed.tres" id="14_b2suy"]
 [ext_resource type="PackedScene" uid="uid://uaiyj5jeo46l" path="res://systems/spawner/enemy_spawner.tscn" id="15_j34ew"]
+[ext_resource type="Resource" uid="uid://ol07gqdxxoj7" path="res://systems/upgrades/unlocks/meteor_unlock.tres" id="16_llyeo"]
 [ext_resource type="Script" uid="uid://cafxbvye36ocx" path="res://systems/spawner/spawn_event.gd" id="16_p2iis"]
-[ext_resource type="Resource" uid="uid://d2x4f4i25spgm" path="res://systems/spawner/spawn_timelines/test_timeline/brute_2_seconds.tres" id="17_aysyn"]
-[ext_resource type="Resource" uid="uid://cikavm4kwvbk5" path="res://systems/spawner/spawn_timelines/test_timeline/swamer_burst_30_sec.tres" id="18_o1net"]
-[ext_resource type="Resource" uid="uid://2gi3bo0o1klx" path="res://systems/spawner/spawn_timelines/test_timeline/tank_5_seconds.tres" id="19_3ljsx"]
-[ext_resource type="Resource" uid="uid://bvr2bn71y6omq" path="res://systems/spawner/spawn_timelines/test_timeline/swamer_steady_10_seconds.tres" id="20_aysyn"]
 [ext_resource type="PackedScene" uid="uid://cvo8y06lxkaq8" path="res://ui/hud/hud.tscn" id="20_p2iis"]
 [ext_resource type="Texture2D" uid="uid://cnsh16hskpn1v" path="res://ui/textures/texture_01.png" id="21_aysyn"]
-[ext_resource type="Resource" uid="uid://cbk48mj2ynvh8" path="res://systems/spawner/spawn_timelines/test_timeline/shooter_12_seconds.tres" id="21_o1net"]
+[ext_resource type="Resource" uid="uid://bmsi31r75i0mq" path="res://systems/spawner/spawn_timelines/test_timeline/swamer_burst_0_sec.tres" id="26_2tavo"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_ov2xu")
@@ -36,14 +33,14 @@ process_mode = 3
 
 [node name="UpgradeManager" type="Node" parent="."]
 script = ExtResource("6_h8lre")
-upgrade_pool = Array[ExtResource("7_ysn08")]([ExtResource("8_m0cxt"), ExtResource("13_3ljsx"), ExtResource("8_0pnie"), ExtResource("9_llyeo"), ExtResource("10_p2iis"), ExtResource("12_dqqhb"), ExtResource("13_b2suy"), ExtResource("13_2tavo"), ExtResource("14_b2suy"), ExtResource("11_aysyn")])
+upgrade_pool = Array[ExtResource("7_ysn08")]([ExtResource("8_m0cxt"), ExtResource("13_3ljsx"), ExtResource("8_0pnie"), ExtResource("9_llyeo"), ExtResource("10_p2iis"), ExtResource("12_dqqhb"), ExtResource("13_b2suy"), ExtResource("13_2tavo"), ExtResource("14_b2suy"), ExtResource("11_aysyn"), ExtResource("16_llyeo")])
 
 [node name="DevConsole" parent="." instance=ExtResource("12_mad0u")]
 
 [node name="HUD" parent="." instance=ExtResource("20_p2iis")]
 
 [node name="EnemySpawner" parent="." instance=ExtResource("15_j34ew")]
-spawn_timeline = Array[ExtResource("16_p2iis")]([ExtResource("17_aysyn"), ExtResource("18_o1net"), ExtResource("19_3ljsx"), ExtResource("20_aysyn"), ExtResource("21_o1net")])
+spawn_timeline = Array[ExtResource("16_p2iis")]([ExtResource("26_2tavo")])
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -51,7 +48,7 @@ spawn_timeline = Array[ExtResource("16_p2iis")]([ExtResource("17_aysyn"), ExtRes
 motion_mirroring = Vector2(1024, 1024)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-modulate = Color(0, 0.501961, 0, 1)
+modulate = Color(0.140447, 0.140447, 0.140447, 1)
 texture_repeat = 2
 position = Vector2(-2048, -2048)
 texture = ExtResource("21_aysyn")

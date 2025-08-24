@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwn7hj0nsqvok"
-path="res://.godot/imported/swarmer.png-26f97ad557f93929023c56cd662d8c7e.ctex"
+uid="uid://b1wxkc5er4faq"
+path="res://.godot/imported/warning_indicator.png-15deaff1185025ac16e9f6ead3486191.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/enemies/normal_enemy_types/swarmer/swarmer.png"
-dest_files=["res://.godot/imported/swarmer.png-26f97ad557f93929023c56cd662d8c7e.ctex"]
+source_file="res://items/effects/warning_indicator/warning_indicator.png"
+dest_files=["res://.godot/imported/warning_indicator.png-15deaff1185025ac16e9f6ead3486191.ctex"]
 
 [params]
 

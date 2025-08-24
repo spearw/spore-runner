@@ -44,6 +44,9 @@ func _on_firerate_timer_timeout():
 	var host = get_parent()
 	if not is_instance_valid(host): return
 	
+	# Play fire animation, if it has one
+	if host.has_method("play_one_shot_animation"):
+		host.play_one_shot_animation("fire")
 	# Tell the host to fire whatever weapons it has.
 	if host.has_method("fire_weapons"):
 		host.fire_weapons()

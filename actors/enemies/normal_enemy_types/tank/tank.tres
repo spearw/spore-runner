@@ -1,18 +1,19 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://b7o4xc2lowkku"]
 
-[ext_resource type="Resource" uid="uid://c7ttwmrsaxqss" path="res://items/pickups/experience_gem/types/medium_gem.tres" id="1_bu884"]
-[ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/chase/chase_behavior.tscn" id="1_g6tvs"]
-[ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="2_eohnr"]
-[ext_resource type="Texture2D" uid="uid://crmv6juqfeplt" path="res://actors/enemies/normal_enemy_types/tank/tank.png" id="3_bu884"]
+[ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/chase/chase_behavior.tscn" id="1_7p43x"]
+[ext_resource type="Resource" uid="uid://c7ttwmrsaxqss" path="res://items/pickups/experience_gem/types/medium_gem.tres" id="2_bjtra"]
+[ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_x0di6"]
+[ext_resource type="Texture2D" uid="uid://crmv6juqfeplt" path="res://actors/enemies/normal_enemy_types/tank/tank.png" id="4_gtb4c"]
 
 [resource]
-script = ExtResource("2_eohnr")
+script = ExtResource("3_x0di6")
 max_health = 60
 speed = 60.0
 damage = 30
-texture = ExtResource("3_bu884")
-scale = Vector2(1, 1)
+texture = ExtResource("4_gtb4c")
+scale = Vector2(2, 2)
 modulate = Color(1, 1, 1, 1)
-behavior_scene = ExtResource("1_g6tvs")
-experience_gem_stats = ExtResource("1_bu884")
+behavior_scene = ExtResource("1_7p43x")
+weapon_scenes = Array[PackedScene]([])
+experience_gem_stats = ExtResource("2_bjtra")
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

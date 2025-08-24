@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=3 format=3 uid="uid://cv01kpc2dum5p"]
+
+[ext_resource type="Script" uid="uid://dm4u2phuyptno" path="res://systems/projectiles/projectile_stats.gd" id="1_krwfq"]
+[ext_resource type="Texture2D" uid="uid://bg7j501dilws7" path="res://items/weapons/meteor/explosion.png" id="3_oymcm"]
+
+[resource]
+script = ExtResource("1_krwfq")
+damage = 50
+speed = -1.0
+lifetime = 0.1
+texture = ExtResource("3_oymcm")
+scale = Vector2(1, 1)
+is_aoe = true
+aoe_effect_sprite = ExtResource("3_oymcm")
+aoe_effect_scale = Vector2(1.5, 1.5)
+aoe_effect_duration = 0.4
+metadata/_custom_type_script = "uid://dm4u2phuyptno"
