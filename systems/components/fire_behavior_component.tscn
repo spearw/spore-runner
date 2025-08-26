@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5vl748oixb2p"]
+
+[ext_resource type="Script" uid="uid://dv28jcxv7jbak" path="res://systems/components/fire_behavior_component.gd" id="1_ate7f"]
+
+[node name="FireBehaviorComponent" type="Node"]
+script = ExtResource("1_ate7f")
+spread_angle_degrees = 10.0
+metadata/_custom_type_script = "uid://dv28jcxv7jbak"
+
+[node name="AoeDelayTimer" type="Timer" parent="."]
+process_mode = 1
+process_callback = 0
+one_shot = true
+
+[node name="BurstDelayTimer" type="Timer" parent="."]
+wait_time = 0.5

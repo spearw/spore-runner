@@ -14,11 +14,16 @@ signal health_changed(current_health, max_health)
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var health_bar: TextureProgressBar = $TextureProgressBar
+@onready var visibility_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+
 
 # --- Runtime Variables ---
 var current_health: int
 var player_node: Node2D
 var behavior: EnemyBehavior = null
+var is_on_screen: bool = false
+
+
 
 func _ready() -> void:
 	player_node = get_tree().get_first_node_in_group("player")
@@ -45,6 +50,9 @@ func _ready() -> void:
 			
 			equipment_node.add_child(new_weapon)
 
+	# After all equipment is ready, initialize the behavior component.
+	if is_instance_valid(behavior) and behavior.has_method("initialize_behavior"):
+		behavior.initialize_behavior(self)
 		
 	# Apply stats from the resource.
 	current_health = stats.max_health
@@ -58,6 +66,10 @@ func _ready() -> void:
 	health_changed.connect(update_health_bar)
 	update_health_bar(current_health, stats.max_health)
 	health_bar.visible = false
+	
+	# Detect whether enemy is on screen
+	visibility_notifier.screen_entered.connect(_on_screen_entered)
+	visibility_notifier.screen_exited.connect(_on_screen_exited)
 	
 ## Tells all equipped weapons to fire once.
 func fire_weapons():
@@ -167,3 +179,9 @@ func _on_animation_finished():
 	# Return control to the physics process logic.
 	# The next frame, the velocity check will take over again.
 	pass
+	
+func _on_screen_entered():
+	is_on_screen = true
+
+func _on_screen_exited():
+	is_on_screen = false

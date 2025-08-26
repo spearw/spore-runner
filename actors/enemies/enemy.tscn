@@ -14,18 +14,6 @@ load_path = "res://.godot/imported/health_bar_texture.png-aaad8e65b491f39a131c7d
 
 [sub_resource type="Animation" id="Animation_smojp"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"update": 1,
-"values": []
-}
 
 [sub_resource type="Animation" id="Animation_i3vid"]
 resource_name = "fire"
@@ -89,8 +77,12 @@ tint_progress = Color(1.1407e-05, 0.897686, 7.70092e-07, 1)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("4_smojp")
+animation = &"fire"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_dluy2")
 }
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-5, -5, 10, 10)

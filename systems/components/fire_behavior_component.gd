@@ -19,6 +19,7 @@ enum FirePattern {
 # Only for AoE attacks
 @export var aoe_warning_scene: PackedScene
 @export var aoe_delay: float = 1.0
+@onready var aoe_delay_timer: Timer = $AoeDelayTimer
 
 # --- References (set at runtime) ---
 var weapon # The parent weapon node
@@ -79,20 +80,11 @@ func fire():
 				# Find a target, but default to a random position near the owner if none are found.
 				var target_node = targeting_comp.find_target(weapon.global_position, allegiance)
 				var target_position = weapon.global_position + Vector2(randf_range(-150, 150), randf_range(-150, 150))
+								
 				if is_instance_valid(target_node):
 					target_position = target_node.global_position
-
-				# Spawn the warning indicator at the target position.
-				if aoe_warning_scene: 
-					var warning = aoe_warning_scene.instantiate()
-					get_tree().current_scene.add_child(warning)
-					warning.global_position = target_position
 					
-				# Wait for the delay.
-				await get_tree().create_timer(aoe_delay).timeout
-				
-				# Spawn a configured "projectile" that will act as the explosion.
-				_spawn_projectile(projectile_stats, allegiance, Vector2.ZERO, target_position)
+				_execute_aoe_strike(target_position, projectile_stats, allegiance)
 
 ## Helper function to handle the actual creation of a single projectile.
 func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, p_direction: Vector2, p_position: Vector2 = weapon.global_position):
@@ -104,4 +96,20 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 	get_tree().current_scene.add_child(projectile)
 	projectile.global_position = p_position # On firing entity, unless AoE attack
 	
+## Handles the sequence for a single AoE strike.
+func _execute_aoe_strike(target_pos: Vector2, p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance):
+	# Spawn the warning indicator.
+	if aoe_warning_scene:
+		var warning = aoe_warning_scene.instantiate()
+		get_tree().current_scene.add_child(warning)
+		warning.global_position = target_pos
+		
+	# Configure and start our pause-respecting timer.
+	aoe_delay_timer.wait_time = aoe_delay
+	aoe_delay_timer.start()
 	
+	# Wait for the timer's timeout signal.
+	await aoe_delay_timer.timeout
+	
+	# Spawn the configured "projectile" that will act as the explosion.
+	_spawn_projectile(p_stats, p_allegiance, Vector2.ZERO, target_pos)

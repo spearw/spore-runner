@@ -4,3 +4,4 @@
 
 [node name="TargetingComponent" type="Node"]
 script = ExtResource("1_ghot6")
+metadata/_custom_type_script = "uid://5nf8qiekyyrw"

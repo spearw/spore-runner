@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmsiho67xk03p"]
+
+[ext_resource type="Script" uid="uid://b0g8wtar8xbcn" path="res://items/weapon.gd" id="1_boaog"]
+[ext_resource type="Resource" uid="uid://bm60l0uekjv1o" path="res://items/weapons/shotgun/pellet_stats.tres" id="2_2qlpj"]
+[ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="3_wsq2h"]
+[ext_resource type="PackedScene" uid="uid://bi2e3pkfcknbt" path="res://systems/components/weapon_stats_component.tscn" id="4_bpk0b"]
+[ext_resource type="PackedScene" uid="uid://c5vl748oixb2p" path="res://systems/components/fire_behavior_component.tscn" id="5_gymco"]
+
+[node name="Shotgun" type="Node2D"]
+script = ExtResource("1_boaog")
+projectile_stats = ExtResource("2_2qlpj")
+base_projectile_count = 10
+base_fire_rate = 4.0
+
+[node name="FireRateTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="TargetingComponent" type="Node" parent="."]
+script = ExtResource("3_wsq2h")
+metadata/_custom_type_script = "uid://5nf8qiekyyrw"
+
+[node name="WeaponStatsComponent" parent="." instance=ExtResource("4_bpk0b")]
+
+[node name="FireBehaviorComponent" parent="." instance=ExtResource("5_gymco")]
+pattern = 1
+spread_angle_degrees = 30.0
+burst_delay = 0.0

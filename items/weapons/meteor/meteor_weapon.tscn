@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://b0g8wtar8xbcn" path="res://items/weapon.gd" id="1_7qe2d"]
 [ext_resource type="Resource" uid="uid://cv01kpc2dum5p" path="res://items/weapons/meteor/meteor_projectile_stats.tres" id="2_ly2pg"]
-[ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="3_hddnh"]
+[ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="3_4jrkr"]
 [ext_resource type="PackedScene" uid="uid://bi2e3pkfcknbt" path="res://systems/components/weapon_stats_component.tscn" id="4_bj4c7"]
-[ext_resource type="Script" uid="uid://dv28jcxv7jbak" path="res://systems/components/fire_behavior_component.gd" id="5_44fls"]
+[ext_resource type="PackedScene" uid="uid://c5vl748oixb2p" path="res://systems/components/fire_behavior_component.tscn" id="5_4jrkr"]
 [ext_resource type="PackedScene" uid="uid://ch2xenva56c83" path="res://items/effects/warning_indicator/warning_indicator.tscn" id="6_4jrkr"]
 
 [node name="MeteorWeapon" type="Node2D"]
@@ -17,15 +17,13 @@ base_fire_rate = 10.0
 wait_time = 2.0
 
 [node name="TargetingComponent" type="Node" parent="."]
-script = ExtResource("3_hddnh")
+script = ExtResource("3_4jrkr")
 metadata/_custom_type_script = "uid://5nf8qiekyyrw"
 
 [node name="WeaponStatsComponent" parent="." instance=ExtResource("4_bj4c7")]
 
-[node name="FireBehaviorComponent" type="Node" parent="."]
-script = ExtResource("5_44fls")
+[node name="FireBehaviorComponent" parent="." instance=ExtResource("5_4jrkr")]
 pattern = 3
 spread_angle_degrees = 20.0
 burst_delay = 1.0
 aoe_warning_scene = ExtResource("6_4jrkr")
-metadata/_custom_type_script = "uid://dv28jcxv7jbak"

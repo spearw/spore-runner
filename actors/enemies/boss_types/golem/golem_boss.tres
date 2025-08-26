@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=7 format=3 uid="uid://bxlnbwklstwrq"]
 
-[ext_resource type="PackedScene" uid="uid://np8hsandn71t" path="res://actors/enemies/behaviors/shoot/shoot_behavior.tscn" id="1_hbbmx"]
+[ext_resource type="PackedScene" uid="uid://cxhhjeh136uws" path="res://actors/enemies/behaviors/golem_boss_behavior/golem_boss_behavior.tscn" id="1_hbbmx"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="1_iuged"]
-[ext_resource type="PackedScene" uid="uid://ct1o670bpbrau" path="res://items/weapons/spike_ring/spike_ring_weapon.tscn" id="2_6ncyx"]
+[ext_resource type="PackedScene" uid="uid://ct1o670bpbrau" path="res://systems/components/spike_ring_weapon.tscn" id="2_6ncyx"]
 [ext_resource type="PackedScene" uid="uid://bk15qy83bpykg" path="res://items/pickups/treasure_chest/treasure_chest.tscn" id="2_w786k"]
 [ext_resource type="SpriteFrames" uid="uid://cmef8ul4hl0ha" path="res://actors/enemies/boss_types/golem/golem_boss_animation.tres" id="3_4a7dd"]
 [ext_resource type="PackedScene" uid="uid://ncj0fb7g32mn" path="res://items/weapons/meteor/meteor_weapon.tscn" id="3_w786k"]
