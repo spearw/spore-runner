@@ -8,6 +8,7 @@
 script = ExtResource("1_m6ymp")
 base_move_speed = 180.0
 starting_upgrades = Array[ExtResource("2_c5qfw")]([ExtResource("3_4fc5e")])
-max_health = 60
+max_health = 80
 base_pickup_radius = 120.0
+base_luck = 1.0
 metadata/_custom_type_script = "uid://nwbrj5ockot1"

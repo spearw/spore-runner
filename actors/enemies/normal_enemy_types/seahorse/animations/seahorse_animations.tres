@@ -1,13 +1,15 @@
-[gd_resource type="SpriteFrames" load_steps=9 format=3 uid="uid://5psmt1jj745a"]
+[gd_resource type="SpriteFrames" load_steps=11 format=3 uid="uid://5psmt1jj745a"]
 
-[ext_resource type="Texture2D" uid="uid://bw5m3gsfnw0t3" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_0.png" id="1_fcpv0"]
-[ext_resource type="Texture2D" uid="uid://cpieauukemelw" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_1.png" id="2_4nldj"]
-[ext_resource type="Texture2D" uid="uid://h4lj3iugf3ao" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_2.png" id="3_scn0a"]
-[ext_resource type="Texture2D" uid="uid://w1yg8qtarl6e" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_3.png" id="4_4l4vi"]
 [ext_resource type="Texture2D" uid="uid://dqhj2vme53b7h" path="res://actors/enemies/normal_enemy_types/seahorse/animations/fire/Seahorse_0.png" id="5_ev7dy"]
+[ext_resource type="Texture2D" uid="uid://blskbe6nwkwpg" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse - 1.png" id="5_scn0a"]
+[ext_resource type="Texture2D" uid="uid://cnrk87yjosaek" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse - 2.png" id="6_4l4vi"]
 [ext_resource type="Texture2D" uid="uid://unk10mu1aokn" path="res://actors/enemies/normal_enemy_types/seahorse/animations/fire/Seahorse_1.png" id="6_c0jff"]
 [ext_resource type="Texture2D" uid="uid://qms1m6du5jh6" path="res://actors/enemies/normal_enemy_types/seahorse/animations/fire/Seahorse_2.png" id="7_8d5t1"]
+[ext_resource type="Texture2D" uid="uid://i5dw3gb3fxv4" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse - 3.png" id="7_ev7dy"]
 [ext_resource type="Texture2D" uid="uid://ct0ovwrjkakr6" path="res://actors/enemies/normal_enemy_types/seahorse/animations/fire/Seahorse_3.png" id="8_54rr5"]
+[ext_resource type="Texture2D" uid="uid://d3iq6auldlk2g" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse - 4.png" id="8_c0jff"]
+[ext_resource type="Texture2D" uid="uid://t8d6nj24vocb" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse - 5.png" id="9_8d5t1"]
+[ext_resource type="Texture2D" uid="uid://cv5gj43gt3n65" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse - 6.png" id="10_54rr5"]
 
 [resource]
 animations = [{
@@ -30,16 +32,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_fcpv0")
+"texture": ExtResource("5_scn0a")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_4nldj")
+"texture": ExtResource("6_4l4vi")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_scn0a")
+"texture": ExtResource("7_ev7dy")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_4l4vi")
+"texture": ExtResource("8_c0jff")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_8d5t1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_54rr5")
 }],
 "loop": true,
 "name": &"move",

@@ -15,6 +15,7 @@ enum FirePattern {
 @export var pattern: FirePattern = FirePattern.FORWARD
 @export var spread_angle_degrees: float = 30.0 # Only used for SPREAD pattern
 @export var burst_delay: float = 0.08 # Delay between shots in a burst
+@onready var burst_delay_timer: Timer = $BurstDelayTimer
 
 # Only for AoE attacks
 @export var aoe_warning_scene: PackedScene
@@ -46,32 +47,10 @@ func fire():
 	# --- Main Firing Logic ---
 	match pattern:
 		FirePattern.FORWARD, FirePattern.SPREAD:
-			# Get a single base direction from the targeting component.
-			var base_direction = targeting_comp.get_fire_direction(weapon.global_position, weapon.last_fire_direction, allegiance)
-			
-			for i in range(final_projectile_count):
-				var fire_direction = base_direction
-				if pattern == FirePattern.SPREAD:
-					fire_direction = base_direction.rotated(
-						deg_to_rad(randf_range(-spread_angle_degrees / 2.0, spread_angle_degrees / 2.0))
-					)
-				
-				_spawn_projectile(projectile_stats, allegiance, fire_direction)
-				
-				if i < final_projectile_count - 1 and burst_delay > 0:
-					await get_tree().create_timer(burst_delay).timeout
-					
-			weapon.last_fire_direction = base_direction
-
+			_execute_burst_fire(final_projectile_count, projectile_stats, allegiance, targeting_comp)
 		FirePattern.NOVA:
-			var angle_step = TAU / final_projectile_count
-			for i in range(final_projectile_count):
-				var fire_direction = Vector2.RIGHT.rotated(angle_step * i)
-				_spawn_projectile(projectile_stats, allegiance, fire_direction)
-				
-				# Add burst delay to NOVA for a ripple effect.
-				if i < final_projectile_count - 1 and burst_delay > 0:
-					await get_tree().create_timer(burst_delay).timeout
+			_execute_nova_fire(final_projectile_count, projectile_stats, allegiance)
+
 					
 		FirePattern.AIMED_AOE:
 			# For AoE, the "projectile count" is how many meteors we drop.
@@ -95,6 +74,39 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 	projectile.rotation = p_direction.angle()
 	get_tree().current_scene.add_child(projectile)
 	projectile.global_position = p_position # On firing entity, unless AoE attack
+	
+func _execute_burst_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, targeting_comp: TargetingComponent):
+	# Get a single base direction from the targeting component.
+	var base_direction = targeting_comp.get_fire_direction(weapon.global_position, weapon.last_fire_direction, p_allegiance)
+	
+	for i in range(p_count):
+		var fire_direction = base_direction
+		if pattern == FirePattern.SPREAD:
+			fire_direction = base_direction.rotated(
+				deg_to_rad(randf_range(-spread_angle_degrees / 2.0, spread_angle_degrees / 2.0))
+			)
+		
+		_spawn_projectile(p_stats, p_allegiance, fire_direction)
+		
+		# Delay burst
+		if i < p_count - 1 and burst_delay > 0:
+			burst_delay_timer.wait_time = burst_delay
+			burst_delay_timer.start()
+			await burst_delay_timer.timeout
+			
+	weapon.last_fire_direction = base_direction
+	
+func _execute_nova_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance):
+	var angle_step = TAU / p_count
+	for i in range(p_count):
+		var fire_direction = Vector2.RIGHT.rotated(angle_step * i)
+		_spawn_projectile(p_stats, p_allegiance, fire_direction)
+		
+		# Add burst delay to NOVA for a ripple effect.
+		if i < p_count - 1 and burst_delay > 0:
+			burst_delay_timer.wait_time = burst_delay
+			burst_delay_timer.start()
+			await burst_delay_timer.timeout
 	
 ## Handles the sequence for a single AoE strike.
 func _execute_aoe_strike(target_pos: Vector2, p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance):

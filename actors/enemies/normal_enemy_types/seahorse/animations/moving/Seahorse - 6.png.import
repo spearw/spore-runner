@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://h4lj3iugf3ao"
-path="res://.godot/imported/Seahorse_2.png-99845ef83d90e2750ca358626a09562f.ctex"
+uid="uid://cv5gj43gt3n65"
+path="res://.godot/imported/Seahorse - 6.png-56e17a0ec28994b58a11e50db9c505cf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_2.png"
-dest_files=["res://.godot/imported/Seahorse_2.png-99845ef83d90e2750ca358626a09562f.ctex"]
+source_file="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse - 6.png"
+dest_files=["res://.godot/imported/Seahorse - 6.png-56e17a0ec28994b58a11e50db9c505cf.ctex"]
 
 [params]
 

@@ -30,6 +30,7 @@ func initialize_behavior(host: Node):
 	var equipment = host.get_node_or_null("Equipment")
 	if equipment:
 		spike_ring_weapon = equipment.get_node_or_null("SpikeRingWeapon")
+		spike_ring_weapon.base_projectile_count = 20
 		meteor_slam_weapon = equipment.get_node_or_null("MeteorWeapon")
 
 func process_behavior(delta: float, host: CharacterBody2D) -> void:
@@ -125,7 +126,7 @@ func _execute_spike_nova():
 	if not is_instance_valid(spike_ring_weapon): return
 	
 	var spike_burst_count = 3
-	var delay_between_bursts = 0.4
+	var delay_between_bursts = 1
 	
 	for i in range(spike_burst_count):
 		spike_ring_weapon.fire()
