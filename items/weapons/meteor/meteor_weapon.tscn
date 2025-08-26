@@ -10,8 +10,8 @@
 [node name="MeteorWeapon" type="Node2D"]
 script = ExtResource("1_7qe2d")
 projectile_stats = ExtResource("2_ly2pg")
-base_projectile_count = 4
-base_fire_rate = 0.5
+base_projectile_count = 3
+base_fire_rate = 10.0
 
 [node name="FireRateTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -25,7 +25,7 @@ metadata/_custom_type_script = "uid://5nf8qiekyyrw"
 [node name="FireBehaviorComponent" type="Node" parent="."]
 script = ExtResource("5_44fls")
 pattern = 3
-spread_angle_degrees = 0.0
-burst_delay = 0.8
+spread_angle_degrees = 20.0
+burst_delay = 1.0
 aoe_warning_scene = ExtResource("6_4jrkr")
 metadata/_custom_type_script = "uid://dv28jcxv7jbak"

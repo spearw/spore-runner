@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbkr2wf05npvq"
-path="res://.godot/imported/pixellab-cyberpunk-hacker--cordyceps-ma-1755724850366.png-6333039dcb7e84841ab3fca2e5e6c0af.ctex"
+uid="uid://fprpkisrxd2x"
+path="res://.godot/imported/Sea star try two - 2.png-c81cbb8856fb4888c190cd5f8c9c6701.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/enemies/unused_sprites/pixellab-cyberpunk-hacker--cordyceps-ma-1755724850366.png"
-dest_files=["res://.godot/imported/pixellab-cyberpunk-hacker--cordyceps-ma-1755724850366.png-6333039dcb7e84841ab3fca2e5e6c0af.ctex"]
+source_file="res://actors/enemies/normal_enemy_types/seastar/animations/move/Sea star try two - 2.png"
+dest_files=["res://.godot/imported/Sea star try two - 2.png-c81cbb8856fb4888c190cd5f8c9c6701.ctex"]
 
 [params]
 

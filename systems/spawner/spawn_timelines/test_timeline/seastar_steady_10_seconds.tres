@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SpawnEvent" load_steps=3 format=3 uid="uid://bvr2bn71y6omq"]
 
-[ext_resource type="Resource" uid="uid://bfvy3wl5xjfc6" path="res://actors/enemies/normal_enemy_types/seahorse/seahorse.tres" id="1_oglsk"]
+[ext_resource type="Resource" uid="uid://yleacb2jahp7" path="res://actors/enemies/normal_enemy_types/seastar/seastar.tres" id="1_oglsk"]
 [ext_resource type="Script" uid="uid://cafxbvye36ocx" path="res://systems/spawner/spawn_event.gd" id="2_tfypj"]
 
 [resource]
@@ -10,5 +10,5 @@ time_end = -1
 enemy_stats = ExtResource("1_oglsk")
 quantity = 4
 interval = 10.0
-is_burst = true
+is_burst = false
 metadata/_custom_type_script = "uid://cafxbvye36ocx"

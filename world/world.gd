@@ -60,3 +60,4 @@ func win_game():
 	# We can create a victory screen later.
 	# For now, just pause the tree.
 	get_tree().paused = true
+	

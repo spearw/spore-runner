@@ -5,6 +5,9 @@ extends CanvasLayer
 # An array to hold the upgrade choices currently being displayed.
 var current_upgrades: Array[Dictionary]
 
+# signal to announce when choice has been made
+signal upgrade_chosen
+
 # References to UI elements for easier access.
 @onready var upgrade_manager: Node = get_tree().get_root().get_node("World/UpgradeManager")
 @onready var upgrade_buttons: Array[Button] = [
@@ -24,9 +27,32 @@ func _ready() -> void:
 	for i in range(upgrade_buttons.size()):
 		# .bind(i) passes the index 'i' as an argument to the function.
 		upgrade_buttons[i].pressed.connect(_on_upgrade_button_pressed.bind(i))
+	Events.boss_reward_requested.connect(on_boss_reward_requested)
+	
+## Called by the global 'boss_reward_requested' signal.
+func on_boss_reward_requested():
+	print("UI received boss reward request. Granting free level-ups.")
+	# For now, we'll just show the level up screen 3 times in a row.
+	# A better system might have a dedicated multi-choice UI.
+	# We need to use a loop that waits for the player to choose before showing the next.
+	_show_reward_sequence(3)
+	
 
+## Asynchronously shows the level-up screen multiple times.
+func _show_reward_sequence(count: int):
+	for i in range(count):
+		# Manually trigger the level-up display logic.
+		show_upgrade_screen()
+
+		# Wait for signal that reward was chosen
+		await self.upgrade_chosen
+		await get_tree().process_frame
+	
 ## Called when the player levels up. Fetches and displays upgrade choices.
 func on_player_leveled_up(new_level: int):
+	show_upgrade_screen()
+	
+func show_upgrade_screen():
 	get_tree().paused = true
 	self.show()
 	current_upgrades = upgrade_manager.get_upgrade_choices(3)
@@ -65,6 +91,8 @@ func _on_upgrade_button_pressed(choice_index: int) -> void:
 	# Apply the selected upgrade.
 	upgrade_manager.apply_upgrade(current_upgrades[choice_index])
 	
+	upgrade_chosen.emit()
+		
 	# Hide the UI and unpause the game.
 	self.hide()
 	get_tree().paused = false

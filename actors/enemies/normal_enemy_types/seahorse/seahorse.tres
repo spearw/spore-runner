@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://bfvy3wl5xjfc6"]
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=6 format=3 uid="uid://bfvy3wl5xjfc6"]
 
-[ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/chase/chase_behavior.tscn" id="1_cwy8e"]
+[ext_resource type="PackedScene" uid="uid://np8hsandn71t" path="res://actors/enemies/behaviors/shoot/shoot_behavior.tscn" id="1_cwy8e"]
 [ext_resource type="Resource" uid="uid://mte760o2hl0i" path="res://items/pickups/experience_gem/types/small_gem.tres" id="2_u5mky"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_ikw3o"]
 [ext_resource type="SpriteFrames" uid="uid://5psmt1jj745a" path="res://actors/enemies/normal_enemy_types/seahorse/animations/seahorse_animations.tres" id="4_ai5ug"]
+[ext_resource type="PackedScene" uid="uid://divtus20vmop4" path="res://items/weapons/dagger/daggers_weapon.tscn" id="5_u5mky"]
 
 [resource]
 script = ExtResource("3_ikw3o")
@@ -14,6 +15,6 @@ sprite_frames = ExtResource("4_ai5ug")
 scale = Vector2(1, 1)
 modulate = Color(1, 1, 1, 1)
 behavior_scene = ExtResource("1_cwy8e")
-weapon_scenes = Array[PackedScene]([])
+weapon_scenes = Array[PackedScene]([ExtResource("5_u5mky")])
 experience_gem_stats = ExtResource("2_u5mky")
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

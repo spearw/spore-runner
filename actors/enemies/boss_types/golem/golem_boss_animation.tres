@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://cmef8ul4hl0ha"]
+
+[ext_resource type="Texture2D" uid="uid://bbkr2wf05npvq" path="res://actors/enemies/boss_types/golem/pixellab-cyberpunk-hacker--cordyceps-ma-1755724850366.png" id="1_x0yfw"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_x0yfw")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]

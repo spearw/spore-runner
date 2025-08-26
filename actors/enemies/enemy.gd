@@ -95,7 +95,12 @@ func update_health_bar(current: int, max_val: int):
 ## Handles the enemy's death sequence.
 func die() -> void:
 	# Drop experience
-	if stats.experience_gem_stats:
+		# Check for a special drop first.
+	if stats.special_drop_scene:
+		var special_drop = stats.special_drop_scene.instantiate()
+		get_tree().current_scene.add_child(special_drop)
+		special_drop.global_position = self.global_position
+	elif stats.experience_gem_stats:
 		# Spawn the generic gem scene.
 		var gem_instance = experience_gem_scene.instantiate()
 		gem_instance.stats = stats.experience_gem_stats
@@ -116,9 +121,23 @@ func _physics_process(delta: float):
 		animated_sprite.play("move")
 	else:
 		# Play idle animation, if one exists
-		animated_sprite.play("idle")
-		animated_sprite.stop()
+		# animated_sprite.play("idle")
+		# animated_sprite.stop()
 		animated_sprite.frame = 0
+		
+	if stats.face_movement_direction:
+		# Only rotate if we are actually moving.
+		if velocity.length() > 0.1:
+			# Calculate the angle of the velocity vector and add the offset.
+			# We must convert the degrees offset from our data into radians for the code.
+			var rotation_offset_radians = deg_to_rad(stats.rotation_offset_degrees)
+			animated_sprite.rotation = velocity.angle() + rotation_offset_radians
+	else:
+		if abs(velocity.x) > 0.1:
+			if velocity.x > 0:
+				animated_sprite.flip_h = true
+			else:
+				animated_sprite.flip_h = false
 
 		
 	# Check for collision

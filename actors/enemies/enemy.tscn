@@ -1,15 +1,31 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjpvtmn8ptm1n"]
+[gd_scene load_steps=10 format=3 uid="uid://bjpvtmn8ptm1n"]
 
 [ext_resource type="Script" uid="uid://b4c4seddr04t5" path="res://actors/enemies/enemy.gd" id="1_i3vid"]
 [ext_resource type="PackedScene" uid="uid://bvjckw4le1mr3" path="res://ui/damage_number/damage_number.tscn" id="2_smojp"]
 [ext_resource type="PackedScene" uid="uid://b6g8t0tg7ccfi" path="res://items/pickups/experience_gem/experience_gem.tscn" id="3_smojp"]
+[ext_resource type="SpriteFrames" uid="uid://b07nax6t85adf" path="res://actors/enemies/placeholder_animation_names.tres" id="4_smojp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7k104"]
-radius = 22.0
-height = 50.0
+radius = 12.0
+height = 26.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1bop1"]
 load_path = "res://.godot/imported/health_bar_texture.png-aaad8e65b491f39a131c7da8b4b6cc5e.ctex"
+
+[sub_resource type="Animation" id="Animation_smojp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
 
 [sub_resource type="Animation" id="Animation_i3vid"]
 resource_name = "fire"
@@ -23,33 +39,21 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"default"]
+"values": [&"fire"]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("_on_animation_finished")
+tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"values": []
-}
-
-[sub_resource type="Animation" id="Animation_smojp"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.5),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"default"]
+"values": [{
+"args": [],
+"method": &"_on_animation_finished"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dluy2"]
@@ -84,6 +88,7 @@ tint_progress = Color(1.1407e-05, 0.897686, 7.70092e-07, 1)
 [node name="Equipment" type="Node2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("4_smojp")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

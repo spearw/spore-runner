@@ -1,24 +1,45 @@
-[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://5psmt1jj745a"]
+[gd_resource type="SpriteFrames" load_steps=9 format=3 uid="uid://5psmt1jj745a"]
 
-[ext_resource type="Texture2D" uid="uid://bw5m3gsfnw0t3" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_0.png" id="1_u2ri2"]
-[ext_resource type="Texture2D" uid="uid://cpieauukemelw" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_1.png" id="2_0urac"]
-[ext_resource type="Texture2D" uid="uid://h4lj3iugf3ao" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_2.png" id="3_1xmv2"]
-[ext_resource type="Texture2D" uid="uid://w1yg8qtarl6e" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_3.png" id="4_588sf"]
+[ext_resource type="Texture2D" uid="uid://bw5m3gsfnw0t3" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_0.png" id="1_fcpv0"]
+[ext_resource type="Texture2D" uid="uid://cpieauukemelw" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_1.png" id="2_4nldj"]
+[ext_resource type="Texture2D" uid="uid://h4lj3iugf3ao" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_2.png" id="3_scn0a"]
+[ext_resource type="Texture2D" uid="uid://w1yg8qtarl6e" path="res://actors/enemies/normal_enemy_types/seahorse/animations/moving/Seahorse_3.png" id="4_4l4vi"]
+[ext_resource type="Texture2D" uid="uid://dqhj2vme53b7h" path="res://actors/enemies/normal_enemy_types/seahorse/animations/fire/Seahorse_0.png" id="5_ev7dy"]
+[ext_resource type="Texture2D" uid="uid://unk10mu1aokn" path="res://actors/enemies/normal_enemy_types/seahorse/animations/fire/Seahorse_1.png" id="6_c0jff"]
+[ext_resource type="Texture2D" uid="uid://qms1m6du5jh6" path="res://actors/enemies/normal_enemy_types/seahorse/animations/fire/Seahorse_2.png" id="7_8d5t1"]
+[ext_resource type="Texture2D" uid="uid://ct0ovwrjkakr6" path="res://actors/enemies/normal_enemy_types/seahorse/animations/fire/Seahorse_3.png" id="8_54rr5"]
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_u2ri2")
+"texture": ExtResource("5_ev7dy")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_0urac")
+"texture": ExtResource("6_c0jff")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_1xmv2")
+"texture": ExtResource("7_8d5t1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_588sf")
+"texture": ExtResource("8_54rr5")
+}],
+"loop": false,
+"name": &"fire",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_fcpv0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_4nldj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_scn0a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4l4vi")
 }],
 "loop": true,
 "name": &"move",

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bdcbnkahhxu6b"]
+[gd_scene load_steps=26 format=3 uid="uid://bdcbnkahhxu6b"]
 
 [ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="2_mad0u"]
@@ -21,6 +21,9 @@
 [ext_resource type="Script" uid="uid://cafxbvye36ocx" path="res://systems/spawner/spawn_event.gd" id="16_p2iis"]
 [ext_resource type="PackedScene" uid="uid://cvo8y06lxkaq8" path="res://ui/hud/hud.tscn" id="20_p2iis"]
 [ext_resource type="Texture2D" uid="uid://cnsh16hskpn1v" path="res://ui/textures/texture_01.png" id="21_aysyn"]
+[ext_resource type="Resource" uid="uid://qkf78ip8nkqx" path="res://systems/spawner/spawn_timelines/test_timeline/seastar_burst_0.tres" id="22_3ljsx"]
+[ext_resource type="Resource" uid="uid://bvr2bn71y6omq" path="res://systems/spawner/spawn_timelines/test_timeline/seastar_steady_10_seconds.tres" id="23_gi7ib"]
+[ext_resource type="Resource" uid="uid://bhdphbys06lqo" path="res://systems/spawner/spawn_timelines/test_timeline/0s_golem_boss.tres" id="24_0pnie"]
 [ext_resource type="Resource" uid="uid://bmsi31r75i0mq" path="res://systems/spawner/spawn_timelines/test_timeline/swamer_burst_0_sec.tres" id="26_2tavo"]
 
 [node name="World" type="Node2D"]
@@ -40,7 +43,7 @@ upgrade_pool = Array[ExtResource("7_ysn08")]([ExtResource("8_m0cxt"), ExtResourc
 [node name="HUD" parent="." instance=ExtResource("20_p2iis")]
 
 [node name="EnemySpawner" parent="." instance=ExtResource("15_j34ew")]
-spawn_timeline = Array[ExtResource("16_p2iis")]([ExtResource("26_2tavo")])
+spawn_timeline = Array[ExtResource("16_p2iis")]([ExtResource("26_2tavo"), ExtResource("22_3ljsx"), ExtResource("23_gi7ib"), ExtResource("24_0pnie")])
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

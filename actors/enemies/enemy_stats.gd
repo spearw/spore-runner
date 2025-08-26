@@ -14,6 +14,11 @@ extends Resource
 @export var scale: Vector2 = Vector2(1.0, 1.0)
 # A color to tint the sprite.
 @export var modulate: Color = Color.WHITE
+# If true, the sprite will automatically rotate to face its direction of movement.
+@export var face_movement_direction: bool = false
+# An angle in degrees to correct the sprite's base orientation.
+# (e.g., if the art points 'up', set this to 90 to make it face 'right').
+@export var rotation_offset_degrees: float = 0.0
 @export var behavior_scene: PackedScene
 # The weapon scenes to automatically equip to this enemy on spawn.
 @export var weapon_scenes: Array[PackedScene]
@@ -21,3 +26,5 @@ extends Resource
 # --- Loot ---
 # The stats for the gem this enemy drops.
 @export var experience_gem_stats: ExperienceGemStats
+# An optional, special scene to drop on death (such as boss loot)
+@export var special_drop_scene: PackedScene

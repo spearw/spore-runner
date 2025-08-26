@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("2_mfvxl")
 time_start = 0
-time_end = 0
+time_end = 60
 enemy_stats = ExtResource("1_jemmq")
-quantity = 40
-interval = 0.0
-is_burst = true
+quantity = 1
+interval = 2.0
+is_burst = false
 metadata/_custom_type_script = "uid://cafxbvye36ocx"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpawnEvent" load_steps=3 format=3 uid="uid://qkf78ip8nkqx"]
+
+[ext_resource type="Resource" uid="uid://yleacb2jahp7" path="res://actors/enemies/normal_enemy_types/seastar/seastar.tres" id="1_dphly"]
+[ext_resource type="Script" uid="uid://cafxbvye36ocx" path="res://systems/spawner/spawn_event.gd" id="2_gjlbo"]
+
+[resource]
+script = ExtResource("2_gjlbo")
+time_start = 0
+time_end = 0
+enemy_stats = ExtResource("1_dphly")
+quantity = 10
+interval = 0.0
+is_burst = true
+metadata/_custom_type_script = "uid://cafxbvye36ocx"
