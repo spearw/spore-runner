@@ -8,6 +8,9 @@ var current_upgrades: Array[Dictionary]
 # signal to announce when choice has been made
 signal upgrade_chosen
 
+# Reference to player.
+var player_node: Node2D
+
 # References to UI elements for easier access.
 @onready var upgrade_manager: Node = get_tree().get_root().get_node("World/UpgradeManager")
 @onready var upgrade_buttons: Array[Button] = [
@@ -18,10 +21,6 @@ signal upgrade_chosen
 
 func _ready() -> void:
 	self.hide()
-	# Connect to the player's level up signal.
-	var player = get_tree().get_first_node_in_group("player")
-	if player:
-		player.leveled_up.connect(on_player_leveled_up)
 	
 	# Connect all button presses to a single handler.
 	for i in range(upgrade_buttons.size()):

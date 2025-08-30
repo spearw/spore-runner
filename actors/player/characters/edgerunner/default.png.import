@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgsx70oul5a6v"
-path="res://.godot/imported/spore_witch.png-b9a4373dda33bf2028b170e0ea16be73.ctex"
+uid="uid://02e3ushkwkj5"
+path="res://.godot/imported/default.png-ca4c879527932c32c6530520f09e3a4a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/player/characters/spore_witch/spore_witch.png"
-dest_files=["res://.godot/imported/spore_witch.png-b9a4373dda33bf2028b170e0ea16be73.ctex"]
+source_file="res://actors/player/characters/edgerunner/default.png"
+dest_files=["res://.godot/imported/default.png-ca4c879527932c32c6530520f09e3a4a.ctex"]
 
 [params]
 

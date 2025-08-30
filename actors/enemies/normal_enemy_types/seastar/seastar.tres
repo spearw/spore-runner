@@ -3,14 +3,14 @@
 [ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/chase/chase_behavior.tscn" id="1_j8c56"]
 [ext_resource type="Resource" uid="uid://mte760o2hl0i" path="res://items/pickups/experience_gem/types/small_gem.tres" id="2_oetbc"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_hcl0x"]
-[ext_resource type="SpriteFrames" uid="uid://c2mp61n5ypb8c" path="res://actors/enemies/normal_enemy_types/seastar/animations/seastar_animations.tres" id="4_hpcc2"]
+[ext_resource type="SpriteFrames" uid="uid://dhgqrkxqfy4lg" path="res://actors/enemies/normal_enemy_types/seastar/animations/seastar_animations_2.tres" id="4_j8c56"]
 
 [resource]
 script = ExtResource("3_hcl0x")
 max_health = 8
 speed = 200.0
 damage = 5
-sprite_frames = ExtResource("4_hpcc2")
+sprite_frames = ExtResource("4_j8c56")
 scale = Vector2(1.2, 1.2)
 modulate = Color(1, 1, 1, 1)
 face_movement_direction = true
@@ -18,4 +18,5 @@ rotation_offset_degrees = 20.0
 behavior_scene = ExtResource("1_j8c56")
 weapon_scenes = Array[PackedScene]([])
 experience_gem_stats = ExtResource("2_oetbc")
+soul_drop_chance = 0.05
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

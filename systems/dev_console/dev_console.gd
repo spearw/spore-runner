@@ -1,55 +1,124 @@
 ## dev_console.gd
-## A node that provides developer/debug functionality.
-## This should be removed or disabled in a release build.
+## A global Singleton for handling developer commands.
 extends Node
 
-# Amount of experience to grant with the dev key.
-@export var xp_grant_amount: int = 100
+# --- References ---
+var console_ui_scene = preload("res://systems/dev_console/dev_console_ui.tscn")
+var console_instance: CanvasLayer = null
 
-# A cached reference to the player node.
-var player: Node = null
+# --- Command Registry ---
+# A dictionary where Key = command name, Value = dictionary of command info.
+var commands = {}
 
-## Called when the node enters the scene tree.
-func _ready() -> void:
-	# Wait until the first frame is processed to ensure the player exists.
-	await get_tree().process_frame
+func _ready():
+	_register_command("help", "Lists all available commands.", self, "_execute_help")
+	_register_command("add_souls", "Adds souls. Usage: add_souls [amount]", self, "_execute_add_souls")
+	_register_command("unlock_all", "Unlocks all characters.", self, "_execute_unlock_all")
+	_register_command("kill_all", "Kills all enemies in the current scene.", self, "_execute_kill_all")
+	_register_command("delete_save", "Deletes the save file and reloads the current scene.", self, "_execute_clear_save")
+
+## This function runs constantly because it's a global Singleton.
+func _unhandled_input(event: InputEvent):
+	# Listen for the tilde key to toggle the console.
+	if event.is_action_pressed("ui_toggle_console"): # We'll define this action
+		_toggle_console_visibility()
+
+# --- Command Execution ---
+
+## Adds a command to our registry.
+func _register_command(name: String, description: String, target: Object, method_name: String):
+	commands[name.to_lower()] = {
+		"description": description,
+		"target": target,
+		"method_name": method_name 
+	}
+
+## Parses and executes a command string from the user.
+func _execute_command(command_string: String):
+	if command_string.is_empty(): return
 	
-	# Find the player node once and store the reference.
-	player = get_tree().get_first_node_in_group("player")
+	var parts = command_string.split(" ", false)
+	var command_name = parts[0].to_lower()
+	var args = parts.slice(1)
+	
+	if command_name in commands:
+		var command_info = commands[command_name]
+		var target = command_info["target"]
+		var method_name = command_info["method_name"] 
+		
+		# Call the method by its string name, and pass the 'args' array as a single argument.
+		target.call(method_name, args)
+	else:
+		_log_to_console("Error: Command not found: '%s'" % command_name)
 
-## Called every frame. Used here to check for unhandled input events.
-## The '_unhandled_input' function is a special Godot function that receives
-## input events that have not been consumed by the UI or other nodes.
-## This is the ideal place for global, non-player-specific key presses.
-func _unhandled_input(event: InputEvent) -> void:
-	# Guard clause: Do nothing if the player reference is not valid.
-	if not is_instance_valid(player):
+# --- UI Management ---
+
+func _toggle_console_visibility():
+	if not console_instance is CanvasLayer:
+		# Create the UI instance for the first time.
+		console_instance = console_ui_scene.instantiate()
+		get_tree().get_root().add_child(console_instance)
+		# Connect the signal from the LineEdit.
+		console_instance.get_node("ColorRect/MarginContainer/VBoxContainer/InputLine").text_submitted.connect(_on_input_line_submitted)
+	
+	console_instance.visible = not console_instance.visible
+	if console_instance.visible:
+		console_instance.get_node("ColorRect/MarginContainer/VBoxContainer/InputLine").grab_focus()
+
+func _log_to_console(text: String):
+	if console_instance is CanvasLayer:
+		var log = console_instance.get_node("ColorRect/MarginContainer/VBoxContainer/ScrollContainer/OutputLog")
+		log.text = log.text + text + "\n"
+		# Give the engine one frame to process the new text and update the scrollbar's max value.
+		await get_tree().process_frame
+		# Now, set the scrollbar's value to its maximum to scroll to the bottom.
+		var scroll_container = log.get_parent()
+		scroll_container.get_v_scroll_bar().value = scroll_container.get_v_scroll_bar().max_value
+
+func _on_input_line_submitted(text: String):
+	_log_to_console("> " + text) # Echo the command
+	_execute_command(text)
+	var input_line = console_instance.get_node("ColorRect/MarginContainer/VBoxContainer/InputLine")
+	input_line.clear()
+	input_line.grab_focus()
+
+# --- Command Implementations ---
+# These are the actual functions that do the work.
+
+func _execute_help(_args: Array):
+	_log_to_console("Available Commands:")
+	for command_name in commands:
+		_log_to_console("- %s: %s" % [command_name, commands[command_name]["description"]])
+
+func _execute_add_souls(args: Array):
+	if args.is_empty():
+		_log_to_console("Usage: add_souls [amount]")
 		return
+	var amount = args[0].to_int()
+	GameData.add_souls(amount)
+	_log_to_console("Added %d souls." % amount)
 
-	# Check if the "dev_add_xp" action was just pressed.
-	if event.is_action_pressed("dev_add_xp"):
-		print("DEV: Granting %s XP." % xp_grant_amount)
-		player.add_experience(xp_grant_amount)
-		# Mark the event as handled so other nodes don't process it.
-		get_viewport().set_input_as_handled()
+func _execute_unlock_all(_args: Array):
+	var character_list = load("res://actors/player/characters/master_character_list.tres") # Load the master list
+	for char_data in character_list.characters:
+		GameData.unlock_character(char_data.resource_path)
+	_log_to_console("All characters unlocked. Changes will appear on the next character screen visit.")
 
-	# Check if the "dev_force_levelup" action was just pressed.
-	if event.is_action_pressed("dev_force_levelup"):
-		print("DEV: Forcing level up.")
-		# We can cheat by giving the player exactly enough XP to level up.
-		var xp_needed = player.experience_to_next_level - player.current_experience
-		player.add_experience(xp_needed)
-		get_viewport().set_input_as_handled()
-		
-	if event.is_action_pressed("dev_kill_all"):
-		print("DEV: Killing all enemies.")
-		# Get an array of all nodes currently in the "enemies" group.
-		var all_enemies = get_tree().get_nodes_in_group("enemies")
-		
-		# Loop through the array and call the die() method on each one.
-		for enemy in all_enemies:
-			# Check if the enemy is valid and has the die method before calling.
-			if is_instance_valid(enemy) and enemy.has_method("die"):
-				enemy.die()
-				
-		get_viewport().set_input_as_handled()
+func _execute_kill_all(_args: Array):
+	var all_enemies = get_tree().get_nodes_in_group("enemies")
+	if all_enemies.is_empty():
+		_log_to_console("No enemies to kill.")
+		return
+	for enemy in all_enemies:
+		if is_instance_valid(enemy) and enemy.has_method("die"):
+			enemy.die()
+	_log_to_console("Killed %d enemies." % all_enemies.size())
+
+func _execute_clear_save(_args: Array):
+	_log_to_console("Deleting save file...")
+	GameData.clear_save_file()
+	_log_to_console("Reloading scene to apply changes...")
+	# Reloading the scene is the best way to see the "fresh start" immediately.
+	# We wait a very short moment to ensure the log message appears before the reload happens.
+	await get_tree().create_timer(0.1).timeout
+	get_tree().reload_current_scene()

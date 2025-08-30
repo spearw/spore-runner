@@ -28,3 +28,4 @@ extends Resource
 @export var experience_gem_stats: ExperienceGemStats
 # An optional, special scene to drop on death (such as boss loot)
 @export var special_drop_scene: PackedScene
+@export_range(0.0, 1.0) var soul_drop_chance: float = 0.05

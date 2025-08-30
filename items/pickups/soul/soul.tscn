@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvd6w0bq2fi03"]
+
+[ext_resource type="Texture2D" uid="uid://bhpcl1hiy4ksm" path="res://items/pickups/soul/pixellab-small-glowing-soul-shard-1756256665166.png" id="1_7iwn2"]
+[ext_resource type="Script" uid="uid://dvc4u0v2yghtm" path="res://items/pickups/soul/soul.gd" id="1_nq8dp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7iwn2"]
+height = 48.0
+
+[node name="Soul" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+collision_layer = 8
+script = ExtResource("1_nq8dp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7iwn2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_7iwn2")

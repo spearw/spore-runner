@@ -11,13 +11,16 @@ config_version=5
 [application]
 
 config/name="Spore Runner"
-run/main_scene="uid://bdcbnkahhxu6b"
+run/main_scene="uid://d1dg35wer2lxb"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Events="*res://systems/global/events.gd"
+GameData="*res://systems/global/game_data.gd"
+DevConsole="*res://systems/dev_console/dev_console.gd"
+CurrentRun="*res://systems/global/current_run.gd"
 
 [display]
 
@@ -64,6 +67,11 @@ dev_force_levelup={
 dev_kill_all={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":75,"key_label":0,"unicode":107,"location":0,"echo":false,"script":null)
+]
+}
+ui_toggle_console={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":96,"key_label":0,"unicode":96,"location":0,"echo":false,"script":null)
 ]
 }
 

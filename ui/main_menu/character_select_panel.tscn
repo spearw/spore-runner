@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://7rvo0dymjiq3"]
+
+[ext_resource type="Script" uid="uid://dojlwwgiwn6o6" path="res://ui/main_menu/character_select_panel.gd" id="1_vs8pe"]
+[ext_resource type="Resource" uid="uid://po5h8natv6il" path="res://actors/player/characters/master_character_list.tres" id="2_hv0rl"]
+[ext_resource type="PackedScene" uid="uid://0rkl7hhg0sdp" path="res://ui/main_menu/character_button.tscn" id="4_i4rnc"]
+
+[node name="CharacterSelectPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vs8pe")
+character_list = ExtResource("2_hv0rl")
+character_button_scene = ExtResource("4_i4rnc")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -131.5
+offset_top = -42.5
+offset_right = 131.5
+offset_bottom = 46.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="SelectAndStartButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Select Character and Start
+"
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/SelectAndStartButton" to="." method="_on_select_and_start_button_pressed"]

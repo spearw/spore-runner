@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dulw5xigdffvi"]
+[gd_scene load_steps=5 format=3 uid="uid://dulw5xigdffvi"]
 
 [ext_resource type="Script" uid="uid://dg0ibawosy3ih" path="res://actors/player/player.gd" id="1_onrkg"]
-[ext_resource type="Resource" uid="uid://berxcvx2dhox3" path="res://actors/player/characters/default/default_player_stats.tres" id="2_sweqy"]
-[ext_resource type="Texture2D" uid="uid://bm5mppgqw3k6b" path="res://actors/player/characters/default/cyberpunk-swordswoman.png" id="3_ax26v"]
+[ext_resource type="Resource" uid="uid://berxcvx2dhox3" path="res://actors/player/characters/edgerunner/edgerunner_character.tres" id="2_sweqy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_onrkg"]
 radius = 16.0
@@ -14,8 +13,7 @@ height = 60.0
 script = ExtResource("1_onrkg")
 stats = ExtResource("2_sweqy")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_ax26v")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_onrkg")

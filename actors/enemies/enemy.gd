@@ -8,6 +8,7 @@ signal health_changed(current_health, max_health)
 @export var stats: EnemyStats
 @export var damage_number_scene: PackedScene
 @export var experience_gem_scene: PackedScene
+@export var soul_scene: PackedScene
 
 # --- Node References ---
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -106,18 +107,24 @@ func update_health_bar(current: int, max_val: int):
 
 ## Handles the enemy's death sequence.
 func die() -> void:
-	# Drop experience
-		# Check for a special drop first.
+	# Drop loot
 	if stats.special_drop_scene:
 		var special_drop = stats.special_drop_scene.instantiate()
 		get_tree().current_scene.add_child(special_drop)
 		special_drop.global_position = self.global_position
-	elif stats.experience_gem_stats:
+	# Drop XP gems
+	if stats.experience_gem_stats:
 		# Spawn the generic gem scene.
 		var gem_instance = experience_gem_scene.instantiate()
 		gem_instance.stats = stats.experience_gem_stats
 		get_tree().current_scene.add_child(gem_instance)
 		gem_instance.global_position = self.global_position
+	# Drop soul
+	if randf() < stats.soul_drop_chance:
+		if soul_scene:
+			var soul_instance = soul_scene.instantiate()
+			get_tree().current_scene.add_child(soul_instance)
+			soul_instance.global_position = self.global_position
 	queue_free()
 
 

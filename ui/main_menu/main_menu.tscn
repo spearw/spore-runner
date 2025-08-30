@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1dg35wer2lxb"]
+
+[ext_resource type="Script" uid="uid://cseb2o7bc5spi" path="res://ui/main_menu/main_menu.gd" id="1_uhj5c"]
+[ext_resource type="Script" uid="uid://lh323ejqh8v0" path="res://systems/metaprogression/meta_upgrade.gd" id="2_i5wg5"]
+[ext_resource type="PackedScene" uid="uid://djk8bwt6fg0ae" path="res://ui/main_menu/meta_upgrade_button.tscn" id="2_mu8pm"]
+[ext_resource type="Resource" uid="uid://cyxkh7fkxypuq" path="res://systems/metaprogression/upgrades/meta_move_speed.tres" id="3_3c04x"]
+[ext_resource type="PackedScene" uid="uid://7rvo0dymjiq3" path="res://ui/main_menu/character_select_panel.tscn" id="5_3c04x"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uhj5c")
+meta_upgrades = Array[ExtResource("2_i5wg5")]([ExtResource("3_3c04x")])
+upgrade_button_scene = ExtResource("2_mu8pm")
+
+[node name="MainMenuButtons" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 187.0
+offset_right = 1054.0
+offset_bottom = 288.0
+
+[node name="StartRunButton" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+text = "Start Run"
+
+[node name="MetaShopButton" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+text = "Open Shop"
+
+[node name="QuitButton" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+text = "Quit"
+
+[node name="MetaShopPanel" type="PanelContainer" parent="."]
+layout_mode = 2
+offset_left = 615.0
+offset_top = 305.0
+offset_right = 1275.0
+offset_bottom = 894.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MetaShopPanel"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MetaShopPanel/VBoxContainer"]
+layout_mode = 2
+text = "Shop"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SoulsCount" type="Label" parent="MetaShopPanel/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MetaShopPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="MetaShopPanel/VBoxContainer"]
+layout_mode = 2
+text = "Back
+"
+
+[node name="CharacterSelectPanel" parent="." instance=ExtResource("5_3c04x")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="MainMenuButtons/StartRunButton" to="." method="_on_start_run_button_pressed"]
+[connection signal="pressed" from="MainMenuButtons/MetaShopButton" to="." method="_on_meta_shop_button_pressed"]
+[connection signal="pressed" from="MainMenuButtons/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MetaShopPanel/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

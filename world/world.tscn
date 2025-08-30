@@ -1,9 +1,9 @@
-[gd_scene load_steps=26 format=3 uid="uid://bdcbnkahhxu6b"]
+[gd_scene load_steps=25 format=3 uid="uid://bdcbnkahhxu6b"]
 
 [ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="2_mad0u"]
 [ext_resource type="PackedScene" uid="uid://dulw5xigdffvi" path="res://actors/player/player.tscn" id="3_ocfjn"]
-[ext_resource type="Script" uid="uid://cdevlwpbk7w8g" path="res://systems/upgrade_manager.gd" id="6_h8lre"]
+[ext_resource type="Script" uid="uid://cdevlwpbk7w8g" path="res://systems/upgrades/upgrade_manager.gd" id="6_h8lre"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="7_ysn08"]
 [ext_resource type="Resource" uid="uid://ei4vnjeiqilo" path="res://systems/upgrades/unlocks/player_speed.tres" id="8_0pnie"]
 [ext_resource type="Resource" uid="uid://deynodmipwbdh" path="res://systems/upgrades/unlocks/daggers_unlock.tres" id="8_m0cxt"]
@@ -11,7 +11,6 @@
 [ext_resource type="Resource" uid="uid://c64jci32lqc3" path="res://systems/upgrades/unlocks/spike_ring_unlock.tres" id="10_p2iis"]
 [ext_resource type="Resource" uid="uid://cg64e0ifhkfb7" path="res://systems/upgrades/upgrades/spike_ring_count.tres" id="11_aysyn"]
 [ext_resource type="Resource" uid="uid://bib5t3cy8av85" path="res://systems/upgrades/unlocks/swift_bracer_unlock.tres" id="12_dqqhb"]
-[ext_resource type="PackedScene" uid="uid://cbw5xw2x3ghy3" path="res://systems/dev_console/dev_console.tscn" id="12_mad0u"]
 [ext_resource type="Resource" uid="uid://imgvcskg7a5r" path="res://systems/upgrades/upgrades/daggers_damage.tres" id="13_2tavo"]
 [ext_resource type="Resource" uid="uid://of54uih30ise" path="res://systems/upgrades/unlocks/fireball_staff_unlock.tres" id="13_3ljsx"]
 [ext_resource type="Resource" uid="uid://bvqb5l5r7b4iy" path="res://systems/upgrades/unlocks/tome_of_duplication_unlock.tres" id="13_b2suy"]
@@ -28,17 +27,14 @@
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_ov2xu")
+player_scene = ExtResource("3_ocfjn")
 
 [node name="LevelUpUI" parent="." instance=ExtResource("2_mad0u")]
 process_mode = 3
 
-[node name="Player" parent="." instance=ExtResource("3_ocfjn")]
-
 [node name="UpgradeManager" type="Node" parent="."]
 script = ExtResource("6_h8lre")
 upgrade_pool = Array[ExtResource("7_ysn08")]([ExtResource("8_m0cxt"), ExtResource("13_3ljsx"), ExtResource("8_0pnie"), ExtResource("9_llyeo"), ExtResource("10_p2iis"), ExtResource("12_dqqhb"), ExtResource("13_b2suy"), ExtResource("13_2tavo"), ExtResource("14_b2suy"), ExtResource("11_aysyn"), ExtResource("16_llyeo")])
-
-[node name="DevConsole" parent="." instance=ExtResource("12_mad0u")]
 
 [node name="HUD" parent="." instance=ExtResource("20_p2iis")]
 

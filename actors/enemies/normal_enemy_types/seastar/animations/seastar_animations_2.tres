@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://dhgqrkxqfy4lg"]
+
+[ext_resource type="Texture2D" uid="uid://cj2nnxb25ub8" path="res://actors/enemies/normal_enemy_types/seastar/animations/move/Sea star try two - 1.png" id="1_ir3ml"]
+[ext_resource type="Texture2D" uid="uid://fprpkisrxd2x" path="res://actors/enemies/normal_enemy_types/seastar/animations/move/Sea star try two - 2.png" id="2_vhx7g"]
+[ext_resource type="Texture2D" uid="uid://d08u1om8c72pj" path="res://actors/enemies/normal_enemy_types/seastar/animations/move/Sea star try two - 3.png" id="3_66aiw"]
+[ext_resource type="Texture2D" uid="uid://dei075kf1p37" path="res://actors/enemies/normal_enemy_types/seastar/animations/move/Sea star try two - 4.png" id="4_bwy1n"]
+[ext_resource type="Texture2D" uid="uid://6sq7y20baaod" path="res://actors/enemies/normal_enemy_types/seastar/animations/move/Sea star try two - 5.png" id="5_t0574"]
+[ext_resource type="Texture2D" uid="uid://b7yfd03gdpu5s" path="res://actors/enemies/normal_enemy_types/seastar/animations/move/Sea star try two - 6.png" id="6_aveby"]
+[ext_resource type="Texture2D" uid="uid://djb142x56p8wf" path="res://actors/enemies/normal_enemy_types/seastar/animations/move/Sea star try two - 7.png" id="7_2kf1e"]
+[ext_resource type="Texture2D" uid="uid://bxvtxmiurx7jq" path="res://actors/enemies/normal_enemy_types/seastar/animations/move/Sea star try two - 8.png" id="8_kabm6"]
+[ext_resource type="Texture2D" uid="uid://d3iv0e8bsyiqb" path="res://actors/enemies/normal_enemy_types/seastar/animations/move/Sea star try two - 9.png" id="9_7xsp2"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("9_7xsp2")
+}, {
+"duration": 0.5,
+"texture": ExtResource("8_kabm6")
+}, {
+"duration": 0.5,
+"texture": ExtResource("7_2kf1e")
+}, {
+"duration": 0.5,
+"texture": ExtResource("6_aveby")
+}, {
+"duration": 0.5,
+"texture": ExtResource("5_t0574")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_bwy1n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_66aiw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vhx7g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_ir3ml")
+}],
+"loop": true,
+"name": &"move",
+"speed": 8.0
+}]

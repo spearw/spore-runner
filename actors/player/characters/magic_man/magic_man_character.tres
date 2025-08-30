@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=6 format=3 uid="uid://b5yscp3npggn5"]
+
+[ext_resource type="SpriteFrames" uid="uid://nbeutjhl0hto" path="res://actors/player/characters/magic_man/magic_man_animation.tres" id="1_dou2t"]
+[ext_resource type="Script" uid="uid://nwbrj5ockot1" path="res://actors/player/character_data.gd" id="2_lqmeo"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="3_vnxkr"]
+[ext_resource type="Resource" uid="uid://ol07gqdxxoj7" path="res://systems/upgrades/unlocks/meteor_unlock.tres" id="4_28ul7"]
+[ext_resource type="Resource" uid="uid://of54uih30ise" path="res://systems/upgrades/unlocks/fireball_staff_unlock.tres" id="5_lqmeo"]
+
+[resource]
+script = ExtResource("2_lqmeo")
+character_name = "Magic Man"
+character_description = "He's magical."
+character_sprite_frames = ExtResource("1_dou2t")
+base_move_speed = 175.0
+base_max_health = 100
+base_pickup_radius = 150.0
+base_luck = 3.0
+base_firerate_modifier = 0.8
+base_projectile_bonus = 0
+starting_upgrades = Array[ExtResource("3_vnxkr")]([ExtResource("4_28ul7"), ExtResource("5_lqmeo")])
+metadata/_custom_type_script = "uid://nwbrj5ockot1"

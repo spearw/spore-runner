@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=5 format=3 uid="uid://berxcvx2dhox3"]
+
+[ext_resource type="SpriteFrames" uid="uid://dpd2rd3gsogan" path="res://actors/player/characters/edgerunner/edgerunner_animations.tres" id="1_f1v6m"]
+[ext_resource type="Script" uid="uid://nwbrj5ockot1" path="res://actors/player/character_data.gd" id="1_ph724"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_f1v6m"]
+[ext_resource type="Resource" uid="uid://deynodmipwbdh" path="res://systems/upgrades/unlocks/daggers_unlock.tres" id="3_blbt3"]
+
+[resource]
+script = ExtResource("1_ph724")
+character_name = "Edgerunner"
+character_description = "A fast edgerunner that throws daggers at her enemies"
+character_sprite_frames = ExtResource("1_f1v6m")
+base_move_speed = 200.0
+base_max_health = 80
+base_pickup_radius = 100.0
+base_luck = 1.0
+base_firerate_modifier = 1.0
+base_projectile_bonus = 0
+starting_upgrades = Array[ExtResource("2_f1v6m")]([ExtResource("3_blbt3")])
+metadata/_custom_type_script = "uid://nwbrj5ockot1"

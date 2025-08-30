@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://02e3ushkwkj5"
-path="res://.godot/imported/default.png-1fefeb00cd8d946dad9d761cca21ae28.ctex"
+uid="uid://bm5mppgqw3k6b"
+path="res://.godot/imported/cyberpunk-swordswoman.png-832b2138adaece269b62bbf0bb8bb0fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/player/characters/default/default.png"
-dest_files=["res://.godot/imported/default.png-1fefeb00cd8d946dad9d761cca21ae28.ctex"]
+source_file="res://actors/player/characters/edgerunner/cyberpunk-swordswoman.png"
+dest_files=["res://.godot/imported/cyberpunk-swordswoman.png-832b2138adaece269b62bbf0bb8bb0fa.ctex"]
 
 [params]
 

@@ -25,8 +25,6 @@ func _ready():
 		printerr("EnemySpawner not configured. Disabling.")
 		set_physics_process(false)
 		return
-	
-	player_node = get_tree().get_first_node_in_group("player")
 	# Init randomizer
 	rng.randomize()
 	

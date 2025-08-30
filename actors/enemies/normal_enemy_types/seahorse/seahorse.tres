@@ -19,4 +19,5 @@ rotation_offset_degrees = 0.0
 behavior_scene = ExtResource("1_cwy8e")
 weapon_scenes = Array[PackedScene]([ExtResource("5_u5mky")])
 experience_gem_stats = ExtResource("2_u5mky")
+soul_drop_chance = 0.05
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

@@ -3,20 +3,44 @@
 extends Node2D
 
 # The time in seconds the player must survive to win.
-@export var survival_goal_seconds: float = 120.0 
-
+@export var survival_goal_seconds: float = 300.0 
 var game_time: float = 0.0
 var is_game_over: bool = false
 
-@onready var player: CharacterBody2D = $Player
+# Player references
+@export var player_scene: PackedScene
+@onready var player: CharacterBody2D = null
+
+# Game references.
+@onready var upgrade_manager: Node = $UpgradeManager
+@onready var spawner: Node = $EnemySpawner
+@onready var level_up_ui: CanvasLayer = $LevelUpUI
+
+# Hud
 @onready var hud: CanvasLayer = $HUD
 
 ## Called once when the node enters the scene tree.
 func _ready() -> void:
-	# Check if the player instance is valid before connecting.
-	if is_instance_valid(player):
-		# Connect to the player's 'died' signal.
+	# Check if a character was selected for the current run.
+	if CurrentRun.selected_character:
+		# Instance our generic player scene.
+		player = player_scene.instantiate()
+		# Add player to scene tree
+		add_child(player)
+		# Init spawner.
+		spawner.player_node = player
+		# Init level up logic.
+		level_up_ui.player_node = player
+		level_up_ui.player_node.leveled_up.connect(level_up_ui.on_player_leveled_up)
+		# Init stats.
+		player.initialize_character(CurrentRun.selected_character, upgrade_manager)
+		
 		player.died.connect(_on_player_died)
+	else:
+		# Failsafe in case we somehow get here without selecting a character.
+		printerr("World: No character selected in CurrentRun! Returning to main menu.")
+		get_tree().change_scene_to_file("res://ui/main_menu/main_menu.tscn")
+		return
 
 func _physics_process(delta: float):
 	# Don't advance the timer if the game has ended.
@@ -49,9 +73,7 @@ func win_game():
 	print("VICTORY - YOU SURVIVED!")
 	
 	# Stop enemies from spawning.
-	var spawner = get_node_or_null("EnemySpawner")
-	if spawner:
-		spawner.set_physics_process(false)
+	spawner.set_physics_process(false)
 		
 	# You could also kill all remaining enemies for a satisfying screen clear.
 	# for enemy in get_tree().get_nodes_in_group("enemies"):

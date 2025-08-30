@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bm5mppgqw3k6b"
-path="res://.godot/imported/cyberpunk-swordswoman.png-69b91eb35e43142c4998d3e071f5afd9.ctex"
+uid="uid://bpdtmaj5e7xas"
+path="res://.godot/imported/pixellab-cyberpunk-tuxedo-1756046479883.png-50a7a280cb544ff9ba69916b4772f8b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/player/characters/default/cyberpunk-swordswoman.png"
-dest_files=["res://.godot/imported/cyberpunk-swordswoman.png-69b91eb35e43142c4998d3e071f5afd9.ctex"]
+source_file="res://actors/player/characters/magic_man/pixellab-cyberpunk-tuxedo-1756046479883.png"
+dest_files=["res://.godot/imported/pixellab-cyberpunk-tuxedo-1756046479883.png-50a7a280cb544ff9ba69916b4772f8b6.ctex"]
 
 [params]
 
