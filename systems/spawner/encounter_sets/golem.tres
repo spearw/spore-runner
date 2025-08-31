@@ -6,7 +6,8 @@
 
 [resource]
 script = ExtResource("2_m13gf")
-time_start = 120
+time_start = 0
 time_end = -1
+spawn_immediately_on_start = true
 enemies = Array[ExtResource("1_spkpw")]([ExtResource("2_rtbp4")])
 metadata/_custom_type_script = "uid://dnb7k3xg8h5sr"

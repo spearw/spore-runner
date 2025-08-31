@@ -5,6 +5,9 @@ extends Resource
 
 @export var time_start: int = 0  # Time in seconds this set becomes available.
 @export var time_end: int = -1   # Time in seconds this set is no longer available (-1 for indefinite).
+# If true, spawn enemies in this set immediately, potentially driving into budget deficit.
+@export var spawn_immediately_on_start: bool = false
+
 
 # The list of enemy types that can spawn during this encounter.
 @export var enemies: Array[EnemyStats]

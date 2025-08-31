@@ -16,9 +16,12 @@ var run_timer: float = 0.0
 var budget_accumulator: float = 0.0
 var player_node: Node2D
 
-# --- The Director's internal threat tracking ledger ---
+
+# --- THREAT TRACKING ---
 # Key: Behavior Class Name (String), Value: Total Challenge Rating on screen (float)
 var current_threat: Dictionary = {}
+# A list of all encounter sets, which will shrink as they are processed.
+var pending_encounter_sets: Array[EncounterSet]
 
 # --- METAPROGRESSION ---
 var threat_level: float = 1.0 # This will later be fetched from GameData as a player unlocks/increases difficulty
@@ -34,6 +37,9 @@ func _ready():
 	# In the future, get this from GameData:
 	# threat_level = GameData.data["permanent_stats"].get("threat_level", 1.0)
 	spawn_pulse_timer.timeout.connect(_on_spawn_pulse_timer_timeout)
+	# Sort the master list by time and create pending list.
+	encounter_sets.sort_custom(func(a, b): return a.time_start < b.time_start)
+	pending_encounter_sets = encounter_sets.duplicate()
 	
 func _physics_process(delta: float):
 	if not is_instance_valid(player_node): return
@@ -43,8 +49,28 @@ func _physics_process(delta: float):
 	var base_budget_per_sec = difficulty_curve.sample(run_timer)
 	var current_frame_budget = base_budget_per_sec * threat_level * delta
 	budget_accumulator += current_frame_budget
+	
+	# Check for any one-time "override" events that need to fire now.
+	# While loop to handles multiple events triggering on the same frame.
+	while not pending_encounter_sets.is_empty() and run_timer >= pending_encounter_sets[0].time_start:
+		var event_to_check = pending_encounter_sets[0]
+		
+		if event_to_check.spawn_immediately_on_start:
+			# It's a boss/burst event. Process it now.
+			var event = pending_encounter_sets.pop_front() # Get and remove it from the list
+			print("Director Override: Spawning immediate event '%s'" % event.resource_path)
+			
+			for enemy_stat in event.enemies:
+				# Spawn the enemy and go into budget deficit.
+				budget_accumulator -= enemy_stat.challenge_rating
+				spawn_enemy(enemy_stat)
+		else:
+			# It's a normal, repeating set. Since the list is sorted,
+			# we know no later "immediate" events are ready yet.
+			break
 
 func _on_spawn_pulse_timer_timeout():
+	print("Director Budget:", budget_accumulator)
 	var available_enemies = _get_currently_available_enemies()
 	if available_enemies.is_empty(): return
 

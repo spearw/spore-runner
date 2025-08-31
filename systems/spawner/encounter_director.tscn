@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://uaiyj5jeo46l"]
+[gd_scene load_steps=4 format=3 uid="uid://uaiyj5jeo46l"]
 
 [ext_resource type="Script" uid="uid://fhk1ou3boos2" path="res://systems/spawner/encounter_director.gd" id="1_qjnew"]
+[ext_resource type="PackedScene" uid="uid://bjpvtmn8ptm1n" path="res://actors/enemies/enemy.tscn" id="2_dy8jg"]
+[ext_resource type="Curve" uid="uid://ccl7n5x133ejo" path="res://systems/spawner/difficulty_curves/default_difficulty_curve.tres" id="3_cr4ux"]
 
 [node name="EncounterDirector" type="Node"]
 script = ExtResource("1_qjnew")
+enemy_scene = ExtResource("2_dy8jg")
+difficulty_curve = ExtResource("3_cr4ux")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
