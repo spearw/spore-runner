@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EncounterSet" load_steps=6 format=3 uid="uid://c1nw5nw8ico5h"]
+
+[ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="1_41lrm"]
+[ext_resource type="Script" uid="uid://dnb7k3xg8h5sr" path="res://systems/spawner/encounter_set.gd" id="2_0txta"]
+[ext_resource type="Resource" uid="uid://c53cpmq5w2pwg" path="res://actors/enemies/normal_enemy_types/brute/brute.tres" id="2_s1fop"]
+[ext_resource type="Resource" uid="uid://b7o4xc2lowkku" path="res://actors/enemies/normal_enemy_types/tank/tank.tres" id="3_vu1qa"]
+[ext_resource type="Resource" uid="uid://cwpkepnxytuy3" path="res://actors/enemies/normal_enemy_types/shooter/shooter.tres" id="4_t1avv"]
+
+[resource]
+script = ExtResource("2_0txta")
+time_start = 60
+time_end = -1
+enemies = Array[ExtResource("1_41lrm")]([ExtResource("2_s1fop"), ExtResource("3_vu1qa"), ExtResource("4_t1avv")])
+metadata/_custom_type_script = "uid://dnb7k3xg8h5sr"

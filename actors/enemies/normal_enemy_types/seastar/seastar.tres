@@ -17,6 +17,7 @@ face_movement_direction = true
 rotation_offset_degrees = 20.0
 behavior_scene = ExtResource("1_j8c56")
 weapon_scenes = Array[PackedScene]([])
+challenge_rating = 0.5
 experience_gem_stats = ExtResource("2_oetbc")
 soul_drop_chance = 0.05
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

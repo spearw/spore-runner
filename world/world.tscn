@@ -1,45 +1,34 @@
-[gd_scene load_steps=25 format=3 uid="uid://bdcbnkahhxu6b"]
+[gd_scene load_steps=13 format=3 uid="uid://bdcbnkahhxu6b"]
 
 [ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="2_mad0u"]
 [ext_resource type="PackedScene" uid="uid://dulw5xigdffvi" path="res://actors/player/player.tscn" id="3_ocfjn"]
+[ext_resource type="PackedScene" uid="uid://bjpvtmn8ptm1n" path="res://actors/enemies/enemy.tscn" id="4_ocfjn"]
 [ext_resource type="Script" uid="uid://cdevlwpbk7w8g" path="res://systems/upgrades/upgrade_manager.gd" id="6_h8lre"]
-[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="7_ysn08"]
-[ext_resource type="Resource" uid="uid://ei4vnjeiqilo" path="res://systems/upgrades/unlocks/player_speed.tres" id="8_0pnie"]
-[ext_resource type="Resource" uid="uid://deynodmipwbdh" path="res://systems/upgrades/unlocks/daggers_unlock.tres" id="8_m0cxt"]
-[ext_resource type="Resource" uid="uid://btc5l6uhsaoqk" path="res://systems/upgrades/unlocks/shotgun_unlock.tres" id="9_llyeo"]
-[ext_resource type="Resource" uid="uid://c64jci32lqc3" path="res://systems/upgrades/unlocks/spike_ring_unlock.tres" id="10_p2iis"]
-[ext_resource type="Resource" uid="uid://cg64e0ifhkfb7" path="res://systems/upgrades/upgrades/spike_ring_count.tres" id="11_aysyn"]
-[ext_resource type="Resource" uid="uid://bib5t3cy8av85" path="res://systems/upgrades/unlocks/swift_bracer_unlock.tres" id="12_dqqhb"]
-[ext_resource type="Resource" uid="uid://imgvcskg7a5r" path="res://systems/upgrades/upgrades/daggers_damage.tres" id="13_2tavo"]
-[ext_resource type="Resource" uid="uid://of54uih30ise" path="res://systems/upgrades/unlocks/fireball_staff_unlock.tres" id="13_3ljsx"]
-[ext_resource type="Resource" uid="uid://bvqb5l5r7b4iy" path="res://systems/upgrades/unlocks/tome_of_duplication_unlock.tres" id="13_b2suy"]
-[ext_resource type="Resource" uid="uid://b8y1u7wm4bi06" path="res://systems/upgrades/upgrades/player_speed.tres" id="14_b2suy"]
-[ext_resource type="PackedScene" uid="uid://uaiyj5jeo46l" path="res://systems/spawner/enemy_spawner.tscn" id="15_j34ew"]
-[ext_resource type="Resource" uid="uid://ol07gqdxxoj7" path="res://systems/upgrades/unlocks/meteor_unlock.tres" id="16_llyeo"]
-[ext_resource type="Script" uid="uid://cafxbvye36ocx" path="res://systems/spawner/spawn_event.gd" id="16_p2iis"]
+[ext_resource type="Curve" uid="uid://ccl7n5x133ejo" path="res://systems/spawner/difficulty_curves/default_difficulty_curve.tres" id="7_mad0u"]
+[ext_resource type="Script" uid="uid://dnb7k3xg8h5sr" path="res://systems/spawner/encounter_set.gd" id="8_ocfjn"]
+[ext_resource type="Resource" uid="uid://bilgtioohtoti" path="res://systems/spawner/encounter_sets/golem.tres" id="10_b2suy"]
+[ext_resource type="Resource" uid="uid://c5abx25utn3mg" path="res://systems/spawner/encounter_sets/sea_babies.tres" id="11_h8lre"]
+[ext_resource type="PackedScene" uid="uid://uaiyj5jeo46l" path="res://systems/spawner/encounter_director.tscn" id="15_j34ew"]
 [ext_resource type="PackedScene" uid="uid://cvo8y06lxkaq8" path="res://ui/hud/hud.tscn" id="20_p2iis"]
 [ext_resource type="Texture2D" uid="uid://cnsh16hskpn1v" path="res://ui/textures/texture_01.png" id="21_aysyn"]
-[ext_resource type="Resource" uid="uid://qkf78ip8nkqx" path="res://systems/spawner/spawn_timelines/test_timeline/seastar_burst_0.tres" id="22_3ljsx"]
-[ext_resource type="Resource" uid="uid://bvr2bn71y6omq" path="res://systems/spawner/spawn_timelines/test_timeline/seastar_steady_10_seconds.tres" id="23_gi7ib"]
-[ext_resource type="Resource" uid="uid://bhdphbys06lqo" path="res://systems/spawner/spawn_timelines/test_timeline/0s_golem_boss.tres" id="24_0pnie"]
-[ext_resource type="Resource" uid="uid://bmsi31r75i0mq" path="res://systems/spawner/spawn_timelines/test_timeline/swamer_burst_0_sec.tres" id="26_2tavo"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_ov2xu")
 player_scene = ExtResource("3_ocfjn")
 
-[node name="LevelUpUI" parent="." instance=ExtResource("2_mad0u")]
-process_mode = 3
+[node name="EncounterDirector" parent="." instance=ExtResource("15_j34ew")]
+enemy_scene = ExtResource("4_ocfjn")
+difficulty_curve = ExtResource("7_mad0u")
+encounter_sets = Array[ExtResource("8_ocfjn")]([ExtResource("10_b2suy"), ExtResource("11_h8lre")])
 
 [node name="UpgradeManager" type="Node" parent="."]
 script = ExtResource("6_h8lre")
-upgrade_pool = Array[ExtResource("7_ysn08")]([ExtResource("8_m0cxt"), ExtResource("13_3ljsx"), ExtResource("8_0pnie"), ExtResource("9_llyeo"), ExtResource("10_p2iis"), ExtResource("12_dqqhb"), ExtResource("13_b2suy"), ExtResource("13_2tavo"), ExtResource("14_b2suy"), ExtResource("11_aysyn"), ExtResource("16_llyeo")])
+
+[node name="LevelUpUI" parent="." instance=ExtResource("2_mad0u")]
+process_mode = 3
 
 [node name="HUD" parent="." instance=ExtResource("20_p2iis")]
-
-[node name="EnemySpawner" parent="." instance=ExtResource("15_j34ew")]
-spawn_timeline = Array[ExtResource("16_p2iis")]([ExtResource("26_2tavo"), ExtResource("22_3ljsx"), ExtResource("23_gi7ib"), ExtResource("24_0pnie")])
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

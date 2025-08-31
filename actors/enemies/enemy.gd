@@ -24,6 +24,9 @@ var player_node: Node2D
 var behavior: EnemyBehavior = null
 var is_on_screen: bool = false
 
+# --- Signals ---
+signal died(enemy_stats)
+
 
 
 func _ready() -> void:
@@ -106,14 +109,15 @@ func update_health_bar(current: int, max_val: int):
 	health_bar.visible = current < max_val
 
 ## Handles the enemy's death sequence.
-func die() -> void:
+func die(drop_xp=true) -> void:
+	died.emit(stats) # Announce death to encounter director.
 	# Drop loot
 	if stats.special_drop_scene:
 		var special_drop = stats.special_drop_scene.instantiate()
 		get_tree().current_scene.add_child(special_drop)
 		special_drop.global_position = self.global_position
 	# Drop XP gems
-	if stats.experience_gem_stats:
+	if stats.experience_gem_stats and drop_xp:
 		# Spawn the generic gem scene.
 		var gem_instance = experience_gem_scene.instantiate()
 		gem_instance.stats = stats.experience_gem_stats
@@ -170,9 +174,8 @@ func _physics_process(delta: float):
 		if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
 			# Call the player's damage function, using this enemy's damage stat.
 			collided_object.take_damage(stats.damage)
-			# The normal enemy is deleted on contact.
-			# This prevents dealing damage every single frame and dropping xp.
-			queue_free()
+			# The normal enemy dies on contact but does not drop xp.
+			die(false)
 			return
 
 

@@ -17,7 +17,8 @@ var starter_data = {
 	"selected_character_path": "res://actors/player/characters/edgerunner/edgerunner_character.tres",
 	# A list of resource paths for all characters the player has unlocked.
 	"unlocked_character_paths": ["res://actors/player/characters/edgerunner/edgerunner_character.tres"],
-	"unlocked_packs": ["starter_pack_id"],
+	# A list of resource paths for all unlocked upgrade packs.
+	"unlocked_pack_paths": ["res://systems/upgrades/packs/core_pack.tres", "res://systems/upgrades/packs/projectile_pack.tres"],
 	"permanent_stats": {
 		"move_speed_bonus": 0.0,
 		"luck_bonus": 0.0,
@@ -99,3 +100,8 @@ func clear_save_file():
 			printerr("Error deleting save file. Code: ", err)
 	else:
 		print("No save file to delete.")
+
+func unlock_pack(pack_path: String):
+	if not pack_path in data["unlocked_pack_paths"]:
+		data["unlocked_pack_paths"].append(pack_path)
+		# TODO: Add signal for UI

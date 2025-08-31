@@ -23,6 +23,9 @@ extends Resource
 # The weapon scenes to automatically equip to this enemy on spawn.
 @export var weapon_scenes: Array[PackedScene]
 
+# The "cost" of this enemy for the dynamic spawner. Higher is tougher.
+@export var challenge_rating: float = 1.0
+
 # --- Loot ---
 # The stats for the gem this enemy drops.
 @export var experience_gem_stats: ExperienceGemStats

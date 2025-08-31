@@ -32,14 +32,13 @@ func update_display():
 
 	name_label.text = character_data.character_name if is_unlocked else "???"
 	
+	if character_data.character_sprite_frames and character_data.character_sprite_frames.has_animation("default"):
+		portrait_rect.texture = character_data.character_sprite_frames.get_frame_texture("default", 0)
 	if is_unlocked:
-		if character_data.character_sprite_frames and character_data.character_sprite_frames.has_animation("default"):
-			portrait_rect.texture = character_data.character_sprite_frames.get_frame_texture("default", 0)
-			panel.modulate.a = 0
+		panel.modulate.a = 0
 		portrait_rect.modulate = Color.WHITE
 		select_button.disabled = false
 	else:
-		portrait_rect.texture = null
 		portrait_rect.modulate = Color.BLACK
 		select_button.disabled = true
 

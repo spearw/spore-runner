@@ -17,11 +17,6 @@ func _ready():
 	_register_command("kill_all", "Kills all enemies in the current scene.", self, "_execute_kill_all")
 	_register_command("delete_save", "Deletes the save file and reloads the current scene.", self, "_execute_clear_save")
 
-## This function runs constantly because it's a global Singleton.
-func _unhandled_input(event: InputEvent):
-	# Listen for the tilde key to toggle the console.
-	if event.is_action_pressed("ui_toggle_console"): # We'll define this action
-		_toggle_console_visibility()
 
 # --- Command Execution ---
 
@@ -55,14 +50,16 @@ func _execute_command(command_string: String):
 
 func _toggle_console_visibility():
 	if not console_instance is CanvasLayer:
-		# Create the UI instance for the first time.
 		console_instance = console_ui_scene.instantiate()
+		# Add it to the root, but outside the main scene tree's pause group.
 		get_tree().get_root().add_child(console_instance)
-		# Connect the signal from the LineEdit.
-		console_instance.get_node("ColorRect/MarginContainer/VBoxContainer/InputLine").text_submitted.connect(_on_input_line_submitted)
+		# The connection is now done inside the UI's _ready() function.
 	
-	console_instance.visible = not console_instance.visible
-	if console_instance.visible:
+	var is_opening = not console_instance.visible
+	console_instance.visible = is_opening
+	get_tree().paused = is_opening
+	
+	if is_opening:
 		console_instance.get_node("ColorRect/MarginContainer/VBoxContainer/InputLine").grab_focus()
 
 func _log_to_console(text: String):
@@ -81,6 +78,12 @@ func _on_input_line_submitted(text: String):
 	var input_line = console_instance.get_node("ColorRect/MarginContainer/VBoxContainer/InputLine")
 	input_line.clear()
 	input_line.grab_focus()
+	
+func _unhandled_input(event: InputEvent):
+	# Only listen if the console is NOT visible
+	if not console_instance or not console_instance.visible:
+		if event.is_action_pressed("ui_toggle_console"):
+			_toggle_console_visibility()
 
 # --- Command Implementations ---
 # These are the actual functions that do the work.

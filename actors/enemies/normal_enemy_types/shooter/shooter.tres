@@ -1,20 +1,22 @@
-[gd_resource type="Resource" script_class="EnemyStats" load_steps=6 format=3 uid="uid://cwpkepnxytuy3"]
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://cwpkepnxytuy3"]
 
 [ext_resource type="PackedScene" uid="uid://np8hsandn71t" path="res://actors/enemies/behaviors/shoot/shoot_behavior.tscn" id="1_37k1l"]
 [ext_resource type="Resource" uid="uid://c7ttwmrsaxqss" path="res://items/pickups/experience_gem/types/medium_gem.tres" id="2_wat6f"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_5uev6"]
-[ext_resource type="Texture2D" uid="uid://bvbxnuahiaeu7" path="res://actors/enemies/normal_enemy_types/shooter/shooter.png" id="4_37k1l"]
 [ext_resource type="PackedScene" uid="uid://bs1xgub1sjuhs" path="res://items/weapons/fireball_staff/fireball_staff_weapon.tscn" id="5_wat6f"]
 
 [resource]
 script = ExtResource("3_5uev6")
-max_health = 30
+max_health = 50
 speed = 100.0
 damage = 40
-texture = ExtResource("4_37k1l")
 scale = Vector2(1, 1)
 modulate = Color(1, 1, 1, 1)
+face_movement_direction = false
+rotation_offset_degrees = 0.0
 behavior_scene = ExtResource("1_37k1l")
 weapon_scenes = Array[PackedScene]([ExtResource("5_wat6f")])
+challenge_rating = 4.0
 experience_gem_stats = ExtResource("2_wat6f")
+soul_drop_chance = 0.05
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

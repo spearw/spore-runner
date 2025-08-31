@@ -13,7 +13,7 @@ var is_game_over: bool = false
 
 # Game references.
 @onready var upgrade_manager: Node = $UpgradeManager
-@onready var spawner: Node = $EnemySpawner
+@onready var spawner: Node = $EncounterDirector
 @onready var level_up_ui: CanvasLayer = $LevelUpUI
 
 # Hud

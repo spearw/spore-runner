@@ -3,7 +3,7 @@
 ## and applies selected upgrades.
 extends Node
 
-@export var upgrade_pool: Array[Upgrade]
+var active_upgrade_pool: Array[Upgrade] = []
 
 var player_equipment: Node2D = null
 var player_artifacts: Node2D = null
@@ -15,6 +15,27 @@ const RARITY_WEIGHTS = {
 	Upgrade.Rarity.EPIC: 15,
 	Upgrade.Rarity.LEGENDARY: 5
 }
+
+func _ready():
+	# Build pool from chosen upgrade packs.
+	_build_active_upgrade_pool()
+	
+func _build_active_upgrade_pool():
+	# Clear any old data.
+	active_upgrade_pool.clear()
+	
+	# Get the list of selected pack paths from persistent data.
+	var selected_pack_paths = CurrentRun.selected_pack_paths
+	
+	for pack_path in selected_pack_paths:
+		var pack_resource: UpgradePack = load(pack_path)
+		if pack_resource:
+			# Add all upgrades from this pack into our active pool for this run.
+			active_upgrade_pool.append_array(pack_resource.upgrades)
+		else:
+			printerr("Failed to load UpgradePack at path: ", pack_path)
+			
+	print("UpgradeManager pool built for this run. Total upgrades available: ", active_upgrade_pool.size())
 
 ## Store reference to the player's equipment and artifacts.
 ## @param player: Node - The player node instance that is registering itself.
@@ -43,7 +64,7 @@ func get_upgrade_choices(count: int) -> Array[Dictionary]:
 	# --- Filter the pool for currently valid upgrades ---
 	var player_inventory = get_player_inventory_names()
 	var filtered_pool: Array[Upgrade] = []
-	for upgrade in upgrade_pool:
+	for upgrade in active_upgrade_pool:
 		var target_name = upgrade.target_class_name
 		match upgrade.type:
 			Upgrade.UpgradeType.UNLOCK_WEAPON, Upgrade.UpgradeType.UNLOCK_ARTIFACT:
