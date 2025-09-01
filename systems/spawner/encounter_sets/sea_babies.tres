@@ -9,5 +9,6 @@
 script = ExtResource("2_0mkja")
 time_start = 0
 time_end = -1
+spawn_immediately_on_start = false
 enemies = Array[ExtResource("1_e37mg")]([ExtResource("2_mepsr"), ExtResource("3_b7wdr")])
 metadata/_custom_type_script = "uid://dnb7k3xg8h5sr"

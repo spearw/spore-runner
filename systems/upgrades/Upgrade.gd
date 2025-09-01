@@ -6,6 +6,7 @@ extends Resource
 # --- Enums ---
 enum UpgradeType { UNLOCK_WEAPON, UNLOCK_ARTIFACT, UPGRADE }
 enum Rarity { COMMON, RARE, EPIC, LEGENDARY }
+enum ModifierType {ADDITIVE, MULTIPLICATIVE}
 
 # --- Core Properties ---
 @export var id: String
@@ -20,6 +21,9 @@ enum Rarity { COMMON, RARE, EPIC, LEGENDARY }
 
 # For UPGRADE types, this is the property on the target item to modify.
 @export var property_to_modify: String
+
+# Whether to add or multiply the stat by the incoming value
+@export var modifier_type: ModifierType = ModifierType.ADDITIVE
 
 # This array holds the different values for this upgrade based on rarity.
 # Index 0 = COMMON, 1 = RARE, 2 = EPIC, 3 = LEGENDARY

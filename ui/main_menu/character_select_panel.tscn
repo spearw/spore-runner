@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://7rvo0dymjiq3"]
 
 [ext_resource type="Script" uid="uid://dojlwwgiwn6o6" path="res://ui/main_menu/character_select_panel.gd" id="1_vs8pe"]
-[ext_resource type="Resource" uid="uid://po5h8natv6il" path="res://actors/player/characters/master_character_list.tres" id="2_hv0rl"]
+[ext_resource type="Resource" uid="uid://45e0tpblxsns" path="res://actors/player/characters/master_character_list.tres" id="2_hv0rl"]
 [ext_resource type="PackedScene" uid="uid://0rkl7hhg0sdp" path="res://ui/main_menu/character_button.tscn" id="4_i4rnc"]
-[ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="4_ykukb"]
-[ext_resource type="Resource" uid="uid://cslvyly2f8qn1" path="res://systems/upgrades/packs/core_pack.tres" id="5_neb2l"]
 [ext_resource type="Resource" uid="uid://ds2uq4c8iwsfq" path="res://systems/upgrades/packs/projectile_pack.tres" id="6_fsgfl"]
 [ext_resource type="PackedScene" uid="uid://d1vkjj3tcx30h" path="res://ui/main_menu/upgrade_pack_button.tscn" id="7_ykukb"]
+[ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="8_rbbip"]
+[ext_resource type="Resource" uid="uid://cslvyly2f8qn1" path="res://systems/upgrades/packs/core_pack.tres" id="9_setnx"]
 
 [node name="CharacterSelectPanel" type="Control"]
 layout_mode = 3
@@ -18,7 +18,7 @@ grow_vertical = 2
 script = ExtResource("1_vs8pe")
 character_list = ExtResource("2_hv0rl")
 character_button_scene = ExtResource("4_i4rnc")
-all_packs = Array[ExtResource("4_ykukb")]([ExtResource("5_neb2l"), ExtResource("6_fsgfl")])
+all_packs = Array[ExtResource("8_rbbip")]([ExtResource("9_setnx"), ExtResource("6_fsgfl")])
 upgrade_pack_button_scene = ExtResource("7_ykukb")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]

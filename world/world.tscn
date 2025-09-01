@@ -1,11 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bdcbnkahhxu6b"]
+[gd_scene load_steps=11 format=3 uid="uid://bdcbnkahhxu6b"]
 
 [ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="2_mad0u"]
 [ext_resource type="PackedScene" uid="uid://dulw5xigdffvi" path="res://actors/player/player.tscn" id="3_ocfjn"]
-[ext_resource type="PackedScene" uid="uid://bjpvtmn8ptm1n" path="res://actors/enemies/enemy.tscn" id="4_ocfjn"]
 [ext_resource type="Script" uid="uid://cdevlwpbk7w8g" path="res://systems/upgrades/upgrade_manager.gd" id="6_h8lre"]
-[ext_resource type="Curve" uid="uid://ccl7n5x133ejo" path="res://systems/spawner/difficulty_curves/default_difficulty_curve.tres" id="7_mad0u"]
 [ext_resource type="Script" uid="uid://dnb7k3xg8h5sr" path="res://systems/spawner/encounter_set.gd" id="8_ocfjn"]
 [ext_resource type="Resource" uid="uid://bilgtioohtoti" path="res://systems/spawner/encounter_sets/golem.tres" id="10_b2suy"]
 [ext_resource type="Resource" uid="uid://c5abx25utn3mg" path="res://systems/spawner/encounter_sets/sea_babies.tres" id="11_h8lre"]
@@ -18,8 +16,6 @@ script = ExtResource("1_ov2xu")
 player_scene = ExtResource("3_ocfjn")
 
 [node name="EncounterDirector" parent="." instance=ExtResource("15_j34ew")]
-enemy_scene = ExtResource("4_ocfjn")
-difficulty_curve = ExtResource("7_mad0u")
 encounter_sets = Array[ExtResource("8_ocfjn")]([ExtResource("10_b2suy"), ExtResource("11_h8lre")])
 
 [node name="UpgradeManager" type="Node" parent="."]

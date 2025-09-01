@@ -4,12 +4,13 @@
 
 [resource]
 script = ExtResource("1_kcm0e")
-id = "player_speed_2"
-display_name = "Running Shoes II"
+id = "player_speed"
+display_name = "Speed"
 description = "Increase movement speed"
 type = 2
-target_class_name = "RunningShoesArtifact"
+target_class_name = "Player"
 rarity = 0
-property_to_modify = "level"
-rarity_values = Array[float]([0.05, 0.1, 0.15, 0.25])
+property_to_modify = "stats/base_move_speed"
+modifier_type = 1
+rarity_values = Array[float]([0.1, 0.15, 0.2, 0.25])
 metadata/_custom_type_script = "uid://d0ibxieicws6j"

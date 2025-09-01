@@ -13,6 +13,7 @@ var commands = {}
 func _ready():
 	_register_command("help", "Lists all available commands.", self, "_execute_help")
 	_register_command("add_souls", "Adds souls. Usage: add_souls [amount]", self, "_execute_add_souls")
+	_register_command("add_xp", "Adds xp. Usage: add_xp [amount]", self, "_execute_add_xp")
 	_register_command("unlock_all", "Unlocks all characters.", self, "_execute_unlock_all")
 	_register_command("kill_all", "Kills all enemies in the current scene.", self, "_execute_kill_all")
 	_register_command("delete_save", "Deletes the save file and reloads the current scene.", self, "_execute_clear_save")
@@ -100,6 +101,18 @@ func _execute_add_souls(args: Array):
 	var amount = args[0].to_int()
 	GameData.add_souls(amount)
 	_log_to_console("Added %d souls." % amount)
+	
+func _execute_add_xp(args: Array):
+	if args.is_empty():
+		_log_to_console("Usage: add_xp [amount]")
+		return
+	var amount = args[0].to_int()
+	var player_node = get_tree().get_first_node_in_group("player")
+	if player_node:
+		player_node.add_experience(amount)
+		_log_to_console("Added %d xp." % amount)
+	else:
+		print("Nothing to give xp to!")
 
 func _execute_unlock_all(_args: Array):
 	var character_list = load("res://actors/player/characters/master_character_list.tres") # Load the master list

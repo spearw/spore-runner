@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://nwbrj5ockot1" path="res://actors/player/character_data.gd" id="1_cx50m"]
 [ext_resource type="SpriteFrames" uid="uid://do1qfw5yr1lu0" path="res://actors/player/characters/shotgunner/shotgun_animation.tres" id="1_vryq4"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_4b2tc"]
-[ext_resource type="Resource" uid="uid://btc5l6uhsaoqk" path="res://systems/upgrades/unlocks/shotgun_unlock.tres" id="3_4b2tc"]
+[ext_resource type="Resource" uid="uid://btc5l6uhsaoqk" path="res://systems/upgrades/weapons/shotgun_unlock.tres" id="4_vryq4"]
 
 [resource]
 script = ExtResource("1_cx50m")
@@ -16,5 +16,5 @@ base_pickup_radius = 100.0
 base_luck = 1.0
 base_firerate_modifier = 1.4
 base_projectile_bonus = 0
-starting_upgrades = Array[ExtResource("2_4b2tc")]([ExtResource("3_4b2tc")])
+starting_upgrades = Array[ExtResource("2_4b2tc")]([ExtResource("4_vryq4")])
 metadata/_custom_type_script = "uid://nwbrj5ockot1"

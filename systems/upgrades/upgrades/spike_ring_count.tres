@@ -11,5 +11,6 @@ type = 2
 target_class_name = "SpikeRingWeapon"
 rarity = 0
 property_to_modify = "base_projectile_count"
+modifier_type = 0
 rarity_values = Array[float]([2.0, 3.0, 4.0, 6.0])
 metadata/_custom_type_script = "uid://d0ibxieicws6j"

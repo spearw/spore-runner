@@ -11,7 +11,6 @@ extends Control
 @onready var character_select_panel: Control = $CharacterSelectPanel
 
 func _ready():
-
 	# Make sure the shop is hidden initially
 	meta_shop_panel.hide()
 	populate_shop()

@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="1_1vjku"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_s72px"]
-[ext_resource type="Resource" uid="uid://c64jci32lqc3" path="res://systems/upgrades/unlocks/spike_ring_unlock.tres" id="3_eyock"]
+[ext_resource type="Resource" uid="uid://c64jci32lqc3" path="res://systems/upgrades/weapons/spike_ring_unlock.tres" id="3_eyock"]
 [ext_resource type="Resource" uid="uid://cg64e0ifhkfb7" path="res://systems/upgrades/upgrades/spike_ring_count.tres" id="4_lt3rw"]
-[ext_resource type="Resource" uid="uid://bvqb5l5r7b4iy" path="res://systems/upgrades/unlocks/tome_of_duplication_unlock.tres" id="5_fx16c"]
+[ext_resource type="Resource" uid="uid://bvqb5l5r7b4iy" path="res://systems/upgrades/artifacts/tome_of_duplication_unlock.tres" id="5_lt3rw"]
 
 [resource]
 script = ExtResource("1_1vjku")
 pack_name = "Projectiles"
 pack_description = "You are the bullet hell."
-upgrades = Array[ExtResource("2_s72px")]([ExtResource("3_eyock"), ExtResource("4_lt3rw"), ExtResource("5_fx16c")])
+upgrades = Array[ExtResource("2_s72px")]([ExtResource("3_eyock"), ExtResource("4_lt3rw"), ExtResource("5_lt3rw")])
 metadata/_custom_type_script = "uid://cvcnhdf5np0ln"

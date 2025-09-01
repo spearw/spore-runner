@@ -71,7 +71,8 @@ func get_upgrade_choices(count: int) -> Array[Dictionary]:
 				if not target_name in player_inventory:
 					filtered_pool.append(upgrade)
 			Upgrade.UpgradeType.UPGRADE:
-				if target_name in player_inventory:
+				# Use upgrades that are stats buffs or they modify something in the inventory
+				if target_name == "Player" or target_name in player_inventory:
 					filtered_pool.append(upgrade)
 
 	var final_choices: Array[Dictionary] = []
@@ -169,7 +170,11 @@ func apply_upgrade(upgrade_package: Dictionary) -> void:
 				printerr("Unlock upgrade '%s' is missing a scene!" % upgrade.id)
 		Upgrade.UpgradeType.UPGRADE:
 			# Find the target item.
-			var target_item = player_equipment.get_node_or_null(upgrade.target_class_name)
+			var target_item: Node = null
+			if upgrade.target_class_name == "Player":
+				target_item = self.player
+			else:
+				target_item = player_equipment.get_node_or_null(upgrade.target_class_name)
 			if not target_item:
 				target_item = player_artifacts.get_node_or_null(upgrade.target_class_name)
 			if target_item:
@@ -178,8 +183,18 @@ func apply_upgrade(upgrade_package: Dictionary) -> void:
 				var current_value = get_nested_property(target_item, property_path)
 				if current_value == null:
 					return
-				var value_to_add = upgrade.rarity_values[chosen_rarity_enum]
-				set_nested_property(target_item, property_path, current_value + value_to_add)
+				
+				# Get value from upgrade
+				var upgrade_value = upgrade.rarity_values[chosen_rarity_enum]
+				var new_value = 0.0
+				
+				if upgrade.modifier_type == Upgrade.ModifierType.MULTIPLICATIVE:
+					# Apply as a percentage.
+					new_value = current_value * (1.0 + upgrade_value)
+				else:
+					# Apply as a flat bonus.
+					new_value = current_value + upgrade_value
+				set_nested_property(target_item, property_path, current_value + new_value)
 			else:
 				printerr("Upgrade failed: Could not find item '%s' to upgrade." % upgrade.target_class_name)
 				
