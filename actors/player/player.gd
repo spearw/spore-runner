@@ -15,6 +15,9 @@ signal took_damage
 @onready var artifacts_node: Node = $Artifacts
 @onready var pickup_area_shape: CollisionShape2D = $PickupArea/CollisionShape2D
 @onready var sprite = $AnimatedSprite2D
+
+@onready var stats_panel: CanvasLayer = get_tree().get_root().get_node("World/StatsPanel")
+
 var upgrade_manager: Node
 
 var max_health: int
@@ -22,6 +25,10 @@ var current_health: int
 var level: int = 1
 var current_experience: int = 0
 var experience_to_next_level: int = 100
+
+# This dictionary will store the sum of all percentage-based bonuses collected during a run.
+# Key: bonus_key (String, e.g., "move_speed_bonus"), Value: total bonus (float, e.g., 0.25 for +25%)
+var in_run_multipliers: Dictionary = {}
 
 ## initialize_character is called by world.tscn.
 func _ready() -> void:
@@ -58,55 +65,56 @@ func initialize_character(character_data: CharacterData, world_upgrade_manager: 
 ## Called every physics frame for movement updates.
 ## @param delta: float - The time elapsed since the last physics frame.
 func _physics_process(delta: float) -> void:
-	var move_speed = get_modified_move_speed()
+	var move_speed = get_stat("move_speed")
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = direction * move_speed
 	move_and_slide()
 	
-## Calculates the final value of a stat after applying permanent and artifact modifiers.
-## @param base_stat_name: String - The name of the property on the PlayerStats resource (e.g., "base_move_speed").
-## @param permanent_bonus_key: String - The key for the bonus in the GameData dictionary (e.g., "move_speed_bonus").
-## @param artifact_modifier_method: String - The name of the method to call on artifacts (e.g., "modify_speed").
-func get_modified_stat(base_stat_name: String, permanent_bonus_key: String, artifact_modifier_method: String) -> float:
-	# 1. Get the base value from the PlayerStats resource using its string name.
-	var final_value = stats.get(base_stat_name)
-	
-	# 2. Apply the permanent bonus from GameData using its string key.
-	var permanent_bonus = GameData.data["permanent_stats"].get(permanent_bonus_key, 0.0)
-	final_value *= (1.0 + permanent_bonus)
-	
-	# 3. Apply artifact modifiers from the current run.
-	for artifact in artifacts_node.get_children():
-		# Check if the artifact has the specified modifier method.
-		if artifact.has_method(artifact_modifier_method):
-			# Call the method by its string name, passing the current value.
-			final_value = artifact.call(artifact_modifier_method, final_value)
-			
-	return final_value
-	
-## Calculates the final move speed after applying all artifact modifiers.
-## @return: float - The final calculated move speed.
-func get_modified_move_speed() -> float:
-	return get_modified_stat("base_move_speed", "move_speed_bonus", "modify_speed")
-	
-## Calculates the final pickup radius after applying all artifact modifiers.
-func get_modified_pickup_radius() -> float:
-	return get_modified_stat("base_pickup_radius", "pickup_radius_bonus", "modify_pickup_radius")
-	
-## Calculates the final luck after applying all artifact modifiers.
-func get_modified_luck() -> float:
-	return get_modified_stat("base_luck", "luck_bonus", "modify_luck")
-	
-## Calculates the total projectile bonus from all equipped artifacts.
-## @return: int - The number of extra projectiles to add.
-func get_global_projectile_bonus() -> int:
-	return get_modified_stat("base_projectile_bonus", "projectile_bonus", "modify_projectile_count")
+## Adds a percentage-based bonus to the player's stat tracker.
+func add_multiplier(key: String, value: float):
+	var current_multiplier = in_run_multipliers.get(key, 0.0)
+	in_run_multipliers[key] = current_multiplier + value
+	print("Player bonus '%s' updated. New total for this run: %.2f" % [key, in_run_multipliers[key]])
+	notify_stats_changed()
 
-
-## Calculates the total fire rate multiplier from all equipped artifacts.
-## @return: float - The final multiplier for timer wait_time (e.g., 0.8 for 20% faster).
-func get_global_firerate_modifier() -> float:
-	return get_modified_stat("base_firerate_modifier", "firerate_modifier", "modify_firerate")
+# --- Get stat multiplier based on key ---
+func get_stat_multiplier(key: String) -> float:
+	var permanent_bonus = GameData.data["permanent_stats"].get(key, 0.0)
+	if (key in ["firerate"]):
+		# Fire rate is subtractive and caps at 90%
+		return max(0.1, 1.0-(permanent_bonus + in_run_multipliers.get(key, 0.0)))
+	else:
+		# Return 1 + total multiplier
+		return 1.0 + permanent_bonus + in_run_multipliers.get(key, 0.0)
+		
+## Returns the final, calculated value for any player stat.
+## @param key: String - The key for the stat (e.g., "move_speed", "damage").
+func get_stat(key: String):
+	match key:
+		"move_speed":
+			return stats.base_move_speed * get_stat_multiplier(key)
+		"luck":
+			return stats.base_luck * get_stat_multiplier(key)
+		"pickup_radius":
+			# base pickup radius is enhanced by area size
+			return stats.base_pickup_radius * get_stat_multiplier("area_size")
+		"crit_chance":
+			return stats.base_crit_chance * get_stat_multiplier(key)
+		"crit_damage":
+			return stats.base_crit_damage * get_stat_multiplier(key)
+		"damage_multiplier":
+			# Damage doesn't have a base value on the player, it's just a multiplier.
+			return get_stat_multiplier(key)
+		"firerate":
+			# Fire rate is also just a multiplier.
+			return get_stat_multiplier(key)
+		"projectile_speed":
+			return get_stat_multiplier(key)
+		"area_size":
+			return get_stat_multiplier(key)
+		_:
+			printerr("get_stat: Requested unknown stat key: '", key, "'")
+			return 1.0 # Return a safe default
 	
 ## Adds experience to the player and checks for level-up conditions.
 ## @param amount: int - The amount of experience to add.
@@ -145,7 +153,7 @@ func take_damage(amount: int) -> void:
 		
 func notify_stats_changed():
 	stats_changed.emit()
-	pickup_area_shape.shape.radius = get_modified_pickup_radius()
+	pickup_area_shape.shape.radius = get_stat("pickup_radius")
 
 ## Handles the player's death sequence.
 func die() -> void:

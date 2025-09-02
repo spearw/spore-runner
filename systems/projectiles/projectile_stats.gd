@@ -3,7 +3,8 @@
 class_name ProjectileStats
 extends Resource
 
-@export var damage: int = 10
+@export var base_damage: int = 10
+var damage = base_damage
 @export var speed: float = 300.0
 
 # How long the projectile lives before disappearing, in seconds. -1 means forever.

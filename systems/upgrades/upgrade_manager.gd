@@ -71,7 +71,7 @@ func get_upgrade_choices(count: int) -> Array[Dictionary]:
 				if not target_name in player_inventory:
 					filtered_pool.append(upgrade)
 			Upgrade.UpgradeType.UPGRADE:
-				# Use upgrades that are stats buffs or they modify something in the inventory
+				# Use upgrades that are stats buffs or they modify something in the inventorycan
 				if target_name == "Player" or target_name in player_inventory:
 					filtered_pool.append(upgrade)
 
@@ -169,32 +169,33 @@ func apply_upgrade(upgrade_package: Dictionary) -> void:
 			else:
 				printerr("Unlock upgrade '%s' is missing a scene!" % upgrade.id)
 		Upgrade.UpgradeType.UPGRADE:
-			# Find the target item.
 			var target_item: Node = null
+			# Get upgrade target
 			if upgrade.target_class_name == "Player":
 				target_item = self.player
 			else:
 				target_item = player_equipment.get_node_or_null(upgrade.target_class_name)
-			if not target_item:
-				target_item = player_artifacts.get_node_or_null(upgrade.target_class_name)
+				if not target_item:
+					target_item = player_artifacts.get_node_or_null(upgrade.target_class_name)
+			# Apply upgrade
 			if target_item:
-				# Find the property
-				var property_path = upgrade.property_to_modify
-				var current_value = get_nested_property(target_item, property_path)
-				if current_value == null:
-					return
+				var value_from_rarity = upgrade.rarity_values[chosen_rarity_enum]
 				
-				# Get value from upgrade
-				var upgrade_value = upgrade.rarity_values[chosen_rarity_enum]
-				var new_value = 0.0
-				
-				if upgrade.modifier_type == Upgrade.ModifierType.MULTIPLICATIVE:
-					# Apply as a percentage.
-					new_value = current_value * (1.0 + upgrade_value)
+				if target_item == self.player:
+					player.add_bonus(upgrade.stat_key, value_from_rarity)
 				else:
-					# Apply as a flat bonus.
-					new_value = current_value + upgrade_value
-				set_nested_property(target_item, property_path, current_value + new_value)
+					# This is a flat bonus, or a buff for a weapon/artifact. 
+					# TODO: May be depricated with current upgrade system
+					var property_path = upgrade.key
+					var current_value = get_nested_property(target_item, property_path)
+					if current_value == null: return
+					var new_value = 0.0
+					if upgrade.modifier_type == Upgrade.ModifierType.MULTIPLICATIVE:
+						new_value = current_value * (1.0 + value_from_rarity)
+					else: # ADDITIVE
+						new_value = current_value + value_from_rarity
+					
+					set_nested_property(target_item, property_path, new_value)
 			else:
 				printerr("Upgrade failed: Could not find item '%s' to upgrade." % upgrade.target_class_name)
 				

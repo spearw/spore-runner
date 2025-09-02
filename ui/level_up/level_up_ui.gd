@@ -8,6 +8,9 @@ var current_upgrades: Array[Dictionary]
 # signal to announce when choice has been made
 signal upgrade_chosen
 
+@onready var stats_panel: CanvasLayer = get_tree().get_root().get_node("World/StatsPanel") # Update path
+
+
 # Reference to player.
 var player_node: Node2D
 
@@ -35,7 +38,10 @@ func on_boss_reward_requested():
 	# A better system might have a dedicated multi-choice UI.
 	# We need to use a loop that waits for the player to choose before showing the next.
 	_show_reward_sequence(3)
-	
+
+func _on_show_stats_button_pressed():
+	if stats_panel:
+		stats_panel.toggle_visibility()
 
 ## Asynchronously shows the level-up screen multiple times.
 func _show_reward_sequence(count: int):

@@ -13,10 +13,20 @@ var last_fire_direction: Vector2 = Vector2.RIGHT
 
 # --- Component References ---
 @onready var fire_behavior_component: FireBehaviorComponent = $FireBehaviorComponent
+@onready var stats_component: WeaponStatsComponent = $WeaponStatsComponent
 @onready var fire_rate_timer: Timer = $FireRateTimer
 
 func _ready():
 	fire_rate_timer.timeout.connect(_on_fire_rate_timer_timeout)
+	
+# Update internal stats whenever the user's stats change.
+func update_stats():
+	var user = stats_component.user
+	if not is_instance_valid(user): return
+
+	# Get fire rate from the user
+	var firerate_multiplier = user.get_stat("firerate")
+	fire_rate_timer.wait_time = base_fire_rate * firerate_multiplier
 
 func _on_fire_rate_timer_timeout():
 	# Delegate the actual firing to the component.

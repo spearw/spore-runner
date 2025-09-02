@@ -25,16 +25,17 @@ enum FirePattern {
 # --- References (set at runtime) ---
 var weapon # The parent weapon node
 const GENERIC_PROJECTILE_SCENE = preload("res://systems/projectiles/projectile.tscn")
+var stats_comp: WeaponStatsComponent;
+var targeting_comp: TargetingComponent;
 
 func _ready():
 	weapon = get_parent()
+	stats_comp = weapon.get_node("WeaponStatsComponent")
+	targeting_comp = weapon.get_node("TargetingComponent")
 
 ## The main public method called by the weapon's timer or AI.
 func fire():
 	if not is_instance_valid(weapon): return
-
-	var stats_comp: WeaponStatsComponent = weapon.get_node("WeaponStatsComponent")
-	var targeting_comp: TargetingComponent = weapon.get_node("TargetingComponent")
 	
 	if not stats_comp or not targeting_comp:
 		printerr("FireBehaviorComponent on '%s' is missing required components!" % weapon.name)
@@ -69,6 +70,9 @@ func fire():
 func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, p_direction: Vector2, p_position: Vector2 = weapon.global_position):
 	var projectile = GENERIC_PROJECTILE_SCENE.instantiate()
 	projectile.stats = p_stats
+	# Calculate damage
+	var damage_multiplier = stats_comp.user.get_stat("damage_multiplier")
+	projectile.stats.damage = projectile.stats.base_damage * damage_multiplier
 	projectile.allegiance = p_allegiance
 	projectile.direction = p_direction
 	projectile.rotation = p_direction.angle()

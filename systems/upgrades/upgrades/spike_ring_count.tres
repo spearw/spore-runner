@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource("1_gvgat")
-id = "spike_ring_count_1"
-display_name = "Spike Count"
-description = "Increase number of spikes"
+id = "projectile_count"
+display_name = "Projectile Count"
+description = "Increase number of projectiles. Rounds down."
 type = 2
-target_class_name = "SpikeRingWeapon"
-rarity = 0
-property_to_modify = "base_projectile_count"
+target_class_name = "Player"
+rarity = 2
+key = ""
 modifier_type = 0
-rarity_values = Array[float]([2.0, 3.0, 4.0, 6.0])
+rarity_values = Array[float]([0.0, 0.0, 0.25, 0.5])
 metadata/_custom_type_script = "uid://d0ibxieicws6j"
