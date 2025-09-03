@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=5 format=3 uid="uid://dnrjnbiid7c82"]
+
+[ext_resource type="SpriteFrames" uid="uid://dpd2rd3gsogan" path="res://actors/player/characters/edgerunner/edgerunner_animations.tres" id="1_j0sld"]
+[ext_resource type="Script" uid="uid://nwbrj5ockot1" path="res://actors/player/character_data.gd" id="2_qg7sx"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="3_yxjex"]
+[ext_resource type="Resource" uid="uid://btc5l6uhsaoqk" path="res://systems/upgrades/weapons/shotgun_unlock.tres" id="4_om70o"]
+
+[resource]
+script = ExtResource("2_qg7sx")
+character_name = "TEST"
+character_description = "No weapon, infinite health?"
+character_sprite_frames = ExtResource("1_j0sld")
+base_move_speed = 300.0
+base_max_health = 9999999
+base_pickup_radius = 0.0
+base_luck = 1.0
+base_firerate_modifier = 1.0
+base_projectile_count_multiplier = 1.0
+base_critical_chance = 0.05
+base_critical_damage = 0.5
+starting_upgrades = Array[ExtResource("3_yxjex")]([ExtResource("4_om70o")])
+metadata/_custom_type_script = "uid://nwbrj5ockot1"

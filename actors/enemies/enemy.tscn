@@ -6,9 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://dvd6w0bq2fi03" path="res://items/pickups/soul/soul.tscn" id="4_dluy2"]
 [ext_resource type="SpriteFrames" uid="uid://b07nax6t85adf" path="res://actors/enemies/placeholder_animation_names.tres" id="4_smojp"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7k104"]
-radius = 12.0
-height = 26.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_dluy2"]
+radius = 5.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1bop1"]
 load_path = "res://.godot/imported/health_bar_texture.png-aaad8e65b491f39a131c7da8b4b6cc5e.ctex"
@@ -60,7 +59,7 @@ experience_gem_scene = ExtResource("3_smojp")
 soul_scene = ExtResource("4_dluy2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemies"]]
-shape = SubResource("CapsuleShape2D_7k104")
+shape = SubResource("CircleShape2D_dluy2")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
 z_index = 1
