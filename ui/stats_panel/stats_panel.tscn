@@ -1,11 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://vnih610ckder"]
+[gd_scene load_steps=3 format=3 uid="uid://vnih610ckder"]
 
 [ext_resource type="Script" uid="uid://bf87k42ux6cyh" path="res://ui/stats_panel/stats_panel.gd" id="1_qrigu"]
+[ext_resource type="PackedScene" uid="uid://dv0kmcoknucck" path="res://ui/stats_panel/weapon_stat_button.tscn" id="2_6x54g"]
 
 [node name="StatsPanel" type="CanvasLayer"]
 process_mode = 3
 visible = false
 script = ExtResource("1_qrigu")
+weapon_button_scene = ExtResource("2_6x54g")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(800, 500)
@@ -30,6 +32,24 @@ layout_mode = 2
 [node name="PickupRadiusLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StatsContainer"]
 layout_mode = 2
 
+[node name="CriticalChanceLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="CriticalDamageLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="DamageMultiplierLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="FirerateLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="ProjectileSpeedLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="AreaSizeLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
 [node name="ItemsContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
@@ -40,7 +60,7 @@ text = "Weapons:"
 [node name="WeaponsGridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/HBoxContainer/ItemsContainer"]
 layout_mode = 2
 
-[node name="Artifacts" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/ItemsContainer/WeaponsGridContainer"]
+[node name="Artifacts" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/ItemsContainer"]
 layout_mode = 2
 text = "Artifacts:"
 

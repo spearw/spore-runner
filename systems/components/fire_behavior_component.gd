@@ -71,8 +71,11 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 	var projectile = GENERIC_PROJECTILE_SCENE.instantiate()
 	projectile.stats = p_stats
 	# Calculate damage
-	var damage_multiplier = stats_comp.user.get_stat("damage_multiplier")
-	projectile.stats.damage = projectile.stats.base_damage * damage_multiplier
+	if stats_comp.user.has_method("get_stat"):
+		var damage_increase = stats_comp.user.get_stat("damage_increase")
+		projectile.stats.damage = projectile.stats.base_damage * damage_increase
+	else:
+		projectile.stats.damage = projectile.stats.base_damage
 	projectile.allegiance = p_allegiance
 	projectile.direction = p_direction
 	projectile.rotation = p_direction.angle()

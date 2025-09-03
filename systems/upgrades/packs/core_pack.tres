@@ -1,11 +1,12 @@
-[gd_resource type="Resource" script_class="UpgradePack" load_steps=3 format=3 uid="uid://cslvyly2f8qn1"]
+[gd_resource type="Resource" script_class="UpgradePack" load_steps=4 format=3 uid="uid://cslvyly2f8qn1"]
 
 [ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="1_1hgme"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_bdncx"]
+[ext_resource type="Resource" uid="uid://b8y1u7wm4bi06" path="res://systems/upgrades/upgrades/player_speed.tres" id="7_7sh0r"]
 
 [resource]
 script = ExtResource("1_1hgme")
 pack_name = "Core"
 pack_description = "Fundementals. Every character starts with this. "
-upgrades = Array[ExtResource("2_bdncx")]([])
+upgrades = Array[ExtResource("2_bdncx")]([ExtResource("7_7sh0r")])
 metadata/_custom_type_script = "uid://cvcnhdf5np0ln"

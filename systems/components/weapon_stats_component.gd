@@ -23,12 +23,12 @@ func update_stats():
 	if not is_instance_valid(user) or not is_instance_valid(weapon): return
 
 	# Only players have global modifiers, so we check for the method.
-	if user.has_method("get_global_firerate_modifier"):
+	if user.has_method("get_stat"):
 		if weapon.has_node("FireRateTimer"):
 			var timer = weapon.get_node("FireRateTimer")
 			var base_wait_time = timer.get_meta("base_wait_time", 2.0)
-			var modifier = user.get_global_firerate_modifier()
-			timer.wait_time = base_wait_time * modifier
+			var firerate_modifier = user.get_stat("firerate")
+			timer.wait_time = base_wait_time * firerate_modifier
 			print(weapon.name, "stats updated! Fire rate:", timer.wait_time)
 	else:
 		print("%s stats not updated!")
@@ -39,8 +39,8 @@ func get_final_projectile_count() -> int:
 	if not is_instance_valid(weapon) or not "base_projectile_count" in weapon: return 1
 
 	var final_count = weapon.base_projectile_count
-	if is_instance_valid(user) and user.has_method("get_global_projectile_bonus"):
-		final_count += user.get_global_projectile_bonus()
+	if is_instance_valid(user) and user.has_method("get_stat"):
+		final_count = final_count * user.get_stat("projectile_count_multiplier")
 	return final_count
 	
 ## Determines the allegiance of projectiles based on the weapon's user.

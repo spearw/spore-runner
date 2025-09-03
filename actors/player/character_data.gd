@@ -13,9 +13,9 @@ extends Resource
 @export var base_pickup_radius: float = 100.0
 @export var base_luck: float = 1.0 
 @export var base_firerate_modifier: float = 1.0 
-@export var base_projectile_bonus: int = 0
+@export var base_projectile_count_multiplier: float = 1.0
 @export var base_critical_chance: float = .05
-@export var base_critical_damage: int = .5
+@export var base_critical_damage: float = .5
 
 
 # --- Starting Loadout ---

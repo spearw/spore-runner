@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://dnb7k3xg8h5sr" path="res://systems/spawner/encounter_set.gd" id="8_ocfjn"]
 [ext_resource type="Resource" uid="uid://bilgtioohtoti" path="res://systems/spawner/encounter_sets/golem.tres" id="10_b2suy"]
 [ext_resource type="Resource" uid="uid://c5abx25utn3mg" path="res://systems/spawner/encounter_sets/sea_babies.tres" id="11_h8lre"]
-[ext_resource type="PackedScene" uid="uid://vnih610ckder" path="res://ui/stats_panel.tscn" id="11_ov2xu"]
+[ext_resource type="PackedScene" uid="uid://vnih610ckder" path="res://ui/stats_panel/stats_panel.tscn" id="11_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://uaiyj5jeo46l" path="res://systems/spawner/encounter_director.tscn" id="15_j34ew"]
 [ext_resource type="PackedScene" uid="uid://cvo8y06lxkaq8" path="res://ui/hud/hud.tscn" id="20_p2iis"]
 [ext_resource type="Texture2D" uid="uid://cnsh16hskpn1v" path="res://ui/textures/texture_01.png" id="21_aysyn"]

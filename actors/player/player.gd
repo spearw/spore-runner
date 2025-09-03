@@ -99,10 +99,10 @@ func get_stat(key: String):
 			# base pickup radius is enhanced by area size
 			return stats.base_pickup_radius * get_stat_multiplier("area_size")
 		"crit_chance":
-			return stats.base_crit_chance * get_stat_multiplier(key)
+			return stats.base_critical_chance * get_stat_multiplier(key)
 		"crit_damage":
-			return stats.base_crit_damage * get_stat_multiplier(key)
-		"damage_multiplier":
+			return stats.base_critical_damage * get_stat_multiplier(key)
+		"damage_increase":
 			# Damage doesn't have a base value on the player, it's just a multiplier.
 			return get_stat_multiplier(key)
 		"firerate":
@@ -112,6 +112,9 @@ func get_stat(key: String):
 			return get_stat_multiplier(key)
 		"area_size":
 			return get_stat_multiplier(key)
+		"projectile_count_multiplier":
+			# Percentage, floored.
+			return stats.base_projectile_count_multiplier * get_stat_multiplier(key)
 		_:
 			printerr("get_stat: Requested unknown stat key: '", key, "'")
 			return 1.0 # Return a safe default
