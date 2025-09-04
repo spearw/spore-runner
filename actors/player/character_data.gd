@@ -16,6 +16,7 @@ extends Resource
 @export var base_projectile_count_multiplier: float = 1.0
 @export var base_critical_chance: float = .05
 @export var base_critical_damage: float = .5
+@export var base_armor: int = 0
 
 
 # --- Starting Loadout ---

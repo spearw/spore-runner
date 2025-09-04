@@ -11,11 +11,12 @@ var allegiance: Allegiance
 # --- Public Properties ---
 var stats: ProjectileStats
 var direction: Vector2 = Vector2.RIGHT
+var pierce_count: int = 0
 
 # --- Node References ---
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var lifetime_timer: Timer = $LifetimeTimer
+@onready var swing_timer: Timer = $LifetimeTimer
 
 func _ready():
 	# This function is called AFTER the spawner has set properties.
@@ -28,6 +29,8 @@ func _ready():
 		printerr("Projectile spawned without a valid allegiance! Deleting.")
 		queue_free()
 		return
+	
+	pierce_count = stats.pierce + 1 if stats.pierce != -1 else -1
 
 	# Configure visuals from stats.
 	sprite.texture = stats.texture
@@ -55,10 +58,10 @@ func _ready():
 func _intialize_as_bullet():
 	# Configure lifetime.
 	if stats.lifetime > 0:
-		lifetime_timer.wait_time = stats.lifetime
-		lifetime_timer.one_shot = true
-		lifetime_timer.timeout.connect(queue_free) # Delete self when timer ends
-		lifetime_timer.start()
+		swing_timer.wait_time = stats.lifetime
+		swing_timer.one_shot = true
+		swing_timer.timeout.connect(queue_free) # Delete self when timer ends
+		swing_timer.start()
 
 	# Connect the damage signal.
 	self.body_entered.connect(_on_body_entered)
@@ -96,13 +99,33 @@ func generate_hitbox_from_sprite():
 	
 	# Assign the newly created and sized shape to our CollisionShape2D node.
 	collision_shape.shape = new_shape
+	collision_shape.position = sprite.position
 
 func _process(delta: float):
 	global_position += direction * stats.speed * delta
 
 func _on_body_entered(body: Node2D):
 	# The physics layers have already guaranteed we hit a valid target.
-	if body.has_method("take_damage"):
-		body.take_damage(stats.damage)
+	if stats.is_aoe: return
 	
-	queue_free()
+	# --- MODIFIED: Hit Logic ---
+	var can_damage = false
+	if allegiance == Allegiance.PLAYER and body.is_in_group("enemies"):
+		can_damage = true
+	elif allegiance == Allegiance.ENEMY and body.is_in_group("player"):
+		can_damage = true
+
+	if can_damage:
+		# Apply damage and knockback if the body is a valid target.
+		if body.has_method("take_damage"):
+			body.take_damage(stats.damage)
+		if stats.knockback_force > 0 and body.has_method("apply_knockback"):
+			body.apply_knockback(stats.knockback_force, self.global_position)
+			
+		# Decrement pierce_count
+		if pierce_count != -1: # Do nothing if pierce is infinite
+			pierce_count -= 1
+			
+			if pierce_count <= 0:
+				# We are out of hits, destroy the projectile.
+				queue_free()

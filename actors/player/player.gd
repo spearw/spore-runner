@@ -25,10 +25,11 @@ var current_health: int
 var level: int = 1
 var current_experience: int = 0
 var experience_to_next_level: int = 100
+var last_move_direction: Vector2 = Vector2.RIGHT
 
 # This dictionary will store the sum of all percentage-based bonuses collected during a run.
 # Key: bonus_key (String, e.g., "move_speed_bonus"), Value: total bonus (float, e.g., 0.25 for +25%)
-var in_run_multipliers: Dictionary = {}
+var in_run_bonuses: Dictionary = {}
 
 ## initialize_character is called by world.tscn.
 func _ready() -> void:
@@ -67,14 +68,16 @@ func initialize_character(character_data: CharacterData, world_upgrade_manager: 
 func _physics_process(delta: float) -> void:
 	var move_speed = get_stat("move_speed")
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if direction.length() > 0:
+		last_move_direction = direction.normalized()
 	velocity = direction * move_speed
 	move_and_slide()
 	
 ## Adds a percentage-based bonus to the player's stat tracker.
 func add_multiplier(key: String, value: float):
-	var current_multiplier = in_run_multipliers.get(key, 0.0)
-	in_run_multipliers[key] = current_multiplier + value
-	print("Player bonus '%s' updated. New total for this run: %.2f" % [key, in_run_multipliers[key]])
+	var current_multiplier = in_run_bonuses.get(key, 0.0)
+	in_run_bonuses[key] = current_multiplier + value
+	print("Player bonus '%s' updated. New total for this run: %.2f" % [key, in_run_bonuses[key]])
 	notify_stats_changed()
 
 # --- Get stat multiplier based on key ---
@@ -82,10 +85,10 @@ func get_stat_multiplier(key: String) -> float:
 	var permanent_bonus = GameData.data["permanent_stats"].get(key, 0.0)
 	if (key in ["firerate"]):
 		# Fire rate is subtractive and caps at 90%
-		return max(0.1, 1.0-(permanent_bonus + in_run_multipliers.get(key, 0.0)))
+		return max(0.1, 1.0-(permanent_bonus + in_run_bonuses.get(key, 0.0)))
 	else:
 		# Return 1 + total multiplier
-		return 1.0 + permanent_bonus + in_run_multipliers.get(key, 0.0)
+		return 1.0 + permanent_bonus + in_run_bonuses.get(key, 0.0)
 		
 ## Returns the final, calculated value for any player stat.
 ## @param key: String - The key for the stat (e.g., "move_speed", "damage").
@@ -115,6 +118,11 @@ func get_stat(key: String):
 		"projectile_count_multiplier":
 			# Percentage, floored.
 			return stats.base_projectile_count_multiplier * get_stat_multiplier(key)
+		"armor":
+			# Armor is a flat stat, so just add bonuses. Multiplier doesn't apply.
+			var permanent_bonus = GameData.data["permanent_stats"].get("armor", 0)
+			var in_run_bonus = in_run_bonuses.get("armor", 0)
+			return stats.base_armor + permanent_bonus + in_run_bonus
 		_:
 			printerr("get_stat: Requested unknown stat key: '", key, "'")
 			return 1.0 # Return a safe default
@@ -143,6 +151,9 @@ func add_experience(amount: int) -> void:
 ## Public method to apply damage to the player.
 ## @param amount: int - The amount of damage to inflict.
 func take_damage(amount: int) -> void:
+		# --- Armor Calculation ---
+	var armor = get_stat("armor")
+	var final_damage = max(0, amount - armor)
 	# Reduce current health, ensuring it does not go below zero.
 	current_health = max(0, current_health - amount)
 	

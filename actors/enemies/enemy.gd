@@ -107,6 +107,15 @@ func update_health_bar(current: int, max_val: int):
 	health_bar.value = current
 	# Show the bar only when the enemy has taken damage.
 	health_bar.visible = current < max_val
+	
+## Applies a knockback force away from a given point.
+## @param force: float - The strength of the knockback.
+## @param from_position: Vector2 - The world position the knockback originates from.
+func apply_knockback(force: float, from_position: Vector2):
+	# Calculate the direction vector away from the damage source.
+	var direction = (self.global_position - from_position).normalized()
+	# Apply the force to the velocity. This will be handled by move_and_slide.
+	velocity += direction * force
 
 ## Handles the enemy's death sequence.
 func die(drop_xp=true) -> void:

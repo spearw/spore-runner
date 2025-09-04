@@ -10,9 +10,15 @@ var damage = base_damage
 # How long the projectile lives before disappearing, in seconds. -1 means forever.
 @export var lifetime: float = 5.0 
 
+# How many enemies this projectile can hit before being destroyed.
+# 0 = hits one target. -1 = infinite hits.
+@export var pierce: int = 0
+
 # --- Visuals ---
 @export var texture: Texture2D
 @export var scale: Vector2 = Vector2(1.0, 1.0)
+
+@export var knockback_force: float = 0.0
 
 # --- AoE Properties ---
 # If true, this projectile is an area-of-effect explosion, not a moving bullet.

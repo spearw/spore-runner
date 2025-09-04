@@ -10,9 +10,14 @@ enum FirePattern {
 	NOVA,         # Fires all projectiles in a 360-degree circle (dumbfire).
 	AIMED_AOE,    # Fires exactly on targeted enemy with small delay
 }
+enum SpawnLocation {
+	IN_WORLD,  # For normal, independent projectiles (bullets, fireballs).
+	ON_USER    # For attached effects (melee swings, auras).
+}
 
 # --- Configurable Properties ---
 @export var pattern: FirePattern = FirePattern.FORWARD
+@export var spawn_location: SpawnLocation = SpawnLocation.IN_WORLD
 @export var spread_angle_degrees: float = 30.0 # Only used for SPREAD pattern
 @export var burst_delay: float = 0.08 # Delay between shots in a burst
 @onready var burst_delay_timer: Timer = $BurstDelayTimer
@@ -68,7 +73,16 @@ func fire():
 
 ## Helper function to handle the actual creation of a single projectile.
 func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, p_direction: Vector2, p_position: Vector2 = weapon.global_position):
-	var projectile = GENERIC_PROJECTILE_SCENE.instantiate()
+	# The weapon is attached to the user, so its global_position is the user's position.
+	var spawn_position = weapon.global_position
+	
+	# We need to instantiate the correct scene. Axe needs its custom scene.
+	var projectile_scene = GENERIC_PROJECTILE_SCENE
+	# We can add a property to the weapon to specify a custom projectile scene.
+	if "custom_projectile_scene" in weapon and weapon.custom_projectile_scene:
+		projectile_scene = weapon.custom_projectile_scene
+	
+	var projectile = projectile_scene.instantiate()
 	projectile.stats = p_stats
 	# Calculate damage
 	if stats_comp.user.has_method("get_stat"):
@@ -77,11 +91,23 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 	else:
 		projectile.stats.damage = projectile.stats.base_damage
 	projectile.allegiance = p_allegiance
-	projectile.direction = p_direction
-	projectile.rotation = p_direction.angle()
-	get_tree().current_scene.add_child(projectile)
-	projectile.global_position = p_position # On firing entity, unless AoE attack
 	
+	match spawn_location:
+		SpawnLocation.IN_WORLD:
+			# The old logic: spawn in the main world.
+			projectile.direction = p_direction
+			get_tree().current_scene.add_child(projectile)
+			projectile.global_position = spawn_position
+			projectile.rotation = p_direction.angle()
+		
+		SpawnLocation.ON_USER:
+			# The new logic: spawn as a child of the user.
+			stats_comp.user.add_child(projectile)
+			# Its position will be (0,0) relative to the user, which is correct.
+			projectile.position = Vector2.ZERO
+			# The swing's rotation is set relative to the user's facing direction.
+			projectile.rotation = p_direction.angle()
+
 func _execute_burst_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, targeting_comp: TargetingComponent):
 	# Get a single base direction from the targeting component.
 	var base_direction = targeting_comp.get_fire_direction(weapon.global_position, weapon.last_fire_direction, p_allegiance)

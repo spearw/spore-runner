@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://hdwb478pexpn"]
+
+[ext_resource type="PackedScene" uid="uid://rd1d1qx5xd6k" path="res://items/weapons/axe/axe_weapon.tscn" id="1_vi5qg"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_p5r41"]
+
+[resource]
+script = ExtResource("2_p5r41")
+id = "axe_unlock"
+display_name = "Axe"
+description = "It's an axe."
+type = 0
+target_class_name = "AxeWeapon"
+scene_to_unlock = ExtResource("1_vi5qg")
+rarity = 2
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

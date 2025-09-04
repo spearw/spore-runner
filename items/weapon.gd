@@ -5,6 +5,8 @@ extends Node2D
 
 # --- Data ---
 @export var projectile_stats: ProjectileStats
+# This optionally overrides the generic projectile scene with a custom one.
+@export var custom_projectile_scene: PackedScene
 @export var base_projectile_count: int = 1
 @export var base_fire_rate: float = 2;
 

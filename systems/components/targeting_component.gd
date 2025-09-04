@@ -4,10 +4,14 @@ class_name TargetingComponent
 extends Node
 
 enum TargetingMode {
-	NONE,
 	NEAREST,
-	SELF
-	# Add more modes here later
+	FARTHEST,
+	SELF,
+	RANDOM,
+	HIGHEST_HEALTH,
+	LOWEST_HEALTH,
+	LAST_MOVE_DIRECTION,
+	NONE
 }
 
 @export var targeting_mode: TargetingMode = TargetingMode.NEAREST
@@ -58,9 +62,16 @@ func find_target(origin_pos: Vector2, weapon_allegiance: int):
 func get_fire_direction(origin_pos: Vector2, fallback_direction: Vector2, weapon_allegiance: int) -> Vector2:
 	var fire_direction = fallback_direction
 
-	var target = find_target(origin_pos, weapon_allegiance)
-			
-	if is_instance_valid(target):
-		fire_direction = (target.global_position - origin_pos).normalized()
+	if targeting_mode == TargetingMode.LAST_MOVE_DIRECTION:
+		# The weapon's user should have a 'last_move_direction' property.
+		var user = get_parent().stats_component.user
+		if is_instance_valid(user) and "last_move_direction" in user:
+			# If the user isn't moving, use the fallback.
+			if user.last_move_direction.length() > 0:
+				fire_direction = user.last_move_direction
+	else:
+		var target = find_target(origin_pos, weapon_allegiance)	
+		if is_instance_valid(target):
+			fire_direction = (target.global_position - origin_pos).normalized()
 	
 	return fire_direction

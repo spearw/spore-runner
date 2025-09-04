@@ -16,12 +16,14 @@ extends CanvasLayer
 @onready var firerate_label: Label = $PanelContainer/MarginContainer/HBoxContainer/StatsContainer/FirerateLabel
 @onready var projectile_speed_label: Label = $PanelContainer/MarginContainer/HBoxContainer/StatsContainer/ProjectileSpeedLabel
 @onready var area_size_label: Label = $PanelContainer/MarginContainer/HBoxContainer/StatsContainer/AreaSizeLabel
+# Targeting Picker
+@onready var targeting_picker: PanelContainer = $TargetingPicker
 
 var player: Node
 var is_open: bool = false
 
 func _ready():
-	pass
+	targeting_picker.hide()
 
 func _unhandled_input(event: InputEvent):
 	# The toggle can be handled here because this panel will be in the World scene.
@@ -95,4 +97,5 @@ func _refresh_artifact_icons():
 ## Called when any weapon button in the grid is clicked.
 func _on_weapon_button_pressed(weapon_node: Node):
 	print("Player clicked on weapon: ", weapon_node.name)
-	# TODO: Function should open Targeting Picker UI.
+	# Tell the picker to open and configure itself for the selected weapon.
+	targeting_picker.open_for_weapon(weapon_node)

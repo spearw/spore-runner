@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://rd1d1qx5xd6k"]
+
+[ext_resource type="Script" uid="uid://b0g8wtar8xbcn" path="res://items/weapon.gd" id="1_tohrk"]
+[ext_resource type="Resource" uid="uid://b7sb8gmwmh508" path="res://items/weapons/axe/axe_swing_stats.tres" id="2_3pnfh"]
+[ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="3_k0wnb"]
+[ext_resource type="PackedScene" uid="uid://c8ebkfexmubj3" path="res://items/weapons/axe/axe_swing.tscn" id="3_xvvru"]
+[ext_resource type="PackedScene" uid="uid://bi2e3pkfcknbt" path="res://systems/components/weapon_stats_component.tscn" id="4_38sd1"]
+[ext_resource type="PackedScene" uid="uid://c5vl748oixb2p" path="res://systems/components/fire_behavior_component.tscn" id="5_mw5ru"]
+
+[node name="AxeWeapon" type="Node2D"]
+script = ExtResource("1_tohrk")
+projectile_stats = ExtResource("2_3pnfh")
+custom_projectile_scene = ExtResource("3_xvvru")
+base_fire_rate = 3.0
+
+[node name="FireRateTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="TargetingComponent" type="Node" parent="."]
+script = ExtResource("3_k0wnb")
+metadata/_custom_type_script = "uid://5nf8qiekyyrw"
+
+[node name="WeaponStatsComponent" parent="." instance=ExtResource("4_38sd1")]
+
+[node name="FireBehaviorComponent" parent="." instance=ExtResource("5_mw5ru")]
+spawn_location = 1
+
+[connection signal="timeout" from="FireRateTimer" to="." method="_on_fire_rate_timer_timeout"]

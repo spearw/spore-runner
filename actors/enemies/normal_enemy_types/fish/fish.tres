@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://b1lkjc77082fm"]
+
+[ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/chase/chase_behavior.tscn" id="1_pe56h"]
+[ext_resource type="Resource" uid="uid://c7ttwmrsaxqss" path="res://items/pickups/experience_gem/types/medium_gem.tres" id="2_6t3l4"]
+[ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_scipe"]
+[ext_resource type="SpriteFrames" uid="uid://bfv7q1d5e6kgi" path="res://actors/enemies/normal_enemy_types/fish/animations/fish_animations.tres" id="4_6t3l4"]
+
+[resource]
+script = ExtResource("3_scipe")
+max_health = 70
+speed = 70.0
+damage = 20
+sprite_frames = ExtResource("4_6t3l4")
+scale = Vector2(2, 2)
+modulate = Color(1, 1, 1, 1)
+face_movement_direction = false
+rotation_offset_degrees = 0.0
+behavior_scene = ExtResource("1_pe56h")
+weapon_scenes = Array[PackedScene]([])
+challenge_rating = 2.0
+experience_gem_stats = ExtResource("2_6t3l4")
+soul_drop_chance = 0.05
+metadata/_custom_type_script = "uid://b7tpycat8da2s"
