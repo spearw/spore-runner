@@ -9,6 +9,7 @@ enum FirePattern {
 	SPREAD,       # Fires all projectiles in a cone towards a target.
 	NOVA,         # Fires all projectiles in a 360-degree circle (dumbfire).
 	AIMED_AOE,    # Fires exactly on targeted enemy with small delay
+	MIRRORED_FORWARD, # Fires projectiles in single targeted direction, also behind.
 }
 enum SpawnLocation {
 	IN_WORLD,  # For normal, independent projectiles (bullets, fireballs).
@@ -16,7 +17,7 @@ enum SpawnLocation {
 }
 
 # --- Configurable Properties ---
-@export var pattern: FirePattern = FirePattern.FORWARD
+@export var base_pattern: FirePattern = FirePattern.FORWARD
 @export var spawn_location: SpawnLocation = SpawnLocation.IN_WORLD
 @export var spread_angle_degrees: float = 30.0 # Only used for SPREAD pattern
 @export var burst_delay: float = 0.08 # Delay between shots in a burst
@@ -32,6 +33,9 @@ var weapon # The parent weapon node
 const GENERIC_PROJECTILE_SCENE = preload("res://systems/projectiles/projectile.tscn")
 var stats_comp: WeaponStatsComponent;
 var targeting_comp: TargetingComponent;
+var pattern_override = -1 # -1 means no override
+var fire_pattern = -1
+
 
 func _ready():
 	weapon = get_parent()
@@ -49,14 +53,18 @@ func fire():
 	var final_projectile_count = stats_comp.get_final_projectile_count()
 	var allegiance = stats_comp.get_projectile_allegiance()
 	var projectile_stats = weapon.projectile_stats
-
+	
+	fire_pattern = base_pattern # Use the default pattern
+	if pattern_override != -1:
+		fire_pattern = pattern_override # Or use the override
+		pattern_override = -1 # Reset override
+	
 	# --- Main Firing Logic ---
-	match pattern:
-		FirePattern.FORWARD, FirePattern.SPREAD:
+	match fire_pattern:
+		FirePattern.FORWARD, FirePattern.SPREAD, FirePattern.MIRRORED_FORWARD:
 			_execute_burst_fire(final_projectile_count, projectile_stats, allegiance, targeting_comp)
 		FirePattern.NOVA:
 			_execute_nova_fire(final_projectile_count, projectile_stats, allegiance)
-
 					
 		FirePattern.AIMED_AOE:
 			# For AoE, the "projectile count" is how many meteors we drop.
@@ -108,24 +116,41 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 			# The swing's rotation is set relative to the user's facing direction.
 			projectile.rotation = p_direction.angle()
 
+# This is a public function the weapon script can now call to override the pattern for a single shot.
+func override_pattern_for_next_shot(new_pattern: FirePattern):
+	pattern_override = new_pattern
+
 func _execute_burst_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, targeting_comp: TargetingComponent):
 	# Get a single base direction from the targeting component.
 	var base_direction = targeting_comp.get_fire_direction(weapon.global_position, weapon.last_fire_direction, p_allegiance)
+	var final_projectile_count = stats_comp.get_final_projectile_count()
 	
-	for i in range(p_count):
+	# If the pattern is MIRRORED_FORWARD, it DOUBLES the current projectile count.
+	if fire_pattern == FirePattern.MIRRORED_FORWARD:
+		final_projectile_count *= 2
+		
+	for i in range(final_projectile_count):
 		var fire_direction = base_direction
-		if pattern == FirePattern.SPREAD:
+		if fire_pattern == FirePattern.SPREAD or fire_pattern == FirePattern.MIRRORED_FORWARD:
 			fire_direction = base_direction.rotated(
 				deg_to_rad(randf_range(-spread_angle_degrees / 2.0, spread_angle_degrees / 2.0))
 			)
+		var should_delay = true
+		if fire_pattern == FirePattern.MIRRORED_FORWARD:
+			# Fire behind every odd shot (index 1, 3, etc.)
+			if i % 2 == 1:
+				fire_direction = fire_direction.rotated(PI)
+			if i % 2 == 0:
+				should_delay = false
 		
 		_spawn_projectile(p_stats, p_allegiance, fire_direction)
 		
 		# Delay burst
-		if i < p_count - 1 and burst_delay > 0:
+		if i < final_projectile_count - 1 and burst_delay > 0:
 			burst_delay_timer.wait_time = burst_delay
 			burst_delay_timer.start()
 			await burst_delay_timer.timeout
+			
 			
 	weapon.last_fire_direction = base_direction
 	

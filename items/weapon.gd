@@ -32,7 +32,7 @@ func update_stats():
 
 func _on_fire_rate_timer_timeout():
 	# Delegate the actual firing to the component.
-	fire_behavior_component.fire()
+	fire()
 
 ## Public method for manual firing (e.g., by enemy AI).
 func fire():
