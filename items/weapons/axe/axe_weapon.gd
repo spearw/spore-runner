@@ -5,7 +5,7 @@ extends Weapon
 
 # --- Transformation Flags ---
 var has_berserker: bool = false
-var has_charge: bool = true
+var has_charge: bool = false
 var charge_speed: float = 600.0
 var max_charge_distance: float = 300.0
 
