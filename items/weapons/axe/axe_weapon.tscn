@@ -24,5 +24,6 @@ metadata/_custom_type_script = "uid://5nf8qiekyyrw"
 
 [node name="FireBehaviorComponent" parent="." instance=ExtResource("5_mw5ru")]
 spawn_location = 1
+burst_delay = 0.5
 
 [connection signal="timeout" from="FireRateTimer" to="." method="_on_fire_rate_timer_timeout"]

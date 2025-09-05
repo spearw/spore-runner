@@ -4,7 +4,7 @@ class_name Upgrade
 extends Resource
 
 # --- Enums ---
-enum UpgradeType { UNLOCK_WEAPON, UNLOCK_ARTIFACT, UPGRADE }
+enum UpgradeType { UNLOCK_WEAPON, UNLOCK_ARTIFACT, UPGRADE, TRANSFORMATION }
 enum Rarity { COMMON, RARE, EPIC, LEGENDARY }
 enum ModifierType {MULTIPLICATIVE, ADDITIVE}
 

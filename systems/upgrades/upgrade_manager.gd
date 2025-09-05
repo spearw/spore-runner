@@ -168,6 +168,12 @@ func apply_upgrade(upgrade_package: Dictionary) -> void:
 				player_artifacts.add_child(new_artifact)
 			else:
 				printerr("Unlock upgrade '%s' is missing a scene!" % upgrade.id)
+		Upgrade.UpgradeType.TRANSFORMATION:
+			var target_weapon = player_equipment.get_node_or_null(upgrade.target_class_name)
+			if target_weapon and target_weapon.has_method("apply_transformation"):
+				target_weapon.apply_transformation(upgrade.key)
+			else:
+				printerr("Failed to apply transformation: could not find weapon '%s'" % upgrade.target_class_name)
 		Upgrade.UpgradeType.UPGRADE:
 			var target_item: Node = null
 			# Get upgrade target

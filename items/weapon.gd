@@ -17,6 +17,7 @@ var last_fire_direction: Vector2 = Vector2.RIGHT
 @onready var fire_behavior_component: FireBehaviorComponent = $FireBehaviorComponent
 @onready var stats_component: WeaponStatsComponent = $WeaponStatsComponent
 @onready var fire_rate_timer: Timer = $FireRateTimer
+@onready var targeting_component: TargetingComponent = $TargetingComponent
 
 func _ready():
 	fire_rate_timer.timeout.connect(_on_fire_rate_timer_timeout)
@@ -35,5 +36,5 @@ func _on_fire_rate_timer_timeout():
 	fire()
 
 ## Public method for manual firing (e.g., by enemy AI).
-func fire():
-	fire_behavior_component.fire()
+func fire(damage_multiplier=1):
+	fire_behavior_component.fire(damage_multiplier)

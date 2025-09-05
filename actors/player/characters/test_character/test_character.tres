@@ -3,7 +3,7 @@
 [ext_resource type="SpriteFrames" uid="uid://dpd2rd3gsogan" path="res://actors/player/characters/edgerunner/edgerunner_animations.tres" id="1_j0sld"]
 [ext_resource type="Script" uid="uid://nwbrj5ockot1" path="res://actors/player/character_data.gd" id="2_qg7sx"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="3_yxjex"]
-[ext_resource type="Resource" uid="uid://hdwb478pexpn" path="res://systems/upgrades/weapons/axe_unlock.tres" id="4_j0sld"]
+[ext_resource type="Resource" uid="uid://hdwb478pexpn" path="res://systems/upgrades/weapons/axe/axe_unlock.tres" id="4_j0sld"]
 
 [resource]
 script = ExtResource("2_qg7sx")

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://cw15bs4a6jwep"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_pm7jp"]
+
+[resource]
+script = ExtResource("1_pm7jp")
+id = "axe_charge_transform"
+display_name = "Axe: Charge"
+description = "Changes attack to automatically charging towards the enemy, granting invulnerability."
+type = 3
+target_class_name = "AxeWeapon"
+rarity = 0
+key = "charge"
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

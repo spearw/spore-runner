@@ -20,6 +20,7 @@ signal took_damage
 
 var upgrade_manager: Node
 
+var is_invulnerable: bool = false
 var max_health: int
 var current_health: int
 var level: int = 1
@@ -151,6 +152,8 @@ func add_experience(amount: int) -> void:
 ## Public method to apply damage to the player.
 ## @param amount: int - The amount of damage to inflict.
 func take_damage(amount: int) -> void:
+	if is_invulnerable:
+		return
 		# --- Armor Calculation ---
 	var armor = get_stat("armor")
 	var final_damage = max(0, amount - armor)
@@ -177,3 +180,12 @@ func die() -> void:
 	# For now, simply remove the player from the game.
 	# This will stop movement and further interactions.
 	queue_free()
+	
+func set_invulnerability(active: bool):
+	is_invulnerable = active
+	if active:
+		 # Make the player flash white or semi-transparent to show they are immune.
+		sprite.modulate = Color(1, 1, 1, 0.5) # Semi-transparent white
+	else:
+		# Return to normal.
+		sprite.modulate = Color.WHITE

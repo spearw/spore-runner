@@ -35,6 +35,7 @@ var stats_comp: WeaponStatsComponent;
 var targeting_comp: TargetingComponent;
 var pattern_override = -1 # -1 means no override
 var fire_pattern = -1
+var additional_multiplier = 1
 
 
 func _ready():
@@ -43,7 +44,8 @@ func _ready():
 	targeting_comp = weapon.get_node("TargetingComponent")
 
 ## The main public method called by the weapon's timer or AI.
-func fire():
+func fire(damage_multiplier=1):
+	additional_multiplier = damage_multiplier
 	if not is_instance_valid(weapon): return
 	
 	if not stats_comp or not targeting_comp:
@@ -95,9 +97,9 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 	# Calculate damage
 	if stats_comp.user.has_method("get_stat"):
 		var damage_increase = stats_comp.user.get_stat("damage_increase")
-		projectile.stats.damage = projectile.stats.base_damage * damage_increase
+		projectile.stats.damage = projectile.stats.base_damage * damage_increase * additional_multiplier
 	else:
-		projectile.stats.damage = projectile.stats.base_damage
+		projectile.stats.damage = projectile.stats.base_damage * additional_multiplier
 	projectile.allegiance = p_allegiance
 	
 	match spawn_location:
@@ -146,7 +148,7 @@ func _execute_burst_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: P
 		_spawn_projectile(p_stats, p_allegiance, fire_direction)
 		
 		# Delay burst
-		if i < final_projectile_count - 1 and burst_delay > 0:
+		if i < final_projectile_count - 1 and burst_delay > 0 and should_delay:
 			burst_delay_timer.wait_time = burst_delay
 			burst_delay_timer.start()
 			await burst_delay_timer.timeout
