@@ -16,6 +16,7 @@ signal health_changed(current_health, max_health)
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var health_bar: TextureProgressBar = $TextureProgressBar
 @onready var visibility_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var death_timer: Timer = $DeathTimer
 
 
 # --- Runtime Variables ---
@@ -23,6 +24,8 @@ var current_health: int
 var player_node: Node2D
 var behavior: EnemyBehavior = null
 var is_on_screen: bool = false
+var knockback_velocity: Vector2 = Vector2.ZERO
+var is_dying: bool = false
 
 # --- Signals ---
 signal died(enemy_stats)
@@ -86,6 +89,7 @@ func fire_weapons():
 ## Reduces the enemy's health and handles the consequences.
 ## @param amount: int - The amount of damage to inflict.
 func take_damage(amount: int) -> void:
+	if is_dying: return
 	current_health = max(0, current_health - amount)
 	
 	# Emit the signal for the health bar.
@@ -99,7 +103,12 @@ func take_damage(amount: int) -> void:
 		dmg_num_instance.start(amount, self.global_position)
 	
 	if current_health <= 0:
-		die()
+		# When health drops to 0, let death play out.
+		is_dying = true
+		death_timer.wait_time = 0.3
+		death_timer.one_shot = true
+		death_timer.timeout.connect(die)
+		death_timer.start()
 		
 ## Called by the health_changed signal to update the UI.
 func update_health_bar(current: int, max_val: int):
@@ -115,7 +124,7 @@ func apply_knockback(force: float, from_position: Vector2):
 	# Calculate the direction vector away from the damage source.
 	var direction = (self.global_position - from_position).normalized()
 	# Apply the force to the velocity. This will be handled by move_and_slide.
-	velocity += direction * force
+	knockback_velocity = direction * force
 
 ## Handles the enemy's death sequence.
 func die(drop_xp=true) -> void:
@@ -142,50 +151,58 @@ func die(drop_xp=true) -> void:
 
 
 func _physics_process(delta: float):
-	if is_instance_valid(behavior):
-		behavior.process_behavior(delta, self)
-		
-	# Only change animation if we are not in the middle of a special animation (like "fire").
-	if animation_player.is_playing():
-		return # Let the AnimationPlayer finish its job.
-		
-	if velocity.length() > 0.1:
-		animated_sprite.play("move")
+	# Knockback decays over time
+	knockback_velocity = knockback_velocity.lerp(Vector2.ZERO, 0.05)
+	if is_dying:
+		# In in "dying" state, just a ragdoll.
+		velocity = knockback_velocity
 	else:
-		# Play idle animation, if one exists
-		# animated_sprite.play("idle")
-		# animated_sprite.stop()
-		animated_sprite.frame = 0
-		
-	if stats.face_movement_direction:
-		# Only rotate if we are actually moving.
+		if is_instance_valid(behavior):
+			behavior.process_behavior(delta, self)
+			
+		# Only change animation if we are not in the middle of a special animation (like "fire").
+		if animation_player.is_playing():
+			return # Let the AnimationPlayer finish its job.
+			
 		if velocity.length() > 0.1:
-			# Calculate the angle of the velocity vector and add the offset.
-			# We must convert the degrees offset from our data into radians for the code.
-			var rotation_offset_radians = deg_to_rad(stats.rotation_offset_degrees)
-			animated_sprite.rotation = velocity.angle() + rotation_offset_radians
-	else:
-		if abs(velocity.x) > 0.1:
-			if velocity.x > 0:
-				animated_sprite.flip_h = true
-			else:
-				animated_sprite.flip_h = false
+			animated_sprite.play("move")
+		else:
+			# Play idle animation, if one exists
+			# animated_sprite.play("idle")
+			# animated_sprite.stop()
+			animated_sprite.frame = 0
+			
+		if stats.face_movement_direction:
+			# Only rotate if we are actually moving.
+			if velocity.length() > 0.1:
+				# Calculate the angle of the velocity vector and add the offset.
+				# We must convert the degrees offset from our data into radians for the code.
+				var rotation_offset_radians = deg_to_rad(stats.rotation_offset_degrees)
+				animated_sprite.rotation = velocity.angle() + rotation_offset_radians
+		else:
+			if abs(velocity.x) > 0.1:
+				if velocity.x > 0:
+					animated_sprite.flip_h = true
+				else:
+					animated_sprite.flip_h = false
 
-		
-	# Check for collision
-	for i in range(get_slide_collision_count()):
-		var collision = get_slide_collision(i)
-		if not collision: continue
-		
-		var collided_object = collision.get_collider()
-		
-		# Check if the object is the player.
-		if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
-			# Call the player's damage function, using this enemy's damage stat.
-			collided_object.take_damage(stats.damage)
-			# The normal enemy dies on contact but does not drop xp.
-			die(false)
-			return
+			
+		# Check for collision
+		for i in range(get_slide_collision_count()):
+			var collision = get_slide_collision(i)
+			if not collision: continue
+			
+			var collided_object = collision.get_collider()
+			
+			# Check if the object is the player.
+			if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
+				# Call the player's damage function, using this enemy's damage stat.
+				collided_object.take_damage(stats.damage)
+				# The normal enemy dies on contact but does not drop xp.
+				die(false)
+				return
+		velocity += knockback_velocity
+	move_and_slide()
 
 
 ## Plays a one-shot animation via the AnimationPlayer.

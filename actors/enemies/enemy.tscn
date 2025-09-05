@@ -87,3 +87,5 @@ libraries = {
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-5, -5, 10, 10)
+
+[node name="DeathTimer" type="Timer" parent="."]

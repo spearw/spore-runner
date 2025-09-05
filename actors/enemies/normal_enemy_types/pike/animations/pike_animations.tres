@@ -1,0 +1,38 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://dd1utmce46lri"]
+
+[ext_resource type="Texture2D" uid="uid://cdoc7awlnonce" path="res://actors/enemies/normal_enemy_types/pike/animations/move/UntitledArtwork1 - 1.png" id="1_h3ke2"]
+[ext_resource type="Texture2D" uid="uid://nfmtc0vmn1bg" path="res://actors/enemies/normal_enemy_types/pike/animations/move/UntitledArtwork1 - 2.png" id="2_gr6d3"]
+[ext_resource type="Texture2D" uid="uid://cdc1avpnbxmuh" path="res://actors/enemies/normal_enemy_types/pike/animations/move/UntitledArtwork1 - 3.png" id="3_leyxa"]
+[ext_resource type="Texture2D" uid="uid://qepgp2ies20e" path="res://actors/enemies/normal_enemy_types/pike/animations/move/UntitledArtwork1 - 4.png" id="4_20vv8"]
+[ext_resource type="Texture2D" uid="uid://yjwegmoymkx2" path="res://actors/enemies/normal_enemy_types/pike/animations/move/UntitledArtwork1 - 5.png" id="5_x1wgn"]
+[ext_resource type="Texture2D" uid="uid://8dd433qu1xbt" path="res://actors/enemies/normal_enemy_types/pike/animations/move/UntitledArtwork1 - 6.png" id="6_ljfyu"]
+[ext_resource type="Texture2D" uid="uid://dc7l0vsmq8dtn" path="res://actors/enemies/normal_enemy_types/pike/animations/move/UntitledArtwork1 - 7.png" id="7_v1332"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_h3ke2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_gr6d3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_leyxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_20vv8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_x1wgn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ljfyu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_v1332")
+}],
+"loop": true,
+"name": &"move",
+"speed": 6.0
+}]

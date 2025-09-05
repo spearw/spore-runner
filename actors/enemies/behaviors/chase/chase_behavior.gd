@@ -10,5 +10,3 @@ func process_behavior(delta: float, host: CharacterBody2D) -> void:
 		host.velocity = direction * host.stats.speed
 	else:
 		host.velocity = Vector2.ZERO
-		
-	host.move_and_slide()

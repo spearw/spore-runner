@@ -37,8 +37,6 @@ func process_behavior(delta: float, host: CharacterBody2D) -> void:
 		State.SHOOTING:
 			# Do nothing while waiting for the timer to fire.
 			host.velocity = Vector2.ZERO
-			
-	host.move_and_slide()
 
 func _on_firerate_timer_timeout():
 	var host = get_parent()
