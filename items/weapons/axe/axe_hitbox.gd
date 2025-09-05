@@ -3,7 +3,6 @@ extends Area2D
 
 var stats: ProjectileStats
 var allegiance: Projectile.Allegiance
-var final_damage: float
 
 var pierce_count: int = 0
 var hit_targets: Array = [] # Prevent hitting the same enemy twice in one swing

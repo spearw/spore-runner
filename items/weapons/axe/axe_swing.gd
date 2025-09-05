@@ -4,7 +4,6 @@ extends Node2D
 
 var stats: ProjectileStats
 var allegiance: Projectile.Allegiance
-var final_damage: float
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var hitbox: Area2D = $AxeHitbox
@@ -14,7 +13,6 @@ func _ready():
 	# Pass configuration data down to the hitbox.
 	hitbox.stats = self.stats
 	hitbox.allegiance = self.allegiance
-	hitbox.final_damage = self.final_damage
 	# Configure self from stats
 	hitbox.pierce_count = stats.pierce + 1 if stats.pierce != -1 else -1
 
