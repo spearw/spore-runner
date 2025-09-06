@@ -1,0 +1,33 @@
+[gd_scene load_steps=9 format=3 uid="uid://dihxgokojxw2l"]
+
+[ext_resource type="Script" uid="uid://cq36abi0abbyx" path="res://items/weapons/warhammer/hammer_weapon.gd" id="1_fxubb"]
+[ext_resource type="Resource" uid="uid://doao3xdxu6xx2" path="res://items/weapons/warhammer/hammer_swing_stats.tres" id="2_bmetw"]
+[ext_resource type="PackedScene" uid="uid://0n3mokxmn5to" path="res://items/weapons/warhammer/shockwave_projectile.tscn" id="2_dbtn2"]
+[ext_resource type="Resource" uid="uid://0xpb26raxxco" path="res://items/weapons/warhammer/shockwave_stats.tres" id="3_dbtn2"]
+[ext_resource type="PackedScene" uid="uid://bu385a16ns0bt" path="res://items/weapons/warhammer/hammer_swing.tscn" id="3_g88j3"]
+[ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="4_bmetw"]
+[ext_resource type="PackedScene" uid="uid://bi2e3pkfcknbt" path="res://systems/components/weapon_stats_component.tscn" id="4_dbtn2"]
+[ext_resource type="PackedScene" uid="uid://c5vl748oixb2p" path="res://systems/components/fire_behavior_component.tscn" id="5_xbq6d"]
+
+[node name="HammerWeapon" type="Node2D"]
+script = ExtResource("1_fxubb")
+shockwave_effect_scene = ExtResource("2_dbtn2")
+shockwave_stats = ExtResource("3_dbtn2")
+projectile_stats = ExtResource("2_bmetw")
+custom_projectile_scene = ExtResource("3_g88j3")
+base_fire_rate = 5.0
+
+[node name="FireRateTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="TargetingComponent" type="Node" parent="."]
+script = ExtResource("4_bmetw")
+metadata/_custom_type_script = "uid://5nf8qiekyyrw"
+
+[node name="WeaponStatsComponent" parent="." instance=ExtResource("4_dbtn2")]
+
+[node name="FireBehaviorComponent" parent="." instance=ExtResource("5_xbq6d")]
+spawn_location = 1
+burst_delay = 0.5
+
+[connection signal="timeout" from="FireRateTimer" to="." method="_on_fire_rate_timer_timeout"]

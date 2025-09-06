@@ -114,4 +114,4 @@ libraries = {
 }
 autoplay = "RESET"
 
-[node name="SwingTimer" type="Timer" parent="."]
+[node name="LifetimeTimer" type="Timer" parent="."]

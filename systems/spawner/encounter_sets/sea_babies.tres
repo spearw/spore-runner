@@ -1,15 +1,17 @@
-[gd_resource type="Resource" script_class="EncounterSet" load_steps=6 format=3 uid="uid://c5abx25utn3mg"]
+[gd_resource type="Resource" script_class="EncounterSet" load_steps=8 format=3 uid="uid://c5abx25utn3mg"]
 
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="1_e37mg"]
 [ext_resource type="Script" uid="uid://dnb7k3xg8h5sr" path="res://systems/spawner/encounter_set.gd" id="2_0mkja"]
 [ext_resource type="Resource" uid="uid://b1lkjc77082fm" path="res://actors/enemies/normal_enemy_types/fish/fish.tres" id="2_mepsr"]
 [ext_resource type="Resource" uid="uid://yleacb2jahp7" path="res://actors/enemies/normal_enemy_types/jelly/jelly.tres" id="3_mepsr"]
 [ext_resource type="Resource" uid="uid://b38kmy85mn3pc" path="res://actors/enemies/normal_enemy_types/pike/pike.tres" id="4_b7wdr"]
+[ext_resource type="Resource" uid="uid://cfgd0o08fqx37" path="res://actors/enemies/normal_enemy_types/comb_jelly/comb_jelly.tres" id="5_bkorg"]
+[ext_resource type="Resource" uid="uid://b8q77yds6prpk" path="res://actors/enemies/normal_enemy_types/noodle_boy/noodle_boy.tres" id="6_y5bhc"]
 
 [resource]
 script = ExtResource("2_0mkja")
-time_start = 0
+time_start = 10
 time_end = -1
 spawn_immediately_on_start = false
-enemies = Array[ExtResource("1_e37mg")]([ExtResource("2_mepsr"), ExtResource("3_mepsr"), ExtResource("4_b7wdr")])
+enemies = Array[ExtResource("1_e37mg")]([ExtResource("2_mepsr"), ExtResource("3_mepsr"), ExtResource("4_b7wdr"), ExtResource("5_bkorg"), ExtResource("6_y5bhc")])
 metadata/_custom_type_script = "uid://dnb7k3xg8h5sr"

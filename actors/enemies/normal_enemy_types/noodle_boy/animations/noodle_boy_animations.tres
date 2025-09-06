@@ -1,0 +1,102 @@
+[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://34uegh8l3hsg"]
+
+[ext_resource type="Texture2D" uid="uid://cbqkwletsam80" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 1.png" id="1_xpx2l"]
+[ext_resource type="Texture2D" uid="uid://c4np85xsje6su" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 2.png" id="2_030ss"]
+[ext_resource type="Texture2D" uid="uid://b3r32i5cooj35" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 3.png" id="3_e186t"]
+[ext_resource type="Texture2D" uid="uid://hruue5fdqjt4" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 4.png" id="4_rnwha"]
+[ext_resource type="Texture2D" uid="uid://drrpxl2x41w70" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 5.png" id="5_i7mp1"]
+[ext_resource type="Texture2D" uid="uid://dvxo4bp28qxfg" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 6.png" id="6_llkai"]
+[ext_resource type="Texture2D" uid="uid://dpsmdrh3lcxgx" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 7.png" id="7_y2jxm"]
+[ext_resource type="Texture2D" uid="uid://dryurww5m6us7" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 8.png" id="8_wt7nn"]
+[ext_resource type="Texture2D" uid="uid://dfcn1js24py6q" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 9.png" id="9_a4jwd"]
+[ext_resource type="Texture2D" uid="uid://bge2mnf8rhk1m" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 10.png" id="10_04yil"]
+[ext_resource type="Texture2D" uid="uid://bkr2wjk4h7xv5" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 11.png" id="11_ins45"]
+[ext_resource type="Texture2D" uid="uid://dbp15xfvw4qdf" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 12.png" id="12_bb5c6"]
+[ext_resource type="Texture2D" uid="uid://da1tpj2q68v1" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 13.png" id="13_yfa84"]
+[ext_resource type="Texture2D" uid="uid://b4p3fx7e82l1a" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 14.png" id="14_3ingj"]
+[ext_resource type="Texture2D" uid="uid://bb6755k4rcm63" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 15.png" id="15_j08ga"]
+[ext_resource type="Texture2D" uid="uid://dw20t6ssoo5l2" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 16.png" id="16_17yep"]
+[ext_resource type="Texture2D" uid="uid://qd3d8gwp3u7j" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 17.png" id="17_dcv7s"]
+[ext_resource type="Texture2D" uid="uid://b2ve3ao6symei" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 18.png" id="18_oljjh"]
+[ext_resource type="Texture2D" uid="uid://b07lkix0iokeb" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 19.png" id="19_81goa"]
+[ext_resource type="Texture2D" uid="uid://cpyj2s1r0o511" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 20.png" id="20_m7080"]
+[ext_resource type="Texture2D" uid="uid://bx0xo2y42qf6t" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 21.png" id="21_0uofr"]
+[ext_resource type="Texture2D" uid="uid://d33rnanxodlut" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 22.png" id="22_ftrcf"]
+[ext_resource type="Texture2D" uid="uid://c1e77yqie6pdj" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/move/UntitledArtwork1 - 23.png" id="23_tcecl"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xpx2l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_030ss")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_e186t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rnwha")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i7mp1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_llkai")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_y2jxm")
+}, {
+"duration": 0.5,
+"texture": ExtResource("8_wt7nn")
+}, {
+"duration": 0.5,
+"texture": ExtResource("9_a4jwd")
+}, {
+"duration": 0.5,
+"texture": ExtResource("10_04yil")
+}, {
+"duration": 1.5,
+"texture": ExtResource("11_ins45")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_bb5c6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_yfa84")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_3ingj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_j08ga")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_17yep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_dcv7s")
+}, {
+"duration": 0.5,
+"texture": ExtResource("18_oljjh")
+}, {
+"duration": 0.5,
+"texture": ExtResource("19_81goa")
+}, {
+"duration": 0.5,
+"texture": ExtResource("20_m7080")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_0uofr")
+}, {
+"duration": 1.5,
+"texture": ExtResource("22_ftrcf")
+}, {
+"duration": 1.5,
+"texture": ExtResource("23_tcecl")
+}],
+"loop": true,
+"name": &"move",
+"speed": 11.0
+}]

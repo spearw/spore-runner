@@ -103,6 +103,7 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 	else:
 		projectile.stats.damage = projectile.stats.base_damage * additional_multiplier
 	projectile.allegiance = p_allegiance
+	projectile.weapon = weapon
 	
 	match spawn_location:
 		SpawnLocation.IN_WORLD:

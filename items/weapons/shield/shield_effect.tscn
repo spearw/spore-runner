@@ -128,4 +128,4 @@ libraries = {
 }
 autoplay = "reset"
 
-[node name="SwingTimer" type="Timer" parent="."]
+[node name="ShotTimer" type="Timer" parent="."]

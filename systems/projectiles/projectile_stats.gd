@@ -14,6 +14,9 @@ var damage = base_damage
 # 0 = hits one target. -1 = infinite hits.
 @export var pierce: int = 0
 
+# Armor pen. Reduces armor by % before damage is calculated.
+@export_range(0.0, 1.0) var armor_penetration: float = 0.0
+
 # --- Visuals ---
 @export var texture: Texture2D
 @export var scale: Vector2 = Vector2(1.0, 1.0)

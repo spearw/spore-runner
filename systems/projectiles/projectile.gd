@@ -1,7 +1,7 @@
 ## projectile.gd
 ## A generic projectile. Its behavior is configured by a ProjectileStats resource.
 class_name Projectile
-extends Area2D
+extends Node2D
 
 # --- Allegiance ---
 # This determines who the projectile belongs to and who it should hit.
@@ -12,11 +12,14 @@ var allegiance: Allegiance
 var stats: ProjectileStats
 var direction: Vector2 = Vector2.RIGHT
 var pierce_count: int = 0
+# Reference to weapon that shot this.
+var weapon: Node2D
 
 # --- Node References ---
-@onready var sprite: Sprite2D = $Sprite2D
-@onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var swing_timer: Timer = $LifetimeTimer
+@onready var sprite: Sprite2D = $Area2D/Sprite2D
+@onready var collision_shape: CollisionShape2D = $Area2D/CollisionShape2D
+@onready var lifetime_timer: Timer = $LifetimeTimer
+@onready var area2d: Area2D = $Area2D
 
 func _ready():
 	# This function is called AFTER the spawner has set properties.
@@ -41,12 +44,12 @@ func _ready():
 	match allegiance:
 		Allegiance.PLAYER:
 			# I am a player projectile, I should hit enemies.
-			self.collision_layer = 1 << 2 # Set layer to 'player_projectile' (layer 3)
-			self.collision_mask = 1 << 1  # Set mask to scan for 'enemy_body' (layer 2)
+			self.area2d.collision_layer = 1 << 2 # Set layer to 'player_projectile' (layer 3)
+			self.area2d.collision_mask = 1 << 1  # Set mask to scan for 'enemy_body' (layer 2)
 		Allegiance.ENEMY:
 			# I am an enemy projectile, I should hit the player.
-			self.collision_layer = 1 << 4 # Set layer to 'enemy_projectile' (layer 5)
-			self.collision_mask = 1 << 0  # Set mask to scan for 'player_body' (layer 1)
+			self.area2d.collision_layer = 1 << 4 # Set layer to 'enemy_projectile' (layer 5)
+			self.area2d.collision_mask = 1 << 0  # Set mask to scan for 'player_body' (layer 1)
 	
 	if stats.is_aoe:
 		# This is an explosion, run the AoE logic.
@@ -58,19 +61,19 @@ func _ready():
 func _intialize_as_bullet():
 	# Configure lifetime.
 	if stats.lifetime > 0:
-		swing_timer.wait_time = stats.lifetime
-		swing_timer.one_shot = true
-		swing_timer.timeout.connect(queue_free) # Delete self when timer ends
-		swing_timer.start()
+		lifetime_timer.wait_time = stats.lifetime
+		lifetime_timer.one_shot = true
+		lifetime_timer.timeout.connect(queue_free) # Delete self when timer ends
+		lifetime_timer.start()
 
 	# Connect the damage signal.
-	self.body_entered.connect(_on_body_entered)
+	self.area2d.body_entered.connect(_on_body_entered)
 	
 func _execute_aoe():
 	
 	await get_tree().process_frame # Wait for physics server
 	
-	var bodies = get_overlapping_bodies()
+	var bodies = area2d.get_overlapping_bodies()
 
 	# Play the visual effect
 	sprite.texture = stats.aoe_effect_sprite
@@ -118,7 +121,7 @@ func _on_body_entered(body: Node2D):
 	if can_damage:
 		# Apply damage and knockback if the body is a valid target.
 		if body.has_method("take_damage"):
-			body.take_damage(stats.damage)
+			body.take_damage(stats.damage, stats.armor_penetration)
 		if stats.knockback_force > 0 and body.has_method("apply_knockback"):
 			body.apply_knockback(stats.knockback_force, self.global_position)
 			

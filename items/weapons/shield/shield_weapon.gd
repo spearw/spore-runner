@@ -11,6 +11,11 @@ var has_tower: bool = false
 var user: Node2D;
 var shield_instance: Node2D;
 
+func _ready():
+	super._ready()
+	# Init shield immediately
+	fire()
+
 func fire(multiplier: int = 1):
 	user = stats_component.user
 	if not is_instance_valid(user): return

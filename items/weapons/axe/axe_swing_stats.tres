@@ -1,17 +1,16 @@
-[gd_resource type="Resource" script_class="ProjectileStats" load_steps=3 format=3 uid="uid://b7sb8gmwmh508"]
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=2 format=3 uid="uid://b7sb8gmwmh508"]
 
 [ext_resource type="Script" uid="uid://dm4u2phuyptno" path="res://systems/projectiles/projectile_stats.gd" id="1_0nxch"]
-[ext_resource type="Texture2D" uid="uid://dpyd707nmp356" path="res://items/weapons/axe/war-axe.png" id="2_0nxch"]
 
 [resource]
 script = ExtResource("1_0nxch")
-base_damage = 30
+base_damage = 20
 speed = 0.0
 lifetime = 0.25
 pierce = -1
-texture = ExtResource("2_0nxch")
+armor_penetration = 0.0
 scale = Vector2(3, 2)
-knockback_force = 250.0
+knockback_force = 200.0
 is_aoe = false
 aoe_effect_scale = Vector2(1.5, 1.5)
 aoe_effect_duration = 0.4

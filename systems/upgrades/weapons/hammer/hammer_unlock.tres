@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://bl22e3qpounco"]
+
+[ext_resource type="PackedScene" uid="uid://dihxgokojxw2l" path="res://items/weapons/warhammer/hammer_weapon.tscn" id="1_yed26"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_2s53l"]
+
+[resource]
+script = ExtResource("2_2s53l")
+id = "hammer_unlock"
+display_name = "Hammer"
+description = "Slow, powerful melee weapon with high armor pen."
+type = 0
+target_class_name = "HammerWeapon"
+scene_to_unlock = ExtResource("1_yed26")
+rarity = 2
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

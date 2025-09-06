@@ -88,9 +88,17 @@ func fire_weapons():
 	
 ## Reduces the enemy's health and handles the consequences.
 ## @param amount: int - The amount of damage to inflict.
-func take_damage(amount: int) -> void:
+## @param armor_pen: float - Armor penetration of incoming hit.
+func take_damage(amount: int, armor_pen: float) -> void:
 	if is_dying: return
-	current_health = max(0, current_health - amount)
+	
+	# Armor is reduced by the penetration percentage.
+	# Effective Armor = Armor * (1 - Penetration)
+	var effective_armor = self.stats.armor * (1.0 - armor_pen)
+	var damage_taken = max(0, amount - effective_armor)
+	
+	# Take damage.
+	current_health = max(0, current_health - damage_taken)
 	
 	# Emit the signal for the health bar.
 	health_changed.emit(current_health, stats.max_health)
@@ -168,9 +176,8 @@ func _physics_process(delta: float):
 			animated_sprite.play("move")
 		else:
 			# Play idle animation, if one exists
-			# animated_sprite.play("idle")
+			animated_sprite.play("idle")
 			# animated_sprite.stop()
-			animated_sprite.frame = 0
 			
 		if stats.face_movement_direction:
 			# Only rotate if we are actually moving.
@@ -197,7 +204,7 @@ func _physics_process(delta: float):
 			# Check if the object is the player.
 			if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
 				# Call the player's damage function, using this enemy's damage stat.
-				collided_object.take_damage(stats.damage)
+				collided_object.take_damage(stats.damage, stats.armor_pen)
 				# The normal enemy dies on contact but does not drop xp.
 				die(false)
 				return

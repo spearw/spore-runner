@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=3 format=3 uid="uid://0xpb26raxxco"]
+
+[ext_resource type="Script" uid="uid://dm4u2phuyptno" path="res://systems/projectiles/projectile_stats.gd" id="1_oc258"]
+[ext_resource type="Texture2D" uid="uid://cavykkekrfoa7" path="res://items/weapons/warhammer/crater.png" id="2_6jqvc"]
+
+[resource]
+script = ExtResource("1_oc258")
+base_damage = 10
+speed = 0.0
+lifetime = 0.25
+pierce = -1
+armor_penetration = 1.0
+texture = ExtResource("2_6jqvc")
+scale = Vector2(1, 1)
+knockback_force = 75.0
+is_aoe = false
+aoe_effect_scale = Vector2(1.5, 1.5)
+aoe_effect_duration = 0.4
+metadata/_custom_type_script = "uid://dm4u2phuyptno"

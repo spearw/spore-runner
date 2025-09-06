@@ -175,14 +175,16 @@ func remove_timed_bonus(stat_key: String, value: float):
 
 ## Public method to apply damage to the player.
 ## @param amount: int - The amount of damage to inflict.
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, armor_pen: float) -> void:
 	if is_invulnerable:
 		return
-		# --- Armor Calculation ---
-	var armor = get_stat("armor")
-	var final_damage = max(0, amount - armor)
-	# Reduce current health, ensuring it does not go below zero.
-	current_health = max(0, current_health - amount)
+		
+	# --- Armor Calculation ---
+	var effective_armor = self.get_stat("armor") * (1.0 - armor_pen)
+	var damage_taken = max(0, amount - effective_armor)
+	
+	# Take damage.
+	current_health = max(0, current_health - damage_taken)
 	
 	# Emit the signal to notify listeners (like the UI) of the health change.
 	health_changed.emit(current_health, max_health)

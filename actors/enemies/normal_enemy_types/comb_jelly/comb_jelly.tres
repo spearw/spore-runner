@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=6 format=3 uid="uid://cfgd0o08fqx37"]
+
+[ext_resource type="PackedScene" uid="uid://np8hsandn71t" path="res://actors/enemies/behaviors/shoot/shoot_behavior.tscn" id="1_iptgc"]
+[ext_resource type="Resource" uid="uid://c7ttwmrsaxqss" path="res://items/pickups/experience_gem/types/medium_gem.tres" id="2_o8vgm"]
+[ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_3dq7q"]
+[ext_resource type="SpriteFrames" uid="uid://don3jnndc8rvp" path="res://actors/enemies/normal_enemy_types/comb_jelly/animations/comb_jelly_animations.tres" id="4_d1t4s"]
+[ext_resource type="PackedScene" uid="uid://ct1o670bpbrau" path="res://items/weapons/spike_ring/spike_ring_weapon.tscn" id="5_1ncx8"]
+
+[resource]
+script = ExtResource("3_3dq7q")
+max_health = 200
+speed = 30.0
+damage = 25
+armor = 10
+armor_pen = 0
+sprite_frames = ExtResource("4_d1t4s")
+scale = Vector2(2, 2)
+modulate = Color(1, 1, 1, 1)
+face_movement_direction = false
+rotation_offset_degrees = 0.0
+behavior_scene = ExtResource("1_iptgc")
+weapon_scenes = Array[PackedScene]([ExtResource("5_1ncx8")])
+challenge_rating = 10.0
+experience_gem_stats = ExtResource("2_o8vgm")
+soul_drop_chance = 0.05
+metadata/_custom_type_script = "uid://b7tpycat8da2s"

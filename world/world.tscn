@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="2_mad0u"]
 [ext_resource type="PackedScene" uid="uid://dulw5xigdffvi" path="res://actors/player/player.tscn" id="3_ocfjn"]
+[ext_resource type="Resource" uid="uid://ck0xxgv4gmkc1" path="res://systems/spawner/encounter_sets/sea_babies2.tres" id="5_ov2xu"]
 [ext_resource type="Script" uid="uid://cdevlwpbk7w8g" path="res://systems/upgrades/upgrade_manager.gd" id="6_h8lre"]
 [ext_resource type="Script" uid="uid://dnb7k3xg8h5sr" path="res://systems/spawner/encounter_set.gd" id="8_ocfjn"]
-[ext_resource type="Resource" uid="uid://bilgtioohtoti" path="res://systems/spawner/encounter_sets/golem.tres" id="10_b2suy"]
 [ext_resource type="Resource" uid="uid://c5abx25utn3mg" path="res://systems/spawner/encounter_sets/sea_babies.tres" id="11_h8lre"]
 [ext_resource type="PackedScene" uid="uid://vnih610ckder" path="res://ui/stats_panel/stats_panel.tscn" id="11_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://uaiyj5jeo46l" path="res://systems/spawner/encounter_director.tscn" id="15_j34ew"]
@@ -17,7 +17,7 @@ script = ExtResource("1_ov2xu")
 player_scene = ExtResource("3_ocfjn")
 
 [node name="EncounterDirector" parent="." instance=ExtResource("15_j34ew")]
-encounter_sets = Array[ExtResource("8_ocfjn")]([ExtResource("10_b2suy"), ExtResource("11_h8lre")])
+encounter_sets = Array[ExtResource("8_ocfjn")]([ExtResource("5_ov2xu"), ExtResource("11_h8lre")])
 
 [node name="UpgradeManager" type="Node" parent="."]
 script = ExtResource("6_h8lre")

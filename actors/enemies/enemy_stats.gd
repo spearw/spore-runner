@@ -7,6 +7,8 @@ extends Resource
 @export var max_health: int = 30
 @export var speed: float = 120.0
 @export var damage: int = 10
+@export var armor: int = 0
+@export var armor_pen: int = 0
 
 # --- Visuals ---
 @export var sprite_frames: SpriteFrames

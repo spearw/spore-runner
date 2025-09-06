@@ -21,7 +21,6 @@ var last_fire_direction: Vector2 = Vector2.RIGHT
 
 func _ready():
 	fire_rate_timer.timeout.connect(_on_fire_rate_timer_timeout)
-	fire()
 	
 # Update internal stats whenever the user's stats change.
 func update_stats():

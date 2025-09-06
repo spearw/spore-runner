@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://b8q77yds6prpk"]
+
+[ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/chase/chase_behavior.tscn" id="1_6w6ff"]
+[ext_resource type="Resource" uid="uid://mte760o2hl0i" path="res://items/pickups/experience_gem/types/small_gem.tres" id="2_6w4x6"]
+[ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_4cg34"]
+[ext_resource type="SpriteFrames" uid="uid://34uegh8l3hsg" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/noodle_boy_animations.tres" id="4_fes0k"]
+
+[resource]
+script = ExtResource("3_4cg34")
+max_health = 4
+speed = 200.0
+damage = 5
+armor = 0
+armor_pen = 0
+sprite_frames = ExtResource("4_fes0k")
+scale = Vector2(1, 1)
+modulate = Color(1, 1, 1, 1)
+face_movement_direction = true
+rotation_offset_degrees = 35.0
+behavior_scene = ExtResource("1_6w6ff")
+weapon_scenes = Array[PackedScene]([])
+challenge_rating = 1.0
+experience_gem_stats = ExtResource("2_6w4x6")
+soul_drop_chance = 0.05
+metadata/_custom_type_script = "uid://b7tpycat8da2s"

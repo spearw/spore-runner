@@ -6,6 +6,10 @@ extends Node
 # Emitted when a treasure chest is collected.
 signal boss_reward_requested
 
+# Emitted when enemy hit
+# TODO: is this performant?
+signal enemy_hit(hit_details: Dictionary)
+
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		# Tell GameData to save before the game quits.
