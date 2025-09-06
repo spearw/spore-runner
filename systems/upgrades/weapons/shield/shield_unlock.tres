@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://cugikhkm114jd"]
+
+[ext_resource type="PackedScene" uid="uid://cg270bcu7rx63" path="res://items/weapons/shield/shield_weapon.tscn" id="1_d12da"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_xketg"]
+
+[resource]
+script = ExtResource("2_xketg")
+id = "shield_unlock"
+display_name = "Shield"
+description = "Blocks melee attacks while durability holds."
+type = 0
+target_class_name = "ShieldWeapon"
+scene_to_unlock = ExtResource("1_d12da")
+rarity = 1
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"
