@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://bth2l0l352cod"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_u6yft"]
+
+[resource]
+script = ExtResource("1_u6yft")
+id = "spear_hedgehog_transform"
+display_name = "Shield: Hedgehog"
+description = "Spear now attacks in cone in front."
+type = 3
+target_class_name = "SpearWeapon"
+rarity = 3
+key = "hedgehog"
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

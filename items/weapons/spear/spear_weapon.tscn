@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://q1majp2jufll"]
+
+[ext_resource type="Script" uid="uid://ck1t6v4gmb6es" path="res://items/weapons/spear/spear_weapon.gd" id="1_2k0ji"]
+[ext_resource type="Resource" uid="uid://ihonrs2dbfrl" path="res://items/weapons/spear/spear_swing_stats.tres" id="2_83nuq"]
+[ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="2_a40c6"]
+[ext_resource type="PackedScene" uid="uid://bi2e3pkfcknbt" path="res://systems/components/weapon_stats_component.tscn" id="3_83nuq"]
+[ext_resource type="PackedScene" uid="uid://sc1rqwo1mhe8" path="res://items/weapons/spear/spear_swing.tscn" id="3_dk6hj"]
+[ext_resource type="PackedScene" uid="uid://c5vl748oixb2p" path="res://systems/components/fire_behavior_component.tscn" id="4_dk6hj"]
+
+[node name="SpearWeapon" type="Node2D"]
+script = ExtResource("1_2k0ji")
+projectile_stats = ExtResource("2_83nuq")
+custom_projectile_scene = ExtResource("3_dk6hj")
+base_fire_rate = 1.5
+
+[node name="FireRateTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="TargetingComponent" type="Node" parent="."]
+script = ExtResource("2_a40c6")
+metadata/_custom_type_script = "uid://5nf8qiekyyrw"
+
+[node name="WeaponStatsComponent" parent="." instance=ExtResource("3_83nuq")]
+
+[node name="FireBehaviorComponent" parent="." instance=ExtResource("4_dk6hj")]
+spawn_location = 1
+burst_delay = 0.5
+
+[connection signal="timeout" from="FireRateTimer" to="." method="_on_fire_rate_timer_timeout"]

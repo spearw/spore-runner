@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=2 format=3 uid="uid://ihonrs2dbfrl"]
+
+[ext_resource type="Script" uid="uid://dm4u2phuyptno" path="res://systems/projectiles/projectile_stats.gd" id="1_km307"]
+
+[resource]
+script = ExtResource("1_km307")
+base_damage = 15
+speed = 0.0
+lifetime = 0.25
+pierce = -1
+scale = Vector2(2, 2)
+knockback_force = 100.0
+is_aoe = false
+aoe_effect_scale = Vector2(1.5, 1.5)
+aoe_effect_duration = 0.4
+metadata/_custom_type_script = "uid://dm4u2phuyptno"

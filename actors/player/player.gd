@@ -31,6 +31,8 @@ var last_move_direction: Vector2 = Vector2.RIGHT
 # This dictionary will store the sum of all percentage-based bonuses collected during a run.
 # Key: bonus_key (String, e.g., "move_speed_bonus"), Value: total bonus (float, e.g., 0.25 for +25%)
 var in_run_bonuses: Dictionary = {}
+# Same as above, but temporary.
+var timed_bonuses: Dictionary = {}
 
 ## initialize_character is called by world.tscn.
 func _ready() -> void:
@@ -94,6 +96,7 @@ func get_stat_multiplier(key: String) -> float:
 ## Returns the final, calculated value for any player stat.
 ## @param key: String - The key for the stat (e.g., "move_speed", "damage").
 func get_stat(key: String):
+	#TODO: Add timed bonuses for all stats
 	match key:
 		"move_speed":
 			return stats.base_move_speed * get_stat_multiplier(key)
@@ -123,7 +126,8 @@ func get_stat(key: String):
 			# Armor is a flat stat, so just add bonuses. Multiplier doesn't apply.
 			var permanent_bonus = GameData.data["permanent_stats"].get("armor", 0)
 			var in_run_bonus = in_run_bonuses.get("armor", 0)
-			return stats.base_armor + permanent_bonus + in_run_bonus
+			var timed_bonus = timed_bonuses.get("armor", 0)
+			return stats.base_armor + permanent_bonus + in_run_bonus + timed_bonus
 		_:
 			printerr("get_stat: Requested unknown stat key: '", key, "'")
 			return 1.0 # Return a safe default
@@ -148,6 +152,26 @@ func add_experience(amount: int) -> void:
 		leveled_up.emit(level)
 		# Re-emit the experience_changed signal to update the UI with the new values.
 		experience_changed.emit(current_experience, experience_to_next_level)
+		
+## Public function to apply a temporary, flat bonus to a stat.
+func apply_timed_bonus(stat_key: String, value: float, duration: float):
+	var current_bonus = timed_bonuses.get(stat_key, 0.0)
+	timed_bonuses[stat_key] = current_bonus + value
+	print("Applied timed bonus: +%s %s for %.1fs" % [value, stat_key, duration])
+	
+	# Create a one-shot timer to remove the bonus after the duration.
+	var timer = get_tree().create_timer(duration)
+	# Use a lambda function to pass arguments to the timeout signal.
+	timer.timeout.connect(func(): remove_timed_bonus(stat_key, value))
+	
+	notify_stats_changed()
+
+## Removes a temporary bonus. Called by the timer.
+func remove_timed_bonus(stat_key: String, value: float):
+	var current_bonus = timed_bonuses.get(stat_key, 0.0)
+	timed_bonuses[stat_key] = current_bonus - value
+	print("Timed bonus expired: -%s %s" % [value, stat_key])
+	notify_stats_changed()
 
 ## Public method to apply damage to the player.
 ## @param amount: int - The amount of damage to inflict.

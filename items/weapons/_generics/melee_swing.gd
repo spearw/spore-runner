@@ -1,12 +1,12 @@
-## axe_swing.gd
-## The controller for the axe swing effect. Plays the animation.
+## melee_swing.gd
+## The controller for the melee swing effect. Plays the animation.
 extends Node2D
 
 var stats: ProjectileStats
 var allegiance: Projectile.Allegiance
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var hitbox: Area2D = $AxeHitbox
+@onready var hitbox: Area2D = $Hitbox
 @onready var swing_timer: Timer = $SwingTimer
 
 func _ready():

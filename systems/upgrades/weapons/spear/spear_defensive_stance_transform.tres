@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://dj2uaqc5v0oad"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_87srk"]
+
+[resource]
+script = ExtResource("1_87srk")
+id = "spear_defensive_stance_transform"
+display_name = "Shield: Defensive Stance"
+description = "Spear grants armor for short time after strike"
+type = 3
+target_class_name = "SpearWeapon"
+rarity = 3
+key = "defensive_stance"
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

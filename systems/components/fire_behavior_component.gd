@@ -6,10 +6,11 @@ extends Node
 # --- Define the different ways a weapon can fire ---
 enum FirePattern {
 	FORWARD,      # Fires all projectiles in a single targeted direction.
-	SPREAD,       # Fires all projectiles in a cone towards a target.
+	SPREAD,       # Fires all projectiles in a random cone towards a target.
 	NOVA,         # Fires all projectiles in a 360-degree circle (dumbfire).
 	AIMED_AOE,    # Fires exactly on targeted enemy with small delay
 	MIRRORED_FORWARD, # Fires projectiles in single targeted direction, also behind.
+	CONE, 		# Fires all projectiles in a set cone towards a target.
 }
 enum SpawnLocation {
 	IN_WORLD,  # For normal, independent projectiles (bullets, fireballs).
@@ -67,7 +68,8 @@ func fire(damage_multiplier=1):
 			_execute_burst_fire(final_projectile_count, projectile_stats, allegiance, targeting_comp)
 		FirePattern.NOVA:
 			_execute_nova_fire(final_projectile_count, projectile_stats, allegiance)
-					
+		FirePattern.CONE:
+			_execute_cone_fire(final_projectile_count, projectile_stats, allegiance, targeting_comp)
 		FirePattern.AIMED_AOE:
 			# For AoE, the "projectile count" is how many meteors we drop.
 			for i in range(final_projectile_count):
@@ -167,6 +169,17 @@ func _execute_nova_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: Pr
 			burst_delay_timer.wait_time = burst_delay
 			burst_delay_timer.start()
 			await burst_delay_timer.timeout
+			
+func _execute_cone_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, targeting_comp: TargetingComponent):
+	# Get a single base direction from the targeting component.
+	var base_direction = targeting_comp.get_fire_direction(weapon.global_position, weapon.last_fire_direction, p_allegiance)
+	var final_projectile_count = stats_comp.get_final_projectile_count()
+	# Projectile angle is 45 degrees / projectile count
+	var angle_step = PI / 4 / p_count
+	for i in range(p_count):
+		# Projectile arc is -22.5 degrees + current step value evenly spaced
+		var fire_direction = base_direction.rotated(-(PI/8) + (angle_step * i))
+		_spawn_projectile(p_stats, p_allegiance, fire_direction)
 	
 ## Handles the sequence for a single AoE strike.
 func _execute_aoe_strike(target_pos: Vector2, p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance):
