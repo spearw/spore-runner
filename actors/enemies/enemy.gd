@@ -33,6 +33,7 @@ signal died(enemy_stats)
 
 
 func _ready() -> void:
+	modulate = stats.modulate
 	player_node = get_tree().get_first_node_in_group("player")
 	
 	# Delete if not properly init
@@ -187,11 +188,19 @@ func _physics_process(delta: float):
 				var rotation_offset_radians = deg_to_rad(stats.rotation_offset_degrees)
 				animated_sprite.rotation = velocity.angle() + rotation_offset_radians
 		else:
+			# Flip sprite to face player
 			if abs(velocity.x) > 0.1:
 				if velocity.x > 0:
-					animated_sprite.flip_h = true
+					# Is flipped means base sprite pointing wrong direction.
+					if stats.is_flipped:
+						animated_sprite.flip_h = true
+					else:
+						animated_sprite.flip_h = false
 				else:
-					animated_sprite.flip_h = false
+					if stats.is_flipped:
+						animated_sprite.flip_h = false
+					else:
+						animated_sprite.flip_h = true
 
 			
 		# Check for collision

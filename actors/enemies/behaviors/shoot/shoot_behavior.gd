@@ -43,8 +43,10 @@ func _on_firerate_timer_timeout():
 	if not is_instance_valid(host): return
 	
 	# Play fire animation, if it has one
-	if host.has_method("play_one_shot_animation"):
-		host.play_one_shot_animation("fire")
+	# TODO: readd this once we have enemies that need this behavior and move eel out of here.
+	#if host.has_method("play_one_shot_animation"):
+		#if host.animation_player.has_animation("fire"):
+			#host.play_one_shot_animation("fire")
 	# Tell the host to fire whatever weapons it has.
 	if host.has_method("fire_weapons"):
 		host.fire_weapons()

@@ -21,6 +21,7 @@ extends Resource
 # An angle in degrees to correct the sprite's base orientation.
 # (e.g., if the art points 'up', set this to 90 to make it face 'right').
 @export var rotation_offset_degrees: float = 0.0
+@export var is_flipped: bool = false
 @export var behavior_scene: PackedScene
 # The weapon scenes to automatically equip to this enemy on spawn.
 @export var weapon_scenes: Array[PackedScene]
