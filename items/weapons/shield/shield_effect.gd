@@ -16,6 +16,12 @@ func _ready():
 	# Initialize durability from stats
 	current_durability = stats.pierce + 1 if stats.pierce != -1 else -1
 	
+	# Ensure masks are correct
+	self.hitbox.collision_mask = 1 << 1 # Enemy mask
+	if can_block_projectiles:
+		# Add enemy projectile mask
+		self.hitbox.collision_mask |= (1 << 4) 
+	
 	# Connect signals for blocking melee and (later) projectiles
 	hitbox.body_entered.connect(_on_body_entered)
 	if can_block_projectiles:

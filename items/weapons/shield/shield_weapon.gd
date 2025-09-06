@@ -26,14 +26,15 @@ func fire(multiplier: int = 1):
 		
 	# Update shield stats, for new or existing shield
 	shield_instance.stats = self.projectile_stats.duplicate()
-	# Pass transformation data
-	shield_instance.can_block_projectiles = self.has_tower
 	# Calculate final damage/knockback based on upgrades
 	var user_damage_mult = user.get_stat("damage_increase")
 	if self.has_bash:
 		shield_instance.stats.knockback_force = projectile_stats.knockback_force * 3.0
 	else:
 		shield_instance.stats.damage = 0
+	if self.has_tower:
+		shield_instance.can_block_projectiles = true
+		shield_instance.stats.pierce = shield_instance.stats.pierce * 2
 	
 	if new_spawn:
 		# Parent the shield to the user.
@@ -52,16 +53,19 @@ func _physics_process(_delta):
 		shield_instance.position = user.last_move_direction * shield_offset_distance
 
 func apply_transformation(id: String):
+	var has_changed = false
 	if id == "bash":
 		has_bash = true
+		has_changed = true
 		print("Shield gained Bash!")
 	if id == "tower":
 		has_tower = true
+		has_changed = true
 		print("Shield gained Tower!")
-		# We might also need to update an existing shield if one is active.
-		var shield_instance = stats_component.user.find_child("ShieldEffect*", false)
-		if is_instance_valid(shield_instance):
-			shield_instance.can_block_projectiles = true
-			# We might need to reconnect signals here, which is tricky.
-			# Easiest way is to just destroy the old one and let a new one spawn.
-			shield_instance.queue_free()
+	if has_changed:
+		# Delete shield and apply new
+		shield_instance.queue_free()
+		fire()
+		var timer = get_node_or_null("FireRateTimer")
+		if is_instance_valid(timer):
+			timer.start()
