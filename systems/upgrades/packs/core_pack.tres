@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="UpgradePack" load_steps=13 format=3 uid="uid://cslvyly2f8qn1"]
+[gd_resource type="Resource" script_class="UpgradePack" load_steps=14 format=3 uid="uid://cslvyly2f8qn1"]
 
 [ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="1_1hgme"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_bdncx"]
@@ -12,10 +12,11 @@
 [ext_resource type="Resource" uid="uid://cxbefvw2pgrfh" path="res://systems/upgrades/upgrades/core/player_projectile_count.tres" id="10_hw6k6"]
 [ext_resource type="Resource" uid="uid://deobvx47porbo" path="res://systems/upgrades/upgrades/core/player_projectile_speed.tres" id="11_d65hj"]
 [ext_resource type="Resource" uid="uid://b8y1u7wm4bi06" path="res://systems/upgrades/upgrades/core/player_speed.tres" id="12_df0jv"]
+[ext_resource type="Resource" uid="uid://c3w4ydbjmr47i" path="res://systems/upgrades/upgrades/core/player_max_health.tres" id="13_odn0n"]
 
 [resource]
 script = ExtResource("1_1hgme")
 pack_name = "Core"
 pack_description = "Fundementals. Every character starts with this. "
-upgrades = Array[ExtResource("2_bdncx")]([ExtResource("3_4ocoj"), ExtResource("4_odn0n"), ExtResource("5_lkko0"), ExtResource("6_syxt0"), ExtResource("7_4bkqh"), ExtResource("8_pfwxy"), ExtResource("9_gwjkf"), ExtResource("10_hw6k6"), ExtResource("11_d65hj"), ExtResource("12_df0jv")])
+upgrades = Array[ExtResource("2_bdncx")]([ExtResource("3_4ocoj"), ExtResource("4_odn0n"), ExtResource("5_lkko0"), ExtResource("6_syxt0"), ExtResource("7_4bkqh"), ExtResource("8_pfwxy"), ExtResource("9_gwjkf"), ExtResource("10_hw6k6"), ExtResource("11_d65hj"), ExtResource("12_df0jv"), ExtResource("13_odn0n")])
 metadata/_custom_type_script = "uid://cvcnhdf5np0ln"

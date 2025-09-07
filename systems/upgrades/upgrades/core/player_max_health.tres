@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://c3w4ydbjmr47i"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_chysy"]
+
+[resource]
+script = ExtResource("1_chysy")
+id = "player_max_health"
+display_name = "Max Health"
+description = "Increases max health."
+type = 2
+target_class_name = "Player"
+rarity = 0
+key = "max_health"
+modifier_type = 1
+rarity_values = Array[float]([10.0, 20.0, 30.0, 50.0])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

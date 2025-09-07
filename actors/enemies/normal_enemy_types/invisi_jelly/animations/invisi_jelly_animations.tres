@@ -1,0 +1,54 @@
+[gd_resource type="SpriteFrames" load_steps=12 format=3 uid="uid://b1cu2yt0c6yp2"]
+
+[ext_resource type="Texture2D" uid="uid://v3weetphgc6g" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 1.png" id="1_kvgpo"]
+[ext_resource type="Texture2D" uid="uid://nyy5eynhiklk" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 2.png" id="2_w1dfx"]
+[ext_resource type="Texture2D" uid="uid://ba5convxea5in" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 3.png" id="3_fgwwx"]
+[ext_resource type="Texture2D" uid="uid://kkdhhtyxs6ka" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 4.png" id="4_ydw6d"]
+[ext_resource type="Texture2D" uid="uid://ih5kunb8t7v5" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 5.png" id="5_4a7w3"]
+[ext_resource type="Texture2D" uid="uid://7x4rrfer42lk" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 6.png" id="6_qp3bn"]
+[ext_resource type="Texture2D" uid="uid://1s6vpp1pm761" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 7.png" id="7_hd43g"]
+[ext_resource type="Texture2D" uid="uid://dlxfpk3t3y0f2" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 8.png" id="8_ss7i0"]
+[ext_resource type="Texture2D" uid="uid://1bq51utig7tq" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 9.png" id="9_11jms"]
+[ext_resource type="Texture2D" uid="uid://bneskv0x8076t" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 10.png" id="10_x4raa"]
+[ext_resource type="Texture2D" uid="uid://bknxsse8s2ubt" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/move/See through jelly move - 11.png" id="11_8h776"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kvgpo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_w1dfx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_fgwwx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ydw6d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_4a7w3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qp3bn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hd43g")
+}, {
+"duration": 0.5,
+"texture": ExtResource("8_ss7i0")
+}, {
+"duration": 0.5,
+"texture": ExtResource("9_11jms")
+}, {
+"duration": 0.5,
+"texture": ExtResource("10_x4raa")
+}, {
+"duration": 0.5,
+"texture": ExtResource("11_8h776")
+}],
+"loop": true,
+"name": &"move",
+"speed": 7.0
+}]

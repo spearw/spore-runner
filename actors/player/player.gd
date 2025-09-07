@@ -91,6 +91,9 @@ func add_bonus(key: String, value: float):
 	var current_multiplier = in_run_bonuses.get(key, 0.0)
 	in_run_bonuses[key] = current_multiplier + value
 	print("Player bonus '%s' updated. New total for this run: %.2f" % [key, in_run_bonuses[key]])
+	if key == "max_health":
+		# If gained max HP, also heal for that amount.
+		heal(value)
 	notify_stats_changed()
 
 # --- Get stat multiplier based on key ---
@@ -119,7 +122,7 @@ func get_stat(key: String):
 			return move_speed
 		"luck":
 			return stats.base_luck * get_stat_multiplier(key)
-		"pickup_radius":
+		"proximity_detector":
 			# base pickup radius is enhanced by area size
 			return stats.base_pickup_radius * get_stat_multiplier("area_size")
 		"critical_hit_rate":
@@ -225,7 +228,14 @@ func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node
 		
 func notify_stats_changed():
 	stats_changed.emit()
-	pickup_area_shape.shape.radius = get_stat("pickup_radius")
+	proximity_detector.scale.x = 1 * get_stat("area_size")
+	proximity_detector.scale.y = 1 * get_stat("area_size")
+	
+# Heal
+func heal(amount: int):
+	current_health = min(get_stat("max_health"), current_health + amount)
+	# Emit the health_changed signal so the UI updates.
+	health_changed.emit(current_health, get_stat("max_health"))
 
 ## Handles the player's death sequence.
 func die() -> void:

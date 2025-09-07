@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="EncounterSet" load_steps=4 format=3 uid="uid://ck0xxgv4gmkc1"]
 
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="1_mydxv"]
-[ext_resource type="Resource" uid="uid://c24du334caccc" path="res://actors/enemies/normal_enemy_types/lil_fishy/lil_fishy.tres" id="2_wicu7"]
+[ext_resource type="Resource" uid="uid://ch4pfms6wb8yf" path="res://actors/enemies/normal_enemy_types/invisi_jelly/invisi_jelly.tres" id="2_wicu7"]
 [ext_resource type="Script" uid="uid://dnb7k3xg8h5sr" path="res://systems/spawner/encounter_set.gd" id="4_5om3e"]
 
 [resource]

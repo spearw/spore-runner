@@ -2,7 +2,7 @@
 extends Area2D
 
 @export var stats: ExperienceGemStats
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 var is_homing: bool = false
 var target_player: Node2D = null
@@ -13,9 +13,7 @@ func _ready():
 		printerr("Gem spawned without stats! Deleting.")
 		queue_free()
 		return
-	
-	sprite.texture = stats.texture
-	sprite.scale = stats.scale
+
 	
 	# Connect to signals for direct and magnetic pickup.
 	self.body_entered.connect(_on_body_entered) # For direct player collision.
@@ -33,6 +31,10 @@ func _ready():
 			start_homing(area.get_parent())
 			# Only need to find one, so the gem can stop checking.
 			break
+			
+	self.modulate = Color.SKY_BLUE
+	animated_sprite_2d.play("default")
+	animated_sprite_2d.scale = stats.scale
 
 func _process(delta: float):
 	if is_homing and is_instance_valid(target_player):
