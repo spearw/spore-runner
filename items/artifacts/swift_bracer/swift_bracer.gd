@@ -3,7 +3,7 @@
 class_name SwiftBracerArtifact
 extends Node
 
-# 20% faster fire rate (timer wait time is multiplied by this)
+# 20% faster fire rate
 var firerate_modifier: float = 0.8 
 
 func get_firerate_modifier() -> float:

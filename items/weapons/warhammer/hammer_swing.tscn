@@ -82,9 +82,9 @@ tracks/5/keys = {
 "values": [Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_6h814"]
-resource_name = "swing"
-length = 0.5
+[sub_resource type="Animation" id="Animation_vwd8n"]
+resource_name = "reset"
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -158,9 +158,9 @@ tracks/5/keys = {
 "values": [Vector2(0.4, 0.4), Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_vwd8n"]
-resource_name = "reset"
-length = 0.001
+[sub_resource type="Animation" id="Animation_6h814"]
+resource_name = "swing"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

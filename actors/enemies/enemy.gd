@@ -88,7 +88,7 @@ func fire_weapons():
 ## Reduces the enemy's health and handles the consequences.
 ## @param amount: int - The amount of damage to inflict.
 ## @param armor_pen: float - Armor penetration of incoming hit.
-func take_damage(amount: int, armor_pen: float) -> void:
+func take_damage(amount: int, armor_pen: float, is_crit: bool) -> void:
 	if is_dying: return
 	
 	# Armor is reduced by the penetration percentage.
@@ -107,7 +107,7 @@ func take_damage(amount: int, armor_pen: float) -> void:
 		var dmg_num_instance = damage_number_scene.instantiate()
 		# Add it to the main scene, not the enemy, so it doesn't move with the enemy.
 		get_tree().current_scene.add_child(dmg_num_instance)
-		dmg_num_instance.start(amount, self.global_position)
+		dmg_num_instance.start(damage_taken, self.global_position, is_crit)
 	
 	if current_health <= 0:
 		# When health drops to 0, let death play out.
@@ -213,7 +213,7 @@ func _physics_process(delta: float):
 			# Check if the object is the player.
 			if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
 				# Call the player's damage function, using this enemy's damage stat.
-				collided_object.take_damage(stats.damage, stats.armor_pen, self)
+				collided_object.take_damage(stats.damage, stats.armor_pen, false, self)
 				# The normal enemy dies on contact but does not drop xp.
 				die(false)
 				return

@@ -96,10 +96,14 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 	
 	var projectile = projectile_scene.instantiate()
 	projectile.stats = p_stats
-	# Calculate damage
+	# Calculate damage and crit
 	if stats_comp.user.has_method("get_stat"):
 		var damage_increase = stats_comp.user.get_stat("damage_increase")
+		var critical_hit_rate_multiplier = stats_comp.user.get_stat("critical_hit_rate")
+		var critical_hit_damage_multiplier = stats_comp.user.get_stat("critical_hit_damage")
 		projectile.stats.damage = projectile.stats.base_damage * damage_increase * additional_multiplier
+		projectile.stats.critical_hit_rate = projectile.stats.base_critical_hit_rate * critical_hit_rate_multiplier
+		projectile.stats.critical_hit_damage = projectile.stats.base_critical_hit_damage * critical_hit_damage_multiplier
 	else:
 		projectile.stats.damage = projectile.stats.base_damage * additional_multiplier
 	projectile.allegiance = p_allegiance

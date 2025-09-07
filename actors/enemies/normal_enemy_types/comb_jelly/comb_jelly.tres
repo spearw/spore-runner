@@ -18,6 +18,7 @@ scale = Vector2(2, 2)
 modulate = Color(1, 1, 1, 1)
 face_movement_direction = false
 rotation_offset_degrees = 0.0
+is_flipped = false
 behavior_scene = ExtResource("1_iptgc")
 weapon_scenes = Array[PackedScene]([ExtResource("5_1ncx8")])
 challenge_rating = 10.0

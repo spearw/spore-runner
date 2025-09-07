@@ -121,7 +121,15 @@ func _on_body_entered(body: Node2D):
 	if can_damage:
 		# Apply damage and knockback if the body is a valid target.
 		if body.has_method("take_damage"):
-			body.take_damage(stats.damage, stats.armor_penetration, self)
+			# Roll for crit
+			var damage
+			var is_crit = false
+			if randf() < stats.critical_hit_rate:
+				damage = stats.damage * (1 + stats.critical_hit_damage)
+				is_crit = true
+			else:
+				damage = stats.damage
+			body.take_damage(damage, stats.armor_penetration, is_crit)
 		if stats.knockback_force > 0 and body.has_method("apply_knockback"):
 			body.apply_knockback(stats.knockback_force, self.global_position)
 			

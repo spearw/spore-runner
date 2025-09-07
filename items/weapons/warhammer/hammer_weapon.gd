@@ -45,6 +45,8 @@ func _on_enemy_hit(hit_details: Dictionary):
 	shockwave.allegiance = Projectile.Allegiance.PLAYER
 	if user.has_method("get_stat"):
 		shockwave.stats.damage = shockwave_stats.base_damage * user.get_stat("damage_increase")
+		shockwave.stats.critical_hit_rate = shockwave_stats.critical_hit_rate * (1 + user.get_stat("critical_hit_rate"))
+		shockwave.stats.critical_hit_damage = shockwave_stats.critical_hit_damage * (1 + user.get_stat("critical_hit_damage"))
 	else:
 		shockwave.stats.damage = shockwave_stats.base_damage
 		

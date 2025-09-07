@@ -122,9 +122,9 @@ func get_stat(key: String):
 		"pickup_radius":
 			# base pickup radius is enhanced by area size
 			return stats.base_pickup_radius * get_stat_multiplier("area_size")
-		"crit_chance":
+		"critical_hit_rate":
 			return stats.base_critical_chance * get_stat_multiplier(key)
-		"crit_damage":
+		"critical_hit_damage":
 			return stats.base_critical_damage * get_stat_multiplier(key)
 		"damage_increase":
 			# Damage doesn't have a base value on the player, it's just a multiplier.
@@ -145,9 +145,15 @@ func get_stat(key: String):
 			var in_run_bonus = in_run_bonuses.get("armor", 0)
 			var timed_bonus = timed_bonuses.get("armor", 0)
 			return stats.base_armor + permanent_bonus + in_run_bonus + timed_bonus
+		"max_health":
+			var base_hp = stats.base_max_health 
+			var permanent_bonus = GameData.data["permanent_stats"].get("max_health", 0)
+			var in_run_bonus = in_run_bonuses.get("max_health", 0)
+			return base_hp + permanent_bonus + in_run_bonus
 		_:
 			printerr("get_stat: Requested unknown stat key: '", key, "'")
 			return 1.0 # Return a safe default
+		
 	
 ## Adds experience to the player and checks for level-up conditions.
 ## @param amount: int - The amount of experience to add.
@@ -163,7 +169,7 @@ func add_experience(amount: int) -> void:
 		# Increase level and calculate the XP required for the next one.
 		level += 1
 		# A simple scaling formula for required XP.
-		experience_to_next_level = int(experience_to_next_level * 1.4)
+		experience_to_next_level = int(experience_to_next_level * 1.1)
 		
 		# Announce the level up.
 		leveled_up.emit(level)
@@ -192,7 +198,7 @@ func remove_timed_bonus(stat_key: String, value: float):
 
 ## Public method to apply damage to the player.
 ## @param amount: int - The amount of damage to inflict.
-func take_damage(amount: int, armor_pen: float, source_node: Node = null) -> void:
+func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node = null) -> void:
 	if is_invulnerable:
 		return
 		

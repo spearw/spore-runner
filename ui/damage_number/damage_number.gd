@@ -5,12 +5,30 @@ extends Label
 ## Public function to initialize the damage number.
 ## @param damage_amount: int - The number to display.
 ## @param start_position: Vector2 - The world position to spawn at.
-func start(damage_amount: int, start_position: Vector2):
-	self.text = str(damage_amount)
+func start(damage_amount: int, start_position: Vector2, is_crit: bool):
+	if is_crit:
+		self.text = str(damage_amount) + "!"
+	else:
+		self.text = str(damage_amount)
+		
 	self.global_position = start_position
 	
 	# Add a little random horizontal offset to make numbers overlap less.
 	self.global_position.x += randf_range(-8.0, 8.0)
+	
+	# Calculate a ratio based on the damage amount, capped at 100.
+	var damage_ratio = clamp(float(damage_amount) / 100.0, 0.0, 1.0)
+
+	# Interpolate the color from white to red based on the damage ratio.
+	# You can adjust the starting color by changing the initial Color values.
+	var text_color = Color(1.0, 1.0 - damage_ratio, 1.0 - damage_ratio)
+	self.modulate = text_color
+
+	# Set the font size based on the damage ratio.
+	var min_font_size = 16
+	var max_font_size = 32
+	var new_font_size = min_font_size + (max_font_size - min_font_size) * damage_ratio
+	add_theme_font_size_override("font_size", new_font_size)
 	
 	# Create a Tween to handle the animation.
 	var tween = create_tween()
