@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EncounterSet" load_steps=10 format=3 uid="uid://c5abx25utn3mg"]
+[gd_resource type="Resource" script_class="EncounterSet" load_steps=11 format=3 uid="uid://c5abx25utn3mg"]
 
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="1_e37mg"]
 [ext_resource type="Script" uid="uid://dnb7k3xg8h5sr" path="res://systems/spawner/encounter_set.gd" id="2_0mkja"]
@@ -9,11 +9,12 @@
 [ext_resource type="Resource" uid="uid://b8q77yds6prpk" path="res://actors/enemies/normal_enemy_types/noodle_boy/noodle_boy.tres" id="6_y5bhc"]
 [ext_resource type="Resource" uid="uid://be58pxccx68xi" path="res://actors/enemies/normal_enemy_types/garden_eel/garden_eel.tres" id="7_tlx4b"]
 [ext_resource type="Resource" uid="uid://cu2tbu4xcihf6" path="res://actors/enemies/normal_enemy_types/bonk_boy/bonk_boy.tres" id="8_3jrgi"]
+[ext_resource type="Resource" uid="uid://c24du334caccc" path="res://actors/enemies/normal_enemy_types/lil_fishy/lil_fishy.tres" id="9_60v07"]
 
 [resource]
 script = ExtResource("2_0mkja")
 time_start = 11
 time_end = -1
 spawn_immediately_on_start = false
-enemies = Array[ExtResource("1_e37mg")]([ExtResource("2_mepsr"), ExtResource("3_mepsr"), ExtResource("4_b7wdr"), ExtResource("5_bkorg"), ExtResource("6_y5bhc"), ExtResource("7_tlx4b"), ExtResource("8_3jrgi")])
+enemies = Array[ExtResource("1_e37mg")]([ExtResource("2_mepsr"), ExtResource("3_mepsr"), ExtResource("4_b7wdr"), ExtResource("5_bkorg"), ExtResource("6_y5bhc"), ExtResource("7_tlx4b"), ExtResource("8_3jrgi"), ExtResource("9_60v07")])
 metadata/_custom_type_script = "uid://dnb7k3xg8h5sr"

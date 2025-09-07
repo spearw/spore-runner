@@ -1,0 +1,44 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://bftobq235pvw"]
+
+[ext_resource type="Texture2D" uid="uid://b114mu8rjwvf0" path="res://actors/enemies/normal_enemy_types/lil_fishy/animations/move/Lil fishy move - 1.png" id="1_ut8e8"]
+[ext_resource type="Texture2D" uid="uid://c25fgqgt3eixv" path="res://actors/enemies/normal_enemy_types/lil_fishy/animations/move/Lil fishy move - 2.png" id="2_ago35"]
+[ext_resource type="Texture2D" uid="uid://dbo5tmhhhfklm" path="res://actors/enemies/normal_enemy_types/lil_fishy/animations/move/Lil fishy move - 3.png" id="3_e85j0"]
+[ext_resource type="Texture2D" uid="uid://bgnfs5u3uhlpb" path="res://actors/enemies/normal_enemy_types/lil_fishy/animations/move/Lil fishy move - 4.png" id="4_83x6j"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ago35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_e85j0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_83x6j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_ut8e8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ago35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_e85j0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_83x6j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ago35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_e85j0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_83x6j")
+}],
+"loop": true,
+"name": &"move",
+"speed": 8.0
+}]
