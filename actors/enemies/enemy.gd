@@ -30,8 +30,6 @@ var is_dying: bool = false
 # --- Signals ---
 signal died(enemy_stats)
 
-
-
 func _ready() -> void:
 	modulate = stats.modulate
 	player_node = get_tree().get_first_node_in_group("player")
@@ -137,7 +135,9 @@ func apply_knockback(force: float, from_position: Vector2):
 
 ## Handles the enemy's death sequence.
 func die(drop_xp=true) -> void:
+	# TODO: Refactor to one signal?
 	died.emit(stats) # Announce death to encounter director.
+	Events.emit_signal("enemy_killed") # Announce death to player.
 	# Drop loot
 	if stats.special_drop_scene:
 		var special_drop = stats.special_drop_scene.instantiate()
@@ -213,7 +213,7 @@ func _physics_process(delta: float):
 			# Check if the object is the player.
 			if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
 				# Call the player's damage function, using this enemy's damage stat.
-				collided_object.take_damage(stats.damage, stats.armor_pen)
+				collided_object.take_damage(stats.damage, stats.armor_pen, self)
 				# The normal enemy dies on contact but does not drop xp.
 				die(false)
 				return

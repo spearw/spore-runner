@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://u61x5f65ho0e"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_c1wc0"]
+
+[resource]
+script = ExtResource("1_c1wc0")
+id = "whirlwind"
+display_name = "Whirlwind"
+description = "Increase speed and attack speed for duration after killing an enemy."
+type = 2
+target_class_name = "Player"
+rarity = 2
+key = "whirlwind"
+modifier_type = 2
+rarity_values = Array[float]([0.0, 0.0, 1.0, 2.0])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

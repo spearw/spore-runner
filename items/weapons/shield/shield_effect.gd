@@ -48,7 +48,7 @@ func _on_body_entered(body: Node2D):
 
 		# Apply Shield Bash damage if it's enabled
 		if stats.damage > 0 and body.has_method("take_damage"):
-			body.take_damage(stats.damage)
+			body.take_damage(stats.damage, stats.armor_penetration, self)
 		
 		# Always apply knockback
 		if body.has_method("apply_knockback"):

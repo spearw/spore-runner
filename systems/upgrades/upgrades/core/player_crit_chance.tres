@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://r4fcwjdtk7w0"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_0byiy"]
+
+[resource]
+script = ExtResource("1_0byiy")
+id = "player_crit_chance"
+display_name = "Critical Hit Chance"
+description = "Increases critical hit rate"
+type = 2
+target_class_name = "Player"
+rarity = 0
+key = "crit_chance"
+modifier_type = 0
+rarity_values = Array[float]([0.1, 0.15, 0.2, 0.25])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

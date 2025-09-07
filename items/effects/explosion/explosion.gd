@@ -54,7 +54,7 @@ func _ready():
 		# The collision mask filters for us, but a group check is safer.
 		var target_group = "enemies" if allegiance == Projectile.Allegiance.PLAYER else "player"
 		if body.is_in_group(target_group) and body.has_method("take_damage"):
-			body.take_damage(stats.damage) # Use damage from stats
+			body.take_damage(stats.damage, stats.armor_penetration) # Use damage from stats
 			
 	# Quick scale animation for visual feedback.
 	var tween = create_tween()

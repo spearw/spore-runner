@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dulw5xigdffvi"]
+[gd_scene load_steps=6 format=3 uid="uid://dulw5xigdffvi"]
 
 [ext_resource type="Script" uid="uid://dg0ibawosy3ih" path="res://actors/player/player.gd" id="1_onrkg"]
 [ext_resource type="Resource" uid="uid://berxcvx2dhox3" path="res://actors/player/characters/edgerunner/edgerunner_character.tres" id="2_sweqy"]
@@ -8,6 +8,9 @@ radius = 16.0
 height = 60.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ax26v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ilk7j"]
+radius = 157.08
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_onrkg")
@@ -29,3 +32,10 @@ shape = SubResource("CircleShape2D_ax26v")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
+
+[node name="ProximityDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProximityDetector"]
+shape = SubResource("CircleShape2D_ilk7j")

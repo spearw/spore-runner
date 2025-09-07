@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://dpdqputv7lmtl"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_be4wy"]
+
+[resource]
+script = ExtResource("1_be4wy")
+id = "player_armor"
+display_name = "Armor"
+description = "Increases armor. Armor reduces incoming damage by a flat amount."
+type = 2
+target_class_name = "Player"
+rarity = 0
+key = "armor"
+modifier_type = 1
+rarity_values = Array[float]([1.0, 2.0, 3.0, 4.0])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

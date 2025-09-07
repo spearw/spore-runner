@@ -121,7 +121,7 @@ func _on_body_entered(body: Node2D):
 	if can_damage:
 		# Apply damage and knockback if the body is a valid target.
 		if body.has_method("take_damage"):
-			body.take_damage(stats.damage, stats.armor_penetration)
+			body.take_damage(stats.damage, stats.armor_penetration, self)
 		if stats.knockback_force > 0 and body.has_method("apply_knockback"):
 			body.apply_knockback(stats.knockback_force, self.global_position)
 			

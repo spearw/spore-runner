@@ -1,16 +1,16 @@
 [gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://b8y1u7wm4bi06"]
 
-[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_kcm0e"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_01g1m"]
 
 [resource]
-script = ExtResource("1_kcm0e")
+script = ExtResource("1_01g1m")
 id = "player_speed"
 display_name = "Speed"
 description = "Increase movement speed"
 type = 2
 target_class_name = "Player"
 rarity = 0
-key = "Player"
-modifier_type = 1
+key = "move_speed"
+modifier_type = 0
 rarity_values = Array[float]([0.1, 0.15, 0.2, 0.25])
 metadata/_custom_type_script = "uid://d0ibxieicws6j"

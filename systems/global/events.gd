@@ -10,6 +10,8 @@ signal boss_reward_requested
 # TODO: is this performant?
 signal enemy_hit(hit_details: Dictionary)
 
+signal enemy_killed()
+
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		# Tell GameData to save before the game quits.

@@ -15,6 +15,7 @@ signal took_damage
 @onready var artifacts_node: Node = $Artifacts
 @onready var pickup_area_shape: CollisionShape2D = $PickupArea/CollisionShape2D
 @onready var sprite = $AnimatedSprite2D
+@onready var proximity_detector: Area2D = $ProximityDetector
 
 @onready var stats_panel: CanvasLayer = get_tree().get_root().get_node("World/StatsPanel")
 
@@ -33,6 +34,15 @@ var last_move_direction: Vector2 = Vector2.RIGHT
 var in_run_bonuses: Dictionary = {}
 # Same as above, but temporary.
 var timed_bonuses: Dictionary = {}
+
+# In-run unique effects
+var unlocked_powers: Dictionary = {}
+
+# Melee
+var undaunted_knockback_base: float = 200.0
+var whirlwind_speed_buff_base: float = 0.30
+var whirlwind_duration_base: float = 2.0
+var fof_speed_per_enemy_base: float = 0.01
 
 ## initialize_character is called by world.tscn.
 func _ready() -> void:
@@ -77,7 +87,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 ## Adds a percentage-based bonus to the player's stat tracker.
-func add_multiplier(key: String, value: float):
+func add_bonus(key: String, value: float):
 	var current_multiplier = in_run_bonuses.get(key, 0.0)
 	in_run_bonuses[key] = current_multiplier + value
 	print("Player bonus '%s' updated. New total for this run: %.2f" % [key, in_run_bonuses[key]])
@@ -99,7 +109,14 @@ func get_stat(key: String):
 	#TODO: Add timed bonuses for all stats
 	match key:
 		"move_speed":
-			return stats.base_move_speed * get_stat_multiplier(key)
+			var move_speed = stats.base_move_speed * get_stat_multiplier(key)
+			if unlocked_powers.has("fight_or_flight"):
+				var fof_level = unlocked_powers["fight_or_flight"]
+				var final_speed_per_enemy = fof_speed_per_enemy_base * (1 + (0.5 * (fof_level - 1)))
+				var nearby_enemies = proximity_detector.get_overlapping_bodies().size()
+				var fof_bonus = 1.0 + (nearby_enemies * final_speed_per_enemy)
+				move_speed *= fof_bonus
+			return move_speed
 		"luck":
 			return stats.base_luck * get_stat_multiplier(key)
 		"pickup_radius":
@@ -175,10 +192,16 @@ func remove_timed_bonus(stat_key: String, value: float):
 
 ## Public method to apply damage to the player.
 ## @param amount: int - The amount of damage to inflict.
-func take_damage(amount: int, armor_pen: float) -> void:
+func take_damage(amount: int, armor_pen: float, source_node: Node = null) -> void:
 	if is_invulnerable:
 		return
 		
+	if unlocked_powers.has("undaunted"):
+		var undaunted_level = unlocked_powers["undaunted"]
+		# The knockback now scales with the power's level.
+		var final_knockback = undaunted_knockback_base * (1 + (0.5 * (undaunted_level - 1))) # +50% per level
+		source_node.apply_knockback(final_knockback, self.global_position)
+	
 	# --- Armor Calculation ---
 	var effective_armor = self.get_stat("armor") * (1.0 - armor_pen)
 	var damage_taken = max(0, amount - effective_armor)
@@ -215,3 +238,34 @@ func set_invulnerability(active: bool):
 	else:
 		# Return to normal.
 		sprite.modulate = Color.WHITE
+		
+# --- Transformations ---
+func _on_enemy_killed(): 
+	if unlocked_powers.has("whirlwind"):
+		var whirlwind_level = unlocked_powers["whirlwind"]
+		var speed_buff = whirlwind_speed_buff_base * (1 + (0.5 * (whirlwind_level - 1))) # +50% per level
+		var attack_speed_buff = whirlwind_speed_buff_base * (1 + (0.5 * (whirlwind_level - 1))) # +50% per level
+		var duration = whirlwind_duration_base
+		apply_timed_bonus("move_speed", speed_buff, duration)
+		apply_timed_bonus("firerate", attack_speed_buff, duration)
+
+## Finds a power by its key, adds levels to it, and initializes it if it's the first time.
+func add_power_level(power_key: String, levels_to_add: int):
+	# Get the current level, defaulting to 0 if the power doesn't exist yet.
+	var current_level = unlocked_powers.get(power_key, 0)
+	
+	# If this is the first time, "unlock" it with one time setups.
+	if current_level == 0:
+		_unlock_power(power_key)
+		print("Player unlocked power: ", power_key)
+
+	unlocked_powers[power_key] = current_level + levels_to_add
+	print("Upgraded power '%s' to level %d" % [power_key, unlocked_powers[power_key]])
+	
+	notify_stats_changed()
+
+## A private helper to handle one-time setup for new powers.
+func _unlock_power(power_key: String):
+	if power_key == "whirlwind":
+		# Connect signal
+		Events.enemy_killed.connect(_on_enemy_killed)

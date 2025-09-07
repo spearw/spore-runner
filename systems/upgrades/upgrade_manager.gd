@@ -126,7 +126,7 @@ func get_upgrade_choices(count: int) -> Array[Dictionary]:
 func _get_random_rarity_tier() -> Upgrade.Rarity:
 	var total_weight = 0
 	var modified_weights = {}
-	var luck = player.get_modified_luck()
+	var luck = player.get_stat("luck")
 	
 	for rarity_enum in RARITY_WEIGHTS:
 		var weight = RARITY_WEIGHTS[rarity_enum]
@@ -187,24 +187,24 @@ func apply_upgrade(upgrade_package: Dictionary) -> void:
 			if target_item:
 				var value_from_rarity = upgrade.rarity_values[chosen_rarity_enum]
 				
-				if target_item == self.player:
-					player.add_bonus(upgrade.stat_key, value_from_rarity)
-				else:
-					# This is a flat bonus, or a buff for a weapon/artifact. 
-					# TODO: May be depricated with current upgrade system
-					var property_path = upgrade.key
-					var current_value = get_nested_property(target_item, property_path)
-					if current_value == null: return
-					var new_value = 0.0
-					if upgrade.modifier_type == Upgrade.ModifierType.MULTIPLICATIVE:
-						new_value = current_value * (1.0 + value_from_rarity)
-					else: # ADDITIVE
-						new_value = current_value + value_from_rarity
+				match upgrade.modifier_type:
+					Upgrade.ModifierType.POWERS:
+						# It's a Power Upgrade. Call the player's powers function.
+						player.add_power_level(upgrade.key, int(value_from_rarity))
 					
-					set_nested_property(target_item, property_path, new_value)
+					Upgrade.ModifierType.MULTIPLICATIVE:
+						# It's a standard stat bonus. Call the player's bonus function.
+						player.add_bonus(upgrade.key, value_from_rarity)
+						
+					Upgrade.ModifierType.ADDITIVE:
+						# It's a flat stat bonus. Use the nested property system.
+						var property_path = upgrade.key # Using 'key' as the path
+						var current_value = get_nested_property(target_item, property_path)
+						if current_value != null:
+							set_nested_property(target_item, property_path, current_value + value_from_rarity)
 			else:
-				printerr("Upgrade failed: Could not find item '%s' to upgrade." % upgrade.target_class_name)
-				
+				printerr("Upgrade failed: Could not find target '%s'" % upgrade.target_class_name)
+			
 	# Notify the player that stats may have changed.
 	if is_instance_valid(player):
 		player.notify_stats_changed()
