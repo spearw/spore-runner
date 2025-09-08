@@ -5,11 +5,16 @@
 
 [resource]
 script = ExtResource("1_sy8ug")
-damage = 25
+base_damage = 15
+base_critical_hit_rate = 0.05
+base_critical_hit_damage = 0.5
 speed = 150.0
 lifetime = 5.0
+pierce = 0
+armor_penetration = 0.75
 texture = ExtResource("2_pjg5b")
 scale = Vector2(0.25, 0.25)
+knockback_force = 0.0
 is_aoe = false
 aoe_effect_scale = Vector2(1.5, 1.5)
 aoe_effect_duration = 0.4

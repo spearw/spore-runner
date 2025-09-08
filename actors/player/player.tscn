@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dulw5xigdffvi"]
+[gd_scene load_steps=7 format=3 uid="uid://dulw5xigdffvi"]
 
 [ext_resource type="Script" uid="uid://dg0ibawosy3ih" path="res://actors/player/player.gd" id="1_onrkg"]
 [ext_resource type="Resource" uid="uid://berxcvx2dhox3" path="res://actors/player/characters/edgerunner/edgerunner_character.tres" id="2_sweqy"]
+[ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="3_ax26v"]
+[ext_resource type="Script" uid="uid://dv28jcxv7jbak" path="res://systems/components/fire_behavior_component.gd" id="4_lsqbn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_onrkg"]
 radius = 16.0
@@ -32,3 +34,11 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProximityDetector"]
 shape = SubResource("CircleShape2D_ilk7j")
 debug_color = Color(0.72575, 0.241465, 1, 0.42)
+
+[node name="TargetingComponent" type="Node" parent="."]
+script = ExtResource("3_ax26v")
+metadata/_custom_type_script = "uid://5nf8qiekyyrw"
+
+[node name="FireBehaviorComponent" type="Node" parent="."]
+script = ExtResource("4_lsqbn")
+metadata/_custom_type_script = "uid://dv28jcxv7jbak"

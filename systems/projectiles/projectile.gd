@@ -14,6 +14,8 @@ var direction: Vector2 = Vector2.RIGHT
 var pierce_count: int = 0
 # Reference to weapon that shot this.
 var weapon: Node2D
+# For the redirect melee artifact
+var has_redirected: bool = false
 
 # --- Node References ---
 @onready var sprite: Sprite2D = $Area2D/Sprite2D
@@ -119,6 +121,7 @@ func _on_body_entered(body: Node2D):
 		can_damage = true
 
 	if can_damage:
+			
 		# Apply damage and knockback if the body is a valid target.
 		if body.has_method("take_damage"):
 			# Roll for crit
@@ -129,7 +132,7 @@ func _on_body_entered(body: Node2D):
 				is_crit = true
 			else:
 				damage = stats.damage
-			body.take_damage(damage, stats.armor_penetration, is_crit)
+			body.take_damage(damage, stats.armor_penetration, is_crit, self)
 		if stats.knockback_force > 0 and body.has_method("apply_knockback"):
 			body.apply_knockback(stats.knockback_force, self.global_position)
 			

@@ -16,6 +16,8 @@ signal took_damage
 @onready var pickup_area_shape: CollisionShape2D = $PickupArea/CollisionShape2D
 @onready var sprite = $AnimatedSprite2D
 @onready var proximity_detector: Area2D = $ProximityDetector
+@onready var player_targeting_component = $TargetingComponent
+@onready var player_fire_behavior_component = $FireBehaviorComponent
 
 @onready var stats_panel: CanvasLayer = get_tree().get_root().get_node("World/StatsPanel")
 
@@ -29,6 +31,8 @@ var current_experience: int = 0
 var experience_to_next_level: int = 100
 var last_move_direction: Vector2 = Vector2.RIGHT
 
+var knockback_velocity: Vector2 = Vector2.ZERO
+
 # This dictionary will store the sum of all percentage-based bonuses collected during a run.
 # Key: bonus_key (String, e.g., "move_speed_bonus"), Value: total bonus (float, e.g., 0.25 for +25%)
 var in_run_bonuses: Dictionary = {}
@@ -39,6 +43,7 @@ var timed_bonuses: Dictionary = {}
 var unlocked_powers: Dictionary = {}
 
 # Melee
+var can_redirect_projectiles: bool = false
 var undaunted_knockback_base: float = 200.0
 var whirlwind_speed_buff_base: float = 0.30
 var whirlwind_duration_base: float = 2.0
@@ -79,21 +84,21 @@ func initialize_character(character_data: CharacterData, world_upgrade_manager: 
 ## Called every physics frame for movement updates.
 ## @param delta: float - The time elapsed since the last physics frame.
 func _physics_process(delta: float) -> void:
+	knockback_velocity = knockback_velocity.lerp(Vector2.ZERO, 0.05)
 	var move_speed = get_stat("move_speed")
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if direction.length() > 0:
 		last_move_direction = direction.normalized()
 	velocity = direction * move_speed
+	velocity += knockback_velocity
 	move_and_slide()
 	
 ## Adds a percentage-based bonus to the player's stat tracker.
-func add_bonus(key: String, value: float):
-	var current_multiplier = in_run_bonuses.get(key, 0.0)
-	in_run_bonuses[key] = current_multiplier + value
+func add_bonus(key: String, value: float, is_additive: bool=false):
+	var current_bonus = in_run_bonuses.get(key, 0.0)
+	in_run_bonuses[key] = current_bonus + value
+
 	print("Player bonus '%s' updated. New total for this run: %.2f" % [key, in_run_bonuses[key]])
-	if key == "max_health":
-		# If gained max HP, also heal for that amount.
-		heal(value)
 	notify_stats_changed()
 
 # --- Get stat multiplier based on key ---
@@ -119,19 +124,30 @@ func get_stat(key: String):
 				var nearby_enemies = proximity_detector.get_overlapping_bodies().size()
 				var fof_bonus = 1.0 + (nearby_enemies * final_speed_per_enemy)
 				move_speed *= fof_bonus
+				for artifact in artifacts_node.get_children():
+					if artifact.has_method("get_speed_modifier"):
+						move_speed *= artifact.get_speed_modifier()
 			return move_speed
 		"luck":
-			return stats.base_luck * get_stat_multiplier(key)
-		"proximity_detector":
-			# base pickup radius is enhanced by area size
-			return stats.base_pickup_radius * get_stat_multiplier("area_size")
+			var luck = stats.base_luck * get_stat_multiplier(key)
+			for artifact in artifacts_node.get_children():
+				if artifact.has_method("get_luck_modifier"):
+					luck *= artifact.get_luck_modifier()
+			return luck
 		"critical_hit_rate":
-			return stats.base_critical_chance * get_stat_multiplier(key)
+			var critical_hit_rate = stats.base_critical_chance * get_stat_multiplier(key)
+			for artifact in artifacts_node.get_children():
+				if artifact.has_method("get_crit_rate_modifier"):
+					critical_hit_rate *= artifact.get_crit_rate_modifier()
+			return critical_hit_rate
 		"critical_hit_damage":
 			return stats.base_critical_damage * get_stat_multiplier(key)
 		"damage_increase":
-			# Damage doesn't have a base value on the player, it's just a multiplier.
-			return get_stat_multiplier(key)
+			var value = get_stat_multiplier(key)
+			for artifact in artifacts_node.get_children():
+				if artifact.has_method("get_damage_modifier"):
+					value *= artifact.get_damage_modifier()
+			return value
 		"firerate":
 			# Fire rate is also just a multiplier.
 			return get_stat_multiplier(key)
@@ -139,6 +155,13 @@ func get_stat(key: String):
 			return get_stat_multiplier(key)
 		"area_size":
 			return get_stat_multiplier(key)
+		"size":
+			var base_size = 1.0
+			var size = base_size
+			for artifact in artifacts_node.get_children():
+				if artifact.has_method("get_size_modifier"):
+					size *= artifact.get_size_modifier()
+			return size
 		"projectile_count_multiplier":
 			# Percentage, floored.
 			return stats.base_projectile_count_multiplier * get_stat_multiplier(key)
@@ -205,11 +228,12 @@ func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node
 	if is_invulnerable:
 		return
 		
-	if unlocked_powers.has("undaunted"):
+	if unlocked_powers.has("undaunted") and source_node is Enemy:
 		var undaunted_level = unlocked_powers["undaunted"]
 		# The knockback now scales with the power's level.
 		var final_knockback = undaunted_knockback_base * (1 + (0.5 * (undaunted_level - 1))) # +50% per level
 		source_node.apply_knockback(final_knockback, self.global_position)
+
 	
 	# --- Armor Calculation ---
 	var effective_armor = self.get_stat("armor") * (1.0 - armor_pen)
@@ -221,15 +245,31 @@ func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node
 	# Emit the signal to notify listeners (like the UI) of the health change.
 	health_changed.emit(current_health, max_health)
 	took_damage.emit()
+		
+	# TODO: refactor unique flags into unlocked_powers
+	if can_redirect_projectiles and source_node is Projectile:
+		var redirect_direction = player_targeting_component.get_fire_direction(self.global_position, Vector2.RIGHT, Projectile.Allegiance.PLAYER)
+		player_fire_behavior_component._spawn_projectile(source_node.stats, Projectile.Allegiance.PLAYER, redirect_direction, self.global_position, self)
 	
 	# Check for death condition.
 	if current_health <= 0:
 		die()
 		
+## Applies a knockback force away from a given point.
+## @param force: float - The strength of the knockback.
+## @param from_position: Vector2 - The world position the knockback originates from.
+func apply_knockback(force: float, from_position: Vector2):
+	# Calculate the direction vector away from the damage source.
+	print("Applying knockback:", force)
+	var direction = (self.global_position - from_position).normalized()
+	# Apply the force to the velocity. This will be handled by move_and_slide.
+	knockback_velocity = direction * force
+		
 func notify_stats_changed():
 	stats_changed.emit()
 	proximity_detector.scale.x = 1 * get_stat("area_size")
 	proximity_detector.scale.y = 1 * get_stat("area_size")
+	self.scale = Vector2.ONE * get_stat("size")
 	
 # Heal
 func heal(amount: int):
@@ -264,6 +304,11 @@ func _on_enemy_killed():
 		var duration = whirlwind_duration_base
 		apply_timed_bonus("move_speed", speed_buff, duration)
 		apply_timed_bonus("firerate", attack_speed_buff, duration)
+		
+func set_redirect_ability(can_redirect: bool):
+	can_redirect_projectiles = can_redirect
+	if can_redirect:
+		print("Player gained redirect ability!")
 
 ## Finds a power by its key, adds levels to it, and initializes it if it's the first time.
 func add_power_level(power_key: String, levels_to_add: int):

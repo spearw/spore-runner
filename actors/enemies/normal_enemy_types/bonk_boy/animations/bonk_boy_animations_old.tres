@@ -1,0 +1,246 @@
+[gd_resource type="SpriteFrames" load_steps=51 format=3 uid="uid://w6i1nohbnal3"]
+
+[ext_resource type="Texture2D" uid="uid://bu4fw2sh7my5p" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 1.png" id="1_k55w8"]
+[ext_resource type="Texture2D" uid="uid://bdxfkmchq568x" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 2.png" id="2_tb8e1"]
+[ext_resource type="Texture2D" uid="uid://pojxfducbb44" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 3.png" id="3_gx8jy"]
+[ext_resource type="Texture2D" uid="uid://4q72ds86311f" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 4.png" id="4_4w84c"]
+[ext_resource type="Texture2D" uid="uid://dtk1sa5cdv010" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 5.png" id="5_n8vaw"]
+[ext_resource type="Texture2D" uid="uid://c6qulsyly860g" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 6.png" id="6_rfi60"]
+[ext_resource type="Texture2D" uid="uid://cn4hp7rhfh1fa" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 7.png" id="7_1d1d7"]
+[ext_resource type="Texture2D" uid="uid://caoub7ms4dbu0" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/idle/Bonk boy idle - 1.png" id="7_tb8e1"]
+[ext_resource type="Texture2D" uid="uid://cw3mjpqlgt0ov" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/idle/Bonk boy idle - 2.png" id="8_gx8jy"]
+[ext_resource type="Texture2D" uid="uid://dno0mdpx3mum6" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 8.png" id="8_s8rgk"]
+[ext_resource type="Texture2D" uid="uid://qurosqftmr5d" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/idle/Bonk boy idle - 3.png" id="9_4w84c"]
+[ext_resource type="Texture2D" uid="uid://xa7kx5v4h7n8" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 9.png" id="9_iick6"]
+[ext_resource type="Texture2D" uid="uid://bwt113hwp10fp" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 10.png" id="10_52gre"]
+[ext_resource type="Texture2D" uid="uid://dnybdkbdv2ua0" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/idle/Bonk boy idle - 4.png" id="10_n8vaw"]
+[ext_resource type="Texture2D" uid="uid://cow2ihal3d0e7" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk/Bonk boy attack - 11.png" id="11_cj0eg"]
+[ext_resource type="Texture2D" uid="uid://shwrgceq4cpi" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/idle/Bonk boy idle - 5.png" id="11_rfi60"]
+[ext_resource type="Texture2D" uid="uid://bmld07v748mpu" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/idle/Bonk boy idle - 6.png" id="12_1d1d7"]
+[ext_resource type="Texture2D" uid="uid://cv03t0o0bhhjd" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 15.png" id="13_s8rgk"]
+[ext_resource type="Texture2D" uid="uid://cgj6ihtyv3w4y" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 16.png" id="14_iick6"]
+[ext_resource type="Texture2D" uid="uid://dkx0vviymxif5" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 17.png" id="15_52gre"]
+[ext_resource type="Texture2D" uid="uid://g7blatn3ck03" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 18.png" id="16_cj0eg"]
+[ext_resource type="Texture2D" uid="uid://coe47akaqonnj" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 19.png" id="17_ovoy5"]
+[ext_resource type="Texture2D" uid="uid://mlw0kctaq54c" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 20.png" id="18_n853w"]
+[ext_resource type="Texture2D" uid="uid://cg54co71x7c7t" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 21.png" id="19_lkd88"]
+[ext_resource type="Texture2D" uid="uid://1wphkhtl844r" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 22.png" id="20_452en"]
+[ext_resource type="Texture2D" uid="uid://bw07mbk3fjcp1" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 23.png" id="21_jx55a"]
+[ext_resource type="Texture2D" uid="uid://dv4lxoqlrhl7b" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 24.png" id="22_87ehw"]
+[ext_resource type="Texture2D" uid="uid://dkb6075s5y7t4" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 25.png" id="23_c0ujp"]
+[ext_resource type="Texture2D" uid="uid://bg2ysngofmspe" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 26.png" id="24_6ybgd"]
+[ext_resource type="Texture2D" uid="uid://cb6iemblsiv5u" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 27.png" id="25_liioa"]
+[ext_resource type="Texture2D" uid="uid://c70fhvqoqqfhl" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 28.png" id="26_53bkg"]
+[ext_resource type="Texture2D" uid="uid://cu2oykog363eo" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 29.png" id="27_c0ca7"]
+[ext_resource type="Texture2D" uid="uid://cisn1nctnjinf" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 30.png" id="28_jhgr0"]
+[ext_resource type="Texture2D" uid="uid://qmtigs4cwgic" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 31.png" id="29_6y8cr"]
+[ext_resource type="Texture2D" uid="uid://cb6f5y4ow6tx0" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 32.png" id="30_iow6m"]
+[ext_resource type="Texture2D" uid="uid://hbl0po7fd03q" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 33.png" id="31_n2alf"]
+[ext_resource type="Texture2D" uid="uid://qw3jrsn1agit" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 1.png" id="32_w3suk"]
+[ext_resource type="Texture2D" uid="uid://dx7q0hy8fa6sb" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 2.png" id="33_ygdml"]
+[ext_resource type="Texture2D" uid="uid://cb5pqgvs2nb6b" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 3.png" id="34_eqf8f"]
+[ext_resource type="Texture2D" uid="uid://ikrikd514me" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 4.png" id="35_liu65"]
+[ext_resource type="Texture2D" uid="uid://5bgj5supn08x" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 5.png" id="36_f81sa"]
+[ext_resource type="Texture2D" uid="uid://uvq57c2oc1u0" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 6.png" id="37_1eiqy"]
+[ext_resource type="Texture2D" uid="uid://dc8tfpulqfeac" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 7.png" id="38_2gdym"]
+[ext_resource type="Texture2D" uid="uid://b6issrdc0au7c" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 8.png" id="39_4d4h6"]
+[ext_resource type="Texture2D" uid="uid://civdqj8w3kdpc" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 9.png" id="40_5mqvq"]
+[ext_resource type="Texture2D" uid="uid://n0df3h2rwgfy" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 10.png" id="41_er1vi"]
+[ext_resource type="Texture2D" uid="uid://cvnldcskqpynu" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 11.png" id="42_7cf3u"]
+[ext_resource type="Texture2D" uid="uid://bdl2if4j7j5lb" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 12.png" id="43_y82ha"]
+[ext_resource type="Texture2D" uid="uid://2iqxh77u5vk8" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 13.png" id="44_fj8sh"]
+[ext_resource type="Texture2D" uid="uid://cfk8hdlamwhu5" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/move/UntitledArtwork2 - 14.png" id="45_1h7od"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_k55w8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_tb8e1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gx8jy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4w84c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_n8vaw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rfi60")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1d1d7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_s8rgk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_iick6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_52gre")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_cj0eg")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_tb8e1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gx8jy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_4w84c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_n8vaw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_rfi60")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_1d1d7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_rfi60")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_n8vaw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_4w84c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gx8jy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_tb8e1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("45_1h7od")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_s8rgk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_iick6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_52gre")
+}, {
+"duration": 0.5,
+"texture": ExtResource("16_cj0eg")
+}, {
+"duration": 0.5,
+"texture": ExtResource("17_ovoy5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_n853w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_lkd88")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_n853w")
+}, {
+"duration": 0.5,
+"texture": ExtResource("20_452en")
+}, {
+"duration": 0.5,
+"texture": ExtResource("21_jx55a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_87ehw")
+}, {
+"duration": 1.5,
+"texture": ExtResource("23_c0ujp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_6ybgd")
+}, {
+"duration": 0.5,
+"texture": ExtResource("25_liioa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_53bkg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_c0ca7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_jhgr0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_6y8cr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_iow6m")
+}, {
+"duration": 0.5,
+"texture": ExtResource("31_n2alf")
+}],
+"loop": true,
+"name": &"move",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("32_w3suk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_ygdml")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_eqf8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_liu65")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_f81sa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_1eiqy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_2gdym")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_4d4h6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_5mqvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_er1vi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_7cf3u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_y82ha")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_fj8sh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_1h7od")
+}],
+"loop": true,
+"name": &"start_move",
+"speed": 5.0
+}]

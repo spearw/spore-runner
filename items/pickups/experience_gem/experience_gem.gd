@@ -2,13 +2,22 @@
 extends Area2D
 
 @export var stats: ExperienceGemStats
+# Determines effect of arc as moving towards player.
+@export var orbit_strength: float = 700.0
+@export var orbit_decay: float = 0.99
+var orbit_speed: float
+
+# TODO: Put rng in global files
+var rng = RandomNumberGenerator.new()
+
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 var is_homing: bool = false
 var target_player: Node2D = null
-var homing_speed: float = 250.0
+var homing_speed: float = 200.0
 
 func _ready():
+	rng.randomize()
 	if not stats:
 		printerr("Gem spawned without stats! Deleting.")
 		queue_free()
@@ -38,7 +47,20 @@ func _ready():
 
 func _process(delta: float):
 	if is_homing and is_instance_valid(target_player):
-		global_position = global_position.move_toward(target_player.global_position, homing_speed * delta)
+		if not orbit_speed:
+			# Apply 10% variation.
+			orbit_speed = orbit_strength * rng.randf_range(.9, 1.1)
+		# Calculate the direction vector towards the player.
+		var direction_to_player = (target_player.global_position - global_position).normalized()
+		# Get a perpendicular vector for the "orbit" motion.
+		var orbit_vector = direction_to_player.orthogonal()
+		# Combine the homing and orbiting vectors to get the final velocity.
+		var velocity = (direction_to_player * homing_speed) + (orbit_vector * orbit_strength)
+		# Move the gem.
+		global_position += velocity * delta
+		# Increase homing speed and decrease orbit strength over time.
+		homing_speed *= 1.02
+		orbit_strength *= orbit_decay
 
 ## Signal handler for when the player's pickup radius enters gem's area.
 func _on_area_entered(area: Area2D):

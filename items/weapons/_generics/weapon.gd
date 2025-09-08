@@ -12,6 +12,7 @@ extends Node2D
 
 # --- State ---
 var last_fire_direction: Vector2 = Vector2.RIGHT
+var is_transformed: bool = false
 
 # --- Component References ---
 @onready var fire_behavior_component: FireBehaviorComponent = $FireBehaviorComponent
@@ -34,7 +35,24 @@ func update_stats():
 func _on_fire_rate_timer_timeout():
 	# Delegate the actual firing to the component.
 	fire()
+	# TODO: Think about performance
+	update_stats()
 
 ## Public method for manual firing (e.g., by enemy AI).
 func fire(damage_multiplier=1):
 	fire_behavior_component.fire(damage_multiplier)
+	
+## Set transformed flag to true. Specific types handle their own transformations.
+func apply_transformation(id: String):
+	is_transformed = true
+
+## Reduces the remaining time on the FireRateTimer by a given amount.
+func reduce_cooldown(amount: float):
+	# Make sure the timer is actually running and not already ready to fire.
+	if is_instance_valid(fire_rate_timer) and not fire_rate_timer.is_stopped():
+		# Subtract the amount from the timer's remaining time.
+		# The timer will automatically fire if time_left becomes <= 0.
+		# Calculate the new remaining time.
+		var new_time_left = fire_rate_timer.time_left - amount
+		print("Time left:", new_time_left)
+		fire_rate_timer.start(max(0, new_time_left))

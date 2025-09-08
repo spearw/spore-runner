@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://cha8jrarccqwh"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_1u4na"]
+[ext_resource type="PackedScene" uid="uid://eihi4fj5hpqc" path="res://items/artifacts/goliath/GoliathArtifact.tscn" id="1_sovms"]
+
+[resource]
+script = ExtResource("1_1u4na")
+id = "goliath_unlock"
+display_name = "Goliath Protocol"
+description = "Become larger and deal more damage based on bonus Max HP. Reduce move speed based on bonus Max HP."
+type = 1
+target_class_name = "GoliathArtifact"
+scene_to_unlock = ExtResource("1_sovms")
+rarity = 4
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

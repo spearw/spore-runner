@@ -7,7 +7,7 @@ extends Node
 @export var enemy_scene: PackedScene
 @export var difficulty_curve: Curve
 @export var encounter_sets: Array[EncounterSet]
-@export var spawn_radius: float = 900.0
+@export var spawn_radius: float = 1200.0
 
 @onready var spawn_pulse_timer: Timer = $Timer
 
@@ -70,7 +70,7 @@ func _physics_process(delta: float):
 			break
 
 func _on_spawn_pulse_timer_timeout():
-	print("Director Budget:", budget_accumulator)
+	#print("Director Budget:", budget_accumulator)
 	var available_enemies = _get_currently_available_enemies()
 	if available_enemies.is_empty(): return
 

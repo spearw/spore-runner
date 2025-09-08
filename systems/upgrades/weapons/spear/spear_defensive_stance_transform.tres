@@ -5,11 +5,11 @@
 [resource]
 script = ExtResource("1_87srk")
 id = "spear_defensive_stance_transform"
-display_name = "Shield: Defensive Stance"
+display_name = "Spear: Defensive Stance"
 description = "Spear grants armor for short time after strike"
 type = 3
 target_class_name = "SpearWeapon"
-rarity = 3
+rarity = 1
 key = "defensive_stance"
 modifier_type = 1
 rarity_values = Array[float]([])

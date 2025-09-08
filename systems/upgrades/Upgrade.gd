@@ -5,7 +5,7 @@ extends Resource
 
 # --- Enums ---
 enum UpgradeType { UNLOCK_WEAPON, UNLOCK_ARTIFACT, UPGRADE, TRANSFORMATION }
-enum Rarity { COMMON, RARE, EPIC, LEGENDARY }
+enum Rarity { COMMON, RARE, EPIC, LEGENDARY, MYTHIC }
 enum ModifierType {MULTIPLICATIVE, ADDITIVE, POWERS}
 
 # --- Core Properties ---

@@ -18,7 +18,7 @@ extends Control
 # Upgrade packs
 @export var all_packs: Array[UpgradePack] # Master list of all packs in the game
 @export var upgrade_pack_button_scene: PackedScene
-@export var max_packs_allowed: int = 2
+@export var max_packs_allowed: int = 3 # 3 including core pack
 
 @onready var pack_grid: GridContainer = $HBoxContainer/PacksContainer/GridContainer
 
@@ -29,12 +29,14 @@ var selected_packs: Array[UpgradePackButton] = []
 func _ready():
 	GameData.unlocked_characters_changed.connect(populate_character_grid)
 	populate_character_grid()
+	
 	# Select current character initially
 	var default_char_path = GameData.data["selected_character_path"]
 	var default_char_data = load(default_char_path)
 	update_details_panel(default_char_data)
 	
 	# Populate packs
+	GameData.unlocked_packs_changed.connect(populate_pack_grid)
 	populate_pack_grid()
 	
 
@@ -70,6 +72,8 @@ func _on_back_button_pressed():
 	get_parent().get_node("MainMenuButtons").show()
 	
 func populate_pack_grid():
+	for child in pack_grid.get_children():
+		child.queue_free()
 	var unlocked_paths = GameData.data["unlocked_pack_paths"]
 	for pack_data in all_packs:
 		var button: UpgradePackButton = upgrade_pack_button_scene.instantiate()

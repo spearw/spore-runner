@@ -10,10 +10,11 @@ var player_artifacts: Node2D = null
 var player: Node2D = null
 
 const RARITY_WEIGHTS = {
-	Upgrade.Rarity.COMMON: 100,
+	Upgrade.Rarity.COMMON: 85,
 	Upgrade.Rarity.RARE: 40,
-	Upgrade.Rarity.EPIC: 15,
-	Upgrade.Rarity.LEGENDARY: 5
+	Upgrade.Rarity.EPIC: 25,
+	Upgrade.Rarity.LEGENDARY: 15,
+	Upgrade.Rarity.MYTHIC: 5
 }
 
 func _ready():
@@ -51,18 +52,23 @@ func register_player(player: Node) -> void:
 		
 ## Gathers the names of all items the player currently has.
 ## @return: Array[String] - An array of items names.
-func get_player_inventory_names() -> Array[String]:
+func get_player_inventory_names_and_transformed_item_list() -> Array[Array]:
 	var inventory: Array[String] = []
+	var transformed_items: Array[String] = []
 	for item in player_equipment.get_children():
 		inventory.append(item.name)
+		if item.is_transformed:
+			transformed_items.append(item.name)
 	for item in player_artifacts.get_children():
 		inventory.append(item.name)
-	return inventory
+	return [inventory, transformed_items]
 
 ## Returns a specified number of valid, random upgrade choices.
 func get_upgrade_choices(count: int) -> Array[Dictionary]:
 	# --- Filter the pool for currently valid upgrades ---
-	var player_inventory = get_player_inventory_names()
+	var inventory = get_player_inventory_names_and_transformed_item_list()
+	var player_inventory = inventory[0]
+	var transformed_item_list = inventory[1]
 	var filtered_pool: Array[Upgrade] = []
 	for upgrade in active_upgrade_pool:
 		var target_name = upgrade.target_class_name
@@ -71,8 +77,12 @@ func get_upgrade_choices(count: int) -> Array[Dictionary]:
 				if not target_name in player_inventory:
 					filtered_pool.append(upgrade)
 			Upgrade.UpgradeType.UPGRADE:
-				# Use upgrades that are stats buffs or they modify something in the inventorycan
+				# Upgrades are stats buffs or they modify something in the inventory.
 				if target_name == "Player" or target_name in player_inventory:
+					filtered_pool.append(upgrade)
+			Upgrade.UpgradeType.TRANSFORMATION:
+				# Only list tranformations if player has the weapon and it has not been transformed.
+				if target_name in player_inventory and target_name not in transformed_item_list:
 					filtered_pool.append(upgrade)
 
 	var final_choices: Array[Dictionary] = []
@@ -82,39 +92,37 @@ func get_upgrade_choices(count: int) -> Array[Dictionary]:
 		# --- Weighted Rarity Selection ---
 		var chosen_rarity_enum = _get_random_rarity_tier()
 
-		# Find all upgrades that are valid candidates for this rarity roll.
-		var potential_upgrades = filtered_pool.filter(func(upg):
-			if upg.type == Upgrade.UpgradeType.UPGRADE:
-				# For an UPGRADE type, its base rarity can be at or below the rolled rarity.
-				# A common upgrade can be presented as an Epic version.
-				return upg.rarity <= chosen_rarity_enum
-			else: # For UNLOCK types
-				# For an UNLOCK, its base rarity must exactly match the rolled rarity.
-				# A common dagger unlock cannot be presented as Epic.
-				return upg.rarity == chosen_rarity_enum
-		)
-		
-		# --- Failsafe ---
-		# If we rolled, say, LEGENDARY, but have no valid legendary unlocks or tiered upgrades...
-		if potential_upgrades.is_empty():
-			# ...don't fail. Just grab any available upgrade.
-			# A more advanced system might try re-rolling, but this is robust.
-			if not filtered_pool.is_empty():
-				potential_upgrades = filtered_pool
-			else:
-				# No upgrades available at all.
-				continue
-
+		var potential_upgrades
+		# Loop until pool filled.
+		while not potential_upgrades or potential_upgrades.is_empty():
+			# Avoid infinite loop with empty upgrade pool.
+			if filtered_pool.is_empty():
+				# TODO: Some reward? Current system should never run out of regular upgrades.
+				break
+			# Find all upgrades that are valid candidates for this rarity roll.
+			potential_upgrades = filtered_pool.filter(func(upg):
+				if upg.type == Upgrade.UpgradeType.UPGRADE:
+					# Check if the chosen rarity exists in the upgrade.
+					return upg.rarity_values.size() > chosen_rarity_enum
+				else: # For UNLOCK types
+					# For an UNLOCK, its base rarity must exactly match the rolled rarity.
+					# A common dagger unlock cannot be presented as Epic.
+					return upg.rarity == chosen_rarity_enum
+			)
+			# If no more rarities of this tier exist, downgrade 1 and try again
+			if potential_upgrades.is_empty():
+				if chosen_rarity_enum != 0:
+					chosen_rarity_enum -= 1
+				else:
+					# If common rarity and does not exist, reroll.
+					chosen_rarity_enum = _get_random_rarity_tier()
+					
 		var chosen_upgrade = potential_upgrades.pick_random()
-		# Ensure rarity value is correct even in case of fallback
-		var rarity = chosen_rarity_enum
-		if chosen_upgrade.type == Upgrade.UpgradeType.UNLOCK_WEAPON or chosen_upgrade.type == Upgrade.UpgradeType.UNLOCK_ARTIFACT:
-			rarity = chosen_upgrade.rarity
 		
 		# Package the results
 		final_choices.append({
 			"upgrade": chosen_upgrade,
-			"rarity": rarity
+			"rarity": chosen_rarity_enum
 		})
 		
 		# Remove the choice from the pool for this round to avoid duplicates
@@ -165,6 +173,8 @@ func apply_upgrade(upgrade_package: Dictionary) -> void:
 		Upgrade.UpgradeType.UNLOCK_ARTIFACT:
 			if upgrade.scene_to_unlock:
 				var new_artifact = create_artifact(upgrade.scene_to_unlock.instantiate(), upgrade)
+				if "user" in new_artifact:
+					new_artifact.user = self.player
 				player_artifacts.add_child(new_artifact)
 			else:
 				printerr("Unlock upgrade '%s' is missing a scene!" % upgrade.id)
@@ -191,17 +201,9 @@ func apply_upgrade(upgrade_package: Dictionary) -> void:
 					Upgrade.ModifierType.POWERS:
 						# It's a Power Upgrade. Call the player's powers function.
 						player.add_power_level(upgrade.key, int(value_from_rarity))
-					
-					Upgrade.ModifierType.MULTIPLICATIVE:
+					Upgrade.ModifierType.MULTIPLICATIVE, Upgrade.ModifierType.ADDITIVE:
 						# It's a standard stat bonus. Call the player's bonus function.
 						player.add_bonus(upgrade.key, value_from_rarity)
-						
-					Upgrade.ModifierType.ADDITIVE:
-						# It's a flat stat bonus. Use the nested property system.
-						var property_path = upgrade.key # Using 'key' as the path
-						var current_value = get_nested_property(target_item, property_path)
-						if current_value != null:
-							set_nested_property(target_item, property_path, current_value + value_from_rarity)
 			else:
 				printerr("Upgrade failed: Could not find target '%s'" % upgrade.target_class_name)
 			

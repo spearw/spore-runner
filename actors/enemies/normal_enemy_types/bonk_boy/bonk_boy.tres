@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://np8hsandn71t" path="res://actors/enemies/behaviors/shoot/shoot_behavior.tscn" id="1_qbwy4"]
 [ext_resource type="Resource" uid="uid://c7ttwmrsaxqss" path="res://items/pickups/experience_gem/types/medium_gem.tres" id="2_ucrfn"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_4upo6"]
-[ext_resource type="SpriteFrames" uid="uid://w6i1nohbnal3" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk_boy_animations.tres" id="4_0h0yx"]
+[ext_resource type="SpriteFrames" uid="uid://copjckbc0uv0c" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk_boy_animations.tres" id="4_0h0yx"]
 [ext_resource type="PackedScene" uid="uid://divtus20vmop4" path="res://items/weapons/dagger/daggers_weapon.tscn" id="5_ekxw1"]
 
 [resource]
@@ -15,7 +15,7 @@ armor = 2
 armor_pen = 0
 sprite_frames = ExtResource("4_0h0yx")
 scale = Vector2(1.2, 1.2)
-modulate = Color(1, 1, 1, 1)
+modulate = Color(0.601223, 0.601223, 0.601223, 1)
 face_movement_direction = false
 rotation_offset_degrees = 0.0
 is_flipped = false
@@ -23,5 +23,6 @@ behavior_scene = ExtResource("1_qbwy4")
 weapon_scenes = Array[PackedScene]([ExtResource("5_ekxw1")])
 challenge_rating = 5.0
 experience_gem_stats = ExtResource("2_ucrfn")
-soul_drop_chance = 0.05
+soul_drop_chance = 0.01
+heart_drop_chance = 0.05
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

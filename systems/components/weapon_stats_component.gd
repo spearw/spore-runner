@@ -29,7 +29,7 @@ func update_stats():
 			var base_wait_time = timer.get_meta("base_wait_time", 2.0)
 			var firerate_modifier = user.get_stat("firerate")
 			timer.wait_time = base_wait_time * firerate_modifier
-			print(weapon.name, "stats updated! Fire rate:", timer.wait_time)
+			#print(weapon.name, "stats updated! Fire rate:", timer.wait_time)
 	else:
 		print("%s stats not updated!")
 	

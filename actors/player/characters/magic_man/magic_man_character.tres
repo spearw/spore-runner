@@ -1,10 +1,9 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=6 format=3 uid="uid://b5yscp3npggn5"]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=5 format=3 uid="uid://b5yscp3npggn5"]
 
 [ext_resource type="SpriteFrames" uid="uid://nbeutjhl0hto" path="res://actors/player/characters/magic_man/magic_man_animation.tres" id="1_dou2t"]
 [ext_resource type="Script" uid="uid://nwbrj5ockot1" path="res://actors/player/character_data.gd" id="2_lqmeo"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="3_vnxkr"]
 [ext_resource type="Resource" uid="uid://of54uih30ise" path="res://systems/upgrades/weapons/fireball_staff_unlock.tres" id="4_lqmeo"]
-[ext_resource type="Resource" uid="uid://ol07gqdxxoj7" path="res://systems/upgrades/weapons/meteor_unlock.tres" id="5_vnxkr"]
 
 [resource]
 script = ExtResource("2_lqmeo")
@@ -20,5 +19,5 @@ base_projectile_count_multiplier = 1.0
 base_critical_chance = 0.05
 base_critical_damage = 0.5
 base_armor = 0
-starting_upgrades = Array[ExtResource("3_vnxkr")]([ExtResource("4_lqmeo"), ExtResource("5_vnxkr")])
+starting_upgrades = Array[ExtResource("3_vnxkr")]([ExtResource("4_lqmeo")])
 metadata/_custom_type_script = "uid://nwbrj5ockot1"

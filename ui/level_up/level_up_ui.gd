@@ -85,7 +85,9 @@ func show_upgrade_screen():
 				Upgrade.Rarity.EPIC:
 					button.modulate = Color.PURPLE
 				Upgrade.Rarity.LEGENDARY:
-					button.modulate = Color.ORANGE
+					button.modulate = Color.YELLOW
+				Upgrade.Rarity.MYTHIC:
+					button.modulate = Color.ORANGE_RED
 			button.visible = true
 		else:
 			button.visible = false

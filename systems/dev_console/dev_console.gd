@@ -113,12 +113,22 @@ func _execute_add_xp(args: Array):
 		_log_to_console("Added %d xp." % amount)
 	else:
 		print("Nothing to give xp to!")
-
+		
 func _execute_unlock_all(_args: Array):
-	var character_list = load("res://actors/player/characters/master_character_list.tres") # Load the master list
+	_execute_unlock_all_characters(_args)
+	_execute_unlock_all_decks(_args)
+
+func _execute_unlock_all_characters(_args: Array):
+	var character_list = load("res://systems/global/lists/master_character_list.tres") # Load the master list
 	for char_data in character_list.characters:
 		GameData.unlock_character(char_data.resource_path)
 	_log_to_console("All characters unlocked. Changes will appear on the next character screen visit.")
+	
+func _execute_unlock_all_decks(_args: Array):
+	var pack_list = load("res://systems/global/lists/master_pack_list.tres") # Load the master list
+	for pack_data in pack_list.packs:
+		GameData.unlock_pack(pack_data.resource_path)
+	_log_to_console("All packs unlocked. Changes will appear on the next character screen visit.")
 
 func _execute_kill_all(_args: Array):
 	var all_enemies = get_tree().get_nodes_in_group("enemies")

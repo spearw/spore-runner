@@ -59,6 +59,7 @@ func _on_enemy_hit(hit_details: Dictionary):
 	shockwave.rotation = direction_away.angle()
 
 func apply_transformation(id: String):
+	super.apply_transformation(id)
 	if id == "smash":
 		# Increase base knockback
 		projectile_stats.knockback_force = projectile_stats.knockback_force * 2

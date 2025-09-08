@@ -75,6 +75,7 @@ func _execute_charge_attack(user: Node):
 	user.set_invulnerability(false)
 	
 func apply_transformation(id: String):
+	super.apply_transformation(id)
 	if id == "berserker":
 		has_berserker = true
 		print("Axe has gained Berserker!")

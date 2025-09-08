@@ -1,5 +1,6 @@
 ## enemy.gd
 ## A generic enemy scene. Its behavior and stats are configured by an EnemyStats resource.
+class_name Enemy
 extends CharacterBody2D
 
 signal health_changed(current_health, max_health)
@@ -9,6 +10,7 @@ signal health_changed(current_health, max_health)
 @export var damage_number_scene: PackedScene
 @export var experience_gem_scene: PackedScene
 @export var soul_scene: PackedScene
+@export var heart_scene: PackedScene
 
 # --- Node References ---
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -17,6 +19,7 @@ signal health_changed(current_health, max_health)
 @onready var health_bar: TextureProgressBar = $TextureProgressBar
 @onready var visibility_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var death_timer: Timer = $DeathTimer
+@onready var damage_cooldown_timer: Timer = $DamageCooldown
 
 
 # --- Runtime Variables ---
@@ -26,6 +29,7 @@ var behavior: EnemyBehavior = null
 var is_on_screen: bool = false
 var knockback_velocity: Vector2 = Vector2.ZERO
 var is_dying: bool = false
+var can_deal_damage: bool = true
 
 # --- Signals ---
 signal died(enemy_stats)
@@ -88,7 +92,8 @@ func fire_weapons():
 ## Reduces the enemy's health and handles the consequences.
 ## @param amount: int - The amount of damage to inflict.
 ## @param armor_pen: float - Armor penetration of incoming hit.
-func take_damage(amount: int, armor_pen: float, is_crit: bool) -> void:
+func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node = null) -> void:
+	#TODO: Refactor enemy/player to inherit from generic 'entity' class that has functions like 'take_damage'
 	if is_dying: return
 	
 	# Armor is reduced by the penetration percentage.
@@ -156,6 +161,12 @@ func die(drop_xp=true) -> void:
 			var soul_instance = soul_scene.instantiate()
 			get_tree().current_scene.add_child(soul_instance)
 			soul_instance.global_position = self.global_position
+	# Drop heart
+	if randf() < stats.soul_drop_chance:
+		if heart_scene:
+			var heart_instance = heart_scene.instantiate()
+			get_tree().current_scene.add_child(heart_instance)
+			heart_instance.global_position = self.global_position
 	queue_free()
 
 
@@ -204,19 +215,24 @@ func _physics_process(delta: float):
 
 			
 		# Check for collision
-		for i in range(get_slide_collision_count()):
-			var collision = get_slide_collision(i)
-			if not collision: continue
-			
-			var collided_object = collision.get_collider()
-			
-			# Check if the object is the player.
-			if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
-				# Call the player's damage function, using this enemy's damage stat.
-				collided_object.take_damage(stats.damage, stats.armor_pen, false, self)
-				# The normal enemy dies on contact but does not drop xp.
-				die(false)
-				return
+		if can_deal_damage:
+			for i in range(get_slide_collision_count()):
+				var collision = get_slide_collision(i)
+				if not collision: continue
+				
+				var collided_object = collision.get_collider()
+				
+				# Check if the object is the player.
+				if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
+					# Internal damage cooldown
+					can_deal_damage = false 
+					damage_cooldown_timer.start(0.5) 
+					
+					# Call the player's damage function, using this enemy's damage stat.
+					collided_object.take_damage(stats.damage, stats.armor_pen, false, self)
+					var knockback = 400 + (stats.damage * 5)
+					collided_object.apply_knockback(knockback, self.global_position)
+					return
 		velocity += knockback_velocity
 	move_and_slide()
 
@@ -231,6 +247,10 @@ func _on_animation_finished():
 	# Return control to the physics process logic.
 	# The next frame, the velocity check will take over again.
 	pass
+
+## Flag to enable damage again.
+func _on_damage_cooldown_timer_timeout():
+	can_deal_damage = true
 	
 func _on_screen_entered():
 	is_on_screen = true

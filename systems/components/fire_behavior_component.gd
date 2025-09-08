@@ -84,7 +84,7 @@ func fire(damage_multiplier=1):
 				_execute_aoe_strike(target_position, projectile_stats, allegiance)
 
 ## Helper function to handle the actual creation of a single projectile.
-func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, p_direction: Vector2, p_position: Vector2 = weapon.global_position):
+func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, p_direction: Vector2, p_position: Vector2 = weapon.global_position, user_override: Node2D = null):
 	# The weapon is attached to the user, so its global_position is the user's position.
 	var spawn_position = weapon.global_position
 	
@@ -97,10 +97,15 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 	var projectile = projectile_scene.instantiate()
 	projectile.stats = p_stats
 	# Calculate damage and crit
-	if stats_comp.user.has_method("get_stat"):
-		var damage_increase = stats_comp.user.get_stat("damage_increase")
-		var critical_hit_rate_multiplier = stats_comp.user.get_stat("critical_hit_rate")
-		var critical_hit_damage_multiplier = stats_comp.user.get_stat("critical_hit_damage")
+	var user
+	if user_override:
+		user = user_override
+	else:
+		user = stats_comp.user
+	if user.has_method("get_stat"):
+		var damage_increase = user.get_stat("damage_increase")
+		var critical_hit_rate_multiplier = user.get_stat("critical_hit_rate")
+		var critical_hit_damage_multiplier = user.get_stat("critical_hit_damage")
 		projectile.stats.damage = projectile.stats.base_damage * damage_increase * additional_multiplier
 		projectile.stats.critical_hit_rate = projectile.stats.base_critical_hit_rate * critical_hit_rate_multiplier
 		projectile.stats.critical_hit_damage = projectile.stats.base_critical_hit_damage * critical_hit_damage_multiplier
@@ -119,7 +124,7 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 		
 		SpawnLocation.ON_USER:
 			# The new logic: spawn as a child of the user.
-			stats_comp.user.add_child(projectile)
+			user.add_child(projectile)
 			# Its position will be (0,0) relative to the user, which is correct.
 			projectile.position = Vector2.ZERO
 			# The swing's rotation is set relative to the user's facing direction.

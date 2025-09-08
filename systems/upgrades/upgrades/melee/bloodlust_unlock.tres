@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://cv0rfe310drw6"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_i7qdg"]
+[ext_resource type="PackedScene" uid="uid://xatgsb2nnav1" path="res://items/artifacts/bloodlust/BloodlustArtifact.tscn" id="1_xi15e"]
+
+[resource]
+script = ExtResource("1_i7qdg")
+id = "bloodlust_unlock"
+display_name = "Bloodlust"
+description = "Killing an enemy has a chance, modified by Luck, to reduce all weapon cooldowns."
+type = 1
+target_class_name = "BloodlustArtifact"
+scene_to_unlock = ExtResource("1_xi15e")
+rarity = 4
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

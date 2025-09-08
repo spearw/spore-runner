@@ -1,18 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://cj02nmcy6fxug"]
+[gd_scene load_steps=4 format=3 uid="uid://ppb43f44qipk"]
 
 [ext_resource type="Script" uid="uid://cv25yimfksk4" path="res://items/pickups/heart/heart_pickup.gd" id="1_2g1uw"]
-[ext_resource type="Texture2D" uid="uid://bhpcl1hiy4ksm" path="res://items/pickups/soul/pixellab-small-glowing-soul-shard-1756256665166.png" id="2_2bexj"]
+[ext_resource type="SpriteFrames" uid="uid://qpjgfps1k8d0" path="res://items/pickups/soul/moving_orb.tres" id="2_2g1uw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7iwn2"]
 height = 48.0
 
-[node name="Soul" type="Area2D"]
-scale = Vector2(0.5, 0.5)
+[node name="Heart_pickup" type="Area2D"]
 collision_layer = 8
 script = ExtResource("1_2g1uw")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_2bexj")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_7iwn2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_2g1uw")

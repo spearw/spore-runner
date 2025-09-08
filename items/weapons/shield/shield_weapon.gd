@@ -58,6 +58,7 @@ func _physics_process(_delta):
 		shield_instance.position = user.last_move_direction * shield_offset_distance
 
 func apply_transformation(id: String):
+	super.apply_transformation(id)
 	var has_changed = false
 	if id == "bash":
 		has_bash = true

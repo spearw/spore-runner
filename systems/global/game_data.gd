@@ -8,6 +8,7 @@ const SAVE_PATH = "user://game_data.save"
 
 # Signals
 signal unlocked_characters_changed
+signal unlocked_packs_changed
 
 # --- Data To Save ---
 # We use a dictionary to hold all our data. This makes saving/loading easy.
@@ -18,8 +19,7 @@ var starter_data = {
 	# A list of resource paths for all characters the player has unlocked.
 	"unlocked_character_paths": ["res://actors/player/characters/edgerunner/edgerunner_character.tres"],
 	# A list of resource paths for all unlocked upgrade packs.
-	"unlocked_pack_paths": ["res://systems/upgrades/packs/core_pack.tres", "res://systems/upgrades/packs/projectile_pack.tres", "res://systems/upgrades/packs/melee_pack.tres",
-	"res://systems/upgrades/packs/test_pack.tres"],
+	"unlocked_pack_paths": ["res://systems/upgrades/packs/core_pack.tres"],
 	"permanent_stats": {
 		"move_speed_bonus": 0.0,
 		"luck_bonus": 0.0,
@@ -53,6 +53,12 @@ func unlock_character(character_data_path: String):
 		print("Unlocked new character: ", character_data_path)
 		# Emit signal that character was unlocked.
 		unlocked_characters_changed.emit()
+		
+func unlock_pack(pack_path: String):
+	if not pack_path in data["unlocked_pack_paths"]:
+		data["unlocked_pack_paths"].append(pack_path)
+		print("Unlocked new pack: ", pack_path)
+		unlocked_packs_changed.emit()
 
 # --- Save/Load Logic ---
 func save_data():
@@ -101,8 +107,3 @@ func clear_save_file():
 			printerr("Error deleting save file. Code: ", err)
 	else:
 		print("No save file to delete.")
-
-func unlock_pack(pack_path: String):
-	if not pack_path in data["unlocked_pack_paths"]:
-		data["unlocked_pack_paths"].append(pack_path)
-		# TODO: Add signal for UI

@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bjpvtmn8ptm1n"]
+[gd_scene load_steps=12 format=3 uid="uid://bjpvtmn8ptm1n"]
 
 [ext_resource type="Script" uid="uid://b4c4seddr04t5" path="res://actors/enemies/enemy.gd" id="1_i3vid"]
 [ext_resource type="PackedScene" uid="uid://bvjckw4le1mr3" path="res://ui/damage_number/damage_number.tscn" id="2_smojp"]
 [ext_resource type="PackedScene" uid="uid://b6g8t0tg7ccfi" path="res://items/pickups/experience_gem/xp_orb.tscn" id="3_smojp"]
 [ext_resource type="PackedScene" uid="uid://dvd6w0bq2fi03" path="res://items/pickups/soul/soul.tscn" id="4_dluy2"]
 [ext_resource type="SpriteFrames" uid="uid://b07nax6t85adf" path="res://actors/enemies/placeholder_animation_names.tres" id="4_smojp"]
+[ext_resource type="PackedScene" uid="uid://ppb43f44qipk" path="res://items/pickups/heart/heart_pickup.tscn" id="5_838wa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dluy2"]
 radius = 5.0
@@ -57,6 +58,7 @@ script = ExtResource("1_i3vid")
 damage_number_scene = ExtResource("2_smojp")
 experience_gem_scene = ExtResource("3_smojp")
 soul_scene = ExtResource("4_dluy2")
+heart_scene = ExtResource("5_838wa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemies"]]
 shape = SubResource("CircleShape2D_dluy2")
@@ -89,3 +91,5 @@ libraries = {
 rect = Rect2(-5, -5, 10, 10)
 
 [node name="DeathTimer" type="Timer" parent="."]
+
+[node name="DamageCooldown" type="Timer" parent="."]

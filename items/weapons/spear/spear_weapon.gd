@@ -6,7 +6,7 @@ extends Weapon
 # --- Transformation Flags ---
 var has_hedgehog	 = false # Multiple cones/points
 var has_defensive_stance	 = false # Reduce damage to player when hit in melee
-var has_couch = true # Damage increases with speed.
+var has_couch = false # Damage increases with speed.
 
 # --- Config for Transformations ---
 # For Defensive Stance: a quick, temporary armor buff.
@@ -40,6 +40,7 @@ func fire(damage_multiplier=1):
 	super.fire(1 + speed_bonus)
 
 func apply_transformation(id: String):
+	super.apply_transformation(id)
 	if id == "hedgehog":
 		# Increase base projectiles and create cone pattern.
 		fire_behavior_component.fire_pattern = fire_behavior_component.FirePattern.CONE
