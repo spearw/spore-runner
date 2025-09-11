@@ -60,6 +60,7 @@ func _refresh_player_stats():
 	damage_increase_label.text = "Damage Increase: %.0f%%" % (100 * player.get_stat("damage_increase") - 100)
 	firerate_label.text = "Fire Rate Interval: %.0f%%" % (100 * player.get_stat("firerate"))
 	projectile_speed_label.text = "Projectile Speed Increase: %.0f%%" % (100 * player.get_stat("projectile_speed") - 100)
+	projectile_speed_label.text = "Projectile Count Increase: %.0f%%" % (100 * player.get_stat("projectile_count"))
 	area_size_label.text = "Area Increase: %.0f%%" % (100 * player.get_stat("area_size") - 100)
 
 func _refresh_weapon_icons():

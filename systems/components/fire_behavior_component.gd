@@ -84,7 +84,7 @@ func fire(damage_multiplier=1):
 				_execute_aoe_strike(target_position, projectile_stats, allegiance)
 
 ## Helper function to handle the actual creation of a single projectile.
-func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, p_direction: Vector2, p_position: Vector2 = weapon.global_position, user_override: Node2D = null):
+func _spawn_projectile(projectile_stats: ProjectileStats, projectile_allegiance: Projectile.Allegiance, projectile_direction: Vector2, p_position: Vector2 = weapon.global_position, user_override: Node2D = null):
 	# The weapon is attached to the user, so its global_position is the user's position.
 	var spawn_position = weapon.global_position
 	
@@ -95,32 +95,27 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 		projectile_scene = weapon.custom_projectile_scene
 	
 	var projectile = projectile_scene.instantiate()
-	projectile.stats = p_stats
-	# Calculate damage and crit
+
+	projectile.stats = projectile_stats
+	projectile.direction = projectile_direction
+	projectile.allegiance = projectile_allegiance
+	projectile.weapon = weapon
+	
+	# Determine projectile's user
 	var user
 	if user_override:
 		user = user_override
 	else:
 		user = stats_comp.user
-	if user.has_method("get_stat"):
-		var damage_increase = user.get_stat("damage_increase")
-		var critical_hit_rate_multiplier = user.get_stat("critical_hit_rate")
-		var critical_hit_damage_multiplier = user.get_stat("critical_hit_damage")
-		projectile.stats.damage = projectile.stats.base_damage * damage_increase * additional_multiplier
-		projectile.stats.critical_hit_rate = projectile.stats.base_critical_hit_rate * critical_hit_rate_multiplier
-		projectile.stats.critical_hit_damage = projectile.stats.base_critical_hit_damage * critical_hit_damage_multiplier
-	else:
-		projectile.stats.damage = projectile.stats.base_damage * additional_multiplier
-	projectile.allegiance = p_allegiance
-	projectile.weapon = weapon
+	projectile.user = user
 	
 	match spawn_location:
 		SpawnLocation.IN_WORLD:
 			# The old logic: spawn in the main world.
-			projectile.direction = p_direction
+			projectile.direction = projectile_direction
 			get_tree().current_scene.add_child(projectile)
 			projectile.global_position = spawn_position
-			projectile.rotation = p_direction.angle()
+			projectile.rotation = projectile_direction.angle()
 		
 		SpawnLocation.ON_USER:
 			# The new logic: spawn as a child of the user.
@@ -128,7 +123,7 @@ func _spawn_projectile(p_stats: ProjectileStats, p_allegiance: Projectile.Allegi
 			# Its position will be (0,0) relative to the user, which is correct.
 			projectile.position = Vector2.ZERO
 			# The swing's rotation is set relative to the user's facing direction.
-			projectile.rotation = p_direction.angle()
+			projectile.rotation = projectile_direction.angle()
 
 # This is a public function the weapon script can now call to override the pattern for a single shot.
 func override_pattern_for_next_shot(new_pattern: FirePattern):

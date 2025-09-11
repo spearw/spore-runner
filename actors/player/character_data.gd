@@ -14,8 +14,8 @@ extends Resource
 @export var base_luck: float = 1.0 
 @export var base_firerate_modifier: float = 1.0 
 @export var base_projectile_count_multiplier: float = 1.0
-@export var base_critical_chance: float = .05
-@export var base_critical_damage: float = .5
+@export var base_critical_chance: float = 0.0
+@export var base_critical_damage: float = 0.0
 @export var base_armor: int = 0
 
 

@@ -240,6 +240,7 @@ func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node
 	var damage_taken = max(0, amount - effective_armor)
 	
 	# Take damage.
+	print("Taking Damage!", damage_taken)
 	current_health = max(0, current_health - damage_taken)
 	
 	# Emit the signal to notify listeners (like the UI) of the health change.

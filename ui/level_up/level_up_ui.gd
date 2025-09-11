@@ -73,7 +73,12 @@ func show_upgrade_screen():
 			if upgrade.rarity_values.size() > 0:
 				var value = upgrade.rarity_values[rarity_enum]
 				# Dyanmic text and colors
-				button.text = "%s\n%s (+%s)" % [upgrade.display_name, upgrade.description, value]
+				if upgrade.modifier_type == Upgrade.ModifierType.MULTIPLICATIVE:
+					button.text = "%s\n%s (+%s%%)" % [upgrade.display_name, upgrade.description, value * 100]
+				elif upgrade.modifier_type == Upgrade.ModifierType.ADDITIVE:
+					button.text = "%s\n%s (+%s)" % [upgrade.display_name, upgrade.description, value]
+				elif upgrade.modifier_type == Upgrade.ModifierType.POWERS:
+					button.text = "%s\n%s (+%s level(s))" % [upgrade.display_name, upgrade.description, value]
 			else: 
 				button.text = "%s\n%s" % [upgrade.display_name, upgrade.description]
 				
