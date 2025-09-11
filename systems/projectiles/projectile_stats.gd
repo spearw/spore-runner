@@ -15,15 +15,17 @@ var critical_hit_damage = base_critical_hit_damage
 # How many enemies this projectile can hit before being destroyed.
 # 0 = hits one target. -1 = infinite hits.
 @export var pierce: int = 0
-
+@export var status_to_apply: StatusEffect
 # Armor pen. Reduces armor by % before damage is calculated.
 @export_range(0.0, 1.0) var armor_penetration: float = 0.0
+# How much force the weapon knocks back its target
+@export var knockback_force: float = 0.0
+
 
 # --- Visuals ---
 @export var texture: Texture2D
 @export var scale: Vector2 = Vector2(1.0, 1.0)
 
-@export var knockback_force: float = 0.0
 
 # --- AoE Properties ---
 # If true, this projectile is an area-of-effect explosion, not a moving bullet.

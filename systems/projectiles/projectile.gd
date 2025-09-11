@@ -133,6 +133,11 @@ func _on_body_entered(body: Node2D):
 			else:
 				damage = stats.damage
 			body.take_damage(damage, stats.armor_penetration, is_crit, self)
+		if stats.status_to_apply and body.has_node("StatusEffectManager"):
+			var status_manager = body.get_node("StatusEffectManager")
+			
+			var user = weapon.user
+			status_manager.apply_status(stats.status_to_apply, user)
 		if stats.knockback_force > 0 and body.has_method("apply_knockback"):
 			body.apply_knockback(stats.knockback_force, self.global_position)
 			

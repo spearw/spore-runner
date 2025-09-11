@@ -9,7 +9,6 @@ var hit_targets: Array = [] # Prevent hitting the same enemy twice in one swing
 
 
 func _ready():
-	# We'll use Area2D layers/masks for collision
 	if allegiance == Projectile.Allegiance.PLAYER:
 		self.collision_mask = 1 << 1 # Scan for enemy_body
 	else:

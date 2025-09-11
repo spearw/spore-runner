@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjpvtmn8ptm1n"]
+[gd_scene load_steps=13 format=3 uid="uid://bjpvtmn8ptm1n"]
 
 [ext_resource type="Script" uid="uid://b4c4seddr04t5" path="res://actors/enemies/enemy.gd" id="1_i3vid"]
 [ext_resource type="PackedScene" uid="uid://bvjckw4le1mr3" path="res://ui/damage_number/damage_number.tscn" id="2_smojp"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dvd6w0bq2fi03" path="res://items/pickups/soul/soul.tscn" id="4_dluy2"]
 [ext_resource type="SpriteFrames" uid="uid://b07nax6t85adf" path="res://actors/enemies/placeholder_animation_names.tres" id="4_smojp"]
 [ext_resource type="PackedScene" uid="uid://ppb43f44qipk" path="res://items/pickups/heart/heart_pickup.tscn" id="5_838wa"]
+[ext_resource type="PackedScene" uid="uid://dykuap5uxjb8r" path="res://systems/status_effects/status_effect_manager.tscn" id="7_tnkxp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dluy2"]
 radius = 5.0
@@ -93,3 +94,5 @@ rect = Rect2(-5, -5, 10, 10)
 [node name="DeathTimer" type="Timer" parent="."]
 
 [node name="DamageCooldown" type="Timer" parent="."]
+
+[node name="StatusEffectManager" parent="." instance=ExtResource("7_tnkxp")]
