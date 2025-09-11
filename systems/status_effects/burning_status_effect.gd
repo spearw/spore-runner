@@ -13,14 +13,14 @@ var tick_timer: float = 0.0
 
 # --- Overridden Functions ---
 ## Called once when Burning is first applied.
-override func on_apply(manager: StatusEffectManager, source):
+func on_apply(manager: StatusEffectManager, source):
 	# Apply the first tick of damage immediately.
 	_do_damage_tick(manager, source)
 	# Reset the tick timer.
 	tick_timer = time_between_ticks
 
 ## Called every frame.
-override func on_process(manager: StatusEffectManager, delta: float, source):
+func on_process(manager: StatusEffectManager, delta: float, source):
 	tick_timer -= delta
 	if tick_timer <= 0:
 		_do_damage_tick(manager, source)

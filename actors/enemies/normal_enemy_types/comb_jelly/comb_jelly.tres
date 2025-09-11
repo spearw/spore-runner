@@ -24,4 +24,5 @@ weapon_scenes = Array[PackedScene]([ExtResource("5_1ncx8")])
 challenge_rating = 10.0
 experience_gem_stats = ExtResource("2_o8vgm")
 soul_drop_chance = 0.05
+heart_drop_chance = 0.05
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

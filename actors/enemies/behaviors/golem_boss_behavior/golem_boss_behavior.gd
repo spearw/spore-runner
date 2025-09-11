@@ -61,7 +61,7 @@ func _on_chase_timer_timeout():
 		_choose_and_execute_attack()
 	else:
 		# If we are off-screen, don't attack. Just reset to chasing.
-		print("Boss AI: Off-screen, skipping attack and resuming chase.")
+		Logs.add_message("Boss AI: Off-screen, skipping attack and resuming chase.")
 		current_state = State.CHASING
 		chase_timer.start()
 
@@ -83,11 +83,11 @@ func _choose_and_execute_attack():
 	if distance_to_player <= close_range_threshold:
 		# Player is close. Heavily favor Spike Nova.
 		attack_weights["spike_nova"] += 30 # A large bonus
-		print("Boss AI: Player is close, favoring Spike Nova.")
+		Logs.add_message("Boss AI: Player is close, favoring Spike Nova.")
 	else:
 		# Player is far. Heavily favor Meteor Slam.
 		attack_weights["meteor_slam"] += 30
-		print("Boss AI: Player is far, favoring Meteor Slam.")
+		Logs.add_message("Boss AI: Player is far, favoring Meteor Slam.")
 
 	# --- Perform Weighted Random Selection ---
 	var chosen_attack = _weighted_random_choice(attack_weights)

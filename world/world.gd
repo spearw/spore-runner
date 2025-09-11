@@ -60,7 +60,7 @@ func _on_player_died():
 	if is_game_over: return # Prevent this from running twice
 	
 	is_game_over = true
-	print("GAME OVER - YOU LOSE")
+	Logs.add_message("GAME OVER - YOU LOSE")
 	
 	# We can create a simple game over screen later.
 	# For now, we'll just pause the tree.
@@ -70,7 +70,7 @@ func win_game():
 	if is_game_over: return # Prevent this from running twice
 	
 	is_game_over = true
-	print("VICTORY - YOU SURVIVED!")
+	Logs.add_message("VICTORY - YOU SURVIVED!")
 	
 	# Stop enemies from spawning.
 	spawner.set_physics_process(false)

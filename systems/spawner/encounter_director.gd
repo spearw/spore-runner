@@ -58,7 +58,7 @@ func _physics_process(delta: float):
 		if event_to_check.spawn_immediately_on_start:
 			# It's a boss/burst event. Process it now.
 			var event = pending_encounter_sets.pop_front() # Get and remove it from the list
-			print("Director Override: Spawning immediate event '%s'" % event.resource_path)
+			Logs.add_message("Director Override: Spawning immediate event '%s'" % event.resource_path)
 			
 			for enemy_stat in event.enemies:
 				# Spawn the enemy and go into budget deficit.
@@ -70,7 +70,7 @@ func _physics_process(delta: float):
 			break
 
 func _on_spawn_pulse_timer_timeout():
-	#print("Director Budget:", budget_accumulator)
+	#Logs.add_message(["Director Budget:", budget_accumulator])
 	var available_enemies = _get_currently_available_enemies()
 	if available_enemies.is_empty(): return
 
@@ -165,7 +165,7 @@ func _update_threat_ledger(enemy_stats: EnemyStats, multiplier: int):
 	var cr_change = enemy_stats.challenge_rating * multiplier
 	current_threat[behavior_class] = current_cr + cr_change
 	
-	# print("Threat updated: ", on_screen_threat)
+	# Logs.add_message(["Threat updated: ", on_screen_threat])
 
 func _on_timer_timeout() -> void:
 	pass # Replace with function body.

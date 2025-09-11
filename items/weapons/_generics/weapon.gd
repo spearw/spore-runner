@@ -54,5 +54,5 @@ func reduce_cooldown(amount: float):
 		# The timer will automatically fire if time_left becomes <= 0.
 		# Calculate the new remaining time.
 		var new_time_left = fire_rate_timer.time_left - amount
-		print("Time left:", new_time_left)
+		Logs.add_message(["Time left:", new_time_left])
 		fire_rate_timer.start(max(0, new_time_left))

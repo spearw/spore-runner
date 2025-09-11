@@ -97,6 +97,6 @@ func _refresh_artifact_icons():
 		
 ## Called when any weapon button in the grid is clicked.
 func _on_weapon_button_pressed(weapon_node: Node):
-	print("Player clicked on weapon: ", weapon_node.name)
+	Logs.add_message(["Player clicked on weapon: ", weapon_node.name])
 	# Tell the picker to open and configure itself for the selected weapon.
 	targeting_picker.open_for_weapon(weapon_node)

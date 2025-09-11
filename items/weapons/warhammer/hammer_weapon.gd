@@ -65,7 +65,7 @@ func apply_transformation(id: String):
 		projectile_stats.knockback_force = projectile_stats.knockback_force * 2
 		projectile_stats.armor_penetration = 0.75
 		has_smash = true
-		print("Hammer has gained Smash!")
+		Logs.add_message(["Hammer has gained Smash!"])
 	if id == "shockwave":
 		has_shockwave = true
-		print("Hammer has gained Shockwave!")
+		Logs.add_message(["Hammer has gained Shockwave!"])

@@ -37,7 +37,7 @@ func _on_mode_button_pressed(new_mode_enum: TargetingComponent.TargetingMode):
 	var targeting_comp = weapon_node.get_node_or_null("TargetingComponent")
 	if targeting_comp:
 		targeting_comp.targeting_mode = new_mode_enum
-		print("Set %s targeting to %s" % [weapon_node.name, TargetingComponent.TargetingMode.keys()[new_mode_enum]])
+		Logs.add_message(["Set %s targeting to %s" % [weapon_node.name, TargetingComponent.TargetingMode.keys()[new_mode_enum]]])
 	
 	close()
 

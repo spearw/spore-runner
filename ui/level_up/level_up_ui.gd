@@ -33,7 +33,7 @@ func _ready() -> void:
 	
 ## Called by the global 'boss_reward_requested' signal.
 func on_boss_reward_requested():
-	print("UI received boss reward request. Granting free level-ups.")
+	Logs.add_message(["UI received boss reward request. Granting free level-ups."])
 	# For now, we'll just show the level up screen 3 times in a row.
 	# A better system might have a dedicated multi-choice UI.
 	# We need to use a loop that waits for the player to choose before showing the next.
@@ -55,6 +55,7 @@ func _show_reward_sequence(count: int):
 	
 ## Called when the player levels up. Fetches and displays upgrade choices.
 func on_player_leveled_up(new_level: int):
+	Logs.add_message(["Player leveled up. New level:", new_level])
 	show_upgrade_screen()
 	
 func show_upgrade_screen():
@@ -100,9 +101,10 @@ func show_upgrade_screen():
 ## Called when any of the upgrade buttons are pressed.
 ## @param choice_index: int - The index of the button that was pressed.
 func _on_upgrade_button_pressed(choice_index: int) -> void:
+	var choice = current_upgrades[choice_index]
+	Logs.add_message(["Player chose upgrade:", choice.upgrade.id, "Rarity:", Upgrade.Rarity.keys()[choice.rarity]])
 	# Apply the selected upgrade.
 	upgrade_manager.apply_upgrade(current_upgrades[choice_index])
-	
 	upgrade_chosen.emit()
 		
 	# Hide the UI and unpause the game.

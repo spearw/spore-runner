@@ -78,7 +78,7 @@ func apply_transformation(id: String):
 	super.apply_transformation(id)
 	if id == "berserker":
 		has_berserker = true
-		print("Axe has gained Berserker!")
+		Logs.add_message("Axe has gained Berserker!")
 	if id == "charge":
 		has_charge = true
-		print("Axe has gained Charge!")
+		Logs.add_message("Axe has gained Charge!")

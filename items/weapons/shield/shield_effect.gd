@@ -74,9 +74,9 @@ func _on_cooldown_timer_timeout():
 func _take_shield_damage():
 	if stats.pierce != -1: # -1 is infinite
 		stats.pierce -= 1
-		print("Shield durability: ", stats.pierce)
+		Logs.add_message(["Shield durability: ", stats.pierce])
 		# TODO: call the AnimationPlayer to show visual cracks.
 		
 		if stats.pierce <= 0:
-			print("Shield broke!")
+			Logs.add_message(["Shield broke!"])
 			queue_free()

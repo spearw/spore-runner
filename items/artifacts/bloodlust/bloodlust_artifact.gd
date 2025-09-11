@@ -28,7 +28,7 @@ func _on_enemy_killed():
 	if randf() > final_proc_chance:
 		return # The roll failed. Do nothing.
 
-	print("Bloodlust Activated! (Final Chance: %.2f)" % final_proc_chance)
+	Logs.add_message(["Bloodlust Activated! (Final Chance: %.2f)" % final_proc_chance])
 	
 	# Find the user's equipment and reduce the cooldown of all weapons.
 	var equipment_node = user.get_node_or_null("Equipment")

@@ -34,7 +34,7 @@ func fire(damage_multiplier=1):
 		var current_speed = user.velocity.length()
 		# Calculate the bonus damage multiplier.
 		speed_bonus = current_speed * (couch_damage_per_speed / 100)
-		print("Couch bonus:", speed_bonus)
+		Logs.add_message(["Couch bonus:", speed_bonus])
 	
 	# Call fire with potential multiplier
 	super.fire(1 + speed_bonus)
@@ -46,10 +46,10 @@ func apply_transformation(id: String):
 		fire_behavior_component.fire_pattern = fire_behavior_component.FirePattern.CONE
 		self.base_projectile_count = 3
 		has_hedgehog = true
-		print("Spear has gained Hedgehog!")
+		Logs.add_message("Spear has gained Hedgehog!")
 	if id == "defensive_stance":
 		has_defensive_stance = true
-		print("Spear has gained Defensive Stance!")
+		Logs.add_message("Spear has gained Defensive Stance!")
 	if id == "couch":
 		has_couch = true
-		print("Spear has gained Couch!")
+		Logs.add_message("Spear has gained Couch!")

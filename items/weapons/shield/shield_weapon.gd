@@ -24,7 +24,7 @@ func fire(multiplier: int = 1):
 	# Check if the user already has a shield equipped.
 	var new_spawn = false
 	if not shield_instance:
-		print("Spawning a new shield.")
+		Logs.add_message(["Spawning a new shield."])
 		new_spawn = true
 		# If no shield exists, spawn one.
 		shield_instance = custom_projectile_scene.instantiate()
@@ -63,11 +63,11 @@ func apply_transformation(id: String):
 	if id == "bash":
 		has_bash = true
 		has_changed = true
-		print("Shield gained Bash!")
+		Logs.add_message(["Shield gained Bash!"])
 	if id == "tower":
 		has_tower = true
 		has_changed = true
-		print("Shield gained Tower!")
+		Logs.add_message(["Shield gained Tower!"])
 	if has_changed:
 		# Delete shield and apply new
 		shield_instance.queue_free()

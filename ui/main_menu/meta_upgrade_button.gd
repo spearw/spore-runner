@@ -40,7 +40,7 @@ func _on_purchase_button_pressed():
 	if GameData.data["total_souls"] >= cost:
 		GameData.data["total_souls"] -= cost
 		GameData.data["permanent_stats"][upgrade_data.stat_key] += upgrade_data.value_per_level
-		print("Purchased '%s'. New value: %s" % [upgrade_data.display_name, GameData.data["permanent_stats"][upgrade_data.stat_key]])
+		Logs.add_message(["Purchased '%s'. New value: %s" % [upgrade_data.display_name, GameData.data["permanent_stats"][upgrade_data.stat_key]]])
 		update_display()
 		# We need to tell the main menu to update the soul count and other buttons
 		purchased_upgrade.emit()

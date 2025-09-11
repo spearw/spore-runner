@@ -98,7 +98,7 @@ func add_bonus(key: String, value: float, is_additive: bool=false):
 	var current_bonus = in_run_bonuses.get(key, 0.0)
 	in_run_bonuses[key] = current_bonus + value
 
-	print("Player bonus '%s' updated. New total for this run: %.2f" % [key, in_run_bonuses[key]])
+	Logs.add_message(["Player bonus '%s' updated. New total for this run: %.2f" % [key, in_run_bonuses[key]]])
 	notify_stats_changed()
 
 # --- Get stat multiplier based on key ---
@@ -206,7 +206,7 @@ func add_experience(amount: int) -> void:
 func apply_timed_bonus(stat_key: String, value: float, duration: float):
 	var current_bonus = timed_bonuses.get(stat_key, 0.0)
 	timed_bonuses[stat_key] = current_bonus + value
-	print("Applied timed bonus: +%s %s for %.1fs" % [value, stat_key, duration])
+	Logs.add_message(["Applied timed bonus: +%s %s for %.1fs" % [value, stat_key, duration]])
 	
 	# Create a one-shot timer to remove the bonus after the duration.
 	var timer = get_tree().create_timer(duration)
@@ -219,7 +219,7 @@ func apply_timed_bonus(stat_key: String, value: float, duration: float):
 func remove_timed_bonus(stat_key: String, value: float):
 	var current_bonus = timed_bonuses.get(stat_key, 0.0)
 	timed_bonuses[stat_key] = current_bonus - value
-	print("Timed bonus expired: -%s %s" % [value, stat_key])
+	Logs.add_message(["Timed bonus expired: -%s %s" % [value, stat_key]])
 	notify_stats_changed()
 
 ## Public method to apply damage to the player.
@@ -240,10 +240,12 @@ func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node
 	var damage_taken = max(0, amount - effective_armor)
 	
 	# Take damage.
-	print("Taking Damage!", damage_taken)
+	Logs.add_message(["Taking Damage:", damage_taken])
 	current_health = max(0, current_health - damage_taken)
 	
 	# Emit the signal to notify listeners (like the UI) of the health change.
+	Logs.add_message(["Current Health:", current_health])
+	Logs.add_message(["Max Health:", current_health])
 	health_changed.emit(current_health, max_health)
 	took_damage.emit()
 		
@@ -261,7 +263,7 @@ func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node
 ## @param from_position: Vector2 - The world position the knockback originates from.
 func apply_knockback(force: float, from_position: Vector2):
 	# Calculate the direction vector away from the damage source.
-	print("Applying knockback:", force)
+	# Logs.add_message(["Applying knockback:", force])
 	var direction = (self.global_position - from_position).normalized()
 	# Apply the force to the velocity. This will be handled by move_and_slide.
 	knockback_velocity = direction * force
@@ -309,7 +311,7 @@ func _on_enemy_killed():
 func set_redirect_ability(can_redirect: bool):
 	can_redirect_projectiles = can_redirect
 	if can_redirect:
-		print("Player gained redirect ability!")
+		Logs.add_message(["Player gained redirect ability!"])
 
 ## Finds a power by its key, adds levels to it, and initializes it if it's the first time.
 func add_power_level(power_key: String, levels_to_add: int):
@@ -319,10 +321,10 @@ func add_power_level(power_key: String, levels_to_add: int):
 	# If this is the first time, "unlock" it with one time setups.
 	if current_level == 0:
 		_unlock_power(power_key)
-		print("Player unlocked power: ", power_key)
+		Logs.add_message(["Player unlocked power: ", power_key])
 
 	unlocked_powers[power_key] = current_level + levels_to_add
-	print("Upgraded power '%s' to level %d" % [power_key, unlocked_powers[power_key]])
+	Logs.add_message(["Upgraded power '%s' to level %d" % [power_key, unlocked_powers[power_key]]])
 	
 	notify_stats_changed()
 

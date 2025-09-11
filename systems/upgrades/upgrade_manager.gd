@@ -28,15 +28,19 @@ func _build_active_upgrade_pool():
 	# Get the list of selected pack paths from persistent data.
 	var selected_pack_paths = CurrentRun.selected_pack_paths
 	
+	var pack_names = []
 	for pack_path in selected_pack_paths:
 		var pack_resource: UpgradePack = load(pack_path)
 		if pack_resource:
 			# Add all upgrades from this pack into our active pool for this run.
 			active_upgrade_pool.append_array(pack_resource.upgrades)
+			pack_names.append(pack_resource.pack_name)
 		else:
 			printerr("Failed to load UpgradePack at path: ", pack_path)
 			
-	print("UpgradeManager pool built for this run. Total upgrades available: ", active_upgrade_pool.size())
+	Logs.add_message("UpgradeManager pool built for this run.")
+	Logs.add_message(["Packs added:", pack_names])
+	Logs.add_message(["Total upgrades available: ", active_upgrade_pool.size()])
 
 ## Store reference to the player's equipment and artifacts.
 ## @param player: Node - The player node instance that is registering itself.
@@ -46,7 +50,7 @@ func register_player(player: Node) -> void:
 		self.player = player
 		self.player_equipment = player.get_node("Equipment")
 		self.player_artifacts = player.get_node("Artifacts")
-		print("UpgradeManager: Player registered successfully.")
+		Logs.add_message("UpgradeManager: Player registered successfully.")
 	else:
 		printerr("UpgradeManager: Failed to register player or find required child nodes (Equipment/Artifacts).")
 		
@@ -65,6 +69,7 @@ func get_player_inventory_names_and_transformed_item_list() -> Array[Array]:
 
 ## Returns a specified number of valid, random upgrade choices.
 func get_upgrade_choices(count: int) -> Array[Dictionary]:
+	Logs.add_message("Getting upgrade choices")
 	# --- Filter the pool for currently valid upgrades ---
 	var inventory = get_player_inventory_names_and_transformed_item_list()
 	var player_inventory = inventory[0]
@@ -118,6 +123,9 @@ func get_upgrade_choices(count: int) -> Array[Dictionary]:
 					chosen_rarity_enum = _get_random_rarity_tier()
 					
 		var chosen_upgrade = potential_upgrades.pick_random()
+		
+		Logs.add_message(["Manager chose upgrade:", chosen_upgrade.id, "Rarity:", Upgrade.Rarity.keys()[chosen_rarity_enum]])
+
 		
 		# Package the results
 		final_choices.append({

@@ -112,7 +112,7 @@ func _execute_add_xp(args: Array):
 		player_node.add_experience(amount)
 		_log_to_console("Added %d xp." % amount)
 	else:
-		print("Nothing to give xp to!")
+		Logs.add_message("Nothing to give xp to!")
 		
 func _execute_unlock_all(_args: Array):
 	_execute_unlock_all_characters(_args)

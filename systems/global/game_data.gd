@@ -33,7 +33,7 @@ func _ready():
 # --- Public API ---
 func add_souls(amount: int):
 	data["total_souls"] += amount
-	print("Souls collected! Total: ", data["total_souls"])
+	Logs.add_message(["Souls collected! Total: ", data["total_souls"]])
 	# TODO: emit a signal here for the UI to update.
 
 ## Sets the character to be used for the next run.
@@ -41,7 +41,7 @@ func add_souls(amount: int):
 func set_selected_character(character_data_path: String):
 	if character_data_path in data["unlocked_character_paths"]:
 		data["selected_character_path"] = character_data_path
-		print("Selected character: ", character_data_path)
+		Logs.add_message(["Selected character: ", character_data_path])
 	else:
 		printerr("Attempted to select a character that is not unlocked: ", character_data_path)
 
@@ -50,14 +50,14 @@ func set_selected_character(character_data_path: String):
 func unlock_character(character_data_path: String):
 	if not character_data_path in data["unlocked_character_paths"]:
 		data["unlocked_character_paths"].append(character_data_path)
-		print("Unlocked new character: ", character_data_path)
+		Logs.add_message(["Unlocked new character: ", character_data_path])
 		# Emit signal that character was unlocked.
 		unlocked_characters_changed.emit()
 		
 func unlock_pack(pack_path: String):
 	if not pack_path in data["unlocked_pack_paths"]:
 		data["unlocked_pack_paths"].append(pack_path)
-		print("Unlocked new pack: ", pack_path)
+		Logs.add_message(["Unlocked new pack: ", pack_path])
 		unlocked_packs_changed.emit()
 
 # --- Save/Load Logic ---
@@ -69,7 +69,7 @@ func save_data():
 		var json_string = JSON.stringify(data, "\t")
 		# Write the string to the file.
 		file.store_string(json_string)
-		print("Game data saved successfully.")
+		Logs.add_message("Game data saved successfully.")
 	else:
 		printerr("Failed to open save file for writing.")
 
@@ -83,13 +83,13 @@ func load_data():
 			var parse_result = JSON.parse_string(json_string)
 			if parse_result:
 				data = parse_result
-				print("Game data loaded successfully.")
+				Logs.add_message("Game data loaded successfully.")
 			else:
 				printerr("Failed to parse save file JSON.")
 		else:
 			printerr("Failed to open save file for reading.")
 	else:
-		print("No save file found. Using default data.")
+		Logs.add_message("No save file found. Using default data.")
 		
 ## Deletes the save file from the disk.
 func clear_save_file():
@@ -102,8 +102,8 @@ func clear_save_file():
 	if dir.file_exists(SAVE_PATH):
 		var err = dir.remove(SAVE_PATH.replace("user://", "")) # DirAccess.remove needs a relative path
 		if err == OK:
-			print("Save file deleted successfully.")
+			Logs.add_message("Save file deleted successfully.")
 		else:
 			printerr("Error deleting save file. Code: ", err)
 	else:
-		print("No save file to delete.")
+		Logs.add_message("No save file to delete.")
