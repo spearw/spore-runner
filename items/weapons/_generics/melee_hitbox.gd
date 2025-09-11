@@ -24,7 +24,7 @@ func _on_body_entered(body: Node2D):
 		var damage
 		var is_crit = false
 		if randf() < stats.critical_hit_rate:
-			damage = stats.damage * (1 + stats.critical_hit_damage)
+			damage = stats.damage * stats.critical_hit_damage
 			is_crit = true
 		else:
 			damage = stats.damage
