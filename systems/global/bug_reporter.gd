@@ -4,6 +4,9 @@ extends Node
 
 const REPORT_DIR = "user://bug_reports/"
 
+func _ready():
+	self.process_mode = Node.PROCESS_MODE_ALWAYS
+	
 ## Signal handler for manual button press
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("report_bug"):
