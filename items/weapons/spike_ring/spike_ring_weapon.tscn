@@ -22,5 +22,6 @@ metadata/_custom_type_script = "uid://5nf8qiekyyrw"
 [node name="WeaponStatsComponent" parent="." instance=ExtResource("4_jfi2l")]
 
 [node name="FireBehaviorComponent" parent="." instance=ExtResource("6_3lntn")]
+base_pattern = 1
 spread_angle_degrees = 30.0
 burst_delay = 0.01

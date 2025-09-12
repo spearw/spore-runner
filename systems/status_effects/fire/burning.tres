@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="BurningStatusEffect" load_steps=3 format=3 uid="uid://dqggjte2gak4i"]
+[gd_resource type="Resource" script_class="DotStatusEffect" load_steps=3 format=3 uid="uid://b0qo4jnrxfh6g"]
 
-[ext_resource type="Resource" uid="uid://2n3ey4no67p5" path="res://systems/status_effects/fire/ignited.tres" id="1_2ewag"]
-[ext_resource type="Script" uid="uid://b6spqm1ea2rj5" path="res://systems/status_effects/fire/burning_status_effect.gd" id="1_xpjei"]
+[ext_resource type="Resource" uid="uid://bmhej18q7vdbq" path="res://systems/status_effects/fire/ignited.tres" id="1_2ewag"]
+[ext_resource type="Script" uid="uid://b6spqm1ea2rj5" path="res://systems/status_effects/dot_status_effect.gd" id="1_xpjei"]
 
 [resource]
 script = ExtResource("1_xpjei")
 damage_per_tick = 2.0
 time_between_ticks = 1.0
-ignite_chance = 0.1
-ignited_status_effect = ExtResource("1_2ewag")
+additional_status_chance = 0.1
+additional_status_effect = ExtResource("1_2ewag")
 id = "burning"
 duration = 5.0
 modulate_color = Color(1, 0.466667, 0.466667, 0.588235)

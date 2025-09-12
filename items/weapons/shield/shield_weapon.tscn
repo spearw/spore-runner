@@ -1,21 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://cg270bcu7rx63"]
+[gd_scene load_steps=6 format=3 uid="uid://cg270bcu7rx63"]
 
 [ext_resource type="Script" uid="uid://cpg0scx4tm0wx" path="res://items/weapons/shield/shield_weapon.gd" id="1_b7brc"]
 [ext_resource type="Resource" uid="uid://b3h1didq7w6d7" path="res://items/weapons/shield/shield_stats.tres" id="2_spds6"]
 [ext_resource type="PackedScene" uid="uid://bl1na4mr42ugu" path="res://items/weapons/shield/shield_effect.tscn" id="3_0j1s4"]
+[ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="5_0j1s4"]
 [ext_resource type="PackedScene" uid="uid://bi2e3pkfcknbt" path="res://systems/components/weapon_stats_component.tscn" id="5_1wvmq"]
 
 [node name="ShieldWeapon" type="Node2D"]
 script = ExtResource("1_b7brc")
-shield_offset_distance = null
 projectile_stats = ExtResource("2_spds6")
 custom_projectile_scene = ExtResource("3_0j1s4")
-base_projectile_count = null
 base_fire_rate = 10.0
 
 [node name="FireRateTimer" type="Timer" parent="."]
 autostart = true
 
 [node name="WeaponStatsComponent" parent="." instance=ExtResource("5_1wvmq")]
+
+[node name="TargetingComponent" type="Node" parent="."]
+script = ExtResource("5_0j1s4")
+metadata/_custom_type_script = "uid://5nf8qiekyyrw"
 
 [connection signal="timeout" from="FireRateTimer" to="." method="_on_fire_rate_timer_timeout"]

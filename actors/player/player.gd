@@ -179,7 +179,7 @@ func get_stat(key: String):
 			return base_hp + permanent_bonus + in_run_bonus
 		"dot_damage_bonus":
 			return 1
-		"ignite_chance_bonus":
+		"status_chance_bonus":
 			return 1
 		_:
 			printerr("get_stat: Requested unknown stat key: '", key, "'")

@@ -1,15 +1,15 @@
-[gd_resource type="Resource" script_class="BurningStatusEffect" load_steps=3 format=3 uid="uid://2n3ey4no67p5"]
+[gd_resource type="Resource" script_class="DotStatusEffect" load_steps=3 format=3 uid="uid://bmhej18q7vdbq"]
 
-[ext_resource type="Script" uid="uid://b6spqm1ea2rj5" path="res://systems/status_effects/fire/burning_status_effect.gd" id="1_gf6r5"]
+[ext_resource type="Script" uid="uid://b6spqm1ea2rj5" path="res://systems/status_effects/dot_status_effect.gd" id="1_jkfln"]
 [ext_resource type="SpriteFrames" uid="uid://b01b04iw8p3sn" path="res://items/effects/status_vfx/ignited_fire_vfx.tres" id="2_0jboh"]
 
 [resource]
-script = ExtResource("1_gf6r5")
-damage_per_tick = 10.0
+script = ExtResource("1_jkfln")
+damage_per_tick = 5.0
 time_between_ticks = 0.5
-ignite_chance = 0.0
+additional_status_chance = 1.0
 id = "ignited"
-duration = 3.0
+duration = 5.0
 modulate_color = Color(1, 1, 1, 1)
 vfx_sprite_frames = ExtResource("2_0jboh")
 metadata/_custom_type_script = "uid://b6spqm1ea2rj5"

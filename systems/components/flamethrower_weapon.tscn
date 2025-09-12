@@ -15,7 +15,6 @@ base_fire_rate = 4.0
 [node name="FireRateTimer" type="Timer" parent="."]
 
 [node name="FireBehaviorComponent" parent="." instance=ExtResource("3_gtem6")]
-base_pattern = 1
 spread_angle_degrees = 25.0
 burst_delay = 0.05
 

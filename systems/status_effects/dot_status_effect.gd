@@ -1,13 +1,13 @@
-## burning_status_effect.gd
-## A specialized status effect that deals damage over time and can ignite.
-class_name BurningStatusEffect
+## dot_status_effect.gd
+## A specialized status effect that deals damage over time and can apply additional statuses.
+class_name DotStatusEffect
 extends StatusEffect
 
 # --- Properties ---
 @export var damage_per_tick: float = 2.0
 @export var time_between_ticks: float = 1.0
-@export_range(0.0, 1.0) var ignite_chance: float = 0.0
-@export var ignited_status_effect: StatusEffect
+@export_range(0.0, 1.0) var additional_status_chance: float = 0.0
+@export var additional_status_effect: StatusEffect
 
 # --- Runtime variables used by the manager ---
 var tick_timer: float = 0.0
@@ -42,8 +42,8 @@ func _do_damage_tick(manager: StatusEffectManager, source):
 		# Handle Ignite chance.
 		var ignite_chance_mult = 1.0
 		if is_instance_valid(source):
-			ignite_chance_mult = source.get_stat("ignite_chance_bonus")
+			ignite_chance_mult = source.get_stat("status_chance_bonus")
 
-		if ignite_chance > 0 and randf() < (ignite_chance * ignite_chance_mult):
-			if ignited_status_effect:
-				manager.apply_status(ignited_status_effect, source)
+		if additional_status_chance > 0 and randf() < (additional_status_chance * ignite_chance_mult):
+			if additional_status_effect:
+				manager.apply_status(additional_status_effect, source)

@@ -5,11 +5,10 @@ extends Node
 
 # --- Define the different ways a weapon can fire ---
 enum FirePattern {
-	FORWARD,      # Fires all projectiles in a single targeted direction.
-	SPREAD,       # Fires all projectiles in a random cone towards a target.
-	NOVA,         # Fires all projectiles in a 360-degree circle (dumbfire).
-	AIMED_AOE,    # Fires exactly on targeted enemy with small delay
-	MIRRORED_FORWARD, # Fires projectiles in single targeted direction, also behind.
+	FORWARD,      # Fires all projectiles in a single targeted direction with optional spread
+	NOVA,         # Fires all projectiles in an even arc without aim.
+	AIMED_AOE,    # Spawns exactly on targeted enemy with variable delay
+	MIRRORED_FORWARD, # Like forward but also creates projectile at 180 degrees.
 	CONE, 		# Fires all projectiles in a set cone towards a target.
 }
 enum SpawnLocation {
@@ -64,7 +63,7 @@ func fire(damage_multiplier=1):
 	
 	# --- Main Firing Logic ---
 	match fire_pattern:
-		FirePattern.FORWARD, FirePattern.SPREAD, FirePattern.MIRRORED_FORWARD:
+		FirePattern.FORWARD, FirePattern.MIRRORED_FORWARD:
 			_execute_burst_fire(final_projectile_count, projectile_stats, allegiance, targeting_comp)
 		FirePattern.NOVA:
 			_execute_nova_fire(final_projectile_count, projectile_stats, allegiance)
@@ -134,13 +133,13 @@ func _execute_burst_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: P
 	var base_direction = targeting_comp.get_fire_direction(weapon.global_position, weapon.last_fire_direction, p_allegiance)
 	var final_projectile_count = stats_comp.get_final_projectile_count()
 	
-	# If the pattern is MIRRORED_FORWARD, it DOUBLES the current projectile count.
+	# If the pattern is MIRRORED_FORWARD, it doubles the current projectile count (to fire behind).
 	if fire_pattern == FirePattern.MIRRORED_FORWARD:
 		final_projectile_count *= 2
 		
 	for i in range(final_projectile_count):
 		var fire_direction = base_direction
-		if fire_pattern == FirePattern.SPREAD or fire_pattern == FirePattern.MIRRORED_FORWARD:
+		if fire_pattern == FirePattern.FORWARD or fire_pattern == FirePattern.MIRRORED_FORWARD:
 			fire_direction = base_direction.rotated(
 				deg_to_rad(randf_range(-spread_angle_degrees / 2.0, spread_angle_degrees / 2.0))
 			)

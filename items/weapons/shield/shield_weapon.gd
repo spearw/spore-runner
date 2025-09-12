@@ -9,7 +9,7 @@ extends Weapon
 var has_bash: bool = false
 var has_tower: bool = false
 var user: Node2D;
-var shield_instance: Node2D;
+var shield_instance: Node2D
 
 func _ready():
 	super._ready()
@@ -53,9 +53,14 @@ func _physics_process(_delta):
 	
 	# Find the active shield.
 	if is_instance_valid(shield_instance):
+
+		# Rotate shield to angle of target
+		var target_direction = targeting_component.get_fire_direction(self.global_position, Vector2.RIGHT, Projectile.Allegiance.PLAYER)
+		shield_instance.rotation = target_direction.angle()
+		shield_instance.position = target_direction * shield_offset_distance
 		# Update its rotation to match the user's last move direction.
-		shield_instance.rotation = user.last_move_direction.angle()
-		shield_instance.position = user.last_move_direction * shield_offset_distance
+		# shield_instance.rotation = user.last_move_direction.angle()
+		# shield_instance.position = user.last_move_direction * shield_offset_distance
 
 func apply_transformation(id: String):
 	super.apply_transformation(id)

@@ -23,6 +23,7 @@ metadata/_custom_type_script = "uid://5nf8qiekyyrw"
 [node name="WeaponStatsComponent" parent="." instance=ExtResource("4_bj4c7")]
 
 [node name="FireBehaviorComponent" parent="." instance=ExtResource("5_4jrkr")]
+base_pattern = 2
 spread_angle_degrees = 20.0
 burst_delay = 1.0
 aoe_warning_scene = ExtResource("6_4jrkr")

@@ -73,10 +73,10 @@ func _apply_visuals(status_instance: StatusEffect):
 	
 func _remove_visuals(status_instance: StatusEffect, vfx_instance):
 		if is_instance_valid(vfx_instance):
-			# If we created a VFX scene, free it.
+			# Remove vfx scene is it exists
 			vfx_instance.queue_free()
 		else:
-			# If it was a color modulate, we need to "un-apply" it.
+			# Unapply any color modulation
 			var host_sprite = host.get_node_or_null("AnimatedSprite2D")
 			if host_sprite and status_instance.modulate_color != Color.WHITE:
 				# Recalcuate modulation based on all active status effects.
