@@ -6,6 +6,7 @@ extends Weapon
 # --- Transformation Flags ---
 var has_flaming_tongues: bool = false
 var has_ring_of_fire: bool = false
+@export var ring_of_fire_stats: PersistentEffectStats
 
 # --- Reference for the Ring of Fire effect ---
 var ring_of_fire_instance: Node = null
@@ -27,6 +28,7 @@ func fire(multiplier: int = 1):
 
 ## This function is called by the UpgradeManager.
 func apply_transformation(id: String):
+	super.apply_transformation(id)
 	if id == "flaming_tongues":
 		has_flaming_tongues = true
 		print("Flamethrower gained Flaming Tongues!")
@@ -45,12 +47,12 @@ func _create_ring_of_fire():
 	# If a ring already exists, don't create another one.
 	if is_instance_valid(ring_of_fire_instance): return
 
-	# We'll need a new scene for the aura effect.
-	var ring_scene = load("res://items/weapons/flamethrower/ring_of_fire_effect.tscn")
+	# Load aura scene
+	var ring_scene = load("res://items/effects/persistent_damage_effect.tscn")
 	ring_of_fire_instance = ring_scene.instantiate()
 	
 	# Pass necessary stats to the aura.
-	ring_of_fire_instance.stats = self.projectile_stats
+	ring_of_fire_instance.stats = self.ring_of_fire_stats
 	ring_of_fire_instance.allegiance = stats_component.get_projectile_allegiance()
 	ring_of_fire_instance.user = user
 	

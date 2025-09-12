@@ -16,7 +16,7 @@ extends Control
 @onready var select_button: Button = $HBoxContainer/CharactersContainer/VBoxContainer/HBoxContainer/SelectAndStartButton
 
 # Upgrade packs
-@export var all_packs: Array[UpgradePack] # Master list of all packs in the game
+@export var all_packs: PackList
 @export var upgrade_pack_button_scene: PackedScene
 @export var max_packs_allowed: int = 3 # 3 including core pack
 
@@ -75,7 +75,7 @@ func populate_pack_grid():
 	for child in pack_grid.get_children():
 		child.queue_free()
 	var unlocked_paths = GameData.data["unlocked_pack_paths"]
-	for pack_data in all_packs:
+	for pack_data in all_packs.packs:
 		var button: UpgradePackButton = upgrade_pack_button_scene.instantiate()
 		var is_unlocked = pack_data.resource_path in unlocked_paths
 		button.set_pack_data(pack_data, is_unlocked)

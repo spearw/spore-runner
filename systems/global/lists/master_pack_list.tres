@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="PackList" load_steps=6 format=3 uid="uid://d5bu6epgfgbw"]
+[gd_resource type="Resource" script_class="PackList" load_steps=7 format=3 uid="uid://d5bu6epgfgbw"]
 
 [ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="1_21fx0"]
 [ext_resource type="Resource" uid="uid://cslvyly2f8qn1" path="res://systems/upgrades/packs/core_pack.tres" id="2_3xg5p"]
 [ext_resource type="Script" uid="uid://ca1pirg1ulnh1" path="res://systems/global/lists/pack_list.gd" id="2_pjtqk"]
 [ext_resource type="Resource" uid="uid://c7go0mrrcgyyi" path="res://systems/upgrades/packs/melee_pack.tres" id="3_6gl76"]
+[ext_resource type="Resource" uid="uid://dy0thirxxtsv" path="res://systems/upgrades/packs/fire_pack.tres" id="4_6gl76"]
 [ext_resource type="Resource" uid="uid://bc8pfntixt6we" path="res://systems/upgrades/packs/test_pack.tres" id="4_wqteb"]
 
 [resource]
 script = ExtResource("2_pjtqk")
-packs = Array[ExtResource("1_21fx0")]([ExtResource("2_3xg5p"), ExtResource("3_6gl76"), ExtResource("4_wqteb")])
+packs = Array[ExtResource("1_21fx0")]([ExtResource("2_3xg5p"), ExtResource("3_6gl76"), ExtResource("4_6gl76"), ExtResource("4_wqteb")])
 metadata/_custom_type_script = "uid://dsippqwnljpr2"

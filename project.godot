@@ -80,6 +80,8 @@ report_bug={
 2d_physics/layer_3="player_projectile"
 2d_physics/layer_4="pickups"
 2d_physics/layer_5="enemy_projectile"
+2d_physics/layer_6="player_aoe"
+2d_physics/layer_7="enemy_aoe"
 
 [rendering]
 

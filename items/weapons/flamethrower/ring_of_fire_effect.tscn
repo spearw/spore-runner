@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bw05pjqglu3a7"]
+
+[node name="RingOfFireEffect" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

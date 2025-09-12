@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PersistentEffectStats" load_steps=4 format=3 uid="uid://c23e66thq1yif"]
+
+[ext_resource type="SpriteFrames" uid="uid://cwe4ufw6fa1h8" path="res://items/weapons/flamethrower/ring_of_fire_animation.tres" id="1_nrx85"]
+[ext_resource type="Script" uid="uid://c1jb1x6tem00f" path="res://systems/projectiles/auras/persistent_effect_stats.gd" id="2_lbiuu"]
+[ext_resource type="Resource" uid="uid://b0qo4jnrxfh6g" path="res://systems/status_effects/fire/burning.tres" id="3_rvlqj"]
+
+[resource]
+script = ExtResource("2_lbiuu")
+tick_rate = 0.5
+animation = ExtResource("1_nrx85")
+damage = 0
+speed = -1.0
+lifetime = -1.0
+pierce = 1
+knockback_force = 0.0
+armor_penetration = 0.0
+critical_hit_rate = 0.0
+critical_hit_damage = 0.0
+status_to_apply = ExtResource("3_rvlqj")
+scale = Vector2(10, 10)
+metadata/_custom_type_script = "uid://c1jb1x6tem00f"

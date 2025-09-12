@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://jm5ekkgbhktd"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_o46km"]
+
+[resource]
+script = ExtResource("1_o46km")
+id = "flamethrower_flaming_tongues_transform"
+display_name = "Flaming Tongues"
+description = "Flamethrower also shoots behind you."
+type = 3
+target_class_name = "FlamethrowerWeapon"
+rarity = 2
+key = "flaming_tongues"
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="UpgradePack" load_steps=4 format=3 uid="uid://dy0thirxxtsv"]
+[gd_resource type="Resource" script_class="UpgradePack" load_steps=6 format=3 uid="uid://dy0thirxxtsv"]
 
 [ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="1_cpco1"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_vldj6"]
-[ext_resource type="Resource" uid="uid://5ukacd4uvq0a" path="res://systems/upgrades/upgrades/fire/flamethrower_unlock.tres" id="3_vldj6"]
+[ext_resource type="Resource" uid="uid://5ukacd4uvq0a" path="res://systems/upgrades/weapons/flamethrower/flamethrower_unlock.tres" id="3_vldj6"]
+[ext_resource type="Resource" uid="uid://s6pxfcgpngps" path="res://systems/upgrades/weapons/flamethrower/flamethrower_ring_of_fire_transform.tres" id="4_a2i7u"]
+[ext_resource type="Resource" uid="uid://jm5ekkgbhktd" path="res://systems/upgrades/weapons/flamethrower/flamethrower_flaming_tongues_transform.tres" id="5_wlwyu"]
 
 [resource]
 script = ExtResource("1_cpco1")
-pack_name = ""
-pack_description = ""
-upgrades = Array[ExtResource("2_vldj6")]([ExtResource("3_vldj6")])
+pack_name = "Fire"
+pack_description = "Applies dot on hit. Dot has chance of igniting, causing more damage and additional effects."
+upgrades = Array[ExtResource("2_vldj6")]([ExtResource("3_vldj6"), ExtResource("4_a2i7u"), ExtResource("5_wlwyu")])
 metadata/_custom_type_script = "uid://cvcnhdf5np0ln"

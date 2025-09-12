@@ -1,16 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2lrvdgtyek6x"]
+[gd_scene load_steps=7 format=3 uid="uid://b2lrvdgtyek6x"]
 
-[ext_resource type="Script" uid="uid://b0g8wtar8xbcn" path="res://items/weapons/_generics/weapon.gd" id="1_2ogeb"]
-[ext_resource type="Resource" uid="uid://cgb5cfxagvox5" path="res://items/weapons/flamethrower/flame_projectile_stats.tres" id="2_y4myj"]
+[ext_resource type="Script" uid="uid://gcenefpmhwv4" path="res://items/weapons/flamethrower/flamethrower_weapon.gd" id="1_u0qg7"]
+[ext_resource type="Resource" uid="uid://c23e66thq1yif" path="res://items/weapons/flamethrower/ring_of_fire_stats.tres" id="2_2ogeb"]
+[ext_resource type="Resource" uid="uid://gisavc16nmse" path="res://items/weapons/flamethrower/flame_projectile_stats.tres" id="2_y4myj"]
 [ext_resource type="PackedScene" uid="uid://c5vl748oixb2p" path="res://systems/components/fire_behavior_component.tscn" id="3_gtem6"]
 [ext_resource type="PackedScene" uid="uid://d4jvsnxhbtq87" path="res://systems/components/targeting_component.tscn" id="4_kwpdm"]
 [ext_resource type="PackedScene" uid="uid://bi2e3pkfcknbt" path="res://systems/components/weapon_stats_component.tscn" id="5_ydfdh"]
 
 [node name="FlamethrowerWeapon" type="Node2D"]
-script = ExtResource("1_2ogeb")
+script = ExtResource("1_u0qg7")
+ring_of_fire_stats = ExtResource("2_2ogeb")
 projectile_stats = ExtResource("2_y4myj")
 base_projectile_count = 8
-base_fire_rate = 4.0
+base_fire_rate = 5.0
 
 [node name="FireRateTimer" type="Timer" parent="."]
 
