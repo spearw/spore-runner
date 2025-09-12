@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UpgradePack" load_steps=4 format=3 uid="uid://dy0thirxxtsv"]
+
+[ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="1_cpco1"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_vldj6"]
+[ext_resource type="Resource" uid="uid://5ukacd4uvq0a" path="res://systems/upgrades/upgrades/fire/flamethrower_unlock.tres" id="3_vldj6"]
+
+[resource]
+script = ExtResource("1_cpco1")
+pack_name = ""
+pack_description = ""
+upgrades = Array[ExtResource("2_vldj6")]([ExtResource("3_vldj6")])
+metadata/_custom_type_script = "uid://cvcnhdf5np0ln"

@@ -1,6 +1,7 @@
 ## burning_status_effect.gd
 ## A specialized status effect that deals damage over time and can ignite.
 class_name BurningStatusEffect
+extends StatusEffect
 
 # --- Properties ---
 @export var damage_per_tick: float = 2.0
@@ -33,9 +34,10 @@ func _do_damage_tick(manager: StatusEffectManager, source):
 	if host.has_method("take_damage"):
 		var damage_multiplier = 1.0
 		if is_instance_valid(source):
-			damage_multiplier = source.get_stat("dot_damage_bonus") # Example stat
+			damage_multiplier = source.get_stat("dot_damage_bonus")
 		
-		host.take_damage(damage_per_tick * damage_multiplier, null, false)
+		# 100% armor pen, no chance to crit.
+		host.take_damage(damage_per_tick * damage_multiplier, 1, false)
 		
 		# Handle Ignite chance.
 		var ignite_chance_mult = 1.0

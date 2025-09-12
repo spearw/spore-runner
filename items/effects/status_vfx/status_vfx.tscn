@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfwi2hq5744a1"]
+
+[ext_resource type="Script" uid="uid://4jrb83equ38m" path="res://items/effects/status_vfx/status_vfx.gd" id="1_tqoja"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tqoja"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"active",
+"speed": 8.0
+}]
+
+[node name="StatusVfx" type="Node2D"]
+script = ExtResource("1_tqoja")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tqoja")
+animation = &"active"

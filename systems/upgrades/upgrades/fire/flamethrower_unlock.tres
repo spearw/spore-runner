@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://5ukacd4uvq0a"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_kbkwu"]
+[ext_resource type="PackedScene" uid="uid://b2lrvdgtyek6x" path="res://systems/components/flamethrower_weapon.tscn" id="1_lraah"]
+
+[resource]
+script = ExtResource("1_kbkwu")
+id = "flamethrower_unlock"
+display_name = "Flamethrower"
+description = "Emits a short-range cone of fire that ignites enemies."
+type = 0
+target_class_name = "Weapon"
+scene_to_unlock = ExtResource("1_lraah")
+rarity = 1
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

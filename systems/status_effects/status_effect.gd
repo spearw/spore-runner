@@ -7,6 +7,8 @@ extends Resource
 @export var id: String
 @export var duration: float = 5.0
 @export var icon: Texture2D
+@export var modulate_color: Color = Color.WHITE # Simple color modulation
+@export var vfx_sprite_frames: SpriteFrames # Optional visual for status
 
 ## Called once when the status is first applied to a target.
 func on_apply(manager: StatusEffectManager, source):

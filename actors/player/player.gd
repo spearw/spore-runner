@@ -114,7 +114,8 @@ func get_stat_multiplier(key: String) -> float:
 ## Returns the final, calculated value for any player stat.
 ## @param key: String - The key for the stat (e.g., "move_speed", "damage").
 func get_stat(key: String):
-	#TODO: Add timed bonuses for all stats
+	# TODO: Add timed bonuses for all stats
+	# TODO: Add projectile range (this will increase 'lifetime' value
 	match key:
 		"move_speed":
 			var move_speed = stats.base_move_speed * get_stat_multiplier(key)
@@ -176,6 +177,10 @@ func get_stat(key: String):
 			var permanent_bonus = GameData.data["permanent_stats"].get("max_health", 0)
 			var in_run_bonus = in_run_bonuses.get("max_health", 0)
 			return base_hp + permanent_bonus + in_run_bonus
+		"dot_damage_bonus":
+			return 1
+		"ignite_chance_bonus":
+			return 1
 		_:
 			printerr("get_stat: Requested unknown stat key: '", key, "'")
 			return 1.0 # Return a safe default

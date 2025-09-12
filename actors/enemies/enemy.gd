@@ -117,6 +117,7 @@ func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node
 	if current_health <= 0:
 		# When health drops to 0, let death play out.
 		is_dying = true
+		self.remove_from_group("enemy")
 		death_timer.wait_time = 0.3
 		death_timer.one_shot = true
 		death_timer.timeout.connect(die)

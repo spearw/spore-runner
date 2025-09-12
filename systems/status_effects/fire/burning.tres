@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BurningStatusEffect" load_steps=3 format=3 uid="uid://dqggjte2gak4i"]
+
+[ext_resource type="Resource" uid="uid://2n3ey4no67p5" path="res://systems/status_effects/fire/ignited.tres" id="1_2ewag"]
+[ext_resource type="Script" uid="uid://b6spqm1ea2rj5" path="res://systems/status_effects/fire/burning_status_effect.gd" id="1_xpjei"]
+
+[resource]
+script = ExtResource("1_xpjei")
+damage_per_tick = 2.0
+time_between_ticks = 1.0
+ignite_chance = 0.1
+ignited_status_effect = ExtResource("1_2ewag")
+id = "burning"
+duration = 5.0
+modulate_color = Color(1, 0.466667, 0.466667, 0.588235)
+metadata/_custom_type_script = "uid://b6spqm1ea2rj5"
