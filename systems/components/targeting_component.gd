@@ -20,7 +20,7 @@ var targeting_mode_override: int
 ## The main public function to find a target.
 func find_target(origin_pos: Vector2, weapon_allegiance: Projectile.Allegiance) -> Node2D:
 	var target_group = "enemies" if weapon_allegiance == Projectile.Allegiance.PLAYER else "player"
-	var candidates = get_tree().get_nodes_in_group(target_group)
+	var candidates = TargetingUtils.get_candidates(target_group)
 	
 	if candidates.is_empty():
 		return null
@@ -33,19 +33,19 @@ func find_target(origin_pos: Vector2, weapon_allegiance: Projectile.Allegiance) 
 
 	match targeting_mode:
 		TargetingMode.NEAREST:
-			best_target = _find_nearest(origin_pos, candidates)
+			best_target = TargetingUtils.find_nearest(origin_pos, candidates)
 		
 		TargetingMode.FARTHEST:
-			best_target = _find_farthest(origin_pos, candidates)
+			best_target = TargetingUtils.find_farthest(origin_pos, candidates)
 			
 		TargetingMode.RANDOM:
 			best_target = candidates.pick_random()
 			
 		TargetingMode.HIGHEST_HEALTH:
-			best_target = _find_highest_health(candidates)
+			best_target = TargetingUtils.find_highest_health(candidates)
 			
 		TargetingMode.LOWEST_HEALTH:
-			best_target = _find_lowest_health(candidates)
+			best_target = TargetingUtils.find_lowest_health(candidates)
 		
 		# LAST_MOVE_DIRECTION is handled in get_fire_direction.
 		TargetingMode.LAST_MOVE_DIRECTION, TargetingMode.NONE:
@@ -70,46 +70,7 @@ func get_fire_direction(origin_pos: Vector2, fallback_direction: Vector2, weapon
 		# If no target is found, use the fallback.
 		return fallback_direction
 
-# --- HELPER FUNCTIONS for finding specific targets ---
 
-func _find_nearest(origin_pos: Vector2, candidates: Array) -> Node2D:
-	var best_target = null
-	var closest_dist_sq = INF 
-	for entity in candidates:
-		var dist_sq = origin_pos.distance_squared_to(entity.global_position)
-		if dist_sq < closest_dist_sq:
-			closest_dist_sq = dist_sq
-			best_target = entity
-	return best_target
-
-func _find_farthest(origin_pos: Vector2, candidates: Array) -> Node2D:
-	var best_target = null
-	var farthest_dist_sq = 0
-	for entity in candidates:
-		var dist_sq = origin_pos.distance_squared_to(entity.global_position)
-		if dist_sq > farthest_dist_sq:
-			farthest_dist_sq = dist_sq
-			best_target = entity
-	return best_target
-
-func _find_highest_health(candidates: Array) -> Node2D:
-	var best_target = null
-	var highest_health = -1
-	for entity in candidates:
-		# Check if the entity has a 'current_health' property.
-		if "current_health" in entity and entity.current_health > highest_health:
-			highest_health = entity.current_health
-			best_target = entity
-	return best_target
-
-func _find_lowest_health(candidates: Array) -> Node2D:
-	var best_target = null
-	var lowest_health = INF
-	for entity in candidates:
-		if "current_health" in entity and entity.current_health < lowest_health:
-			lowest_health = entity.current_health
-			best_target = entity
-	return best_target
 
 ## Public function to permanently lock the targeting mode for this run.
 func set_targeting_mode_override(targeting_mode):

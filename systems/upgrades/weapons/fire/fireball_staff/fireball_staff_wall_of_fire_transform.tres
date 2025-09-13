@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://bvs083xtal688"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_kbdgp"]
+
+[resource]
+script = ExtResource("1_kbdgp")
+id = "fireball_staff_wall_of_fire_transform"
+display_name = "Wall of Fire"
+description = "Transforms fireballs to leave behind persistent damaging zones as they travel."
+type = 3
+target_class_name = "FireballStaffWeapon"
+rarity = 2
+key = "wall_of_fire"
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

@@ -31,6 +31,8 @@ var current_experience: int = 0
 var experience_to_next_level: int = 100
 var last_move_direction: Vector2 = Vector2.RIGHT
 
+var is_dying = false
+
 var knockback_velocity: Vector2 = Vector2.ZERO
 
 # This dictionary will store the sum of all percentage-based bonuses collected during a run.
@@ -188,12 +190,12 @@ func get_stat(key: String):
 	
 ## Adds experience to the player and checks for level-up conditions.
 ## @param amount: int - The amount of experience to add.
-func add_experience(amount: int) -> void:
+func add_experience(amount: int, force_level = false) -> void:
 	current_experience += amount
 	experience_changed.emit(current_experience, experience_to_next_level)
 	
-	# Use a while loop in case of gaining multiple levels from one gem.
-	while current_experience >= experience_to_next_level:
+	# Check for flag to force level up
+	if current_experience >= experience_to_next_level or force_level:
 		# Subtract the cost of the level up.
 		current_experience -= experience_to_next_level
 		

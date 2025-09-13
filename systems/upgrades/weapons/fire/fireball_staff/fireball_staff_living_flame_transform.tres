@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://stebqaf6f7fu"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_6x5ow"]
+
+[resource]
+script = ExtResource("1_6x5ow")
+id = "fireball_staff_living_flame_transform"
+display_name = "Living Flame"
+description = "Transforms fireballs into slow moving persistent balls that chase enemies."
+type = 3
+target_class_name = "FireballStaffWeapon"
+rarity = 2
+key = "living_flame"
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

@@ -64,6 +64,10 @@ func _ready():
 
 	# This is a normal moving projectile.
 	_intialize_as_bullet()
+	# Check if it's a retargeting projectile
+	if stats.can_retarget:
+		# We connect to the global signal that announces any enemy's death.
+		Events.enemy_killed.connect(_on_any_enemy_killed)
 	# Check if it's a phasing projectile
 	if stats.is_phasing:
 		_apply_phasing()
@@ -80,11 +84,11 @@ func _intialize_as_bullet():
 	self.area2d.body_entered.connect(_on_body_entered)
 
 ## Generates and assigns a collision shape based on the sprite's current texture and scale.
-func generate_hitbox_from_sprite(is_scaling=false):
+func generate_hitbox_from_sprite():
 	
 	# If user is player and the projectile is scaling, apply stat bonuses.
 	var size_multiplier = 1
-	if is_scaling and user.is_in_group("player"):
+	if stats.is_scaling and user.is_in_group("player"):
 		size_multiplier *= user.get_stat("area_size")
 	
 	if not sprite.texture:
@@ -201,3 +205,21 @@ func _on_proximity_detected(body: Node2D):
 
 func _destroy():
 	queue_free()
+	
+## Called by the global "enemy_killed" signal.
+func _on_any_enemy_killed():
+	# This function runs when ANY enemy on the screen dies.
+	
+	# First, check if our own target is the one that just died or is now invalid.
+	if target.is_dying:
+		# Find a new target.
+		var target_group
+		if allegiance == Allegiance.PLAYER:
+			target_group = "enemies"
+		else:
+			target_group = "player"
+		var candidates = TargetingUtils.get_candidates(target_group)
+		var new_target = TargetingUtils.find_nearest(self.global_position, candidates)
+		if is_instance_valid(new_target):
+			print("Living Flame is re-targeting!")
+			self.target = new_target

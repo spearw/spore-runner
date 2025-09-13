@@ -6,7 +6,7 @@ func _ready():
 	if not stats: queue_free(); return
 	sprite.texture = stats.texture
 	sprite.scale = stats.scale
-	generate_hitbox_from_sprite(true)
+	generate_hitbox_from_sprite()
 	_configure_collision_mask()
 	_calculate_stats()
 

@@ -15,6 +15,7 @@ func _ready():
 	_register_command("add_souls", "Adds souls. Usage: add_souls [amount]", self, "_execute_add_souls")
 	_register_command("add_xp", "Adds xp. Usage: add_xp [amount]", self, "_execute_add_xp")
 	_register_command("unlock_all", "Unlocks all characters.", self, "_execute_unlock_all")
+	_register_command("force_level", "Forces level up", self, "_execute_level_up")
 	_register_command("kill_all", "Kills all enemies in the current scene.", self, "_execute_kill_all")
 	_register_command("delete_save", "Deletes the save file and reloads the current scene.", self, "_execute_clear_save")
 
@@ -85,6 +86,9 @@ func _unhandled_input(event: InputEvent):
 	if not console_instance or not console_instance.visible:
 		if event.is_action_pressed("ui_toggle_console"):
 			_toggle_console_visibility()
+		elif event.is_action_pressed("force_level"):
+			_execute_level_up([])
+			get_viewport().set_input_as_handled()
 
 # --- Command Implementations ---
 # These are the actual functions that do the work.
@@ -148,3 +152,13 @@ func _execute_clear_save(_args: Array):
 	# We wait a very short moment to ensure the log message appears before the reload happens.
 	await get_tree().create_timer(0.1).timeout
 	get_tree().reload_current_scene()
+	
+func _execute_level_up(_args: Array):
+	var player_node = get_tree().get_first_node_in_group("player")
+	if player_node:
+		# Use force level flag
+		player_node.add_experience(0, true)
+		_log_to_console("Forced level up")
+	else:
+		Logs.add_message("Nothing to give xp to!")
+	

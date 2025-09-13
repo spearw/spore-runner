@@ -11,9 +11,14 @@ extends Resource
 @export var knockback_force: float = 0.0
 @export_range(0.0, 1.0) var armor_penetration: float = 0.0
 @export var critical_hit_rate: float = 0.05
-@export var critical_hit_damage: float = .50
-@export var homing_strength: float = 0.0
+@export var critical_hit_damage: float = .50 
+@export var homing_strength: float = 0.0 # How much this projectile follows a target
+@export var is_scaling: bool = false # Whether this projectile scales with area_size stat
+
+# --- Stats set in runtime ---
 var is_phasing: bool = false
+var can_retarget: bool = false
+
 
 # --- Effects ---
 @export var status_to_apply: StatusEffect
