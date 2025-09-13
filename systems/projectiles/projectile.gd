@@ -21,6 +21,8 @@ var critical_hit_rate: float = 0.0
 var critical_hit_damage: float = 0.0
 var speed: float = 0.0
 var knockback: float = 0.0
+var target: Node2D = null
+var proximity_detector: Area2D
 
 # --- Node References ---
 @onready var sprite: Sprite2D = $Area2D/Sprite2D
@@ -59,8 +61,12 @@ func _ready():
 			self.area2d.collision_layer = 1 << 4 # Set layer to 'enemy_projectile' (layer 5)
 			self.area2d.collision_mask = 1 << 0  # Set mask to scan for 'player_body' (layer 1)
 
+
 	# This is a normal moving projectile.
 	_intialize_as_bullet()
+	# Check if it's a phasing projectile
+	if stats.is_phasing:
+		_apply_phasing()
 	
 func _intialize_as_bullet():
 	# Configure lifetime.
@@ -93,6 +99,12 @@ func generate_hitbox_from_sprite():
 	collision_shape.position = sprite.position
 
 func _process(delta: float):
+	if stats.homing_strength > 0 and is_instance_valid(target):
+		var direction_to_target = (target.global_position - self.global_position).normalized()
+		# Rotate the current direction towards the target direction.
+		direction = direction.lerp(direction_to_target, stats.homing_strength * delta)
+		# Update visual rotation to match the new direction.
+		self.rotation = direction.angle()
 	global_position += direction * stats.speed * delta
 
 func _on_body_entered(body: Node2D):
@@ -147,3 +159,37 @@ func _calculate_stats():
 		critical_hit_rate = (critical_hit_rate) * (1 + user.get_stat("critical_hit_rate"))
 		critical_hit_damage = (1 + critical_hit_damage) * (1 + user.get_stat("critical_hit_damage"))
 		speed *= user.get_stat("projectile_speed")
+
+func _apply_phasing():
+	# Start with the main hitbox disabled.
+	area2d.collision_mask = 0
+	
+	# Create and configure a small proximity detector.
+	proximity_detector = Area2D.new()
+	var proximity_shape = CircleShape2D.new()
+	proximity_shape.radius = 30 # Small radius
+	var proximity_collider = CollisionShape2D.new()
+	proximity_collider.shape = proximity_shape
+	proximity_detector.add_child(proximity_collider)
+	
+	# The detector only needs to look for potential targets
+	if allegiance == Allegiance.PLAYER:
+		proximity_detector.collision_mask = 1 << 1 # enemy_body
+	else: 
+		proximity_detector.collision_mask = 1 << 4 # Set layer to 'enemy_projectile' (layer 5)
+		
+	proximity_detector.body_entered.connect(_on_proximity_detected)
+	add_child(proximity_detector)
+
+func _on_proximity_detected(body: Node2D):
+	# When any enemy enters our proximity, check if it's the specific target.
+	if body == self.target:
+		# Re-enable our main hitbox and destroy the detector.
+		print("Seeker missile arming!")
+		if allegiance == Allegiance.PLAYER:
+			area2d.collision_mask = 1 << 1 # enemy_body
+		else: 
+			self.area2d.collision_layer = 1 << 4 # Set layer to 'enemy_projectile' (layer 5)
+			self.area2d.collision_mask = 1 << 0 
+		
+		proximity_detector.queue_free()

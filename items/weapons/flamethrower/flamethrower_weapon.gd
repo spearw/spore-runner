@@ -18,19 +18,15 @@ func fire(multiplier: int = 1):
 	if has_ring_of_fire:
 		# The aura is persistent, so the timer firing doesn't need to do anything.
 		return
-
-	# If we have "Flaming Tongues", we override the pattern for this shot.
-	if has_flaming_tongues:
-		fire_behavior_component.override_pattern_for_next_shot(FireBehaviorComponent.FirePattern.MIRRORED_FORWARD)
-
-	# Call the original fire logic from the FireBehaviorComponent.
-	fire_behavior_component.fire()
+	
+	super.fire()
 
 ## This function is called by the UpgradeManager.
 func apply_transformation(id: String):
 	super.apply_transformation(id)
 	if id == "flaming_tongues":
 		has_flaming_tongues = true
+		fire_behavior_component.fire_pattern = FireBehaviorComponent.FirePattern.MIRRORED_FORWARD
 		print("Flamethrower gained Flaming Tongues!")
 		
 	if id == "ring_of_fire":

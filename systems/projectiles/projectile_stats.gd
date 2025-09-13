@@ -12,6 +12,8 @@ extends Resource
 @export_range(0.0, 1.0) var armor_penetration: float = 0.0
 @export var critical_hit_rate: float = 0.05
 @export var critical_hit_damage: float = .50
+@export var homing_strength: float = 0.0
+var is_phasing: bool = false
 
 # --- Effects ---
 @export var status_to_apply: StatusEffect

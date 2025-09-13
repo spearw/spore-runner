@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://cj61shiwcw7uo"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_a3h8y"]
+
+[resource]
+script = ExtResource("1_a3h8y")
+id = "cinder_volley_wild_magic_transform"
+display_name = "Wild Magic"
+description = "Cinder volley gains projectiles, but targeting is now random."
+type = 3
+target_class_name = "CinderVolleyWeapon"
+rarity = 2
+key = "wild_magic"
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

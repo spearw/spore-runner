@@ -21,6 +21,8 @@ var is_transformed: bool = false
 @onready var targeting_component: TargetingComponent = $TargetingComponent
 
 func _ready():
+	# Create unique instance for this weapon.
+	projectile_stats = projectile_stats.duplicate(true)
 	fire_rate_timer.timeout.connect(_on_fire_rate_timer_timeout)
 	
 # Update internal stats whenever the user's stats change.

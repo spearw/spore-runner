@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://dsde3c8s08fs0"]
+
+[ext_resource type="PackedScene" uid="uid://deirvym8pv1kw" path="res://items/weapons/cinder_volley/cinder_volley_weapon.tscn" id="1_qblnc"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_c0g8j"]
+
+[resource]
+script = ExtResource("2_c0g8j")
+id = "cinder_volley_unlock"
+display_name = "Cinder Volley"
+description = "Fires burst of fast, seeking projectiles that light enemies on fire."
+type = 0
+target_class_name = "CinderVolleyWeapon"
+scene_to_unlock = ExtResource("1_qblnc")
+rarity = 1
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://d3omotwe5x3y4"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_r3a1t"]
+
+[resource]
+script = ExtResource("1_r3a1t")
+id = "cinder_volley_seeker_missiles_transform"
+display_name = "Seeker Missiles"
+description = "Cinder volley projectiles ignore everything except their intended target, ensuring they always hit."
+type = 3
+target_class_name = "CinderVolleyWeapon"
+rarity = 2
+key = "seeker_missiles"
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"
