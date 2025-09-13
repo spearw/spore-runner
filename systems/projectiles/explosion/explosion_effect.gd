@@ -6,8 +6,9 @@ func _ready():
 	if not stats: queue_free(); return
 	sprite.texture = stats.texture
 	sprite.scale = stats.scale
-	generate_hitbox_from_sprite()
+	generate_hitbox_from_sprite(true)
 	_configure_collision_mask()
+	_calculate_stats()
 
 	_execute_aoe()
 
@@ -19,7 +20,11 @@ func _execute_aoe():
 		printerr("ExplosionEffect requires an ExplosionStats resource!")
 		queue_free()
 		return
+	
+	# Wait one process_frame for hitbox to be registered.
 	await get_tree().process_frame
+	# Wait one physics_frame for overlapping bodies list to be populated.
+	await get_tree().physics_frame
 	
 	var bodies = area2d.get_overlapping_bodies()
 	for body in bodies:

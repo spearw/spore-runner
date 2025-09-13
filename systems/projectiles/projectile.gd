@@ -73,16 +73,19 @@ func _intialize_as_bullet():
 	if stats.lifetime > 0:
 		lifetime_timer.wait_time = stats.lifetime
 		lifetime_timer.one_shot = true
-		lifetime_timer.timeout.connect(queue_free) # Delete self when timer ends
+		lifetime_timer.timeout.connect(_destroy) # Delete self when timer ends
 		lifetime_timer.start()
 
 	# Connect the damage signal.
 	self.area2d.body_entered.connect(_on_body_entered)
 
 ## Generates and assigns a collision shape based on the sprite's current texture and scale.
-func generate_hitbox_from_sprite():
-	# Wait for one frame to ensure the sprite's texture has been fully loaded and sized.
-	await get_tree().process_frame
+func generate_hitbox_from_sprite(is_scaling=false):
+	
+	# If user is player and the projectile is scaling, apply stat bonuses.
+	var size_multiplier = 1
+	if is_scaling and user.is_in_group("player"):
+		size_multiplier *= user.get_stat("area_size")
 	
 	if not sprite.texture:
 		printerr("Cannot generate hitbox: sprite has no texture.")
@@ -90,9 +93,11 @@ func generate_hitbox_from_sprite():
 
 	# Create a new rectangle shape resource.
 	var new_shape = RectangleShape2D.new()
-	
+
 	# Set the rectangle's size. Get the texture's size and multiply by the sprite's scale.
+	sprite.scale = sprite.scale.abs() * size_multiplier
 	new_shape.size = sprite.texture.get_size() * sprite.scale.abs()
+	
 	
 	# Assign the newly created and sized shape to our CollisionShape2D node.
 	collision_shape.shape = new_shape
@@ -131,7 +136,7 @@ func _on_body_entered(body: Node2D):
 			
 			if pierce_count <= 0:
 				# Destroy the projectile.
-				queue_free()
+				_destroy()
 				
 func _deal_damage(body: Node2D):
 	var is_crit = false
@@ -193,3 +198,6 @@ func _on_proximity_detected(body: Node2D):
 			self.area2d.collision_mask = 1 << 0 
 		
 		proximity_detector.queue_free()
+
+func _destroy():
+	queue_free()

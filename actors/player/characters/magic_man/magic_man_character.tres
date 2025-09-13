@@ -3,7 +3,7 @@
 [ext_resource type="SpriteFrames" uid="uid://nbeutjhl0hto" path="res://actors/player/characters/magic_man/magic_man_animation.tres" id="1_dou2t"]
 [ext_resource type="Script" uid="uid://nwbrj5ockot1" path="res://actors/player/character_data.gd" id="2_lqmeo"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="3_vnxkr"]
-[ext_resource type="Resource" uid="uid://of54uih30ise" path="res://systems/upgrades/weapons/fireball_staff_unlock.tres" id="4_lqmeo"]
+[ext_resource type="Resource" uid="uid://of54uih30ise" path="res://systems/upgrades/weapons/fire/fireball_staff/fireball_staff_unlock.tres" id="4_lqmeo"]
 
 [resource]
 script = ExtResource("2_lqmeo")

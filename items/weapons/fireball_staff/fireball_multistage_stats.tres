@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="MultiStageProjectileStats" load_steps=7 format=3 uid="uid://cgmh5jfocc7l1"]
+
+[ext_resource type="Script" uid="uid://0gxb71relmj2" path="res://systems/projectiles/multi_stage_projectile/multi_stage_projectile.gd" id="1_3liif"]
+[ext_resource type="Script" uid="uid://cplh547hfvnko" path="res://systems/projectiles/explosion/explosion_stats.gd" id="1_xx5ps"]
+[ext_resource type="Resource" uid="uid://b0qo4jnrxfh6g" path="res://systems/status_effects/fire/burning.tres" id="2_x1ohy"]
+[ext_resource type="Texture2D" uid="uid://b6wpygoe3pnjk" path="res://items/weapons/fireball_staff/explosion.png" id="3_cnuy8"]
+[ext_resource type="Texture2D" uid="uid://ckk8hpqbf48os" path="res://items/weapons/fireball_staff/fireball.png" id="3_xx5ps"]
+
+[sub_resource type="Resource" id="Resource_cnuy8"]
+script = ExtResource("1_xx5ps")
+effect_duration = 1.0
+damage = 25
+speed = 0.0
+lifetime = 1.0
+pierce = -1
+knockback_force = 300.0
+armor_penetration = 0.5
+critical_hit_rate = 0.0
+critical_hit_damage = 0.0
+homing_strength = 0.0
+status_to_apply = ExtResource("2_x1ohy")
+texture = ExtResource("3_cnuy8")
+scale = Vector2(1, 1)
+metadata/_custom_type_script = "uid://cplh547hfvnko"
+
+[resource]
+script = ExtResource("1_3liif")
+on_death_effect_stats = SubResource("Resource_cnuy8")
+damage = 10
+speed = 200.0
+lifetime = 3.0
+pierce = 0
+knockback_force = 0.0
+armor_penetration = 0.0
+critical_hit_rate = 0.05
+critical_hit_damage = 0.5
+homing_strength = 2.0
+status_to_apply = ExtResource("2_x1ohy")
+texture = ExtResource("3_xx5ps")
+scale = Vector2(0.5, 0.5)
+metadata/_custom_type_script = "uid://0gxb71relmj2"

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bstdvb8jo38ni"]
+
+[ext_resource type="PackedScene" uid="uid://dlntn7hlrn2ao" path="res://systems/projectiles/projectile.tscn" id="1_phn0e"]
+[ext_resource type="Script" uid="uid://kj5f0a3siqxy" path="res://systems/projectiles/exploding_projectile/exploding_projectile.gd" id="2_0o3aa"]
+
+[node name="ExplodingProjectile" instance=ExtResource("1_phn0e")]
+script = ExtResource("2_0o3aa")

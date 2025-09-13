@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="1_iclir"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_dy2c8"]
-[ext_resource type="Resource" uid="uid://d3omotwe5x3y4" path="res://systems/upgrades/weapons/cinder_volley/cinder_volley_seeker_missiles_transform.tres" id="3_5vkkc"]
-[ext_resource type="Resource" uid="uid://cj61shiwcw7uo" path="res://systems/upgrades/weapons/cinder_volley/cinder_volley_wild_magic_transform.tres" id="4_o0k67"]
+[ext_resource type="Resource" uid="uid://d3omotwe5x3y4" path="res://systems/upgrades/weapons/fire/cinder_volley/cinder_volley_seeker_missiles_transform.tres" id="3_5vkkc"]
+[ext_resource type="Resource" uid="uid://cj61shiwcw7uo" path="res://systems/upgrades/weapons/fire/cinder_volley/cinder_volley_wild_magic_transform.tres" id="4_o0k67"]
 [ext_resource type="Resource" uid="uid://cxbefvw2pgrfh" path="res://systems/upgrades/upgrades/core/player_projectile_count.tres" id="5_jlo55"]
 
 [resource]

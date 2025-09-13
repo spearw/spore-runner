@@ -1,17 +1,18 @@
-[gd_resource type="Resource" script_class="UpgradePack" load_steps=9 format=3 uid="uid://dy0thirxxtsv"]
+[gd_resource type="Resource" script_class="UpgradePack" load_steps=10 format=3 uid="uid://dy0thirxxtsv"]
 
 [ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="1_cpco1"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_vldj6"]
-[ext_resource type="Resource" uid="uid://5ukacd4uvq0a" path="res://systems/upgrades/weapons/flamethrower/flamethrower_unlock.tres" id="3_vldj6"]
-[ext_resource type="Resource" uid="uid://s6pxfcgpngps" path="res://systems/upgrades/weapons/flamethrower/flamethrower_ring_of_fire_transform.tres" id="4_a2i7u"]
-[ext_resource type="Resource" uid="uid://jm5ekkgbhktd" path="res://systems/upgrades/weapons/flamethrower/flamethrower_flaming_tongues_transform.tres" id="5_wlwyu"]
-[ext_resource type="Resource" uid="uid://dsde3c8s08fs0" path="res://systems/upgrades/weapons/cinder_volley/cinder_volley_unlock.tres" id="6_n5vwe"]
-[ext_resource type="Resource" uid="uid://cj61shiwcw7uo" path="res://systems/upgrades/weapons/cinder_volley/cinder_volley_wild_magic_transform.tres" id="7_io1kt"]
-[ext_resource type="Resource" uid="uid://d3omotwe5x3y4" path="res://systems/upgrades/weapons/cinder_volley/cinder_volley_seeker_missiles_transform.tres" id="8_2rgh6"]
+[ext_resource type="Resource" uid="uid://5ukacd4uvq0a" path="res://systems/upgrades/weapons/fire/flamethrower/flamethrower_unlock.tres" id="3_io1kt"]
+[ext_resource type="Resource" uid="uid://s6pxfcgpngps" path="res://systems/upgrades/weapons/fire/flamethrower/flamethrower_ring_of_fire_transform.tres" id="4_2rgh6"]
+[ext_resource type="Resource" uid="uid://jm5ekkgbhktd" path="res://systems/upgrades/weapons/fire/flamethrower/flamethrower_flaming_tongues_transform.tres" id="5_wu2a6"]
+[ext_resource type="Resource" uid="uid://dsde3c8s08fs0" path="res://systems/upgrades/weapons/fire/cinder_volley/cinder_volley_unlock.tres" id="6_fh3pm"]
+[ext_resource type="Resource" uid="uid://cj61shiwcw7uo" path="res://systems/upgrades/weapons/fire/cinder_volley/cinder_volley_wild_magic_transform.tres" id="7_x3r5g"]
+[ext_resource type="Resource" uid="uid://d3omotwe5x3y4" path="res://systems/upgrades/weapons/fire/cinder_volley/cinder_volley_seeker_missiles_transform.tres" id="8_mf568"]
+[ext_resource type="Resource" uid="uid://of54uih30ise" path="res://systems/upgrades/weapons/fire/fireball_staff/fireball_staff_unlock.tres" id="9_m1h8x"]
 
 [resource]
 script = ExtResource("1_cpco1")
 pack_name = "Fire"
 pack_description = "Applies dot on hit. Dot has chance of igniting, causing more damage and additional effects."
-upgrades = Array[ExtResource("2_vldj6")]([ExtResource("3_vldj6"), ExtResource("4_a2i7u"), ExtResource("5_wlwyu"), ExtResource("6_n5vwe"), ExtResource("7_io1kt"), ExtResource("8_2rgh6")])
+upgrades = Array[ExtResource("2_vldj6")]([ExtResource("3_io1kt"), ExtResource("4_2rgh6"), ExtResource("5_wu2a6"), ExtResource("6_fh3pm"), ExtResource("7_x3r5g"), ExtResource("8_mf568"), ExtResource("9_m1h8x")])
 metadata/_custom_type_script = "uid://cvcnhdf5np0ln"
