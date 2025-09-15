@@ -3,7 +3,6 @@
 ## It expects its 'stats' property to be a MultiStageProjectileStats resource.
 class_name ExplodingProjectile
 extends Projectile
-const EXPLOSION_EFFECT_SCENE = preload("res://systems/projectiles/explosion/explosion_effect.tscn")
 
 func _destroy():
 	# Cast generic 'stats' property to the specific type we need.
@@ -11,7 +10,7 @@ func _destroy():
 	
 	# Check for the right data and that an on-death effect is defined.
 	if multi_stage_data and multi_stage_data.on_death_effect_stats:
-		var explosion_instance = EXPLOSION_EFFECT_SCENE.instantiate()
+		var explosion_instance = multi_stage_data.on_death_effect_scene.instantiate()
 		
 		# Configure the explosion with the data from our stats.
 		explosion_instance.stats = multi_stage_data.on_death_effect_stats

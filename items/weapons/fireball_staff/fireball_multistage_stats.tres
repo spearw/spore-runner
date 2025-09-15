@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="MultiStageProjectileStats" load_steps=7 format=3 uid="uid://cgmh5jfocc7l1"]
+[gd_resource type="Resource" script_class="MultiStageProjectileStats" load_steps=8 format=3 uid="uid://cgmh5jfocc7l1"]
 
 [ext_resource type="Script" uid="uid://0gxb71relmj2" path="res://systems/projectiles/multi_stage_projectile/multi_stage_projectile.gd" id="1_3liif"]
+[ext_resource type="PackedScene" uid="uid://c3phuxy3akc15" path="res://systems/projectiles/explosion/explosion_effect.tscn" id="1_25xy3"]
 [ext_resource type="Script" uid="uid://cplh547hfvnko" path="res://systems/projectiles/explosion/explosion_stats.gd" id="1_xx5ps"]
 [ext_resource type="Resource" uid="uid://b0qo4jnrxfh6g" path="res://systems/status_effects/fire/burning.tres" id="2_x1ohy"]
 [ext_resource type="Texture2D" uid="uid://b6wpygoe3pnjk" path="res://items/weapons/fireball_staff/explosion.png" id="3_cnuy8"]
@@ -27,6 +28,7 @@ metadata/_custom_type_script = "uid://cplh547hfvnko"
 [resource]
 script = ExtResource("1_3liif")
 on_death_effect_stats = SubResource("Resource_cnuy8")
+on_death_effect_scene = ExtResource("1_25xy3")
 damage = 10
 speed = 200.0
 lifetime = 2.5
