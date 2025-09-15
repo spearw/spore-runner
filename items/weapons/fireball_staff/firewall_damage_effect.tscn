@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ba2gd50gq3anh"]
+
+[ext_resource type="PackedScene" uid="uid://dixeudgqhntlc" path="res://items/effects/persistent_damage_effect.tscn" id="1_cm4on"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jqfoe"]
+
+[node name="PersistentDamageEffect" instance=ExtResource("1_cm4on")]
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_jqfoe")
