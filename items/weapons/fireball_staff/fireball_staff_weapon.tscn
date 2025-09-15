@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bs1xgub1sjuhs"]
+[gd_scene load_steps=8 format=3 uid="uid://bs1xgub1sjuhs"]
 
 [ext_resource type="Script" uid="uid://bxo0vu7rebtus" path="res://items/weapons/fireball_staff/fireball_staff_weapon.gd" id="1_5aoj3"]
+[ext_resource type="Resource" uid="uid://bm7f06s5jc840" path="res://items/weapons/fireball_staff/fireball_trail_stats.tres" id="2_4wsim"]
 [ext_resource type="Resource" uid="uid://cgmh5jfocc7l1" path="res://items/weapons/fireball_staff/fireball_multistage_stats.tres" id="2_nm1tt"]
 [ext_resource type="PackedScene" uid="uid://bstdvb8jo38ni" path="res://systems/projectiles/exploding_projectile/exploding_projectile.tscn" id="3_jirlb"]
 [ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="3_nm1tt"]
@@ -9,6 +10,7 @@
 
 [node name="FireballStaff" type="Node2D"]
 script = ExtResource("1_5aoj3")
+wall_of_fire_stats = ExtResource("2_4wsim")
 projectile_stats = ExtResource("2_nm1tt")
 custom_projectile_scene = ExtResource("3_jirlb")
 base_fire_rate = 5.0

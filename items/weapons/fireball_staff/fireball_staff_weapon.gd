@@ -6,6 +6,8 @@ extends Weapon
 # --- Transformation Flags ---
 var has_living_flame: bool = false
 var has_wall_of_fire: bool = false
+@export var wall_of_fire_stats: TrailProjectileStats
+@export var trail_projectile_scene: TrailProjectile
 
 # The transformation function sets the flags.
 func apply_transformation(id: String):
@@ -19,3 +21,6 @@ func apply_transformation(id: String):
 		has_living_flame = true
 	if id == "wall_of_fire":
 		has_wall_of_fire = true
+		self.projectile_stats = self.wall_of_fire_stats
+		self.custom_projectile_scene = load("res://systems/projectiles/trail_projectile/trail_projectile.tscn")
+		print("Fireball Staff gained Wall of Fire!")

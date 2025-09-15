@@ -6,8 +6,9 @@
 
 [resource]
 script = ExtResource("2_vg434")
-tick_rate = 1.0
+tick_rate = 0.5
 animation = ExtResource("1_rd110")
+duration = 3.0
 damage = 3
 speed = 0.0
 lifetime = 1.0
@@ -17,7 +18,7 @@ armor_penetration = 0.5
 critical_hit_rate = 0.0
 critical_hit_damage = 0.0
 homing_strength = 0.0
-is_scaling = false
+is_scaling = true
 status_to_apply = ExtResource("3_t5hr2")
 scale = Vector2(1, 1)
 metadata/_custom_type_script = "uid://c1jb1x6tem00f"

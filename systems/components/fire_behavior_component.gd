@@ -97,9 +97,8 @@ func _spawn_projectile(
 	# The weapon is attached to the user, so its global_position is the user's position.
 	var spawn_position = weapon.global_position
 	
-	# We need to instantiate the correct scene. Axe needs its custom scene.
+	# Check for custom scene
 	var projectile_scene = GENERIC_PROJECTILE_SCENE
-	# We can add a property to the weapon to specify a custom projectile scene.
 	if "custom_projectile_scene" in weapon and weapon.custom_projectile_scene:
 		projectile_scene = weapon.custom_projectile_scene
 	

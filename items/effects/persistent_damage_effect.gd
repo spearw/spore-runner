@@ -1,6 +1,7 @@
 ## persistent_damage_effect.gd
 ## A generic, persistent Area2D that repeatedly applies a payload.
 ## Configured by a PersistentEffectStats resource.
+class_name PersistentDamageEffect
 extends Area2D
 
 var stats: PersistentEffectStats
@@ -19,6 +20,7 @@ var user: Node:
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var tick_timer: Timer = $TickTimer
+@onready var lifetime_timer: Timer = $LifetimeTimer
 var allegiance
 var base_scale
 
@@ -52,6 +54,11 @@ func _ready():
 	tick_timer.wait_time = stats.tick_rate
 	tick_timer.timeout.connect(_on_tick_timer_timeout)
 	tick_timer.start()
+	
+	# Despawn after set time
+	lifetime_timer.wait_time = stats.duration
+	lifetime_timer.timeout.connect(queue_free)
+	lifetime_timer.start()
 
 func _on_tick_timer_timeout():
 	var bodies = get_overlapping_bodies()

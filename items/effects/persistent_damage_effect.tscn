@@ -16,3 +16,5 @@ autostart = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.392157)
+
+[node name="LifetimeTimer" type="Timer" parent="."]
