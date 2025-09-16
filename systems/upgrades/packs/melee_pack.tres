@@ -18,9 +18,9 @@
 [ext_resource type="Resource" uid="uid://dj2uaqc5v0oad" path="res://systems/upgrades/weapons/melee/spear/spear_defensive_stance_transform.tres" id="16_puna0"]
 [ext_resource type="Resource" uid="uid://bth2l0l352cod" path="res://systems/upgrades/weapons/melee/spear/spear_hedgehog_transform.tres" id="17_lcqdh"]
 [ext_resource type="Resource" uid="uid://dyfy3njfes2tl" path="res://systems/upgrades/weapons/melee/spear/spear_unlock.tres" id="18_tpjyj"]
-[ext_resource type="Resource" uid="uid://cha8jrarccqwh" path="res://systems/upgrades/upgrades/melee/goliath_unlock.tres" id="19_x762d"]
-[ext_resource type="Resource" uid="uid://cv0rfe310drw6" path="res://systems/upgrades/upgrades/melee/bloodlust_unlock.tres" id="20_chv20"]
-[ext_resource type="Resource" uid="uid://dyiyacs841ppe" path="res://systems/upgrades/upgrades/melee/redirect_unlock.tres" id="21_5a720"]
+[ext_resource type="Resource" uid="uid://cha8jrarccqwh" path="res://systems/upgrades/artifacts/melee/goliath_unlock.tres" id="19_x762d"]
+[ext_resource type="Resource" uid="uid://cv0rfe310drw6" path="res://systems/upgrades/artifacts/melee/bloodlust_unlock.tres" id="20_chv20"]
+[ext_resource type="Resource" uid="uid://dyiyacs841ppe" path="res://systems/upgrades/artifacts/melee/redirect_unlock.tres" id="21_5a720"]
 
 [resource]
 script = ExtResource("1_l02k6")

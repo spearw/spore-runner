@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://xatgsb2nnav1"]
-
-[ext_resource type="Script" uid="uid://ww4ypcdm5jck" path="res://items/artifacts/bloodlust/bloodlust_artifact.gd" id="1_awdqm"]
-
-[node name="BloodlustArtifact" type="Node2D"]
-script = ExtResource("1_awdqm")

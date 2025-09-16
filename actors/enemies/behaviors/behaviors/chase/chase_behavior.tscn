@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvdss2f210r6p"]
+
+[ext_resource type="Script" uid="uid://bvyn2s6xwlygk" path="res://actors/enemies/behaviors/behaviors/chase/chase_behavior.gd" id="1_bsyuc"]
+
+[node name="ChaseBehavior" type="Node"]
+script = ExtResource("1_bsyuc")

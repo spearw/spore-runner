@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfjfbpwjhuaf8"]
+
+[ext_resource type="Script" uid="uid://dd3mpy1fbefvg" path="res://items/artifacts/fire/pyrophobia/pyrophobia_artifact.gd" id="1_xt4ir"]
+
+[node name="PyrophobiaArtifact" type="Node2D"]
+script = ExtResource("1_xt4ir")

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://ch4pfms6wb8yf"]
 
-[ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/chase/chase_behavior.tscn" id="1_6qlgf"]
+[ext_resource type="PackedScene" uid="uid://ce134omlw5j02" path="res://actors/enemies/behaviors/ai/enemy_ai.tscn" id="1_ad1st"]
 [ext_resource type="Resource" uid="uid://mte760o2hl0i" path="res://items/pickups/experience_gem/types/small_gem.tres" id="2_7hqek"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_t3y5d"]
 [ext_resource type="SpriteFrames" uid="uid://b1cu2yt0c6yp2" path="res://actors/enemies/normal_enemy_types/invisi_jelly/animations/invisi_jelly_animations.tres" id="4_ad1st"]
@@ -18,9 +18,11 @@ modulate = Color(1, 1, 1, 1)
 face_movement_direction = false
 rotation_offset_degrees = 0.0
 is_flipped = false
-behavior_scene = ExtResource("1_6qlgf")
+default_behavior_name = "chasebehavior"
+ai_scene = ExtResource("1_ad1st")
 weapon_scenes = Array[PackedScene]([])
 challenge_rating = 1.0
 experience_gem_stats = ExtResource("2_7hqek")
 soul_drop_chance = 0.05
+heart_drop_chance = 0.05
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

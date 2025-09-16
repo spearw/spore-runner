@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://b8q77yds6prpk"]
 
-[ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/chase/chase_behavior.tscn" id="1_6w6ff"]
+[ext_resource type="PackedScene" uid="uid://ce134omlw5j02" path="res://actors/enemies/behaviors/ai/enemy_ai.tscn" id="1_fes0k"]
 [ext_resource type="Resource" uid="uid://mte760o2hl0i" path="res://items/pickups/experience_gem/types/small_gem.tres" id="2_6w4x6"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_4cg34"]
 [ext_resource type="SpriteFrames" uid="uid://34uegh8l3hsg" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/noodle_boy_animations.tres" id="4_fes0k"]
@@ -18,7 +18,8 @@ modulate = Color(1, 1, 1, 1)
 face_movement_direction = true
 rotation_offset_degrees = 35.0
 is_flipped = false
-behavior_scene = ExtResource("1_6w6ff")
+default_behavior_name = "chasebehavior"
+ai_scene = ExtResource("1_fes0k")
 weapon_scenes = Array[PackedScene]([])
 challenge_rating = 1.0
 experience_gem_stats = ExtResource("2_6w4x6")

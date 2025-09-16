@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://eihi4fj5hpqc"]
+
+[ext_resource type="Script" uid="uid://gp7gincyok5x" path="res://items/artifacts/melee/goliath/goliath_artifact.gd" id="1_naxwi"]
+
+[node name="GoliathArtifact" type="Node2D"]
+script = ExtResource("1_naxwi")

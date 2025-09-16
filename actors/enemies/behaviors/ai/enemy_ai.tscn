@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ce134omlw5j02"]
+
+[ext_resource type="PackedScene" uid="uid://gqd3gevs3p3m" path="res://actors/enemies/behaviors/behaviors/behavior_library.tscn" id="1_7skgt"]
+[ext_resource type="Script" uid="uid://eadmpf1hm1y" path="res://actors/enemies/behaviors/ai/enemy_ai.gd" id="1_sssvd"]
+
+[node name="EnemyAI" type="Node"]
+script = ExtResource("1_sssvd")
+
+[node name="BehaviorLibrary" parent="." instance=ExtResource("1_7skgt")]

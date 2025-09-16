@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://dyiyacs841ppe"]
+
+[ext_resource type="PackedScene" uid="uid://dge0yja4v3iyc" path="res://items/artifacts/melee/redirect/RedirectArtifact.tscn" id="1_monwb"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_16iea"]
+
+[resource]
+script = ExtResource("2_16iea")
+id = "redirect_unlock"
+display_name = "Redirection"
+description = "When you are hit by a projectile, redirect it to the nearest enemy. (You still take damage)"
+type = 1
+target_class_name = "RedirectArtifact"
+scene_to_unlock = ExtResource("1_monwb")
+rarity = 4
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

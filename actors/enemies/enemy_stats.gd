@@ -22,7 +22,12 @@ extends Resource
 # (e.g., if the art points 'up', set this to 90 to make it face 'right').
 @export var rotation_offset_degrees: float = 0.0
 @export var is_flipped: bool = false
-@export var behavior_scene: PackedScene
+
+# Behaviors
+@export var default_behavior_name: String = "chasebehavior"
+@export var ai_scene: PackedScene = load("res://actors/enemies/behaviors/enemy_ai.tscn")
+
+
 # The weapon scenes to automatically equip to this enemy on spawn.
 @export var weapon_scenes: Array[PackedScene]
 

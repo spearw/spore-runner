@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://yleacb2jahp7"]
 
-[ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/chase/chase_behavior.tscn" id="1_jiq38"]
+[ext_resource type="PackedScene" uid="uid://ce134omlw5j02" path="res://actors/enemies/behaviors/ai/enemy_ai.tscn" id="1_jiq38"]
 [ext_resource type="Resource" uid="uid://mte760o2hl0i" path="res://items/pickups/experience_gem/types/small_gem.tres" id="2_sply8"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_x55ge"]
 [ext_resource type="SpriteFrames" uid="uid://i432bhhx627y" path="res://actors/enemies/normal_enemy_types/jelly/animations/jelly_animations.tres" id="4_4kpdc"]
@@ -10,14 +10,19 @@ script = ExtResource("3_x55ge")
 max_health = 8
 speed = 120.0
 damage = 5
+armor = 0
+armor_pen = 0
 sprite_frames = ExtResource("4_4kpdc")
 scale = Vector2(1, 1)
 modulate = Color(1, 1, 1, 1)
 face_movement_direction = true
 rotation_offset_degrees = 145.0
-behavior_scene = ExtResource("1_jiq38")
+is_flipped = false
+default_behavior_name = "chasebehavior"
+ai_scene = ExtResource("1_jiq38")
 weapon_scenes = Array[PackedScene]([])
 challenge_rating = 0.5
 experience_gem_stats = ExtResource("2_sply8")
 soul_drop_chance = 0.05
+heart_drop_chance = 0.05
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=6 format=3 uid="uid://be58pxccx68xi"]
 
-[ext_resource type="PackedScene" uid="uid://np8hsandn71t" path="res://actors/enemies/behaviors/shoot/shoot_behavior.tscn" id="1_d05cg"]
+[ext_resource type="PackedScene" uid="uid://ce134omlw5j02" path="res://actors/enemies/behaviors/ai/enemy_ai.tscn" id="1_dxa6y"]
 [ext_resource type="Resource" uid="uid://mte760o2hl0i" path="res://items/pickups/experience_gem/types/small_gem.tres" id="2_qduf3"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_uyly4"]
 [ext_resource type="PackedScene" uid="uid://divtus20vmop4" path="res://items/weapons/dagger/daggers_weapon.tscn" id="4_dxa6y"]
@@ -19,7 +19,8 @@ modulate = Color(0.254902, 0.372549, 0.494118, 1)
 face_movement_direction = false
 rotation_offset_degrees = 0.0
 is_flipped = false
-behavior_scene = ExtResource("1_d05cg")
+default_behavior_name = "moveandshootbehavior"
+ai_scene = ExtResource("1_dxa6y")
 weapon_scenes = Array[PackedScene]([ExtResource("4_dxa6y")])
 challenge_rating = 1.0
 experience_gem_stats = ExtResource("2_qduf3")

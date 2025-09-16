@@ -47,6 +47,9 @@ func apply_status(status_resource: StatusEffect, source: Node):
 		
 		duration_timer.start()
 		status_instance.on_apply(self, source)
+		
+	# Emit signal whether new status or not.
+	Events.emit_signal("status_applied_to_enemy", host, status_instance.id)
 
 func _on_status_expired(status_id: String, source):
 	if active_statuses.has(status_id):

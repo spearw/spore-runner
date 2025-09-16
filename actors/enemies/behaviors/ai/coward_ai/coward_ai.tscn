@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7dbvptb6ft3a"]
+
+[ext_resource type="Script" uid="uid://8batlm7rslxi" path="res://actors/enemies/behaviors/behaviors/flee/flee_behavior.gd" id="1_2h3oq"]
+[ext_resource type="PackedScene" uid="uid://gqd3gevs3p3m" path="res://actors/enemies/behaviors/behaviors/behavior_library.tscn" id="2_2h3oq"]
+
+[node name="CowardAI" type="Node"]
+script = ExtResource("1_2h3oq")
+
+[node name="BehaviorLibrary" parent="." instance=ExtResource("2_2h3oq")]

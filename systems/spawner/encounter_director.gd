@@ -105,32 +105,33 @@ func _pick_theme_enemy(pool: Array[EnemyStats], budget: float) -> EnemyStats:
 	var least_represented_behavior = ""
 	# We need a list of all unique behaviors in the affordable pool
 	var affordable_behaviors = {}
-	for enemy_stat in affordable_pool:
-		var behavior_scene = enemy_stat.behavior_scene.instantiate()
-		var behavior_class = behavior_scene.get_class()
-		behavior_scene.queue_free()
-		affordable_behaviors[behavior_class] = true
-
-	for behavior_class in affordable_behaviors:
-		var current_cr = current_threat.get(behavior_class, 0.0)
-		if current_cr < lowest_cr:
-			lowest_cr = current_cr
-			least_represented_behavior = behavior_class
-			
-	# Now, filter our affordable pool to only enemies that have that least-represented behavior.
-	var priority_pool = affordable_pool.filter(func(es):
-		var behavior_scene = es.behavior_scene.instantiate()
-		var behavior_class = behavior_scene.get_class()
-		behavior_scene.queue_free()
-		return behavior_class == least_represented_behavior
-	)
+	# TODO: Refactor to use tags
+	#for enemy_stat in affordable_pool:
+		#var behavior_scene = enemy_stat.behavior_scene.instantiate()
+		#var behavior_class = behavior_scene.get_class()
+		#behavior_scene.queue_free()
+		#affordable_behaviors[behavior_class] = true
+#
+	#for behavior_class in affordable_behaviors:
+		#var current_cr = current_threat.get(behavior_class, 0.0)
+		#if current_cr < lowest_cr:
+			#lowest_cr = current_cr
+			#least_represented_behavior = behavior_class
+			#
+	## Now, filter our affordable pool to only enemies that have that least-represented behavior.
+	#var priority_pool = affordable_pool.filter(func(es):
+		#var behavior_scene = es.behavior_scene.instantiate()
+		#var behavior_class = behavior_scene.get_class()
+		#behavior_scene.queue_free()
+		#return behavior_class == least_represented_behavior
+	#)
 	
 	# If for some reason our priority pool is empty, fall back to the affordable pool.
-	if priority_pool.is_empty():
-		priority_pool = affordable_pool
+	#if priority_pool.is_empty():
+		#priority_pool = affordable_pool
 		
 	# Finally, pick a random enemy from the high-priority list.
-	return priority_pool.pick_random()
+	return affordable_pool.pick_random()
 
 ## Instantiates and positions a single enemy.
 func spawn_enemy(stats: EnemyStats):
@@ -153,6 +154,8 @@ func _on_enemy_died(enemy_stats: EnemyStats):
 	
 ## Helper function to modify our internal threat tally.
 func _update_threat_ledger(enemy_stats: EnemyStats, multiplier: int):
+	#TODO: Update this function with tags
+	return
 	if not enemy_stats.behavior_scene: return
 	
 	# We need to get the class name from the behavior scene.

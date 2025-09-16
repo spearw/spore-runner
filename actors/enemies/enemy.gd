@@ -30,6 +30,7 @@ var is_on_screen: bool = false
 var knockback_velocity: Vector2 = Vector2.ZERO
 var is_dying: bool = false
 var can_deal_damage: bool = true
+var ai: Node
 
 # --- Signals ---
 signal died(enemy_stats)
@@ -44,10 +45,15 @@ func _ready() -> void:
 		queue_free()
 		return
 		
-	if stats.behavior_scene:
-		self.behavior = stats.behavior_scene.instantiate()
-		add_child(self.behavior)
-	
+	# Instantiate the brain
+	if stats.ai_scene:
+		ai = stats.ai_scene.instantiate()
+		add_child(ai)
+
+		# Now, configure the brain with the default behavior from stats.
+		if ai.has_method("initialize_ai"):
+			ai.initialize_ai(stats.default_behavior_name)
+			
 	# Equip weapon
 	if stats.weapon_scenes:
 		var equipment_node = get_node("Equipment")
@@ -248,6 +254,12 @@ func _on_animation_finished():
 	# Return control to the physics process logic.
 	# The next frame, the velocity check will take over again.
 	pass
+	
+func override_behavior(new_state_name: String, duration: float, context: Dictionary = {}):
+	if is_instance_valid(ai):
+		ai.set_state_by_name(new_state_name, context) 
+		if duration > 0:
+			get_tree().create_timer(duration).timeout.connect(ai.restore_default_state)
 
 ## Flag to enable damage again.
 func _on_damage_cooldown_timer_timeout():

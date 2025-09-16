@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://b1lkjc77082fm"]
 
-[ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/chase/chase_behavior.tscn" id="1_pe56h"]
+[ext_resource type="PackedScene" uid="uid://ce134omlw5j02" path="res://actors/enemies/behaviors/ai/enemy_ai.tscn" id="1_6t3l4"]
 [ext_resource type="Resource" uid="uid://c7ttwmrsaxqss" path="res://items/pickups/experience_gem/types/medium_gem.tres" id="2_6t3l4"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_scipe"]
 [ext_resource type="SpriteFrames" uid="uid://bfv7q1d5e6kgi" path="res://actors/enemies/normal_enemy_types/fish/animations/fish_animations.tres" id="4_6t3l4"]
@@ -18,7 +18,8 @@ modulate = Color(1, 1, 1, 1)
 face_movement_direction = false
 rotation_offset_degrees = 0.0
 is_flipped = true
-behavior_scene = ExtResource("1_pe56h")
+default_behavior_name = "chasebehavior"
+ai_scene = ExtResource("1_6t3l4")
 weapon_scenes = Array[PackedScene]([])
 challenge_rating = 2.0
 experience_gem_stats = ExtResource("2_6t3l4")
