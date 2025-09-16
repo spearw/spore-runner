@@ -18,7 +18,10 @@ func on_apply(manager: StatusEffectManager, source):
 	# Apply the first tick of damage immediately.
 	_do_damage_tick(manager, source)
 	# Reset the tick timer.
-	tick_timer = time_between_ticks
+	var time_multiplier = 1
+	if is_instance_valid(source):
+		time_multiplier = source.get_stat("dot_damage_tick_rate")
+	tick_timer = time_between_ticks * time_multiplier
 
 ## Called every frame.
 func on_process(manager: StatusEffectManager, delta: float, source):
@@ -26,7 +29,10 @@ func on_process(manager: StatusEffectManager, delta: float, source):
 	if tick_timer <= 0:
 		_do_damage_tick(manager, source)
 		# Reset the timer for the next tick.
-		tick_timer += time_between_ticks
+		var time_multiplier = 1
+		if is_instance_valid(source):
+			time_multiplier = source.get_stat("dot_damage_tick_rate")
+		tick_timer = time_between_ticks * time_multiplier
 
 ## Helper function to apply damage and check for ignite.
 func _do_damage_tick(manager: StatusEffectManager, source):

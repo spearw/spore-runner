@@ -105,9 +105,10 @@ func add_bonus(key: String, value: float, is_additive: bool=false):
 
 # --- Get stat multiplier based on key ---
 func get_stat_multiplier(key: String) -> float:
+	# Return 1 if stat does not exist
 	var permanent_bonus = GameData.data["permanent_stats"].get(key, 0.0)
-	if (key in ["firerate"]):
-		# Fire rate is subtractive and caps at 90%
+	if (key in ["firerate", "dot_damage_tick_rate"]):
+		# Ra 90%
 		return max(0.1, 1.0-(permanent_bonus + in_run_bonuses.get(key, 0.0)))
 	else:
 		# Return 1 + total multiplier
@@ -118,6 +119,7 @@ func get_stat_multiplier(key: String) -> float:
 func get_stat(key: String):
 	# TODO: Add timed bonuses for all stats
 	# TODO: Add projectile range (this will increase 'lifetime' value
+	# TODO: Refactor to return 1 + x for all multiplicative values - keep logic in here.
 	match key:
 		"move_speed":
 			var move_speed = stats.base_move_speed * get_stat_multiplier(key)
@@ -180,9 +182,13 @@ func get_stat(key: String):
 			var in_run_bonus = in_run_bonuses.get("max_health", 0)
 			return base_hp + permanent_bonus + in_run_bonus
 		"dot_damage_bonus":
-			return 1
+			return 1 * get_stat_multiplier(key)
+		"dot_damage_tick_rate":
+			return 1 * get_stat_multiplier(key)
 		"status_chance_bonus":
-			return 1
+			return 1 * get_stat_multiplier(key)
+		"status_duration":
+			return 1 * get_stat_multiplier(key)
 		_:
 			printerr("get_stat: Requested unknown stat key: '", key, "'")
 			return 1.0 # Return a safe default

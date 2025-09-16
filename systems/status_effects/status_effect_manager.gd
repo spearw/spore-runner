@@ -28,9 +28,12 @@ func apply_status(status_resource: StatusEffect, source: Node):
 		active_statuses[status_instance.id]["timer"].start(status_instance.duration)
 	else:
 		# This is a new status.
+		var duration = status_instance.duration
+		if is_instance_valid(source):
+			duration *= source.get_stat("status_duration")
 		var duration_timer = Timer.new()
 		duration_timer.one_shot = true
-		duration_timer.wait_time = status_instance.duration
+		duration_timer.wait_time = duration
 		duration_timer.timeout.connect(func(): _on_status_expired(status_instance.id, source))
 		add_child(duration_timer)
 		var vfx_instance = _apply_visuals(status_instance)

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://cvw0urvl1p6eb"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_4nq8i"]
+
+[resource]
+script = ExtResource("1_4nq8i")
+id = "ignite_chance"
+display_name = "Fuel"
+description = "Status effects last longer."
+type = 2
+target_class_name = "Player"
+rarity = 0
+key = "status_duration"
+modifier_type = 0
+rarity_values = Array[float]([0.1, 0.15, 0.2, 0.25])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

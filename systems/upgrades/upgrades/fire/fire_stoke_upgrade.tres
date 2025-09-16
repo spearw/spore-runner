@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://baej306tj85v"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_e381r"]
+
+[resource]
+script = ExtResource("1_e381r")
+id = "fire_dot_damage"
+display_name = "Stoke"
+description = "Dot status effects have a faster tick rate."
+type = 2
+target_class_name = "Player"
+rarity = 0
+key = "dot_damage_tick_rate"
+modifier_type = 0
+rarity_values = Array[float]([0.0, 0.1, 0.15, 0.2])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"
