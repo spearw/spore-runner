@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://bdhc6xpg0yfci"]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_hrdoc"]
+
+[resource]
+script = ExtResource("1_hrdoc")
+id = "molotov_cocktail_scorched_earth_transform"
+display_name = "Scorched Earth"
+description = "Molotov fire patches are larger and last longer."
+type = 3
+target_class_name = "MolotovCocktailWeapon"
+rarity = 1
+key = "scorched_earth"
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

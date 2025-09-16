@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="MultiStageProjectileStats" load_steps=5 format=3 uid="uid://bnmsw6oeqrymo"]
+
+[ext_resource type="PackedScene" uid="uid://dixeudgqhntlc" path="res://items/effects/persistent_damage_effect.tscn" id="1_7chs4"]
+[ext_resource type="Script" uid="uid://0gxb71relmj2" path="res://systems/projectiles/multi_stage_projectile/multi_stage_projectile.gd" id="1_7mgcw"]
+[ext_resource type="Resource" uid="uid://bm17cwoseukvn" path="res://items/weapons/molotov_cocktail/molotov_ground_fire_stats.tres" id="2_0a8gg"]
+[ext_resource type="Texture2D" uid="uid://bg4t73i21c1hk" path="res://items/weapons/molotov_cocktail/molotov.png" id="2_h11mj"]
+
+[resource]
+script = ExtResource("1_7mgcw")
+on_death_effect_stats = ExtResource("2_0a8gg")
+on_death_effect_scene = ExtResource("1_7chs4")
+damage = 1
+speed = 250.0
+lifetime = 1.0
+pierce = 0
+knockback_force = 0.0
+armor_penetration = 0.0
+critical_hit_rate = 0.05
+critical_hit_damage = 0.5
+homing_strength = 0.0
+is_scaling = false
+texture = ExtResource("2_h11mj")
+scale = Vector2(1, 1)
+metadata/_custom_type_script = "uid://0gxb71relmj2"

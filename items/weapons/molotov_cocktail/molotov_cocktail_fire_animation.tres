@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://cigxx5tq63m07"]
+
+[ext_resource type="Texture2D" uid="uid://jvadvocv7m8v" path="res://items/weapons/molotov_cocktail/ring_of_fire.png" id="1_qan0r"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qan0r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

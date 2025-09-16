@@ -4,5 +4,5 @@ class_name MultiStageProjectileStats
 extends ProjectileStats
 
 # The stats for the explosion or other effect that spawns when this projectile dies.
-@export var on_death_effect_stats: ExplosionStats
+@export var on_death_effect_stats: ProjectileStats
 @export var on_death_effect_scene: PackedScene

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="PersistentEffectStats" load_steps=4 format=3 uid="uid://bm17cwoseukvn"]
+
+[ext_resource type="SpriteFrames" uid="uid://cigxx5tq63m07" path="res://items/weapons/molotov_cocktail/molotov_cocktail_fire_animation.tres" id="1_261d8"]
+[ext_resource type="Script" uid="uid://c1jb1x6tem00f" path="res://systems/projectiles/auras/persistent_effect_stats.gd" id="1_ktthq"]
+[ext_resource type="Resource" uid="uid://b0qo4jnrxfh6g" path="res://systems/status_effects/fire/burning.tres" id="2_lpw3a"]
+
+[resource]
+script = ExtResource("1_ktthq")
+tick_rate = 0.3
+animation = ExtResource("1_261d8")
+duration = 5.0
+damage = 1
+speed = 0.0
+lifetime = 5.0
+pierce = 100
+knockback_force = 0.0
+armor_penetration = 0.0
+critical_hit_rate = 0.05
+critical_hit_damage = 0.5
+homing_strength = 0.0
+is_scaling = true
+status_to_apply = ExtResource("2_lpw3a")
+scale = Vector2(1.5, 1.5)
+metadata/_custom_type_script = "uid://c1jb1x6tem00f"

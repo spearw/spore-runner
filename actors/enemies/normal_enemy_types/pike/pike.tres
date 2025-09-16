@@ -7,8 +7,8 @@
 
 [resource]
 script = ExtResource("3_lm72u")
-max_health = 50
-speed = 120.0
+max_health = 200
+speed = 130.0
 damage = 15
 armor = 0
 armor_pen = 0
@@ -23,4 +23,5 @@ weapon_scenes = Array[PackedScene]([])
 challenge_rating = 3.0
 experience_gem_stats = ExtResource("2_bc54g")
 soul_drop_chance = 0.05
+heart_drop_chance = 0.05
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

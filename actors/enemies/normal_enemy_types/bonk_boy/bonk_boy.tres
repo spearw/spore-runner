@@ -9,7 +9,7 @@
 [resource]
 script = ExtResource("3_4upo6")
 max_health = 80
-speed = 60.0
+speed = 80.0
 damage = 50
 armor = 2
 armor_pen = 0

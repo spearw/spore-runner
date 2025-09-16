@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("3_scipe")
-max_health = 70
+max_health = 150
 speed = 70.0
 damage = 20
 armor = 0

@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("3_4cg34")
 max_health = 4
-speed = 200.0
+speed = 160.0
 damage = 5
 armor = 0
 armor_pen = 0
@@ -17,9 +17,11 @@ scale = Vector2(1, 1)
 modulate = Color(1, 1, 1, 1)
 face_movement_direction = true
 rotation_offset_degrees = 35.0
+is_flipped = false
 behavior_scene = ExtResource("1_6w6ff")
 weapon_scenes = Array[PackedScene]([])
 challenge_rating = 1.0
 experience_gem_stats = ExtResource("2_6w4x6")
 soul_drop_chance = 0.05
+heart_drop_chance = 0.05
 metadata/_custom_type_script = "uid://b7tpycat8da2s"
