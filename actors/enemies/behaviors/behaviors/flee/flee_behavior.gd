@@ -14,7 +14,7 @@ func process_behavior(delta: float, host: CharacterBody2D):
 		
 	# Calculate the direction vector AWAY from the target.
 	var direction = (host.global_position - flee_target.global_position).normalized()
-	host.velocity = direction * host.stats.speed # Flee at normal speed
+	host.velocity = direction * host.stats.move_speed # Flee at normal speed
 
 func on_enter(context: Dictionary = {}):
 	# Look for a "target" key in the context provided by the caller.

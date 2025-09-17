@@ -7,15 +7,9 @@
 
 [resource]
 script = ExtResource("3_x55ge")
-display_name = "Jelly"
-max_health = 8
 speed = 120.0
 damage = 5
-armor = 0
 armor_pen = 0
-sprite_frames = ExtResource("4_4kpdc")
-scale = Vector2(1, 1)
-modulate = Color(1, 1, 1, 1)
 face_movement_direction = true
 rotation_offset_degrees = 145.0
 is_flipped = false
@@ -24,4 +18,11 @@ ai_scene = ExtResource("1_jiq38")
 weapon_scenes = Array[PackedScene]([])
 challenge_rating = 0.5
 loot_table = ExtResource("2_jiq38")
+move_speed = 120.0
+display_name = "Jelly"
+max_health = 8
+armor = 0
+sprite_frames = ExtResource("4_4kpdc")
+modulate = Color(1, 1, 1, 1)
+scale = Vector2(1, 1)
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

@@ -23,7 +23,7 @@ extends Control
 @onready var pack_grid: GridContainer = $HBoxContainer/PacksContainer/GridContainer
 
 
-var selected_character: CharacterData
+var selected_character: PlayerStats
 var selected_packs: Array[UpgradePackButton] = []
 
 func _ready():
@@ -51,9 +51,9 @@ func populate_character_grid():
 		button.character_selected.connect(update_details_panel)
 		character_grid.add_child(button)
 
-func update_details_panel(char_data: CharacterData):
+func update_details_panel(char_data: PlayerStats):
 	self.selected_character = char_data
-	self.name_label.text = char_data.character_name
+	self.name_label.text = char_data.display_name
 	self.description_label.text = char_data.character_description
 
 func _on_select_and_start_button_pressed():

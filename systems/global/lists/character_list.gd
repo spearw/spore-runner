@@ -3,4 +3,4 @@
 class_name CharacterList
 extends Resource
 
-@export var characters: Array[CharacterData]
+@export var characters: Array[PlayerStats]

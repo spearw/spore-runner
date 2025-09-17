@@ -3,8 +3,8 @@
 ## This data is NOT saved. It is reset at the start of each run.
 extends Node
 
-# The CharacterData resource for the player in this run.
-var selected_character: CharacterData = null
+# The PlayerStats resource for the player in this run.
+var selected_character: PlayerStats = null
 
 # The list of resource paths for the packs chosen for this specific run.
 var selected_pack_paths: Array[String] = []

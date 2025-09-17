@@ -1,12 +1,9 @@
 ## enemy.gd
-## A generic enemy scene. Its behavior and stats are configured by an EnemyStats resource.
+## A generic enemy scene, configured by an EnemyStats resource. Inherits from Entity.
 class_name Enemy
-extends CharacterBody2D
+extends Entity
 
-signal health_changed(current_health, max_health)
-
-# Import stats
-@export var stats: EnemyStats
+# --- Scene Exports ---
 @export var damage_number_scene: PackedScene
 @export var soul_scene: PackedScene
 @export var heart_scene: PackedScene
@@ -20,154 +17,75 @@ signal health_changed(current_health, max_health)
 @onready var death_timer: Timer = $DeathTimer
 @onready var damage_cooldown_timer: Timer = $DamageCooldown
 
-
 # --- Runtime Variables ---
-var current_health: int
 var player_node: Node2D
 var behavior: EnemyBehavior = null
 var is_on_screen: bool = false
-var knockback_velocity: Vector2 = Vector2.ZERO
-var is_dying: bool = false
 var can_deal_damage: bool = true
 var ai: Node
 
-# --- Signals ---
-signal died(enemy_stats)
 
+## Initializes the enemy. The parent Entity's _ready() is called automatically first.
 func _ready() -> void:
+	# The parent _ready() handles the stats check, health init, and scaling.
+	# We still call it with super() to ensure any future parent logic is run.
+	super._ready()
+	
 	modulate = stats.modulate
 	player_node = get_tree().get_first_node_in_group("player")
 	
-	# Delete if not properly init
-	if not stats:
-		printerr("Enemy spawned without EnemyStats resource! Deleting self.")
-		queue_free()
-		return
-		
-	# Instantiate the brain
+	# Instantiate the AI brain from the stats resource.
 	if stats.ai_scene:
 		ai = stats.ai_scene.instantiate()
 		add_child(ai)
-
-		# Now, configure the brain with the default behavior from stats.
 		if ai.has_method("initialize_ai"):
 			ai.initialize_ai(stats.default_behavior_name)
 			
-	# Equip weapon
+	# Equip weapons defined in the stats resource.
 	if stats.weapon_scenes:
 		var equipment_node = get_node("Equipment")
 		for weapon_scene in stats.weapon_scenes:
 			var new_weapon = weapon_scene.instantiate()
-			# The weapon needs to know who its user is.
+			# The weapon needs a reference to its user (this enemy).
 			var stats_comp = new_weapon.get_node("WeaponStatsComponent")
 			if stats_comp:
 				stats_comp.user = self
-			
 			equipment_node.add_child(new_weapon)
 
-	# After all equipment is ready, initialize the behavior component.
+	# After equipment is ready, initialize the behavior component.
 	if is_instance_valid(behavior) and behavior.has_method("initialize_behavior"):
 		behavior.initialize_behavior(self)
 		
-	# Apply stats from the resource.
-	current_health = stats.max_health
-	# Apply the animation library to the sprite node.
+	# Apply visual stats from the resource.
 	animated_sprite.sprite_frames = stats.sprite_frames
-	# Apply the scale to the enemy's root node so all children scale together.
-	self.scale = stats.scale
-	collision_shape.scale = stats.scale
 	animated_sprite.play("move")
 	
-	health_changed.connect(update_health_bar)
+	# Initialize the health bar (it will be hidden until damage is taken).
 	update_health_bar(current_health, stats.max_health)
 	health_bar.visible = false
 	
-	# Detect whether enemy is on screen
+	# Connect signals for screen visibility detection.
 	visibility_notifier.screen_entered.connect(_on_screen_entered)
 	visibility_notifier.screen_exited.connect(_on_screen_exited)
-	
-## Tells all equipped weapons to fire once.
-func fire_weapons():
-	var equipment = get_node_or_null("Equipment")
-	if equipment:
-		for weapon in equipment.get_children():
-			if weapon.has_method("fire"):
-				weapon.fire()
-	
-## Reduces the enemy's health and handles the consequences.
-## @param amount: int - The amount of damage to inflict.
-## @param armor_pen: float - Armor penetration of incoming hit.
-func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node = null) -> void:
-	#TODO: Refactor enemy/player to inherit from generic 'entity' class that has functions like 'take_damage'
-	if is_dying: return
-	
-	# Armor is reduced by the penetration percentage.
-	# Effective Armor = Armor * (1 - Penetration)
-	var effective_armor = self.stats.armor * (1.0 - armor_pen)
-	var damage_taken = max(0, amount - effective_armor)
-	
-	# Take damage.
-	current_health = max(0, current_health - damage_taken)
-	
-	# Emit the signal for the health bar.
-	health_changed.emit(current_health, stats.max_health)
-	
-	# Spawn damage number label
-	if damage_number_scene:
-		var dmg_num_instance = damage_number_scene.instantiate()
-		# Add it to the main scene, not the enemy, so it doesn't move with the enemy.
-		get_tree().current_scene.add_child(dmg_num_instance)
-		dmg_num_instance.start(damage_taken, self.global_position, is_crit)
-	
-	if current_health <= 0:
-		# When health drops to 0, let death play out.
-		is_dying = true
-		self.remove_from_group("enemy")
-		death_timer.wait_time = 0.3
-		death_timer.one_shot = true
-		death_timer.timeout.connect(die)
-		death_timer.start()
-		
-## Called by the health_changed signal to update the UI.
-func update_health_bar(current: int, max_val: int):
-	health_bar.max_value = max_val
-	health_bar.value = current
-	# Show the bar only when the enemy has taken damage.
-	health_bar.visible = current < max_val
-	
-## Applies a knockback force away from a given point.
-## @param force: float - The strength of the knockback.
-## @param from_position: Vector2 - The world position the knockback originates from.
-func apply_knockback(force: float, from_position: Vector2):
-	# Calculate the direction vector away from the damage source.
-	var direction = (self.global_position - from_position).normalized()
-	# Apply the force to the velocity. This will be handled by move_and_slide.
-	knockback_velocity = direction * force
 
-## Handles the enemy's death sequence.
-func die(drop_xp=true) -> void:
-	# TODO: Refactor to one signal?
-	died.emit(stats) # Announce death to encounter director.
-	Events.emit_signal("enemy_killed", self) # Announce death.
-	# Drop loot
-	LootManager.process_loot_drop(stats, self.global_position, self.player_node)
-	queue_free()
-
-
-func _physics_process(delta: float):
-	# Knockback decays over time
-	knockback_velocity = knockback_velocity.lerp(Vector2.ZERO, 0.05)
+## Physics processing for movement, AI, and collision.
+func _physics_process(delta: float) -> void:
+	# Call the parent class's physics process to apply knockback decay.
+	super._physics_process(delta)
+	
 	if is_dying:
-		# In in "dying" state, just a ragdoll.
+		# If dying, act as a ragdoll affected only by knockback.
 		velocity = knockback_velocity
 	else:
+		# If alive, process AI behavior.
 		if is_instance_valid(behavior):
 			behavior.process_behavior(delta, self)
 			
-		# Only change animation if we are not in the middle of a special animation (like "fire").
+		# Let dedicated animations (like "fire") take precedence.
 		if animation_player.is_playing():
-			return # Let the AnimationPlayer finish its job.
+			return
 			
+		# Update animation based on movement.
 		if velocity.length() > 0.1:
 			animated_sprite.play("move")
 		else:
@@ -176,31 +94,18 @@ func _physics_process(delta: float):
 			else:
 				animated_sprite.stop()
 				animated_sprite.frame = 0
-			
+		
+		# Update sprite orientation based on stats.
 		if stats.face_movement_direction:
-			# Only rotate if we are actually moving.
 			if velocity.length() > 0.1:
-				# Calculate the angle of the velocity vector and add the offset.
-				# We must convert the degrees offset from our data into radians for the code.
 				var rotation_offset_radians = deg_to_rad(stats.rotation_offset_degrees)
 				animated_sprite.rotation = velocity.angle() + rotation_offset_radians
 		else:
-			# Flip sprite to face player
+			# Flip sprite horizontally to face movement direction.
 			if abs(velocity.x) > 0.1:
-				if velocity.x > 0:
-					# Is flipped means base sprite pointing wrong direction.
-					if stats.is_flipped:
-						animated_sprite.flip_h = true
-					else:
-						animated_sprite.flip_h = false
-				else:
-					if stats.is_flipped:
-						animated_sprite.flip_h = false
-					else:
-						animated_sprite.flip_h = true
-
+				animated_sprite.flip_h = (velocity.x < 0) if not stats.is_flipped else (velocity.x > 0)
 			
-		# Check for collision
+		# Check for collision with the player to deal contact damage.
 		if can_deal_damage:
 			for i in range(get_slide_collision_count()):
 				var collision = get_slide_collision(i)
@@ -208,44 +113,105 @@ func _physics_process(delta: float):
 				
 				var collided_object = collision.get_collider()
 				
-				# Check if the object is the player.
 				if is_instance_valid(collided_object) and collided_object.is_in_group("player"):
-					# Internal damage cooldown
+					# Start internal damage cooldown to prevent rapid-fire hits.
 					can_deal_damage = false 
 					damage_cooldown_timer.start(0.5) 
 					
-					# Call the player's damage function, using this enemy's damage stat.
+					# Damage the player.
 					collided_object.take_damage(stats.damage, stats.armor_pen, false, self)
+					# Apply knockback to the player.
 					var knockback = 400 + (stats.damage * 5)
 					collided_object.apply_knockback(knockback, self.global_position)
 					return
+					
+		# Add the decaying knockback from the parent to the velocity from behavior.
 		velocity += knockback_velocity
+		
 	move_and_slide()
 
+# --- Overridden Base Class Methods ---
 
-## Plays a one-shot animation via the AnimationPlayer.
-func play_one_shot_animation(anim_name: String):
-	# The AnimationPlayer will take control, play the animation, and then release control.
+## This virtual method is called by the parent Entity's `take_damage` function
+## AFTER health has been reduced. We use it for enemy-specific visual feedback.
+func _on_take_damage(damage_taken: int, is_crit: bool, source_node: Node) -> void:
+	# Spawn a floating damage number if the scene is provided.
+	if damage_number_scene and damage_taken > 0:
+		var dmg_num_instance = damage_number_scene.instantiate()
+		# Add to the main scene tree so it doesn't move with the enemy.
+		get_tree().current_scene.add_child(dmg_num_instance)
+		dmg_num_instance.start(damage_taken, self.global_position, is_crit)
+
+## This virtual method is called by the parent Entity whenever health changes.
+func _on_health_changed(current: int, max_val: int) -> void:
+	update_health_bar(current, max_val)
+
+## Overrides the parent `die` method to add a delay before disappearing,
+## allowing for a death animation or effect.
+func die() -> void:
+	if is_dying: return
+	
+	# Set the state flag from the parent class.
+	is_dying = true
+	
+	# Stop being a target.
+	self.remove_from_group("enemy")
+	
+	# Start a short timer to allow death effects to play out.
+	death_timer.wait_time = 0.3
+	death_timer.one_shot = true
+	death_timer.timeout.connect(finalize_death)
+	death_timer.start()
+
+# --- Enemy-Specific Methods ---
+
+## This function contains the logic that happens after the death timer.
+func finalize_death() -> void:
+	died.emit(stats) # Announce death to encounter director.
+	Events.emit_signal("enemy_killed", self) # Announce death for player powers.
+	LootManager.process_loot_drop(stats, self.global_position, self.player_node)
+	queue_free()
+
+## Tells all equipped weapons to fire.
+func fire_weapons() -> void:
+	var equipment = get_node_or_null("Equipment")
+	if equipment:
+		for weapon in equipment.get_children():
+			if weapon.has_method("fire"):
+				weapon.fire()
+
+## Plays a one-shot animation via the AnimationPlayer (e.g., "attack").
+func play_one_shot_animation(anim_name: String) -> void:
 	animation_player.play(anim_name)
 
-## Called when a one-shot animation is finished.
-func _on_animation_finished():
-	# Return control to the physics process logic.
-	# The next frame, the velocity check will take over again.
-	pass
-	
-func override_behavior(new_state_name: String, duration: float, context: Dictionary = {}):
+## Temporarily overrides the enemy's AI behavior.
+func override_behavior(new_state_name: String, duration: float, context: Dictionary = {}) -> void:
 	if is_instance_valid(ai):
 		ai.set_state_by_name(new_state_name, context) 
 		if duration > 0:
 			get_tree().create_timer(duration).timeout.connect(ai.restore_default_state)
 
-## Flag to enable damage again.
-func _on_damage_cooldown_timer_timeout():
-	can_deal_damage = true
+## Updates the health bar's visual state.
+func update_health_bar(current: int, max_val: int) -> void:
+	health_bar.max_value = max_val
+	health_bar.value = current
+	# Only show the health bar once the enemy has taken damage.
+	health_bar.visible = current < max_val
 	
-func _on_screen_entered():
+# --- Signal Callbacks ---
+
+func _on_screen_entered() -> void:
 	is_on_screen = true
 
-func _on_screen_exited():
+func _on_screen_exited() -> void:
 	is_on_screen = false
+
+## Resets the contact damage cooldown.
+func _on_damage_cooldown_timer_timeout() -> void:
+	can_deal_damage = true
+	
+## Called by the AnimationPlayer when a one-shot animation finishes.
+func _on_animation_finished(anim_name: String) -> void:
+	# This function is necessary for the signal connection but may not need logic.
+	# It effectively returns animation control to the _physics_process.
+	pass

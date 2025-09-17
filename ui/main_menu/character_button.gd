@@ -10,11 +10,11 @@ signal character_selected(character_data)
 @onready var select_button: Button = $SelectButton
 @onready var panel: Panel = $Panel
 
-var character_data: CharacterData
+var character_data: PlayerStats
 var is_unlocked: bool = false
 
 ## Store data
-func set_character(data: CharacterData, unlocked: bool):
+func set_character(data: PlayerStats, unlocked: bool):
 	self.character_data = data
 	self.is_unlocked = unlocked
 
@@ -30,10 +30,10 @@ func update_display():
 	if not is_instance_valid(name_label) or not character_data:
 		return
 
-	name_label.text = character_data.character_name if is_unlocked else "???"
+	name_label.text = character_data.display_name if is_unlocked else "???"
 	
-	if character_data.character_sprite_frames and character_data.character_sprite_frames.has_animation("default"):
-		portrait_rect.texture = character_data.character_sprite_frames.get_frame_texture("default", 0)
+	if character_data.sprite_frames and character_data.sprite_frames.has_animation("default"):
+		portrait_rect.texture = character_data.sprite_frames.get_frame_texture("default", 0)
 	if is_unlocked:
 		panel.modulate.a = 0
 		portrait_rect.modulate = Color.WHITE

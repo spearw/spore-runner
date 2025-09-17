@@ -37,7 +37,7 @@ func add_souls(amount: int):
 	# TODO: emit a signal here for the UI to update.
 
 ## Sets the character to be used for the next run.
-## @param character_data_path: String - The resource path of the CharacterData .tres file.
+## @param character_data_path: String - The resource path of the PlayerStats .tres file.
 func set_selected_character(character_data_path: String):
 	if character_data_path in data["unlocked_character_paths"]:
 		data["selected_character_path"] = character_data_path
