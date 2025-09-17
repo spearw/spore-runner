@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://buhbiuhy0etrs"]
+
+[ext_resource type="PackedScene" uid="uid://cve7ac8uuoddf" path="res://items/artifacts/fire/smoked_fish/smoked_fish.tscn" id="1_axk1m"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_awmak"]
+
+[resource]
+script = ExtResource("2_awmak")
+id = "smoked_fish_unlock"
+display_name = "Smoked Fish"
+description = "Enemies that die while ignited drop bonus xp."
+type = 1
+target_class_name = "SmokedFish"
+scene_to_unlock = ExtResource("1_axk1m")
+rarity = 4
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

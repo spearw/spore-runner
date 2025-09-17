@@ -32,7 +32,8 @@ func _execute_aoe():
 		if body.is_in_group(target_group) and body.has_method("take_damage"):
 			_deal_damage(body)
 		if stats.status_to_apply and body.has_node("StatusEffectManager"):
-			_apply_status(body)
+			if randf() < stats.status_chance:
+				_apply_status(body)
 		if stats.knockback_force > 0 and body.has_method("apply_knockback"):
 			body.apply_knockback(stats.knockback_force, self.global_position)
 			

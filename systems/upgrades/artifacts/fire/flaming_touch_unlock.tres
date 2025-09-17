@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://cqgaxpq4hkja7"]
+
+[ext_resource type="PackedScene" uid="uid://dhy7ee0uaa1w0" path="res://items/artifacts/fire/flaming_touch/flaming_touch_artifact.tscn" id="1_i7xns"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_fj2f5"]
+
+[resource]
+script = ExtResource("2_fj2f5")
+id = "flaming_touch_unlock"
+display_name = "Flaming Touch"
+description = "Enemies who are ignited have a chance to burn nearby enemies."
+type = 1
+target_class_name = "FlamingTouchArtifact"
+scene_to_unlock = ExtResource("1_i7xns")
+rarity = 4
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

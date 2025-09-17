@@ -8,7 +8,6 @@ signal health_changed(current_health, max_health)
 # Import stats
 @export var stats: EnemyStats
 @export var damage_number_scene: PackedScene
-@export var experience_gem_scene: PackedScene
 @export var soul_scene: PackedScene
 @export var heart_scene: PackedScene
 
@@ -149,19 +148,16 @@ func apply_knockback(force: float, from_position: Vector2):
 func die(drop_xp=true) -> void:
 	# TODO: Refactor to one signal?
 	died.emit(stats) # Announce death to encounter director.
-	Events.emit_signal("enemy_killed") # Announce death to player.
+	Events.emit_signal("enemy_killed", self) # Announce death.
 	# Drop loot
 	if stats.special_drop_scene:
 		var special_drop = stats.special_drop_scene.instantiate()
 		get_tree().current_scene.add_child(special_drop)
 		special_drop.global_position = self.global_position
 	# Drop XP gems
-	if stats.experience_gem_stats and drop_xp:
-		# Spawn the generic gem scene.
-		var gem_instance = experience_gem_scene.instantiate()
-		gem_instance.stats = stats.experience_gem_stats
-		get_tree().current_scene.add_child(gem_instance)
-		gem_instance.global_position = self.global_position
+	if drop_xp:
+		var xp_multiplier = player_node.get_stat("xp_multiplier")
+		XpDropper.drop_xp_for_enemy(stats, self.global_position, xp_multiplier)
 	# Drop soul
 	if randf() < stats.soul_drop_chance:
 		if soul_scene:

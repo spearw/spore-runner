@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="ExperienceGemStats" load_steps=2 format=3 uid="uid://mte760o2hl0i"]
+[gd_resource type="Resource" script_class="ExperienceOrbStats" load_steps=2 format=3 uid="uid://mte760o2hl0i"]
 
 [ext_resource type="Script" uid="uid://cjeoe2nx75ikm" path="res://items/pickups/experience_gem/xp_orb_stats.gd" id="1_vwbqg"]
 
 [resource]
 script = ExtResource("1_vwbqg")
-experience_value = 20
+experience_value = 1
 scale = Vector2(1, 1)
 metadata/_custom_type_script = "uid://cjeoe2nx75ikm"

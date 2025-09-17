@@ -28,7 +28,7 @@ var max_health: int
 var current_health: int
 var level: int = 1
 var current_experience: int = 0
-var experience_to_next_level: int = 100
+var experience_to_next_level: int = 10
 var last_move_direction: Vector2 = Vector2.RIGHT
 
 var is_dying = false
@@ -120,6 +120,7 @@ func get_stat(key: String):
 	# TODO: Add timed bonuses for all stats
 	# TODO: Add projectile range (this will increase 'lifetime' value
 	# TODO: Refactor to return 1 + x for all multiplicative values - keep logic in here.
+	# TODO: Decide whether to use catch-all for simple values or leave as is for clarity
 	match key:
 		"move_speed":
 			var move_speed = stats.base_move_speed * get_stat_multiplier(key)
@@ -189,6 +190,8 @@ func get_stat(key: String):
 			return 1 * get_stat_multiplier(key)
 		"status_duration":
 			return 1 * get_stat_multiplier(key)
+		"xp_multiplier":
+			return 1 * get_stat_multiplier(key)
 		_:
 			printerr("get_stat: Requested unknown stat key: '", key, "'")
 			return 1.0 # Return a safe default
@@ -208,7 +211,7 @@ func add_experience(amount: int, force_level = false) -> void:
 		# Increase level and calculate the XP required for the next one.
 		level += 1
 		# A simple scaling formula for required XP.
-		experience_to_next_level = int(experience_to_next_level * 1.1)
+		experience_to_next_level = int(experience_to_next_level * 1.2)
 		
 		# Announce the level up.
 		leveled_up.emit(level)
@@ -312,7 +315,7 @@ func set_invulnerability(active: bool):
 		sprite.modulate = Color.WHITE
 		
 # --- Transformations ---
-func _on_enemy_killed(): 
+func _on_enemy_killed(enemy: Node): 
 	if unlocked_powers.has("whirlwind"):
 		var whirlwind_level = unlocked_powers["whirlwind"]
 		var speed_buff = whirlwind_speed_buff_base * (1 + (0.5 * (whirlwind_level - 1))) # +50% per level

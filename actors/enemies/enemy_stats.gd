@@ -35,7 +35,6 @@ extends Resource
 @export var challenge_rating: float = 1.0
 
 # --- Loot ---
-@export var experience_gem_stats: ExperienceGemStats
 @export var special_drop_scene: PackedScene
 @export_range(0.0, 1.0) var soul_drop_chance: float = 0.01
 @export_range(0.0, 1.0) var heart_drop_chance: float = 0.05

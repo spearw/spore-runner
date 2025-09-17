@@ -46,10 +46,10 @@ func _do_damage_tick(manager: StatusEffectManager, source):
 		host.take_damage(damage_per_tick * damage_multiplier, 1, false)
 		
 		# Handle Ignite chance.
-		var ignite_chance_mult = 1.0
+		var status_chance_mult = 1.0
 		if is_instance_valid(source):
-			ignite_chance_mult = source.get_stat("status_chance_bonus")
+			status_chance_mult = source.get_stat("status_chance_bonus")
 
-		if additional_status_chance > 0 and randf() < (additional_status_chance * ignite_chance_mult):
+		if additional_status_chance > 0 and randf() < (additional_status_chance * status_chance_mult):
 			if additional_status_effect:
 				manager.apply_status(additional_status_effect, source)

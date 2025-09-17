@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="ExperienceGemStats" load_steps=2 format=3 uid="uid://c7ttwmrsaxqss"]
+[gd_resource type="Resource" script_class="ExperienceOrbStats" load_steps=2 format=3 uid="uid://c7ttwmrsaxqss"]
 
 [ext_resource type="Script" uid="uid://cjeoe2nx75ikm" path="res://items/pickups/experience_gem/xp_orb_stats.gd" id="1_s433n"]
 
 [resource]
 script = ExtResource("1_s433n")
-experience_value = 40
-scale = Vector2(0.5, 0.5)
+experience_value = 5
+scale = Vector2(1, 1)
+color = Color(4.13924e-06, 0.89156, 0.689472, 1)
 metadata/_custom_type_script = "uid://cjeoe2nx75ikm"

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cve7ac8uuoddf"]
+
+[ext_resource type="Script" uid="uid://ca08tkpp5wnuf" path="res://items/artifacts/fire/smoked_fish/smoked_fish.gd" id="1_kpdvj"]
+
+[node name="SmokedFish" type="Node"]
+script = ExtResource("1_kpdvj")

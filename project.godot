@@ -24,6 +24,7 @@ CurrentRun="*res://systems/global/current_run.gd"
 Logs="*res://systems/global/logs.gd"
 BugReporter="*res://systems/global/bug_reporter.gd"
 TargetingUtils="*res://systems/global/targeting_utils.gd"
+XpDropper="*res://systems/global/xp/xp_dropper.tscn"
 
 [display]
 

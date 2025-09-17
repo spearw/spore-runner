@@ -23,6 +23,7 @@ var speed: float = 0.0
 var knockback: float = 0.0
 var target: Node2D = null
 var proximity_detector: Area2D
+var status_chance = 0.0
 
 # --- Node References ---
 @onready var sprite: Sprite2D = $Area2D/Sprite2D
@@ -161,6 +162,7 @@ func _calculate_stats():
 	critical_hit_damage = stats.critical_hit_damage
 	speed = stats.speed
 	knockback = stats.knockback_force
+	status_chance = stats.status_chance
 
 	# If user is player, apply stat bonuses.
 	if user.is_in_group("player"):
@@ -168,6 +170,8 @@ func _calculate_stats():
 		critical_hit_rate = (critical_hit_rate) * (1 + user.get_stat("critical_hit_rate"))
 		critical_hit_damage = (1 + critical_hit_damage) * (1 + user.get_stat("critical_hit_damage"))
 		speed *= user.get_stat("projectile_speed")
+		status_chance *= user.get_stat("status_chance_bonus")
+	
 
 func _apply_phasing():
 	# Start with the main hitbox disabled.

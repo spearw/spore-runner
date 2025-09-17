@@ -71,7 +71,8 @@ func _on_tick_timer_timeout():
 		if body.is_in_group(target_group):
 			# Apply payload
 			if stats.status_to_apply and body.has_node("StatusEffectManager"):
-				body.get_node("StatusEffectManager").apply_status(stats.status_to_apply, user)
+				if randf() < stats.status_chance:
+					body.get_node("StatusEffectManager").apply_status(stats.status_to_apply, user)
 			if stats.damage and body.has_method("take_damage"):
 				body.take_damage(stats.damage, stats.armor_penetration, false)
 

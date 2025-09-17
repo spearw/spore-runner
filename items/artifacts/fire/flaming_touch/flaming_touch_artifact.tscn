@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhy7ee0uaa1w0"]
+
+[ext_resource type="Script" uid="uid://h134pi05q5kp" path="res://items/artifacts/fire/flaming_touch/flaming_touch_artifact.gd" id="1_d1k7p"]
+[ext_resource type="Resource" uid="uid://cgjspa3vcordl" path="res://items/artifacts/fire/flaming_touch/spreading_aura_stats.tres" id="2_2urok"]
+
+[node name="FlamingTouchArtifact" type="Node"]
+script = ExtResource("1_d1k7p")
+aura_stats = ExtResource("2_2urok")

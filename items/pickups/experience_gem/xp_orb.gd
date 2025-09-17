@@ -1,7 +1,7 @@
-## Gems
+## xp_orb.gd
 extends Area2D
 
-@export var stats: ExperienceGemStats
+@export var stats: ExperienceOrbStats
 # Determines effect of arc as moving towards player.
 @export var orbit_strength: float = 700.0
 @export var orbit_decay: float = 0.99
@@ -41,7 +41,7 @@ func _ready():
 			# Only need to find one, so the gem can stop checking.
 			break
 			
-	self.modulate = Color.SKY_BLUE
+	self.modulate = stats.color
 	animated_sprite_2d.play("default")
 	animated_sprite_2d.scale = stats.scale
 

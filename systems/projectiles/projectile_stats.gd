@@ -22,6 +22,7 @@ var can_retarget: bool = false
 
 # --- Effects ---
 @export var status_to_apply: StatusEffect
+@export_range(0.0, 1.0) var status_chance: float = 1.0
 
 # --- Visuals ---
 @export var texture: Texture2D

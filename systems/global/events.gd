@@ -10,7 +10,7 @@ signal boss_reward_requested
 # TODO: is this performant?
 signal enemy_hit(hit_details: Dictionary)
 signal status_applied_to_enemy(enemy_node, status_id)
-signal enemy_killed()
+signal enemy_killed(enemy_node)
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:

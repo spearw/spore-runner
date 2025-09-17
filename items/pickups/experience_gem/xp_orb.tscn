@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b6g8t0tg7ccfi"]
 
-[ext_resource type="Script" uid="uid://73rylxfslhag" path="res://items/pickups/experience_gem/experience_gem.gd" id="1_22gny"]
+[ext_resource type="Script" uid="uid://73rylxfslhag" path="res://items/pickups/experience_gem/xp_orb.gd" id="1_22gny"]
 [ext_resource type="Script" uid="uid://cjeoe2nx75ikm" path="res://items/pickups/experience_gem/xp_orb_stats.gd" id="2_y3o0x"]
 [ext_resource type="SpriteFrames" uid="uid://csei3rth8fxcp" path="res://items/pickups/experience_gem/xp_orb_animation.tres" id="3_y3o0x"]
 

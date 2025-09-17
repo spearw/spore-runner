@@ -117,7 +117,7 @@ func _spawn_projectile(
 	else:
 		user = stats_comp.user
 	projectile.user = user
-	
+
 	match spawn_location:
 		SpawnLocation.IN_WORLD:
 			# The old logic: spawn in the main world.
