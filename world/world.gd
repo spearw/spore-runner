@@ -3,7 +3,7 @@
 extends Node2D
 
 # The time in seconds the player must survive to win.
-@export var survival_goal_seconds: float = 300.0 
+@export var survival_goal_seconds: float = 1200.0 
 var game_time: float = 0.0
 var is_game_over: bool = false
 
