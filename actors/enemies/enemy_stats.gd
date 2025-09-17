@@ -4,6 +4,7 @@ class_name EnemyStats
 extends Resource
 
 # --- Core Stats ---
+@export var display_name: String = "Enemy"
 @export var max_health: int = 30
 @export var speed: float = 120.0
 @export var damage: int = 10
@@ -25,7 +26,7 @@ extends Resource
 
 # Behaviors
 @export var default_behavior_name: String = "chasebehavior"
-@export var ai_scene: PackedScene = load("res://actors/enemies/behaviors/enemy_ai.tscn")
+@export var ai_scene: PackedScene = load("res://actors/enemies/behaviors/ai/enemy_ai.tscn")
 
 
 # The weapon scenes to automatically equip to this enemy on spawn.

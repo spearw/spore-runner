@@ -4,15 +4,16 @@
 
 [resource]
 script = ExtResource("1_0nxch")
-damage = 16
+damage = 14
 speed = 0.0
 lifetime = 0.25
 pierce = -1
-knockback_force = 200.0
-armor_penetration = 0.0
-critical_hit_rate = 0.05
-critical_hit_damage = 0.5
+knockback_force = 150.0
+armor_penetration = 0.2
+critical_hit_rate = 0.3
+critical_hit_damage = 1.0
 homing_strength = 0.0
 is_scaling = false
+status_chance = 1.0
 scale = Vector2(4, 3)
 metadata/_custom_type_script = "uid://dm4u2phuyptno"

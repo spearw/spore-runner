@@ -9,14 +9,14 @@ extends Node
 @export var magnet_scene: PackedScene
 
 # The scene for the generic orb pickup.
-const ORB_SCENE = preload("res://items/pickups/experience_gem/xp_orb.tscn")
+var ORB_SCENE = load("res://items/pickups/experience_gem/xp_orb.tscn")
 # How much XP is granted per point of Challenge Rating.
 const XP_PER_CHALLENGE_RATING = 2.0
 
 ## The main public function. Processes a loot table and spawns all drops.
 func process_loot_drop(enemy_stats: EnemyStats, position: Vector2, player_ref: Node):
 	if not enemy_stats.loot_table:
-		printerr("Enemy %s has no loot table assigned." % enemy_stats.name)
+		printerr("Enemy %s has no loot table assigned." % enemy_stats.display_name)
 		return
 
 	var loot_table: LootTable = enemy_stats.loot_table

@@ -14,7 +14,7 @@ var user: Node = null
 
 func _ready():
 	# Listen for global signal
-	Events.enemy_died.connect(_on_enemy_killed)
+	Events.enemy_killed.connect(_on_enemy_killed)
 
 func _on_enemy_killed():
 	# First, we need a valid reference to the user to get their Luck stat.

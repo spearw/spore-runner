@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgjogprsyy57l"
-path="res://.godot/imported/pixellab-Future-mercenary-woman-with-te-1756525835672.png-13ed2b3e3e1393956d86ed49ed09b254.ctex"
+uid="uid://uocooykvan6v"
+path="res://.godot/imported/samurai.png-d172d970aec2422c066d70fc9c69b19a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://actors/player/characters/shotgunner/pixellab-Future-mercenary-woman-with-te-1756525835672.png"
-dest_files=["res://.godot/imported/pixellab-Future-mercenary-woman-with-te-1756525835672.png-13ed2b3e3e1393956d86ed49ed09b254.ctex"]
+source_file="res://actors/player/characters/samurai/samurai.png"
+dest_files=["res://.godot/imported/samurai.png-d172d970aec2422c066d70fc9c69b19a.ctex"]
 
 [params]
 

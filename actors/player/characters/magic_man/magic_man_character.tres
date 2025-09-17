@@ -3,7 +3,7 @@
 [ext_resource type="SpriteFrames" uid="uid://nbeutjhl0hto" path="res://actors/player/characters/magic_man/magic_man_animation.tres" id="1_dou2t"]
 [ext_resource type="Script" uid="uid://nwbrj5ockot1" path="res://actors/player/character_data.gd" id="2_lqmeo"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="3_vnxkr"]
-[ext_resource type="Resource" uid="uid://of54uih30ise" path="res://systems/upgrades/weapons/fire/fireball_staff/fireball_staff_unlock.tres" id="4_lqmeo"]
+[ext_resource type="Resource" uid="uid://dsde3c8s08fs0" path="res://systems/upgrades/weapons/fire/cinder_volley/cinder_volley_unlock.tres" id="4_dou2t"]
 
 [resource]
 script = ExtResource("2_lqmeo")
@@ -19,5 +19,5 @@ base_projectile_count_multiplier = 1.0
 base_critical_chance = 0.0
 base_critical_damage = 0.0
 base_armor = 0
-starting_upgrades = Array[ExtResource("3_vnxkr")]([ExtResource("4_lqmeo")])
+starting_upgrades = Array[ExtResource("3_vnxkr")]([ExtResource("4_dou2t")])
 metadata/_custom_type_script = "uid://nwbrj5ockot1"

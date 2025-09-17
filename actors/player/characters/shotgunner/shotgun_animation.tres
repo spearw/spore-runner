@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://do1qfw5yr1lu0"]
 
-[ext_resource type="Texture2D" uid="uid://bgjogprsyy57l" path="res://actors/player/characters/shotgunner/pixellab-Future-mercenary-woman-with-te-1756525835672.png" id="1_3dkgh"]
+[ext_resource type="Texture2D" uid="uid://bgjogprsyy57l" path="res://actors/player/characters/shotgunner/shotgunner.png" id="1_3dkgh"]
 
 [resource]
 animations = [{

@@ -78,6 +78,8 @@ func fire(damage_multiplier=1):
 				# Get a target position. We can reuse our targeting component!
 				# Find a target, but default to a random position near the owner if none are found.
 				var target_node = targeting_comp.find_target(weapon.global_position, allegiance)
+				if not target_node:
+					return
 				var target_position = weapon.global_position + Vector2(randf_range(-150, 150), randf_range(-150, 150))
 								
 				if is_instance_valid(target_node):
@@ -142,6 +144,8 @@ func _execute_burst_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: P
 	var final_projectile_count = stats_comp.get_final_projectile_count()
 	# Get a target from the targeting component.
 	var target = targeting_comp.find_target(weapon.global_position, p_allegiance)	
+	if not target:
+		return
 	var base_direction = (target.global_position - weapon.global_position).normalized()
 	
 	# If the pattern is MIRRORED_FORWARD, it doubles the current projectile count (to fire behind).
@@ -153,6 +157,8 @@ func _execute_burst_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: P
 		if current_fire_pattern == FirePattern.RANDOM or not is_instance_valid(target):
 			# Find new target each projectile
 			target = targeting_comp.find_target(weapon.global_position, p_allegiance)
+			if not target:
+				return
 			base_direction = (target.global_position - weapon.global_position).normalized()
 		if current_fire_pattern == FirePattern.FORWARD or current_fire_pattern == FirePattern.MIRRORED_FORWARD:
 			fire_direction = base_direction.rotated(

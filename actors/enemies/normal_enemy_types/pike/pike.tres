@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://b38kmy85mn3pc"]
 
 [ext_resource type="PackedScene" uid="uid://ce134omlw5j02" path="res://actors/enemies/behaviors/ai/enemy_ai.tscn" id="1_7qyux"]
-[ext_resource type="Resource" uid="uid://c7ttwmrsaxqss" path="res://items/pickups/experience_gem/types/medium_gem.tres" id="2_bc54g"]
+[ext_resource type="Resource" uid="uid://d0b871pkq4rls" path="res://systems/loot/loot_tables/default_loot.tres" id="2_7qyux"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_lm72u"]
 [ext_resource type="SpriteFrames" uid="uid://dd1utmce46lri" path="res://actors/enemies/normal_enemy_types/pike/animations/pike_animations.tres" id="4_7qyux"]
 
 [resource]
 script = ExtResource("3_lm72u")
+display_name = "Pike"
 max_health = 200
 speed = 130.0
 damage = 15
@@ -22,7 +23,5 @@ default_behavior_name = "chasebehavior"
 ai_scene = ExtResource("1_7qyux")
 weapon_scenes = Array[PackedScene]([])
 challenge_rating = 3.0
-experience_gem_stats = ExtResource("2_bc54g")
-soul_drop_chance = 0.05
-heart_drop_chance = 0.05
+loot_table = ExtResource("2_7qyux")
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

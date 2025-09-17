@@ -171,9 +171,11 @@ func _physics_process(delta: float):
 		if velocity.length() > 0.1:
 			animated_sprite.play("move")
 		else:
-			# Play idle animation, if one exists
-			animated_sprite.play("idle")
-			# animated_sprite.stop()
+			if animated_sprite.sprite_frames.has_animation("idle"):
+				animated_sprite.play("idle")
+			else:
+				animated_sprite.stop()
+				animated_sprite.frame = 0
 			
 		if stats.face_movement_direction:
 			# Only rotate if we are actually moving.

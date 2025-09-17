@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=5 format=3 uid="uid://b8q77yds6prpk"]
 
 [ext_resource type="PackedScene" uid="uid://ce134omlw5j02" path="res://actors/enemies/behaviors/ai/enemy_ai.tscn" id="1_fes0k"]
-[ext_resource type="Resource" uid="uid://mte760o2hl0i" path="res://items/pickups/experience_gem/types/small_gem.tres" id="2_6w4x6"]
+[ext_resource type="Resource" uid="uid://d0b871pkq4rls" path="res://systems/loot/loot_tables/default_loot.tres" id="2_fes0k"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_4cg34"]
 [ext_resource type="SpriteFrames" uid="uid://34uegh8l3hsg" path="res://actors/enemies/normal_enemy_types/noodle_boy/animations/noodle_boy_animations.tres" id="4_fes0k"]
 
 [resource]
 script = ExtResource("3_4cg34")
+display_name = "Noodle Boy"
 max_health = 4
 speed = 160.0
 damage = 5
@@ -22,7 +23,5 @@ default_behavior_name = "chasebehavior"
 ai_scene = ExtResource("1_fes0k")
 weapon_scenes = Array[PackedScene]([])
 challenge_rating = 1.0
-experience_gem_stats = ExtResource("2_6w4x6")
-soul_drop_chance = 0.05
-heart_drop_chance = 0.05
+loot_table = ExtResource("2_fes0k")
 metadata/_custom_type_script = "uid://b7tpycat8da2s"

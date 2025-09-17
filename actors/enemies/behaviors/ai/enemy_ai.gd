@@ -1,4 +1,4 @@
-## ai_controller.gd
+## enemy_ai.gd
 ## A generic AI brain that manages and executes behavior states.
 class_name AIController
 extends Node
@@ -45,7 +45,6 @@ func set_state(new_state_node: EnemyBehavior, context: Dictionary = {}):
 	current_state.enabled = true
 	if current_state.has_method("on_enter"): current_state.on_enter(context)
 
-# In ai_controller.gd
 func set_state_by_name(new_state_name: String, context: Dictionary = {}):
 	var key = new_state_name.to_lower()
 	if states.has(key):
