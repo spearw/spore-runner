@@ -6,6 +6,7 @@ extends Node
 @export var orb_types: Array[ExperienceOrbStats]
 @export var soul_scene: PackedScene
 @export var heart_scene: PackedScene
+@export var magnet_scene: PackedScene
 
 # The scene for the generic orb pickup.
 const ORB_SCENE = preload("res://items/pickups/experience_gem/xp_orb.tscn")
@@ -33,6 +34,9 @@ func process_loot_drop(enemy_stats: EnemyStats, position: Vector2, player_ref: N
 	
 	if randf() < loot_table.heart_drop_chance:
 		_spawn_pickup(heart_scene, position)
+		
+	if randf() < loot_table.magnet_drop_chance:
+		_spawn_pickup(magnet_scene, position)
 
 	# --- Handle Special Drops ---
 	if loot_table.special_drop_scene:

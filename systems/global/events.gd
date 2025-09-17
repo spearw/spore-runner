@@ -6,11 +6,11 @@ extends Node
 # Emitted when a treasure chest is collected.
 signal boss_reward_requested
 
-# Emitted when enemy hit
-# TODO: is this performant?
+# TODO: is this performant to signal every enemy hit etc.?
 signal enemy_hit(hit_details: Dictionary)
 signal status_applied_to_enemy(enemy_node, status_id)
 signal enemy_killed(enemy_node)
+signal magnet_collected(player_node)
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:

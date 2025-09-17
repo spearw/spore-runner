@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dr5s5jfrc24ke"]
+
+[ext_resource type="Script" uid="uid://3i5m6w4q8hin" path="res://items/pickups/magnet/magnet.gd" id="1_plq0x"]
+[ext_resource type="SpriteFrames" uid="uid://qpjgfps1k8d0" path="res://items/pickups/soul/moving_orb.tres" id="2_ykov2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ykov2"]
+
+[node name="Magnet" type="Area2D"]
+script = ExtResource("1_plq0x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_ykov2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_ykov2")

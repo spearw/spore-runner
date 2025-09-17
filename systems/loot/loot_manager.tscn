@@ -1,11 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://qqpdy2dipg2v"]
+[gd_scene load_steps=9 format=3 uid="uid://qqpdy2dipg2v"]
 
 [ext_resource type="Script" uid="uid://cjhpjy1kqb5fq" path="res://systems/loot/loot_manager.gd" id="1_isagy"]
 [ext_resource type="Script" uid="uid://cjeoe2nx75ikm" path="res://items/pickups/experience_gem/xp_orb_stats.gd" id="2_tsrg3"]
 [ext_resource type="Resource" uid="uid://d0w2bm5gjde5h" path="res://items/pickups/experience_gem/types/large_gem.tres" id="3_i3pn4"]
 [ext_resource type="Resource" uid="uid://c7ttwmrsaxqss" path="res://items/pickups/experience_gem/types/medium_gem.tres" id="4_iqdi2"]
 [ext_resource type="Resource" uid="uid://mte760o2hl0i" path="res://items/pickups/experience_gem/types/small_gem.tres" id="5_81bgj"]
+[ext_resource type="PackedScene" uid="uid://dvd6w0bq2fi03" path="res://items/pickups/soul/soul.tscn" id="6_i3pn4"]
+[ext_resource type="PackedScene" uid="uid://ppb43f44qipk" path="res://items/pickups/heart/heart_pickup.tscn" id="7_iqdi2"]
+[ext_resource type="PackedScene" uid="uid://dr5s5jfrc24ke" path="res://items/pickups/magnet/magnet.tscn" id="8_iqdi2"]
 
 [node name="LootManager" type="Node"]
 script = ExtResource("1_isagy")
 orb_types = Array[ExtResource("2_tsrg3")]([ExtResource("3_i3pn4"), ExtResource("4_iqdi2"), ExtResource("5_81bgj")])
+soul_scene = ExtResource("6_i3pn4")
+heart_scene = ExtResource("7_iqdi2")
+magnet_scene = ExtResource("8_iqdi2")

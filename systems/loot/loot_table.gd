@@ -10,6 +10,7 @@ extends Resource
 # --- Pickups ---
 @export_range(0.0, 1.0) var soul_drop_chance: float = 0.001
 @export_range(0.0, 1.0) var heart_drop_chance: float = 0.01
+@export_range(0.0, 1.0) var magnet_drop_chance: float = 0.005
 
 # --- Special Drops ---
 # A guaranteed special drop, like a boss's treasure chest.

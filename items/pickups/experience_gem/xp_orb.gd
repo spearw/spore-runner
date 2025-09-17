@@ -27,6 +27,7 @@ func _ready():
 	# Connect to signals for direct and magnetic pickup.
 	self.body_entered.connect(_on_body_entered) # For direct player collision.
 	self.area_entered.connect(_on_area_entered) # For magnetic radius detection.
+	Events.magnet_collected.connect(_on_magnet_collected) # For magnet pickup.
 
 	# Give the physics engine one frame to settle.
 	# This ensures get_overlapping_areas() is reliable.
@@ -78,3 +79,9 @@ func start_homing(player_node: Node2D):
 	if not is_homing:
 		is_homing = true
 		target_player = player_node
+		
+## Called by the global event when ANY magnet is picked up.
+func _on_magnet_collected(player_node: Node2D):
+	# If this orb isn't already homing, start homing towards the player
+	# that collected the magnet.
+	start_homing(player_node)
