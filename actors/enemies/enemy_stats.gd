@@ -19,7 +19,7 @@ extends Resource
 # If true, the sprite will automatically rotate to face its direction of movement.
 @export var face_movement_direction: bool = false
 # An angle in degrees to correct the sprite's base orientation.
-# (e.g., if the art points 'up', set this to 90 to make it face 'right').
+# (e.g., if the art points up, set this to 90 to make it face right).
 @export var rotation_offset_degrees: float = 0.0
 @export var is_flipped: bool = false
 
@@ -31,10 +31,8 @@ extends Resource
 # The weapon scenes to automatically equip to this enemy on spawn.
 @export var weapon_scenes: Array[PackedScene]
 
-# The "cost" of this enemy for the dynamic spawner. Higher is tougher.
+# The cost of this enemy for the dynamic spawner. Higher is tougher.
 @export var challenge_rating: float = 1.0
 
 # --- Loot ---
-@export var special_drop_scene: PackedScene
-@export_range(0.0, 1.0) var soul_drop_chance: float = 0.01
-@export_range(0.0, 1.0) var heart_drop_chance: float = 0.05
+@export var loot_table: LootTable = load("res://systems/loot/loot_tables/default_loot.tres")

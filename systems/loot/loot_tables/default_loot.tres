@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LootTable" load_steps=2 format=3 uid="uid://d0b871pkq4rls"]
+
+[ext_resource type="Script" uid="uid://ypu4bfrofdl7" path="res://systems/loot/loot_table.gd" id="1_46q01"]
+
+[resource]
+script = ExtResource("1_46q01")
+drops_xp = true
+soul_drop_chance = 0.001
+heart_drop_chance = 0.01
+metadata/_custom_type_script = "uid://ypu4bfrofdl7"

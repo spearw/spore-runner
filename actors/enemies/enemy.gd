@@ -150,26 +150,7 @@ func die(drop_xp=true) -> void:
 	died.emit(stats) # Announce death to encounter director.
 	Events.emit_signal("enemy_killed", self) # Announce death.
 	# Drop loot
-	if stats.special_drop_scene:
-		var special_drop = stats.special_drop_scene.instantiate()
-		get_tree().current_scene.add_child(special_drop)
-		special_drop.global_position = self.global_position
-	# Drop XP gems
-	if drop_xp:
-		var xp_multiplier = player_node.get_stat("xp_multiplier")
-		XpDropper.drop_xp_for_enemy(stats, self.global_position, xp_multiplier)
-	# Drop soul
-	if randf() < stats.soul_drop_chance:
-		if soul_scene:
-			var soul_instance = soul_scene.instantiate()
-			get_tree().current_scene.add_child(soul_instance)
-			soul_instance.global_position = self.global_position
-	# Drop heart
-	if randf() < stats.soul_drop_chance:
-		if heart_scene:
-			var heart_instance = heart_scene.instantiate()
-			get_tree().current_scene.add_child(heart_instance)
-			heart_instance.global_position = self.global_position
+	LootManager.process_loot_drop(stats, self.global_position, self.player_node)
 	queue_free()
 
 

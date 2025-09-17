@@ -28,7 +28,7 @@ func _on_enemy_killed(enemy_node: Node):
 		print("Smoked Fish triggered! Spawning bonus XP.")
 		
 		# Call the global XPDropper to spawn bonus orbs.
-		XpDropper.drop_xp_for_enemy(
+		LootManager.drop_xp(
 			enemy_node.stats,
 			enemy_node.global_position,
 			self.bonus_xp_multiplier

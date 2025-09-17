@@ -14,5 +14,6 @@ critical_hit_rate = 0.05
 critical_hit_damage = 1.5
 homing_strength = 0.0
 is_scaling = false
+status_chance = 1.0
 scale = Vector2(2, 1)
 metadata/_custom_type_script = "uid://dm4u2phuyptno"
