@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="PlayerStats" load_steps=5 format=3 uid="uid://dnrjnbiid7c82"]
+[gd_resource type="Resource" script_class="PlayerStats" load_steps=4 format=3 uid="uid://dnrjnbiid7c82"]
 
 [ext_resource type="SpriteFrames" uid="uid://dpd2rd3gsogan" path="res://actors/player/characters/edgerunner/edgerunner_animations.tres" id="1_j0sld"]
 [ext_resource type="Script" uid="uid://nwbrj5ockot1" path="res://actors/player/player_stats.gd" id="1_udyog"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="3_yxjex"]
-[ext_resource type="Resource" uid="uid://cojj2ypt204wk" path="res://systems/upgrades/weapons/fire/molotov_cocktail/molotov_cocktail_unlock.tres" id="4_j0sld"]
 
 [resource]
 script = ExtResource("1_udyog")
@@ -14,7 +13,7 @@ firerate_modifier = 1.0
 projectile_count_multiplier = 1.0
 critical_chance = 0.0
 critical_damage = 0.0
-starting_upgrades = Array[ExtResource("3_yxjex")]([ExtResource("4_j0sld")])
+starting_upgrades = Array[ExtResource("3_yxjex")]([])
 move_speed = 175.0
 display_name = "Test"
 max_health = 999999

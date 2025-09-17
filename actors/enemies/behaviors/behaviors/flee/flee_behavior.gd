@@ -16,7 +16,7 @@ func process_behavior(delta: float, host: CharacterBody2D):
 	var direction = (host.global_position - flee_target.global_position).normalized()
 	host.velocity = direction * host.stats.move_speed # Flee at normal speed
 
-func on_enter(context: Dictionary = {}):
+func on_enter(host: Node = null, context: Dictionary = {}):
 	# Look for a "target" key in the context provided by the caller.
 	if context.has("target"):
 		self.flee_target = context["target"]

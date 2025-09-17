@@ -43,7 +43,7 @@ func set_state(new_state_node: EnemyBehavior, context: Dictionary = {}):
 			
 	current_state = new_state_node
 	current_state.enabled = true
-	if current_state.has_method("on_enter"): current_state.on_enter(context)
+	if current_state.has_method("on_enter"): current_state.on_enter(host, context)
 
 func set_state_by_name(new_state_name: String, context: Dictionary = {}):
 	var key = new_state_name.to_lower()

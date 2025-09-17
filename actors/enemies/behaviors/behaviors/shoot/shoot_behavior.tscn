@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdvr444uedrhp"]
+
+[ext_resource type="Script" uid="uid://c2b2srkb67gxj" path="res://actors/enemies/behaviors/behaviors/shoot/shoot_behavior.gd" id="1_gsvp5"]
+
+[node name="ShootBehavior" type="Node2D"]
+script = ExtResource("1_gsvp5")

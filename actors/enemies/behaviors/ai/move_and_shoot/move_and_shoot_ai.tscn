@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://np8hsandn71t"]
+
+[ext_resource type="Script" uid="uid://dfnkm5k8sfllk" path="res://actors/enemies/behaviors/ai/move_and_shoot/move_and_shoot_ai.gd" id="1_ofuk4"]
+[ext_resource type="PackedScene" uid="uid://gqd3gevs3p3m" path="res://actors/enemies/behaviors/behaviors/behavior_library.tscn" id="2_ofuk4"]
+
+[node name="MoveAndShootBehavior" type="Node"]
+script = ExtResource("1_ofuk4")
+
+[node name="BehaviorLibrary" parent="." instance=ExtResource("2_ofuk4")]

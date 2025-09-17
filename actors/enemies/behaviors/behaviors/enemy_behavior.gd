@@ -15,5 +15,5 @@ func process_behavior(delta: float, host: CharacterBody2D) -> void:
 	
 ## Called by the AIController when this state becomes active.
 ## Can receive an optional context dictionary for setup.
-func on_enter(context: Dictionary = {}):
+func on_enter(host: Node = null, context: Dictionary = {}):
 	pass
