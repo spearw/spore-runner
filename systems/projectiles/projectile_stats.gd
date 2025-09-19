@@ -27,3 +27,4 @@ var can_retarget: bool = false
 # --- Visuals ---
 @export var texture: Texture2D
 @export var scale: Vector2 = Vector2(1.0, 1.0)
+@export var modulation: Color = Color.WHITE

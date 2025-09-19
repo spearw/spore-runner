@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://d0b871pkq4rls" path="res://systems/loot/loot_tables/default_loot.tres" id="2_0h0yx"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_4upo6"]
 [ext_resource type="SpriteFrames" uid="uid://copjckbc0uv0c" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk_boy_animations.tres" id="4_0h0yx"]
-[ext_resource type="PackedScene" uid="uid://divtus20vmop4" path="res://items/weapons/dagger/daggers_weapon.tscn" id="5_ekxw1"]
+[ext_resource type="PackedScene" uid="uid://b75nkt3siabrx" path="res://items/weapons/poison_cloud/poison_cloud_weapon.tscn" id="5_0h0yx"]
 
 [resource]
 script = ExtResource("3_4upo6")
@@ -15,7 +15,7 @@ rotation_offset_degrees = 0.0
 is_flipped = true
 default_behavior_name = "idlebehavior"
 ai_scene = ExtResource("1_0h0yx")
-weapon_scenes = Array[PackedScene]([ExtResource("5_ekxw1")])
+weapon_scenes = Array[PackedScene]([ExtResource("5_0h0yx")])
 firerate = 4.0
 challenge_rating = 5.0
 loot_table = ExtResource("2_0h0yx")

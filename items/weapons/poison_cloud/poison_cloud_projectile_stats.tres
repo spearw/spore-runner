@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MultiStageProjectileStats" load_steps=5 format=3 uid="uid://devtdk87ib7v"]
+
+[ext_resource type="PackedScene" uid="uid://dixeudgqhntlc" path="res://items/effects/persistent_damage_effect.tscn" id="1_cg64x"]
+[ext_resource type="Script" uid="uid://0gxb71relmj2" path="res://systems/projectiles/multi_stage_projectile/multi_stage_projectile.gd" id="1_x4pdb"]
+[ext_resource type="Resource" uid="uid://bvgldjik8dpab" path="res://items/weapons/poison_cloud/poison_cloud_ground_stats.tres" id="2_4yarh"]
+[ext_resource type="Texture2D" uid="uid://dwx78mwhhjcuv" path="res://items/weapons/poison_cloud/mist.png" id="4_4yarh"]
+
+[resource]
+script = ExtResource("1_x4pdb")
+on_death_effect_stats = ExtResource("2_4yarh")
+on_death_effect_scene = ExtResource("1_cg64x")
+damage = 0
+speed = 0.0
+lifetime = 0.01
+pierce = 0
+knockback_force = 0.0
+armor_penetration = 0.0
+critical_hit_rate = 0.05
+critical_hit_damage = 0.5
+homing_strength = 0.0
+is_scaling = false
+status_chance = 1.0
+texture = ExtResource("4_4yarh")
+scale = Vector2(3, 3)
+modulation = Color(0.447059, 0.54902, 0, 1)
+metadata/_custom_type_script = "uid://dm4u2phuyptno"

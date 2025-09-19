@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://c61r83rmqmosg"]
+
+[ext_resource type="Texture2D" uid="uid://dwx78mwhhjcuv" path="res://items/weapons/poison_cloud/mist.png" id="1_kantq"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kantq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

@@ -46,6 +46,7 @@ func _ready():
 	animated_sprite.sprite_frames = stats.animation
 	animated_sprite.play("default")
 	self.scale = stats.scale
+	self.modulate = stats.modulation
 	
 	# Configure hitbox
 	_generate_circular_hitbox()

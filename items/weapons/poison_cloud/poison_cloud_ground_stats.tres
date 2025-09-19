@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="PersistentEffectStats" load_steps=4 format=3 uid="uid://bvgldjik8dpab"]
+
+[ext_resource type="SpriteFrames" uid="uid://c61r83rmqmosg" path="res://items/weapons/poison_cloud/poison_cloud_animation.tres" id="1_wun8i"]
+[ext_resource type="Resource" uid="uid://dd3audw2k7dxk" path="res://systems/status_effects/poison/poison_status_effect.tres" id="2_7jyxq"]
+[ext_resource type="Script" uid="uid://c1jb1x6tem00f" path="res://systems/projectiles/auras/persistent_effect_stats.gd" id="2_a5mb2"]
+
+[resource]
+script = ExtResource("2_a5mb2")
+tick_rate = 0.3
+animation = ExtResource("1_wun8i")
+duration = 12.0
+damage = 3
+speed = 0.0
+lifetime = 10.0
+pierce = 100
+knockback_force = 0.0
+armor_penetration = 0.0
+critical_hit_rate = 0.05
+critical_hit_damage = 0.5
+homing_strength = 0.0
+is_scaling = true
+status_to_apply = ExtResource("2_7jyxq")
+status_chance = 1.0
+scale = Vector2(3, 3)
+modulation = Color(0.447059, 0.54902, 0, 1)
+metadata/_custom_type_script = "uid://c1jb1x6tem00f"
