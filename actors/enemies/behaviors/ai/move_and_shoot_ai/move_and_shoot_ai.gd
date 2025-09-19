@@ -11,11 +11,9 @@ func _physics_process(delta):
 	
 	if distance_to_player <= shooting_range:
 		# If in range, switch to the Shoot state.
-		if current_state != states["shootbehavior"]:
-			set_state(states["shootbehavior"])
+		set_state(states["shootbehavior"])
 	else:
 		# If out of range, switch to the Chase state.
-		if current_state != states["chasebehavior"]:
-			set_state(states["chasebehavior"])
+		set_state(states["chasebehavior"])
 			
 	super._physics_process(delta) # This calls current_state.process_behavior()

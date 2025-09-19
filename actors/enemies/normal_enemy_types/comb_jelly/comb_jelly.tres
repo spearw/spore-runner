@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=6 format=3 uid="uid://cfgd0o08fqx37"]
 
-[ext_resource type="PackedScene" uid="uid://np8hsandn71t" path="res://actors/enemies/behaviors/ai/move_and_shoot/move_and_shoot_ai.tscn" id="1_iptgc"]
+[ext_resource type="PackedScene" uid="uid://np8hsandn71t" path="res://actors/enemies/behaviors/ai/move_and_shoot_ai/move_and_shoot_ai.tscn" id="1_iptgc"]
 [ext_resource type="Resource" uid="uid://d0b871pkq4rls" path="res://systems/loot/loot_tables/default_loot.tres" id="2_iptgc"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_3dq7q"]
 [ext_resource type="SpriteFrames" uid="uid://don3jnndc8rvp" path="res://actors/enemies/normal_enemy_types/comb_jelly/animations/comb_jelly_animations.tres" id="4_d1t4s"]

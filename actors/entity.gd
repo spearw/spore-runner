@@ -10,12 +10,14 @@ signal health_changed(current_health, max_health)
 signal died(stats)
 
 @export var stats: EntityStats
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 # --- Runtime Variables ---
 var current_health: int
 var max_health: int
 var knockback_velocity: Vector2 = Vector2.ZERO
 var is_dying: bool = false
+   
 
 ## Initializes the entity using its stats resource.
 func _ready() -> void:
@@ -28,6 +30,7 @@ func _ready() -> void:
 	max_health = stats.max_health
 	current_health = max_health
 	self.scale = stats.scale
+	animated_sprite.sprite_frames = stats.sprite_frames
 	
 	# Connect the health_changed signal to a virtual method for subclasses to use.
 	health_changed.connect(_on_health_changed)

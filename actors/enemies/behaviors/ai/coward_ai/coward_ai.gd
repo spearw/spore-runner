@@ -15,8 +15,7 @@ func _physics_process(delta):
 	
 	if health_percent <= flee_health_threshold:
 		# If health is low, our ONLY state is Fleeing.
-		if current_state != states.get("flee"):
-			set_state(states["flee"])
+		set_state(states["flee"])
 	else:
 		# If health is high, use the default attack behavior.
 		if current_state != default_state:

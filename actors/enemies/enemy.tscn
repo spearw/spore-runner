@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjpvtmn8ptm1n"]
+[gd_scene load_steps=11 format=3 uid="uid://bjpvtmn8ptm1n"]
 
 [ext_resource type="Script" uid="uid://b4c4seddr04t5" path="res://actors/enemies/enemy.gd" id="1_i3vid"]
 [ext_resource type="PackedScene" uid="uid://bvjckw4le1mr3" path="res://ui/damage_number/damage_number.tscn" id="2_smojp"]
@@ -6,6 +6,7 @@
 [ext_resource type="SpriteFrames" uid="uid://b07nax6t85adf" path="res://actors/enemies/placeholder_animation_names.tres" id="4_smojp"]
 [ext_resource type="PackedScene" uid="uid://ppb43f44qipk" path="res://items/pickups/heart/heart_pickup.tscn" id="5_838wa"]
 [ext_resource type="PackedScene" uid="uid://dykuap5uxjb8r" path="res://systems/status_effects/status_effect_manager.tscn" id="7_tnkxp"]
+[ext_resource type="PackedScene" uid="uid://ddda3wpylofnr" path="res://actors/components/animation_controller.tscn" id="7_yf1bw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dluy2"]
 radius = 5.0
@@ -13,43 +14,8 @@ radius = 5.0
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1bop1"]
 load_path = "res://.godot/imported/health_bar_texture.png-aaad8e65b491f39a131c7da8b4b6cc5e.ctex"
 
-[sub_resource type="Animation" id="Animation_smojp"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_i3vid"]
-resource_name = "fire"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"fire"]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"_on_animation_finished"
-}]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_dluy2"]
-_data = {
-&"RESET": SubResource("Animation_smojp"),
-&"fire": SubResource("Animation_i3vid")
-}
+[sub_resource type="CircleShape2D" id="CircleShape2D_838wa"]
+radius = 157.08
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 2
@@ -59,7 +25,9 @@ damage_number_scene = ExtResource("2_smojp")
 soul_scene = ExtResource("4_dluy2")
 heart_scene = ExtResource("5_838wa")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemies"]]
+[node name="AnimationController" parent="." instance=ExtResource("7_yf1bw")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dluy2")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
@@ -79,12 +47,7 @@ tint_progress = Color(1.1407e-05, 0.897686, 7.70092e-07, 1)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("4_smojp")
-animation = &"fire"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_dluy2")
-}
+animation = &"idle"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-5, -5, 10, 10)
@@ -94,3 +57,10 @@ rect = Rect2(-5, -5, 10, 10)
 [node name="DamageCooldown" type="Timer" parent="."]
 
 [node name="StatusEffectManager" parent="." instance=ExtResource("7_tnkxp")]
+
+[node name="ProximityDetector" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProximityDetector"]
+shape = SubResource("CircleShape2D_838wa")
+debug_color = Color(0.72575, 0.241465, 1, 0.42)

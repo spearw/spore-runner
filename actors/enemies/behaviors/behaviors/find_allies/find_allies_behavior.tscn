@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bahsx86cvul3f"]
+
+[ext_resource type="Script" uid="uid://5mfprgcu2ua2" path="res://actors/enemies/behaviors/behaviors/find_allies/find_allies_behavior.gd" id="1_ihllj"]
+
+[node name="FindAllies" type="Node2D"]
+script = ExtResource("1_ihllj")

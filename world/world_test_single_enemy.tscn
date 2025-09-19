@@ -1,0 +1,43 @@
+[gd_scene load_steps=11 format=3 uid="uid://b37mpu2ms2mg8"]
+
+[ext_resource type="Script" uid="uid://cdtrlaeo6bkx7" path="res://world/world.gd" id="1_o3iet"]
+[ext_resource type="PackedScene" uid="uid://dulw5xigdffvi" path="res://actors/player/player.tscn" id="2_qtl0j"]
+[ext_resource type="PackedScene" uid="uid://uaiyj5jeo46l" path="res://systems/spawner/encounter_director.tscn" id="3_ugxik"]
+[ext_resource type="Script" uid="uid://dnb7k3xg8h5sr" path="res://systems/spawner/encounter_set.gd" id="4_g4ekh"]
+[ext_resource type="Resource" uid="uid://ck0xxgv4gmkc1" path="res://systems/spawner/encounter_sets/sea_babies2.tres" id="5_cnfn5"]
+[ext_resource type="Script" uid="uid://cdevlwpbk7w8g" path="res://systems/upgrades/upgrade_manager.gd" id="7_5oap2"]
+[ext_resource type="PackedScene" uid="uid://clgxi4bd78qqi" path="res://ui/level_up/level_up_ui.tscn" id="8_8ye5m"]
+[ext_resource type="PackedScene" uid="uid://cvo8y06lxkaq8" path="res://ui/hud/hud.tscn" id="9_uv51d"]
+[ext_resource type="Texture2D" uid="uid://cnsh16hskpn1v" path="res://ui/textures/texture_01.png" id="10_1pdjq"]
+[ext_resource type="PackedScene" uid="uid://vnih610ckder" path="res://ui/stats_panel/stats_panel.tscn" id="11_s0xqi"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_o3iet")
+player_scene = ExtResource("2_qtl0j")
+
+[node name="EncounterDirector" parent="." instance=ExtResource("3_ugxik")]
+encounter_sets = Array[ExtResource("4_g4ekh")]([ExtResource("5_cnfn5")])
+
+[node name="UpgradeManager" type="Node" parent="."]
+script = ExtResource("7_5oap2")
+
+[node name="LevelUpUI" parent="." instance=ExtResource("8_8ye5m")]
+process_mode = 3
+
+[node name="HUD" parent="." instance=ExtResource("9_uv51d")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1024, 1024)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+modulate = Color(0.140447, 0.140447, 0.140447, 1)
+texture_repeat = 2
+position = Vector2(-2048, -2048)
+texture = ExtResource("10_1pdjq")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4096, 4096)
+
+[node name="StatsPanel" parent="." instance=ExtResource("11_s0xqi")]

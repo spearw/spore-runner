@@ -4,16 +4,26 @@
 animations = [{
 "frames": [],
 "loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
 "name": &"fire",
 "speed": 5.0
 }, {
 "frames": [],
 "loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
 "name": &"move",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"start_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"start_move",
 "speed": 5.0
 }]

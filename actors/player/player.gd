@@ -12,7 +12,6 @@ signal took_damage
 # --- Node References ---
 @onready var artifacts_node: Node = $Artifacts
 @onready var pickup_area_shape: CollisionShape2D = $PickupArea/CollisionShape2D
-@onready var sprite = $AnimatedSprite2D
 @onready var proximity_detector: Area2D = $ProximityDetector
 @onready var player_targeting_component = $TargetingComponent
 @onready var player_fire_behavior_component = $FireBehaviorComponent
@@ -56,9 +55,6 @@ func _ready() -> void:
 func initialize_character(character_data: PlayerStats, world_upgrade_manager: Node):
 	upgrade_manager = world_upgrade_manager
 	self.stats = character_data
-	
-	# Apply visual data from the stats resource.
-	sprite.sprite_frames = stats.sprite_frames
 		
 	# Recalculate max_health using the get_stat method to include any permanent bonuses.
 	# This overrides the initial value set by the parent Entity.
@@ -247,7 +243,7 @@ func notify_stats_changed():
 ## Sets the player's invulnerability state.
 func set_invulnerability(active: bool):
 	is_invulnerable = active
-	sprite.modulate.a = 0.5 if active else 1.0
+	animated_sprite.modulate.a = 0.5 if active else 1.0
 		
 ## Activates or deactivates the projectile redirection ability.
 func set_redirect_ability(can_redirect: bool):

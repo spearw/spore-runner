@@ -9,13 +9,12 @@ extends Entity
 @export var heart_scene: PackedScene
 
 # --- Node References ---
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var health_bar: TextureProgressBar = $TextureProgressBar
 @onready var visibility_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var death_timer: Timer = $DeathTimer
 @onready var damage_cooldown_timer: Timer = $DamageCooldown
+@onready var proximity_detector: Area2D = $ProximityDetector
 
 # --- Runtime Variables ---
 var player_node: Node2D
@@ -23,6 +22,7 @@ var behavior: EnemyBehavior = null
 var is_on_screen: bool = false
 var can_deal_damage: bool = true
 var ai: Node
+
 
 
 ## Initializes the enemy. The parent Entity's _ready() is called automatically first.
@@ -55,10 +55,6 @@ func _ready() -> void:
 	# After equipment is ready, initialize the behavior component.
 	if is_instance_valid(behavior) and behavior.has_method("initialize_behavior"):
 		behavior.initialize_behavior(self)
-		
-	# Apply visual stats from the resource.
-	animated_sprite.sprite_frames = stats.sprite_frames
-	animated_sprite.play("move")
 	
 	# Initialize the health bar (it will be hidden until damage is taken).
 	update_health_bar(current_health, stats.max_health)
@@ -80,21 +76,7 @@ func _physics_process(delta: float) -> void:
 		# If alive, process AI behavior.
 		if is_instance_valid(behavior):
 			behavior.process_behavior(delta, self)
-			
-		# Let dedicated animations (like "fire") take precedence.
-		if animation_player.is_playing():
-			return
-			
-		# Update animation based on movement.
-		if velocity.length() > 0.1:
-			animated_sprite.play("move")
-		else:
-			if animated_sprite.sprite_frames.has_animation("idle"):
-				animated_sprite.play("idle")
-			else:
-				animated_sprite.stop()
-				animated_sprite.frame = 0
-		
+
 		# Update sprite orientation based on stats.
 		if stats.face_movement_direction:
 			if velocity.length() > 0.1:
@@ -179,11 +161,7 @@ func fire_weapons() -> void:
 		for weapon in equipment.get_children():
 			if weapon.has_method("fire"):
 				weapon.fire()
-
-## Plays a one-shot animation via the AnimationPlayer (e.g., "attack").
-func play_one_shot_animation(anim_name: String) -> void:
-	animation_player.play(anim_name)
-
+				
 ## Temporarily overrides the enemy's AI behavior.
 func override_behavior(new_state_name: String, duration: float, context: Dictionary = {}) -> void:
 	if is_instance_valid(ai):
@@ -209,9 +187,3 @@ func _on_screen_exited() -> void:
 ## Resets the contact damage cooldown.
 func _on_damage_cooldown_timer_timeout() -> void:
 	can_deal_damage = true
-	
-## Called by the AnimationPlayer when a one-shot animation finishes.
-func _on_animation_finished(anim_name: String) -> void:
-	# This function is necessary for the signal connection but may not need logic.
-	# It effectively returns animation control to the _physics_process.
-	pass
