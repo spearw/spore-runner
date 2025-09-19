@@ -87,7 +87,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_7idoc")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 10.0
 }, {
@@ -199,6 +199,53 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("18_wug0n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_0yt6i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_0xpfk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_2ie0e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_2hb6d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_p5nm5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_myrsi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_r2vvp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_n8qh8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_khnun")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_u8841")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_o5ndw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_0imyx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_nyqa2")
+}],
+"loop": false,
+"name": &"start_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("38_nyqa2")
 }, {
 "duration": 1.0,
@@ -240,7 +287,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("18_wug0n")
 }],
-"loop": true,
+"loop": false,
 "name": &"start_move",
-"speed": 5.0
+"speed": 10.0
 }]

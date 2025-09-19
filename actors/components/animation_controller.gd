@@ -45,6 +45,8 @@ func play_exit_and_loop(exit_anim: String, next_loop: String):
 		play_loop(next_loop)
 		
 func play_once(anim_name: String): # For attacks like "fire"
+	# Default back to idle after shot.
+	self.desired_loop_animation = "idle"
 	# Attacks can interrupt loops but shouldn't lock the AI state for long.
 	if animated_sprite.sprite_frames.has_animation(anim_name):
 		animated_sprite.play(anim_name)
@@ -59,3 +61,7 @@ func _on_sprite_animation_finished():
 	if desired_loop_animation != "" and animated_sprite.sprite_frames.has_animation(desired_loop_animation):
 		animated_sprite.play(desired_loop_animation)
 		current_looping_animation = desired_loop_animation
+		
+## Checks if animation exists.
+func has_animation(anim_name: String) -> bool:
+	return animated_sprite.sprite_frames.has_animation(anim_name)

@@ -65,7 +65,7 @@ func _on_select_and_start_button_pressed():
 	CurrentRun.selected_pack_paths = get_currently_selected_pack_paths_from_ui()
 	
 	# Change scene to game world.
-	get_tree().change_scene_to_file("res://world/world.tscn")
+	get_tree().change_scene_to_file("res://world/world_test_single_enemy.tscn")
 
 func _on_back_button_pressed():
 	self.hide()

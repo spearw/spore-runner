@@ -14,7 +14,7 @@
 
 [resource]
 script = ExtResource("2_0mkja")
-time_start = 11
+time_start = 0
 time_end = -1
 spawn_immediately_on_start = false
 enemies = Array[ExtResource("1_e37mg")]([ExtResource("2_mepsr"), ExtResource("3_mepsr"), ExtResource("4_b7wdr"), ExtResource("5_bkorg"), ExtResource("6_y5bhc"), ExtResource("7_tlx4b"), ExtResource("8_3jrgi"), ExtResource("9_60v07"), ExtResource("10_2ro3k")])

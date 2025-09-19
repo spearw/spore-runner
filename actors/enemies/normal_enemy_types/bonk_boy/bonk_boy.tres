@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyStats" load_steps=6 format=3 uid="uid://cu2tbu4xcihf6"]
 
-[ext_resource type="PackedScene" uid="uid://np8hsandn71t" path="res://actors/enemies/behaviors/ai/move_and_shoot_ai/move_and_shoot_ai.tscn" id="1_0h0yx"]
+[ext_resource type="PackedScene" uid="uid://bu38cpgccqa3p" path="res://actors/enemies/behaviors/ai/guardian_ai/guardian_ai.tscn" id="1_0h0yx"]
 [ext_resource type="Resource" uid="uid://d0b871pkq4rls" path="res://systems/loot/loot_tables/default_loot.tres" id="2_0h0yx"]
 [ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="3_4upo6"]
 [ext_resource type="SpriteFrames" uid="uid://copjckbc0uv0c" path="res://actors/enemies/normal_enemy_types/bonk_boy/animations/bonk_boy_animations.tres" id="4_0h0yx"]
@@ -12,8 +12,8 @@ damage = 50
 armor_pen = 0
 face_movement_direction = false
 rotation_offset_degrees = 0.0
-is_flipped = false
-default_behavior_name = "chasebehavior"
+is_flipped = true
+default_behavior_name = "idlebehavior"
 ai_scene = ExtResource("1_0h0yx")
 weapon_scenes = Array[PackedScene]([ExtResource("5_ekxw1")])
 firerate = 4.0

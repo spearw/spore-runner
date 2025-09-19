@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu38cpgccqa3p"]
+
+[ext_resource type="Script" uid="uid://m65ixdfhgo68" path="res://actors/enemies/behaviors/ai/guardian_ai/guardian_ai.gd" id="1_ej1oy"]
+[ext_resource type="PackedScene" uid="uid://gqd3gevs3p3m" path="res://actors/enemies/behaviors/behaviors/behavior_library.tscn" id="2_a6xti"]
+
+[node name="GuardianAI" type="Node2D"]
+script = ExtResource("1_ej1oy")
+
+[node name="BehaviorLibrary" parent="." instance=ExtResource("2_a6xti")]

@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://gqd3gevs3p3m"]
+[gd_scene load_steps=7 format=3 uid="uid://gqd3gevs3p3m"]
 
 [ext_resource type="PackedScene" uid="uid://dnhfcams7fei3" path="res://actors/enemies/behaviors/behaviors/flee/flee_behavior.tscn" id="2_opth0"]
 [ext_resource type="PackedScene" uid="uid://cdvr444uedrhp" path="res://actors/enemies/behaviors/behaviors/shoot/shoot_behavior.tscn" id="3_gojm8"]
 [ext_resource type="PackedScene" uid="uid://cvdss2f210r6p" path="res://actors/enemies/behaviors/behaviors/chase/chase_behavior.tscn" id="3_v5vik"]
 [ext_resource type="PackedScene" uid="uid://bahsx86cvul3f" path="res://actors/enemies/behaviors/behaviors/find_allies/find_allies_behavior.tscn" id="4_opth0"]
+[ext_resource type="PackedScene" uid="uid://ce7ys3esmrl7l" path="res://actors/enemies/behaviors/behaviors/idle/idle_behavior.tscn" id="5_v5vik"]
+[ext_resource type="PackedScene" uid="uid://hsed2mim3gn8" path="res://actors/enemies/behaviors/behaviors/reposition_behavior/reposition_behavior.tscn" id="6_j31jc"]
 
 [node name="BehaviorLibrary" type="Node"]
 
@@ -14,3 +16,7 @@
 [node name="ShootBehavior" parent="." instance=ExtResource("3_gojm8")]
 
 [node name="FindAlliesBehavior" parent="." instance=ExtResource("4_opth0")]
+
+[node name="IdleBehavior" parent="." instance=ExtResource("5_v5vik")]
+
+[node name="RepositionBehavior" parent="." instance=ExtResource("6_j31jc")]
