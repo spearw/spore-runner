@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=3 format=3 uid="uid://cl47d1oinolex"]
+
+[ext_resource type="Script" uid="uid://dm4u2phuyptno" path="res://systems/projectiles/projectile_stats.gd" id="1_5ofca"]
+[ext_resource type="Texture2D" uid="uid://x6pb2we8n7vm" path="res://items/weapons/bubble_bullet/bubble.png" id="2_a4umn"]
+
+[resource]
+script = ExtResource("1_5ofca")
+damage = 6
+speed = 175.0
+lifetime = 3.5
+pierce = 0
+knockback_force = 80.0
+armor_penetration = 0.0
+critical_hit_rate = 0.0
+critical_hit_damage = 0.0
+homing_strength = 0.5
+is_scaling = false
+status_chance = 1.0
+texture = ExtResource("2_a4umn")
+scale = Vector2(1, 1)
+modulation = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dm4u2phuyptno"

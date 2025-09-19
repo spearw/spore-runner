@@ -9,6 +9,7 @@ enum TargetingMode {
 	RANDOM,
 	HIGHEST_HEALTH,
 	LOWEST_HEALTH,
+	NEAREST_RANGED,
 	LAST_MOVE_DIRECTION,
 	NONE
 }
@@ -46,6 +47,12 @@ func find_target(origin_pos: Vector2, weapon_allegiance: Projectile.Allegiance) 
 			
 		TargetingMode.LOWEST_HEALTH:
 			best_target = TargetingUtils.find_lowest_health(candidates)
+			
+		TargetingMode.NEAREST_RANGED:
+			best_target = TargetingUtils.find_nearest_ranged(origin_pos, candidates)
+			# Failsafe: If no armed enemies are found, fall back to the absolute nearest enemy.
+			if not is_instance_valid(best_target):
+				best_target = TargetingUtils.find_nearest(origin_pos, candidates)
 		
 		# LAST_MOVE_DIRECTION is handled in get_fire_direction.
 		TargetingMode.LAST_MOVE_DIRECTION, TargetingMode.NONE:

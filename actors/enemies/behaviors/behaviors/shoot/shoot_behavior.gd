@@ -26,6 +26,8 @@ func on_enter(host: Node, context: Dictionary = {}):
 func on_exit():
 	# When we leave this state (e.g., player moves out of range),
 	# ensure we clean up and stop any pending timers.
+	if is_instance_valid(host_anim_controller):
+		host_anim_controller.play_exit_and_loop("stop_idle", "move")
 	cooldown_timer.stop()
 	is_attacking = false
 

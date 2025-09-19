@@ -60,6 +60,8 @@ func initialize_character(character_data: PlayerStats, world_upgrade_manager: No
 	# This overrides the initial value set by the parent Entity.
 	self.max_health = get_stat("max_health")
 	self.current_health = self.max_health
+	self.scale = stats.scale
+	animated_sprite.sprite_frames = stats.sprite_frames
 	
 	# Register with the UpgradeManager to handle leveling up.
 	if is_instance_valid(upgrade_manager):
