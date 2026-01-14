@@ -25,6 +25,7 @@ Logs="*res://systems/global/logs.gd"
 BugReporter="*res://systems/global/bug_reporter.gd"
 EntityRegistry="*res://systems/global/entity_registry.gd"
 TargetingUtils="*res://systems/global/targeting_utils.gd"
+ProjectilePool="*res://systems/global/projectile_pool.gd"
 LootManager="*res://systems/loot/loot_manager.tscn"
 
 [display]

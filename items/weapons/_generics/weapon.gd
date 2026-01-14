@@ -24,7 +24,18 @@ func _ready():
 	# Create unique instance for this weapon.
 	projectile_stats = projectile_stats.duplicate(true)
 	fire_rate_timer.timeout.connect(_on_fire_rate_timer_timeout)
-	
+
+	# Connect to user's stats_changed signal when available (deferred to ensure stats_component is ready)
+	call_deferred("_connect_to_user_stats")
+
+func _connect_to_user_stats():
+	var user = stats_component.user
+	if is_instance_valid(user) and user.has_signal("stats_changed"):
+		if not user.stats_changed.is_connected(update_stats):
+			user.stats_changed.connect(update_stats)
+		# Initial stats update
+		update_stats()
+
 # Update internal stats whenever the user's stats change.
 func update_stats():
 	var user = stats_component.user
@@ -37,8 +48,6 @@ func update_stats():
 func _on_fire_rate_timer_timeout():
 	# Delegate the actual firing to the component.
 	fire()
-	# TODO: Think about performance
-	update_stats()
 
 ## Public method for manual firing (e.g., by enemy AI).
 func fire(damage_multiplier=1):

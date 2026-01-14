@@ -22,6 +22,7 @@ var behavior: EnemyBehavior = null
 var is_on_screen: bool = false
 var can_deal_damage: bool = true
 var ai: Node
+var _cached_weapons: Array = []  # Cached weapon list for fire_weapons()
 
 
 
@@ -51,6 +52,8 @@ func _ready() -> void:
 			if stats_comp:
 				stats_comp.user = self
 			equipment_node.add_child(new_weapon)
+		# Cache weapon list after all weapons are added
+		_cached_weapons = equipment_node.get_children()
 
 	# After equipment is ready, initialize the behavior component.
 	if is_instance_valid(behavior) and behavior.has_method("initialize_behavior"):
@@ -132,10 +135,13 @@ func _on_health_changed(current: int, max_val: int) -> void:
 ## allowing for a death animation or effect.
 func die() -> void:
 	if is_dying: return
-	
+
 	# Set the state flag from the parent class.
 	is_dying = true
-	
+
+	# Immediately remove from alive candidates (for targeting optimization)
+	EntityRegistry.mark_enemy_dying(self)
+
 	# Stop being a target.
 	self.remove_from_group("enemy")
 	
@@ -156,11 +162,9 @@ func finalize_death() -> void:
 
 ## Tells all equipped weapons to fire.
 func fire_weapons() -> void:
-	var equipment = get_node_or_null("Equipment")
-	if equipment:
-		for weapon in equipment.get_children():
-			if weapon.has_method("fire"):
-				weapon.fire()
+	for weapon in _cached_weapons:
+		if is_instance_valid(weapon) and weapon.has_method("fire"):
+			weapon.fire()
 				
 ## Temporarily overrides the enemy's AI behavior.
 func override_behavior(new_state_name: String, duration: float, context: Dictionary = {}) -> void:

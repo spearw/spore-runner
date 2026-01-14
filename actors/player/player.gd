@@ -29,6 +29,14 @@ var last_move_direction: Vector2 = Vector2.RIGHT
 var in_run_bonuses: Dictionary = {}
 var timed_bonuses: Dictionary = {}
 
+# --- Cached Values (for performance) ---
+var _cached_artifacts: Array = []  # Cached artifact list
+var _cached_nearby_enemies: int = 0  # Cached proximity count
+var _cached_move_speed: float = 0.0  # Cached move speed
+var _stats_dirty: bool = true  # Flag to recalculate stats
+var _proximity_update_timer: float = 0.0  # Timer for proximity updates
+const PROXIMITY_UPDATE_INTERVAL: float = 0.1  # Update proximity every 100ms
+
 # Dictionary for tracking unique, levelable powers.
 var unlocked_powers: Dictionary = {}
 
@@ -78,17 +86,30 @@ func initialize_character(character_data: PlayerStats, world_upgrade_manager: No
 func _physics_process(delta: float) -> void:
 	# Call the parent class's physics process to apply knockback decay. This is crucial.
 	super._physics_process(delta)
-	
-	var move_speed = get_stat("move_speed")
+
+	# Periodically update proximity count (expensive physics query)
+	_proximity_update_timer += delta
+	if _proximity_update_timer >= PROXIMITY_UPDATE_INTERVAL:
+		_proximity_update_timer = 0.0
+		_cached_nearby_enemies = proximity_detector.get_overlapping_bodies().size()
+		# Proximity changes affect fight_or_flight, so mark move_speed dirty
+		if unlocked_powers.has("fight_or_flight"):
+			_stats_dirty = true
+
+	# Recalculate cached move_speed if stats changed
+	if _stats_dirty:
+		_cached_move_speed = _calculate_move_speed()
+		_stats_dirty = false
+
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	
+
 	if direction.length() > 0:
 		last_move_direction = direction.normalized()
-		
-	velocity = direction * move_speed
+
+	velocity = direction * _cached_move_speed
 	# Add the (decaying) knockback velocity from the parent class.
 	velocity += knockback_velocity
-	
+
 	move_and_slide()
 
 # --- Overridden Base Class Methods ---
@@ -146,24 +167,30 @@ func get_stat_multiplier(key: String) -> float:
 	else:
 		return 1.0 + permanent_bonus + in_run_bonuses.get(key, 0.0)
 
+## Internal helper to calculate move speed (uses cached values).
+func _calculate_move_speed() -> float:
+	var move_speed = stats.move_speed * get_stat_multiplier("move_speed")
+	if unlocked_powers.has("fight_or_flight"):
+		var fof_level = unlocked_powers["fight_or_flight"]
+		var final_speed_per_enemy = fof_speed_per_enemy_base * (1 + (0.5 * (fof_level - 1)))
+		var fof_bonus = 1.0 + (_cached_nearby_enemies * final_speed_per_enemy)
+		move_speed *= fof_bonus
+	for artifact in _cached_artifacts:
+		if artifact.has_method("get_speed_modifier"):
+			move_speed *= artifact.get_speed_modifier()
+	return move_speed
+
 ## Returns the final, calculated value for any player stat, including all bonuses.
 func get_stat(key: String):
 	match key:
 		"move_speed":
-			var move_speed = stats.move_speed * get_stat_multiplier(key)
-			if unlocked_powers.has("fight_or_flight"):
-				var fof_level = unlocked_powers["fight_or_flight"]
-				var final_speed_per_enemy = fof_speed_per_enemy_base * (1 + (0.5 * (fof_level - 1)))
-				var nearby_enemies = proximity_detector.get_overlapping_bodies().size()
-				var fof_bonus = 1.0 + (nearby_enemies * final_speed_per_enemy)
-				move_speed *= fof_bonus
-			for artifact in artifacts_node.get_children():
-				if artifact.has_method("get_speed_modifier"):
-					move_speed *= artifact.get_speed_modifier()
-			return move_speed
+			# Return cached value for frequently-called move_speed
+			if not _stats_dirty:
+				return _cached_move_speed
+			return _calculate_move_speed()
 		"luck":
 			var luck = stats.luck * get_stat_multiplier(key)
-			for artifact in artifacts_node.get_children():
+			for artifact in _cached_artifacts:
 				if artifact.has_method("get_luck_modifier"):
 					luck *= artifact.get_luck_modifier()
 			return luck
@@ -237,6 +264,11 @@ func remove_timed_bonus(stat_key: String, value: float):
 		
 ## Emits the stats_changed signal and updates any visuals that depend on stats.
 func notify_stats_changed():
+	# Invalidate stat cache
+	_stats_dirty = true
+	# Rebuild artifact cache (only when stats change, not every frame)
+	_cached_artifacts = artifacts_node.get_children()
+
 	stats_changed.emit()
 	proximity_detector.scale.x = 1 * get_stat("area_size")
 	proximity_detector.scale.y = 1 * get_stat("area_size")

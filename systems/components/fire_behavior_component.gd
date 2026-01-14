@@ -92,29 +92,37 @@ func fire(damage_multiplier=1):
 
 ## Helper function to handle the actual creation of a single projectile.
 func _spawn_projectile(
-		projectile_stats: ProjectileStats, 
-		projectile_allegiance: Projectile.Allegiance, 
-		projectile_direction: Vector2, 
-		p_position: Vector2 = weapon.global_position, 
-		user_override: Node2D = null, 
+		projectile_stats: ProjectileStats,
+		projectile_allegiance: Projectile.Allegiance,
+		projectile_direction: Vector2,
+		p_position: Vector2 = weapon.global_position,
+		user_override: Node2D = null,
 		projectile_target = null,
 		):
 	# The weapon is attached to the user, so its global_position is the user's position.
 	var spawn_position = weapon.global_position
-	
+
 	# Check for custom scene
 	var projectile_scene = GENERIC_PROJECTILE_SCENE
-	if "custom_projectile_scene" in weapon and weapon.custom_projectile_scene:
+	var use_custom_scene = "custom_projectile_scene" in weapon and weapon.custom_projectile_scene
+	if use_custom_scene:
 		projectile_scene = weapon.custom_projectile_scene
-	
-	var projectile = projectile_scene.instantiate()
+
+	# Use pool for generic projectiles, instantiate for custom scenes
+	var projectile: Node
+	var from_pool = false
+	if not use_custom_scene:
+		projectile = ProjectilePool.get_projectile(projectile_scene)
+		from_pool = projectile._is_pooled if projectile.get("_is_pooled") != null else false
+	else:
+		projectile = projectile_scene.instantiate()
 
 	projectile.stats = projectile_stats
 	projectile.direction = projectile_direction
 	projectile.allegiance = projectile_allegiance
 	projectile.weapon = weapon
 	projectile.target = projectile_target
-	
+
 	# Determine projectile's user
 	var user
 	if user_override:
@@ -130,7 +138,7 @@ func _spawn_projectile(
 			_current_scene.add_child(projectile)
 			projectile.global_position = spawn_position
 			projectile.rotation = projectile_direction.angle()
-		
+
 		SpawnLocation.ON_USER:
 			# The new logic: spawn as a child of the user.
 			user.add_child(projectile)
@@ -138,6 +146,13 @@ func _spawn_projectile(
 			projectile.position = Vector2.ZERO
 			# The swing's rotation is set relative to the user's facing direction.
 			projectile.rotation = projectile_direction.angle()
+
+	# For pooled projectiles, call activate() after adding to scene
+	if from_pool and projectile.has_method("activate"):
+		projectile.activate()
+	elif not from_pool and not use_custom_scene:
+		# Mark new projectiles as poolable for future reuse
+		projectile._is_pooled = true
 
 # This is a public function the weapon script can now call to override the pattern for a single shot.
 func override_pattern_for_next_shot(new_pattern: FirePattern):

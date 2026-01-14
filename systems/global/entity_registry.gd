@@ -6,6 +6,7 @@ extends Node
 
 # --- Cached Entity Lists ---
 var _enemies: Array[Node] = []
+var _alive_enemies: Array[Node] = []  # Pre-filtered list of non-dying enemies
 var _players: Array[Node] = []
 
 # --- Quick Access ---
@@ -21,6 +22,7 @@ func _ready() -> void:
 func _initialize_lists() -> void:
 	# One-time population at game start
 	_enemies.assign(get_tree().get_nodes_in_group("enemies"))
+	_alive_enemies.assign(_enemies.filter(func(e): return is_instance_valid(e) and not e.is_dying))
 	var players = get_tree().get_nodes_in_group("player")
 	_players.assign(players)
 	if players.size() > 0:
@@ -30,10 +32,17 @@ func _initialize_lists() -> void:
 func register_enemy(enemy: Node) -> void:
 	if enemy not in _enemies:
 		_enemies.append(enemy)
+		_alive_enemies.append(enemy)
+
+## Called when an enemy starts dying (remove from alive list immediately).
+## Call this when enemy.is_dying is set to true.
+func mark_enemy_dying(enemy_node: Node) -> void:
+	_alive_enemies.erase(enemy_node)
 
 ## Called when an enemy dies (connected to Events.enemy_killed).
 func _on_enemy_killed(enemy_node: Node) -> void:
 	_enemies.erase(enemy_node)
+	_alive_enemies.erase(enemy_node)  # Redundant if mark_enemy_dying was called, but safe
 
 ## Called when player spawns.
 func register_player(player_node: Node) -> void:
@@ -49,9 +58,9 @@ func get_enemies() -> Array[Node]:
 func get_players() -> Array[Node]:
 	return _players
 
-## Get filtered candidates for targeting (filters out dying entities)
-func get_enemy_candidates() -> Array:
-	return _enemies.filter(func(e): return is_instance_valid(e) and not e.is_dying)
+## Get filtered candidates for targeting (returns pre-filtered alive list)
+func get_enemy_candidates() -> Array[Node]:
+	return _alive_enemies
 
 ## Get player candidates
 func get_player_candidates() -> Array:
@@ -61,7 +70,7 @@ func get_player_candidates() -> Array:
 func get_candidates(target_group: String) -> Array:
 	match target_group:
 		"enemies":
-			return get_enemy_candidates()
+			return _alive_enemies
 		"player":
 			return get_player_candidates()
 		_:
@@ -73,3 +82,7 @@ func get_candidates(target_group: String) -> Array:
 ## Get enemy count (useful for performance checks)
 func get_enemy_count() -> int:
 	return _enemies.size()
+
+## Get alive enemy count
+func get_alive_enemy_count() -> int:
+	return _alive_enemies.size()

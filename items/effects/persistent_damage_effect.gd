@@ -23,6 +23,7 @@ var user: Node:
 @onready var lifetime_timer: Timer = $LifetimeTimer
 var allegiance
 var base_scale
+var _overlapping_bodies: Array = []  # Cached list of bodies in area
 
 func _ready():
 	# Guard clause to ensure correct data type.
@@ -55,20 +56,29 @@ func _ready():
 	tick_timer.wait_time = stats.tick_rate
 	tick_timer.timeout.connect(_on_tick_timer_timeout)
 	tick_timer.start()
-	
+
+	# Cache overlapping bodies via signals (avoids physics query every tick)
+	body_entered.connect(_on_body_entered)
+	body_exited.connect(_on_body_exited)
+
 	# Despawn after set time
 	lifetime_timer.wait_time = stats.duration
 	lifetime_timer.timeout.connect(queue_free)
 	lifetime_timer.start()
 
+func _on_body_entered(body: Node2D) -> void:
+	if body not in _overlapping_bodies:
+		_overlapping_bodies.append(body)
+
+func _on_body_exited(body: Node2D) -> void:
+	_overlapping_bodies.erase(body)
+
 func _on_tick_timer_timeout():
-	var bodies = get_overlapping_bodies()
-	for body in bodies:
-		var target_group
-		if allegiance == Projectile.Allegiance.PLAYER:
-			target_group = "enemies"
-		else:
-			target_group = "player"
+	var target_group = "enemies" if allegiance == Projectile.Allegiance.PLAYER else "player"
+
+	for body in _overlapping_bodies:
+		if not is_instance_valid(body):
+			continue
 		if body.is_in_group(target_group):
 			# Apply payload
 			if stats.status_to_apply and body.has_node("StatusEffectManager"):
