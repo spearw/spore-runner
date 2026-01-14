@@ -1,7 +1,7 @@
 ## entity_registry.gd
 ## A singleton that maintains cached lists of entities for efficient querying.
 ## Updates via signals instead of tree queries every frame.
-class_name EntityRegistry
+## Note: No class_name needed - accessed as autoload "EntityRegistry"
 extends Node
 
 # --- Cached Entity Lists ---
@@ -55,7 +55,7 @@ func get_enemy_candidates() -> Array:
 
 ## Get player candidates
 func get_player_candidates() -> Array:
-	return _players.filter(func(p): return is_instance_valid(p) and not p.is_dying)
+	return _players.filter(func(p): return is_instance_valid(p) and not p.get("is_dying"))
 
 ## Get candidates by group name (for compatibility with existing code)
 func get_candidates(target_group: String) -> Array:
