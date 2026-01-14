@@ -48,3 +48,62 @@ static func calculate_final_damage(
 		"damage": final_damage,
 		"is_crit": crit_result["is_crit"]
 	}
+
+# --- Player Stat Scaling Utilities ---
+# Centralizes the stat scaling logic used by projectiles, weapons, and effects.
+
+## Scales damage stats based on player bonuses.
+## @param base_damage: The base damage value.
+## @param base_crit_rate: The base critical hit rate (0.0 to 1.0).
+## @param base_crit_damage: The base critical hit damage multiplier.
+## @param user: The entity using the attack (must have get_stat method if player).
+## @returns: Dictionary with "damage", "crit_rate", "crit_damage".
+static func scale_damage_stats(base_damage: float, base_crit_rate: float, base_crit_damage: float, user: Node) -> Dictionary:
+	var damage = base_damage
+	var crit_rate = base_crit_rate
+	var crit_damage = base_crit_damage
+
+	if user.is_in_group("player"):
+		damage *= user.get_stat("damage_increase")
+		crit_rate *= (1 + user.get_stat("critical_hit_rate"))
+		crit_damage = (1 + crit_damage) * (1 + user.get_stat("critical_hit_damage"))
+
+	return {
+		"damage": damage,
+		"crit_rate": crit_rate,
+		"crit_damage": crit_damage
+	}
+
+## Scales projectile-specific stats based on player bonuses.
+## @param base_speed: The base projectile speed.
+## @param base_status_chance: The base status effect application chance.
+## @param user: The entity using the attack.
+## @returns: Dictionary with "speed", "status_chance".
+static func scale_projectile_stats(base_speed: float, base_status_chance: float, user: Node) -> Dictionary:
+	var speed = base_speed
+	var status_chance = base_status_chance
+
+	if user.is_in_group("player"):
+		speed *= user.get_stat("projectile_speed")
+		status_chance *= user.get_stat("status_chance_bonus")
+
+	return {
+		"speed": speed,
+		"status_chance": status_chance
+	}
+
+## Convenience method to scale all common projectile stats at once.
+## @param stats: A ProjectileStats resource.
+## @param user: The entity using the attack.
+## @returns: Dictionary with all scaled values.
+static func scale_all_projectile_stats(stats, user: Node) -> Dictionary:
+	var damage_scaled = scale_damage_stats(stats.damage, stats.critical_hit_rate, stats.critical_hit_damage, user)
+	var proj_scaled = scale_projectile_stats(stats.speed, stats.status_chance, user)
+
+	return {
+		"damage": damage_scaled["damage"],
+		"crit_rate": damage_scaled["crit_rate"],
+		"crit_damage": damage_scaled["crit_damage"],
+		"speed": proj_scaled["speed"],
+		"status_chance": proj_scaled["status_chance"]
+	}

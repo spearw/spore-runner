@@ -1,12 +1,7 @@
 ## chase_behavior.gd
 ## A simple behavior that moves the host enemy directly towards the player.
 class_name ChaseBehavior
-extends EnemyBehavior
-
-func on_enter(host: Node, context: Dictionary = {}):
-	super.on_enter(host, context)
-	if is_instance_valid(host_anim_controller):
-		host_anim_controller.play_loop("move")
+extends MovementBehavior
 
 # This overrides the base class function.
 func process_behavior(delta: float, host: CharacterBody2D) -> void:

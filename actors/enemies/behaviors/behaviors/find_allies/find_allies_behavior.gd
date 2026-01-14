@@ -1,18 +1,16 @@
 ## find_allies_behavior.gd
 ## Moves the host towards the nearest ally NOT in its immediate cluster.
 class_name FindAlliesBehavior
-extends EnemyBehavior
+extends MovementBehavior
 
 var ally_name_to_find: String = ""
 var allies_to_ignore: Array = []
 
 func on_enter(host: Node, context: Dictionary = {}):
-	super.on_enter(host, context)
-	if is_instance_valid(host_anim_controller):
-		host_anim_controller.play_loop("move")
+	super.on_enter(host, context)  # MovementBehavior handles animation
 	if is_instance_valid(host_enemy):
 		self.ally_name_to_find = host_enemy.stats.display_name
-	
+
 	# on_enter calls update_context to avoid duplicating code.
 	update_context(context)
 
@@ -45,15 +43,16 @@ func process_behavior(delta: float, host: CharacterBody2D):
 func _find_nearest_ally(host: Node) -> Node:
 	var best_target = null
 	var closest_dist_sq = INF
-	
-	for enemy in get_tree().get_nodes_in_group("enemies"):
+
+	# Use EntityRegistry for cached enemy list (avoids tree query every frame)
+	for enemy in EntityRegistry.get_enemies():
 		# Standard checks: not ourself, is the right type, and not in our current group.
 		if enemy == host or enemy.stats.display_name != self.ally_name_to_find or allies_to_ignore.has(enemy):
 			continue
-			
+
 		var dist_sq = host.global_position.distance_squared_to(enemy.global_position)
 		if dist_sq < closest_dist_sq:
 			closest_dist_sq = dist_sq
 			best_target = enemy
-				
+
 	return best_target

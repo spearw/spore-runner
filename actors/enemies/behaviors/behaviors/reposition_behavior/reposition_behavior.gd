@@ -1,7 +1,7 @@
 ## reposition_behavior.gd
 ## A behavior that moves the host to a specific target position in the world.
 class_name RepositionBehavior
-extends EnemyBehavior
+extends MovementBehavior
 
 # The world coordinate to move towards.
 var target_position: Vector2
@@ -10,17 +10,14 @@ var target_position: Vector2
 var stopping_distance: float = 5.0
 
 func on_enter(host: Node, context: Dictionary = {}):
-	super.on_enter(host, context)
-	
+	super.on_enter(host, context)  # MovementBehavior handles animation
+
 	# Get the target position from the context provided by the AI brain.
 	if context.has("target_position"):
 		self.target_position = context["target_position"]
 	else:
 		# If no position is given, default to the host's current position (do nothing).
 		self.target_position = host_enemy.global_position
-		
-	if is_instance_valid(host_anim_controller):
-		host_anim_controller.play_loop("move")
 
 func process_behavior(delta: float, host: CharacterBody2D):
 	# Calculate the distance to the target position.

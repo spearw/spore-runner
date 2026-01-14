@@ -142,21 +142,14 @@ func _apply_status(body: Node2D):
 
 ## Calculates all final stats by querying the weapon's user.
 func _calculate_stats():
-	# Start with the base values from the stats resource.
-	damage = stats.damage
-	critical_hit_rate = stats.critical_hit_rate
-	critical_hit_damage = stats.critical_hit_damage
-	speed = stats.speed
+	# Use DamageUtils to centralize stat scaling logic.
+	var scaled = DamageUtils.scale_all_projectile_stats(stats, user)
+	damage = scaled["damage"]
+	critical_hit_rate = scaled["crit_rate"]
+	critical_hit_damage = scaled["crit_damage"]
+	speed = scaled["speed"]
+	status_chance = scaled["status_chance"]
 	knockback = stats.knockback_force
-	status_chance = stats.status_chance
-
-	# If user is player, apply stat bonuses.
-	if user.is_in_group("player"):
-		damage *= user.get_stat("damage_increase")
-		critical_hit_rate = (critical_hit_rate) * (1 + user.get_stat("critical_hit_rate"))
-		critical_hit_damage = (1 + critical_hit_damage) * (1 + user.get_stat("critical_hit_damage"))
-		speed *= user.get_stat("projectile_speed")
-		status_chance *= user.get_stat("status_chance_bonus")
 	
 
 func _apply_phasing():

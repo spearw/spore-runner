@@ -1,20 +1,12 @@
 ## cinder_volley_weapon.gd
 ## Manages the unique transformations for the Cinder Volley.
 class_name CinderVolleyWeapon
-extends Weapon
+extends TransformableWeapon
 
-var has_wild_magic: bool = false
-var has_seeker_missiles: bool = false
-
-func apply_transformation(id: String):
-	super.apply_transformation(id)
+func _on_transformation_acquired(id: String):
 	if id == "wild_magic":
-		has_wild_magic = true
 		self.base_projectile_count *= 1.5
 		fire_behavior_component.fire_pattern = FireBehaviorComponent.FirePattern.RANDOM
 		targeting_component.set_targeting_mode_override(TargetingComponent.TargetingMode.RANDOM)
-		print("Cinder Volley gained Wild Magic!")
 	if id == "seeker_missiles":
-		has_seeker_missiles = true
 		projectile_stats.is_phasing = true
-		print("Cinder Volley gained Seeker Missiles!")

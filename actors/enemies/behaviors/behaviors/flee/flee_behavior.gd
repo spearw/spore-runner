@@ -1,25 +1,20 @@
 ## flee_behavior.gd
 ## A simple behavior that moves the host enemy directly away from the player.
 class_name FleeBehavior
-extends EnemyBehavior
+extends MovementBehavior
 
 # This can be configured to flee from a specific target.
 var flee_target: Node2D
-# How much of an agle the flee can happen
+# How much of an angle the flee can happen
 @export var strafe_intensity: float = 0.7
 var strafe_direction: int = 1 # 1 for right, -1 for left
 
 func on_enter(host: Node, context: Dictionary = {}):
-	super.on_enter(host, context)
-	if is_instance_valid(host_anim_controller):
-		host_anim_controller.play_loop("move")
+	super.on_enter(host, context)  # MovementBehavior handles animation
 	if context.has("target"):
 		self.flee_target = context["target"]
-	# Set strafe
-	if randf() < 0.5:
-		strafe_direction = 1
-	else:
-		strafe_direction = -1
+	# Set strafe direction randomly
+	strafe_direction = 1 if randf() < 0.5 else -1
 
 func process_behavior(delta: float, host: CharacterBody2D):
 	if not is_instance_valid(flee_target):
