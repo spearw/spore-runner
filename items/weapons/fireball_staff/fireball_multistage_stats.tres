@@ -24,6 +24,7 @@ status_to_apply = ExtResource("2_x1ohy")
 status_chance = 1.0
 texture = ExtResource("3_cnuy8")
 scale = Vector2(1, 1)
+modulation = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://cplh547hfvnko"
 
 [resource]
@@ -44,4 +45,5 @@ status_to_apply = ExtResource("2_x1ohy")
 status_chance = 1.0
 texture = ExtResource("3_xx5ps")
 scale = Vector2(0.5, 0.5)
+modulation = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://0gxb71relmj2"

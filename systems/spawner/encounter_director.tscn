@@ -8,6 +8,8 @@
 script = ExtResource("1_qjnew")
 enemy_scene = ExtResource("2_dy8jg")
 difficulty_curve = ExtResource("3_cr4ux")
+encounter_sets = null
+spawn_radius = null
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true

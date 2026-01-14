@@ -16,4 +16,5 @@ homing_strength = 0.0
 is_scaling = false
 status_chance = 1.0
 scale = Vector2(2, 1)
+modulation = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dm4u2phuyptno"

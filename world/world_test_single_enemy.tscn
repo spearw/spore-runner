@@ -17,6 +17,7 @@ player_scene = ExtResource("2_qtl0j")
 
 [node name="EncounterDirector" parent="." instance=ExtResource("3_ugxik")]
 encounter_sets = Array[ExtResource("4_g4ekh")]([ExtResource("5_cnfn5")])
+spawn_radius = null
 
 [node name="UpgradeManager" type="Node" parent="."]
 script = ExtResource("7_5oap2")
