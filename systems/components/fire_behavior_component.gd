@@ -38,6 +38,7 @@ var pattern_override = -1 # -1 means no override
 var fire_pattern = -1
 var current_fire_pattern = -1
 var additional_multiplier = 1
+var _current_scene: Node  # Cached reference to avoid tree queries
 
 
 func _ready():
@@ -45,6 +46,8 @@ func _ready():
 	stats_comp = weapon.get_node("WeaponStatsComponent")
 	targeting_comp = weapon.get_node("TargetingComponent")
 	fire_pattern = base_pattern
+	# Cache the current scene reference to avoid tree queries during fire
+	_current_scene = get_tree().current_scene
 
 ## The main public method called by the weapon's timer or AI.
 func fire(damage_multiplier=1):
@@ -124,7 +127,7 @@ func _spawn_projectile(
 		SpawnLocation.IN_WORLD:
 			# The old logic: spawn in the main world.
 			projectile.direction = projectile_direction
-			get_tree().current_scene.add_child(projectile)
+			_current_scene.add_child(projectile)
 			projectile.global_position = spawn_position
 			projectile.rotation = projectile_direction.angle()
 		
@@ -211,7 +214,7 @@ func _execute_aoe_strike(target_pos: Vector2, p_stats: ProjectileStats, p_allegi
 	# Spawn the warning indicator.
 	if aoe_warning_scene:
 		var warning = aoe_warning_scene.instantiate()
-		get_tree().current_scene.add_child(warning)
+		_current_scene.add_child(warning)
 		warning.global_position = target_pos
 		
 	# Configure and start our pause-respecting timer.

@@ -2,8 +2,9 @@ extends Node
 
 # --- HELPER FUNCTIONS for finding specific targets ---
 
-func get_candidates(target_group):
-	return get_tree().get_nodes_in_group(target_group).filter(func(element): return element is CharacterBody2D)
+## Gets candidates from EntityRegistry (cached) instead of tree query.
+func get_candidates(target_group: String) -> Array:
+	return EntityRegistry.get_candidates(target_group)
 
 func find_nearest(origin_pos: Vector2, candidates: Array) -> Node2D:
 	var best_target = null

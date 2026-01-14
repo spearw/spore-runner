@@ -186,6 +186,9 @@ func _on_proximity_detected(body: Node2D):
 		proximity_detector.queue_free()
 
 func _destroy():
+	# Disconnect from global signals to prevent memory leaks
+	if stats.can_retarget and Events.enemy_killed.is_connected(_on_any_enemy_killed):
+		Events.enemy_killed.disconnect(_on_any_enemy_killed)
 	queue_free()
 	
 ## Called by the global "enemy_killed" signal.

@@ -16,8 +16,17 @@ extends AIController
 # The radius to check for allies.
 @export var grouping_radius: float = 250.0
 
+# Cache squared range values (avoid sqrt every frame)
+var _maximum_range_sq: float
+var _optimal_range_sq: float
+var _minimum_range_sq: float
+
 func _ready():
 	super._ready()
+	# Pre-calculate squared ranges
+	_maximum_range_sq = maximum_range * maximum_range
+	_optimal_range_sq = optimal_range * optimal_range
+	_minimum_range_sq = minimum_range * minimum_range
 	# --- Setup ---
 	# Set the initial state.
 	var initial_state_name = "findalliesbehavior"
@@ -34,29 +43,30 @@ func _physics_process(delta):
 		return
 	# --- Decision-Making ---
 	if not is_instance_valid(host.player_node): return
-	
-	var distance_to_player = host.global_position.distance_to(host.player_node.global_position)
+
+	# Use squared distance to avoid sqrt calculation
+	var distance_sq = host.global_position.distance_squared_to(host.player_node.global_position)
 	var nearby_ally_count = get_nearby_allies().size() + 1
-	
+
 	var new_state_name = ""
-	
+
 	match current_state.name.to_lower():
 		"fleebehavior":
 			# While fleeing, reposition to optimal range
-			if distance_to_player >= self.optimal_range:
+			if distance_sq >= _optimal_range_sq:
 				new_state_name = "shootbehavior"
 			else:
 				new_state_name = "fleebehavior"
-				
+
 		_:
 			# Flee.
-			if distance_to_player < self.minimum_range:
+			if distance_sq < _minimum_range_sq:
 				new_state_name = "fleebehavior"
 			# Group.
 			elif nearby_ally_count < self.critical_mass:
 				new_state_name = "findalliesbehavior"
 			# Engage.
-			elif distance_to_player > self.maximum_range:
+			elif distance_sq > _maximum_range_sq:
 				new_state_name = "chasebehavior"
 			# Attack.
 			else:

@@ -144,6 +144,8 @@ func spawn_enemy(stats: EnemyStats):
 	
 	enemy_instance.global_position = spawn_position
 	get_tree().current_scene.add_child(enemy_instance)
+	# Register with EntityRegistry for cached lookups
+	EntityRegistry.register_enemy(enemy_instance)
 	# Update ledger with enemy stats
 	enemy_instance.died.connect(_on_enemy_died)
 	_update_threat_ledger(stats, 1)

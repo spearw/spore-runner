@@ -24,6 +24,7 @@ CurrentRun="*res://systems/global/current_run.gd"
 Logs="*res://systems/global/logs.gd"
 BugReporter="*res://systems/global/bug_reporter.gd"
 TargetingUtils="*res://systems/global/targeting_utils.gd"
+EntityRegistry="*res://systems/global/entity_registry.gd"
 LootManager="*res://systems/loot/loot_manager.tscn"
 
 [display]
