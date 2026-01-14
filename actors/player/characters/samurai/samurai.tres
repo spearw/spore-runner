@@ -8,6 +8,7 @@
 [resource]
 script = ExtResource("1_ic6mu")
 character_description = "Starts with an axe and a boosted critical hit chance."
+unlock_cost = 100
 pickup_radius = 150.0
 luck = 1.0
 firerate_modifier = 1.0

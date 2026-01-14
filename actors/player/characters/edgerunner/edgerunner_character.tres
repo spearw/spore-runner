@@ -8,6 +8,7 @@
 [resource]
 script = ExtResource("1_blbt3")
 character_description = "A fast edgerunner that throws daggers at her enemies"
+unlock_cost = 100
 pickup_radius = 150.0
 luck = 1.0
 firerate_modifier = 1.0

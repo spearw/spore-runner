@@ -12,5 +12,6 @@
 script = ExtResource("1_iclir")
 pack_name = "Test Pack"
 pack_description = "Stuff I am currently testing."
+unlock_cost = 100
 upgrades = Array[ExtResource("2_dy2c8")]([ExtResource("7_enoyn"), ExtResource("8_pi8hp"), ExtResource("5_o0k67"), ExtResource("7_pi8hp"), ExtResource("7_jlo55")])
 metadata/_custom_type_script = "uid://cvcnhdf5np0ln"

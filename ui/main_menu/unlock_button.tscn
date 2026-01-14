@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://rxae3e4j0ebi"]
+
+[ext_resource type="Script" uid="uid://bflsn562n8ure" path="res://ui/main_menu/unlock_button.gd" id="1_xsb8x"]
+
+[node name="UnlockButton" type="PanelContainer"]
+custom_minimum_size = Vector2(150, 180)
+script = ExtResource("1_xsb8x")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="CostLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="PurchaseButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Unlock"

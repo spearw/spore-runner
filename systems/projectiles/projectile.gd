@@ -51,16 +51,8 @@ func _ready():
 	sprite.scale = stats.scale
 	generate_hitbox_from_sprite()
 	
-	# Configure physics based on allegiance.
-	match allegiance:
-		Allegiance.PLAYER:
-			# I am a player projectile, I should hit enemies.
-			self.area2d.collision_layer = 1 << 2 # Set layer to 'player_projectile' (layer 3)
-			self.area2d.collision_mask = 1 << 1  # Set mask to scan for 'enemy_body' (layer 2)
-		Allegiance.ENEMY:
-			# I am an enemy projectile, I should hit the player.
-			self.area2d.collision_layer = 1 << 4 # Set layer to 'enemy_projectile' (layer 5)
-			self.area2d.collision_mask = 1 << 0  # Set mask to scan for 'player_body' (layer 1)
+	# Configure physics based on allegiance (using CollisionUtils).
+	CollisionUtils.set_projectile_collision(self.area2d, allegiance)
 
 
 	# This is a normal moving projectile.
@@ -118,30 +110,24 @@ func _process(delta: float):
 	global_position += direction * stats.speed * delta
 
 func _on_body_entered(body: Node2D):
-	
-	# Hit Logic
-	var can_damage = false
-	if allegiance == Allegiance.PLAYER and body.is_in_group("enemies"):
-		can_damage = true
-	elif allegiance == Allegiance.ENEMY and body.is_in_group("player"):
-		can_damage = true
+	# Hit Logic - check if this body is a valid target for our allegiance.
+	var target_group = CollisionUtils.get_target_group(allegiance)
+	if not body.is_in_group(target_group):
+		return
 
-	if can_damage:
-		# Apply damage and knockback if the body is a valid target.
-		if body.has_method("take_damage"):
-			_deal_damage(body)
-		if stats.status_to_apply and body.has_node("StatusEffectManager"):
-			_apply_status(body)
-		if stats.knockback_force > 0 and body.has_method("apply_knockback"):
-			body.apply_knockback(stats.knockback_force, self.global_position)
-			
-		# Decrement pierce_count
-		if pierce_count != -1: # Do nothing if pierce is infinite
-			pierce_count -= 1
-			
-			if pierce_count <= 0:
-				# Destroy the projectile.
-				_destroy()
+	# Valid target found - apply damage and knockback.
+	if body.has_method("take_damage"):
+		_deal_damage(body)
+	if stats.status_to_apply and body.has_node("StatusEffectManager"):
+		_apply_status(body)
+	if stats.knockback_force > 0 and body.has_method("apply_knockback"):
+		body.apply_knockback(stats.knockback_force, self.global_position)
+
+	# Decrement pierce_count
+	if pierce_count != -1: # Do nothing if pierce is infinite
+		pierce_count -= 1
+		if pierce_count <= 0:
+			_destroy()
 				
 func _deal_damage(body: Node2D):
 	var is_crit = false
@@ -175,8 +161,8 @@ func _calculate_stats():
 
 func _apply_phasing():
 	# Start with the main hitbox disabled.
-	area2d.collision_mask = 0
-	
+	CollisionUtils.disable_collision(area2d)
+
 	# Create and configure a small proximity detector.
 	proximity_detector = Area2D.new()
 	var proximity_shape = CircleShape2D.new()
@@ -184,13 +170,10 @@ func _apply_phasing():
 	var proximity_collider = CollisionShape2D.new()
 	proximity_collider.shape = proximity_shape
 	proximity_detector.add_child(proximity_collider)
-	
-	# The detector only needs to look for potential targets
-	if allegiance == Allegiance.PLAYER:
-		proximity_detector.collision_mask = 1 << 1 # enemy_body
-	else: 
-		proximity_detector.collision_mask = 1 << 4 # Set layer to 'enemy_projectile' (layer 5)
-		
+
+	# The detector only needs to look for potential targets.
+	proximity_detector.collision_mask = 1 << CollisionUtils.LAYER_ENEMY_BODY if allegiance == Allegiance.PLAYER else 1 << CollisionUtils.LAYER_PLAYER_BODY
+
 	proximity_detector.body_entered.connect(_on_proximity_detected)
 	add_child(proximity_detector)
 
@@ -199,12 +182,7 @@ func _on_proximity_detected(body: Node2D):
 	if body == self.target:
 		# Re-enable our main hitbox and destroy the detector.
 		print("Seeker missile arming!")
-		if allegiance == Allegiance.PLAYER:
-			area2d.collision_mask = 1 << 1 # enemy_body
-		else: 
-			self.area2d.collision_layer = 1 << 4 # Set layer to 'enemy_projectile' (layer 5)
-			self.area2d.collision_mask = 1 << 0 
-		
+		CollisionUtils.set_projectile_collision(area2d, allegiance)
 		proximity_detector.queue_free()
 
 func _destroy():

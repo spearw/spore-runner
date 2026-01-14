@@ -6,6 +6,10 @@ extends EntityStats
 # --- Display Info ---
 @export_multiline var character_description: String
 
+# --- Meta Progression ---
+## Cost in souls to unlock this character in the meta shop. 0 = already unlocked.
+@export var unlock_cost: int = 100
+
 # --- Base Gameplay Stats ---
 @export var pickup_radius: float = 150.0
 @export var luck: float = 1.0

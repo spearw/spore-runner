@@ -1,0 +1,123 @@
+[gd_scene load_steps=2 format=3 uid="uid://ciwex3y87jrg8"]
+
+[ext_resource type="Script" uid="uid://dymyox16a5cje" path="res://ui/main_menu/meta_shop_panel.gd" id="1_script"]
+
+[node name="MetaShopPanel" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = -295.0
+offset_right = 330.0
+offset_bottom = 295.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Meta Shop"
+horizontal_alignment = 1
+
+[node name="TabBar" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="StatsButton" type="Button" parent="VBoxContainer/TabBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Stats"
+
+[node name="CharactersButton" type="Button" parent="VBoxContainer/TabBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Characters"
+
+[node name="PacksButton" type="Button" parent="VBoxContainer/TabBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Packs"
+
+[node name="StatsContent" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/StatsContent"]
+layout_mode = 2
+text = "Stat Upgrades"
+horizontal_alignment = 1
+
+[node name="SoulsCount" type="Label" parent="VBoxContainer/StatsContent"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/StatsContent"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/StatsContent/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="BackButton" type="Button" parent="VBoxContainer/StatsContent"]
+layout_mode = 2
+text = "Back"
+
+[node name="CharactersContent" type="VBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/CharactersContent"]
+layout_mode = 2
+text = "Character Unlocks"
+horizontal_alignment = 1
+
+[node name="SoulsCount" type="Label" parent="VBoxContainer/CharactersContent"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/CharactersContent"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/CharactersContent/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+
+[node name="BackButton" type="Button" parent="VBoxContainer/CharactersContent"]
+layout_mode = 2
+text = "Back"
+
+[node name="PacksContent" type="VBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/PacksContent"]
+layout_mode = 2
+text = "Pack Unlocks"
+horizontal_alignment = 1
+
+[node name="SoulsCount" type="Label" parent="VBoxContainer/PacksContent"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/PacksContent"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/PacksContent/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="BackButton" type="Button" parent="VBoxContainer/PacksContent"]
+layout_mode = 2
+text = "Back"

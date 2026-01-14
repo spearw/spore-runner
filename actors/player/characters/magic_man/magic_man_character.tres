@@ -8,6 +8,7 @@
 [resource]
 script = ExtResource("1_lqmeo")
 character_description = "Starts with homing firebolts that catch targets on fire."
+unlock_cost = 100
 pickup_radius = 150.0
 luck = 1.0
 firerate_modifier = 1.0

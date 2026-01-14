@@ -1,7 +1,7 @@
 ## flaming_touch_artifact.gd
 ## Ignited enemies gain a fiery aura that spreads Burning to other enemies.
 class_name FlamingTouchArtifact
-extends Node
+extends ArtifactBase
 
 # --- Configuration ---
 # The data for the aura this artifact creates.
@@ -9,10 +9,12 @@ extends Node
 # The scene for the generic aura effect.
 const AURA_SCENE = preload("res://items/effects/persistent_damage_effect.tscn")
 
-var user: Node = null
-
-func _ready():
+func on_equipped() -> void:
 	Events.status_applied_to_enemy.connect(_on_status_applied_to_enemy)
+
+func on_unequipped() -> void:
+	if Events.status_applied_to_enemy.is_connected(_on_status_applied_to_enemy):
+		Events.status_applied_to_enemy.disconnect(_on_status_applied_to_enemy)
 
 func _on_status_applied_to_enemy(enemy_node: Node, status_id: String):
 	if status_id != "ignited":

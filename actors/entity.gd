@@ -47,12 +47,10 @@ func _physics_process(delta: float) -> void:
 func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node = null) -> void:
 	if is_dying:
 		return
-		
-	# --- Armor Calculation ---
-	# Effective Armor = Armor * (1 - Armor Penetration)
-	var effective_armor = self.stats.armor * (1.0 - armor_pen)
-	var damage_taken = max(0, amount - effective_armor)
-	
+
+	# --- Armor Calculation (using DamageUtils) ---
+	var damage_taken = DamageUtils.apply_armor(amount, self.stats.armor, armor_pen)
+
 	# Apply damage.
 	current_health = max(0, current_health - damage_taken)
 	
