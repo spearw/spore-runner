@@ -16,6 +16,7 @@ extends CanvasLayer
 @onready var firerate_label: Label = $PanelContainer/MarginContainer/HBoxContainer/StatsContainer/FirerateLabel
 @onready var projectile_speed_label: Label = $PanelContainer/MarginContainer/HBoxContainer/StatsContainer/ProjectileSpeedLabel
 @onready var area_size_label: Label = $PanelContainer/MarginContainer/HBoxContainer/StatsContainer/AreaSizeLabel
+@onready var armor_label: Label = $PanelContainer/MarginContainer/HBoxContainer/StatsContainer/ArmorLabel
 # Targeting Picker
 @onready var targeting_picker: PanelContainer = $TargetingPicker
 
@@ -62,6 +63,9 @@ func _refresh_player_stats():
 	projectile_speed_label.text = "Projectile Speed Increase: %.0f%%" % (100 * player.get_stat("projectile_speed") - 100)
 	projectile_speed_label.text = "Projectile Count Increase: %.0f%%" % (100 * player.get_stat("projectile_count"))
 	area_size_label.text = "Area Increase: %.0f%%" % (100 * player.get_stat("area_size") - 100)
+	var armor = player.get_stat("armor")
+	var speed_penalty = armor * player.ARMOR_SPEED_PENALTY * 100
+	armor_label.text = "Armor: %d (-%0.f%% speed)" % [armor, speed_penalty]
 
 func _refresh_weapon_icons():
 	for child in weapons_grid.get_children(): child.queue_free()

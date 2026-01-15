@@ -168,8 +168,16 @@ func get_stat_multiplier(key: String) -> float:
 		return 1.0 + permanent_bonus + in_run_bonuses.get(key, 0.0)
 
 ## Internal helper to calculate move speed (uses cached values).
+const ARMOR_SPEED_PENALTY: float = 0.01  # 1% speed reduction per armor point
+
 func _calculate_move_speed() -> float:
 	var move_speed = stats.move_speed * get_stat_multiplier("move_speed")
+
+	# Apply armor speed penalty (~1% per armor point)
+	var armor = get_stat("armor")
+	if armor > 0:
+		move_speed *= (1.0 - armor * ARMOR_SPEED_PENALTY)
+
 	if unlocked_powers.has("fight_or_flight"):
 		var fof_level = unlocked_powers["fight_or_flight"]
 		var final_speed_per_enemy = fof_speed_per_enemy_base * (1 + (0.5 * (fof_level - 1)))

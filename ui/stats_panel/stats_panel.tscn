@@ -51,6 +51,9 @@ layout_mode = 2
 [node name="AreaSizeLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StatsContainer"]
 layout_mode = 2
 
+[node name="ArmorLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
 [node name="ItemsContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 

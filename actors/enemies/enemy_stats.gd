@@ -5,7 +5,7 @@ extends EntityStats
 
 # --- Core Stats ---
 @export var damage: int = 10
-@export var armor_pen: int = 0
+@export_range(0.0, 1.0) var armor_pen: float = 0.0
 
 # --- Visuals ---
 # If true, the sprite will automatically rotate to face its direction of movement.
