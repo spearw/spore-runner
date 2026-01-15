@@ -27,3 +27,9 @@ extends EntityStats
 
 # --- Loot ---
 @export var loot_table: LootTable = load("res://systems/loot/loot_tables/default_loot.tres")
+
+# --- Tags (for encounter weighting and weapon bonuses) ---
+@export var biome_tags: Array[EnemyTags.Biome] = []
+@export var type_tags: Array[EnemyTags.Type] = []
+@export var size_tags: Array[EnemyTags.Size] = [EnemyTags.Size.MEDIUM]
+@export var behavior_tags: Array[EnemyTags.Behavior] = []

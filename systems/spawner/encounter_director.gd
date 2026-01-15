@@ -136,19 +136,55 @@ func _pick_theme_enemy(pool: Array[EnemyStats], budget: float) -> EnemyStats:
 ## Instantiates and positions a single enemy.
 func spawn_enemy(stats: EnemyStats):
 	var enemy_instance = enemy_scene.instantiate()
-	enemy_instance.stats = stats
-	
+
+	# Pick a random size from the enemy's allowed sizes and apply scaling
+	var scaled_stats = _apply_size_scaling(stats)
+	enemy_instance.stats = scaled_stats.stats
+	enemy_instance.spawned_size = scaled_stats.size
+
 	var random_angle = randf_range(0, TAU)
 	var spawn_offset = Vector2.RIGHT.rotated(random_angle) * spawn_radius
 	var spawn_position = player_node.global_position + spawn_offset
-	
+
 	enemy_instance.global_position = spawn_position
+	enemy_instance.scale *= scaled_stats.visual_scale
 	get_tree().current_scene.add_child(enemy_instance)
 	# Register with EntityRegistry for cached lookups
 	EntityRegistry.register_enemy(enemy_instance)
 	# Update ledger with enemy stats
 	enemy_instance.died.connect(_on_enemy_died)
 	_update_threat_ledger(stats, 1)
+
+## Picks a random size from the enemy's allowed sizes and returns scaled stats.
+## Returns a Dictionary with "stats" (duplicated & scaled), "size" (chosen size), "visual_scale" (float).
+func _apply_size_scaling(base_stats: EnemyStats) -> Dictionary:
+	# Pick random size from allowed sizes (default to MEDIUM if empty)
+	var chosen_size = EnemyTags.Size.MEDIUM
+	if not base_stats.size_tags.is_empty():
+		chosen_size = base_stats.size_tags.pick_random()
+
+	var multipliers = EnemyTags.get_size_multipliers(chosen_size)
+
+	# Duplicate stats to avoid modifying the shared resource
+	var scaled_stats = base_stats.duplicate()
+
+	# Apply multipliers
+	scaled_stats.max_health = int(base_stats.max_health * multipliers.hp)
+	scaled_stats.damage = int(base_stats.damage * multipliers.damage)
+	scaled_stats.move_speed = base_stats.move_speed * multipliers.speed
+
+	# Scale armor if enemy has any
+	if base_stats.armor > 0:
+		scaled_stats.armor = int(base_stats.armor * multipliers.armor_mult)
+
+	# Scale challenge rating and XP based on size
+	scaled_stats.challenge_rating = base_stats.challenge_rating * multipliers.xp
+
+	return {
+		"stats": scaled_stats,
+		"size": chosen_size,
+		"visual_scale": multipliers.scale
+	}
 	
 ## Signal handler for when any enemy dies.
 func _on_enemy_died(enemy_stats: EnemyStats):

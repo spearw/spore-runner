@@ -23,6 +23,7 @@ var is_on_screen: bool = false
 var can_deal_damage: bool = true
 var ai: Node
 var _cached_weapons: Array = []  # Cached weapon list for fire_weapons()
+var spawned_size: EnemyTags.Size = EnemyTags.Size.MEDIUM  # Set by encounter director at spawn
 
 
 

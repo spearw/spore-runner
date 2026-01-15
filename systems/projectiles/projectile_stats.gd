@@ -24,6 +24,10 @@ var can_retarget: bool = false
 @export var status_to_apply: StatusEffect
 @export_range(0.0, 1.0) var status_chance: float = 1.0
 
+# --- Tag Bonuses (bonus damage vs specific enemy types) ---
+# Dictionary mapping EnemyTags.Type -> float bonus (e.g., {EnemyTags.Type.FISH: 0.5} = +50% vs fish)
+@export var bonus_vs_types: Dictionary = {}
+
 # --- Visuals ---
 @export var texture: Texture2D
 @export var scale: Vector2 = Vector2(1.0, 1.0)

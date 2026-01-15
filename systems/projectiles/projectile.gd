@@ -148,11 +148,33 @@ func _on_body_entered(body: Node2D):
 			_destroy()
 
 func _deal_damage(body: Node2D):
+	var final_damage = damage
 	var is_crit = false
+
+	# Apply critical hit
 	if randf() < critical_hit_rate:
-		damage = damage * critical_hit_damage
+		final_damage = damage * critical_hit_damage
 		is_crit = true
-	body.take_damage(damage, stats.armor_penetration, is_crit, self)
+
+	# Apply tag bonus damage vs enemy types
+	final_damage *= _calculate_tag_bonus(body)
+
+	body.take_damage(final_damage, stats.armor_penetration, is_crit, self)
+
+## Calculates bonus damage multiplier based on target's type tags.
+func _calculate_tag_bonus(target: Node2D) -> float:
+	if stats.bonus_vs_types.is_empty():
+		return 1.0
+
+	if not target.stats or not target.stats.type_tags:
+		return 1.0
+
+	var bonus = 1.0
+	for tag in target.stats.type_tags:
+		if tag in stats.bonus_vs_types:
+			bonus += stats.bonus_vs_types[tag]
+
+	return bonus
 
 func _apply_status(body: Node2D):
 	var status_manager = body.get_node("StatusEffectManager")
