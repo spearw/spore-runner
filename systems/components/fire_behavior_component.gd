@@ -22,12 +22,12 @@ enum SpawnLocation {
 @export var spawn_location: SpawnLocation = SpawnLocation.IN_WORLD
 @export var spread_angle_degrees: float = 30.0 # Only used for SPREAD pattern
 @export var burst_delay: float = 0.08 # Delay between shots in a burst
-@onready var burst_delay_timer: Timer = $BurstDelayTimer
+var burst_delay_timer: Timer  # Optional child timer for burst fire
 
 # Only for AoE attacks
 @export var aoe_warning_scene: PackedScene
 @export var aoe_delay: float = 1.0
-@onready var aoe_delay_timer: Timer = $AoeDelayTimer
+var aoe_delay_timer: Timer  # Optional child timer for AoE
 
 # --- References (set at runtime) ---
 var weapon # The parent weapon node
@@ -43,8 +43,12 @@ var _current_scene: Node  # Cached reference to avoid tree queries
 
 func _ready():
 	weapon = get_parent()
-	stats_comp = weapon.get_node("WeaponStatsComponent")
-	targeting_comp = weapon.get_node("TargetingComponent")
+	# Optional sibling components (may not exist when attached to Player)
+	stats_comp = weapon.get_node_or_null("WeaponStatsComponent")
+	targeting_comp = weapon.get_node_or_null("TargetingComponent")
+	# Optional child timers (may not exist when attached to Player)
+	burst_delay_timer = get_node_or_null("BurstDelayTimer")
+	aoe_delay_timer = get_node_or_null("AoeDelayTimer")
 	fire_pattern = base_pattern
 	# Cache the current scene reference to avoid tree queries during fire
 	_current_scene = get_tree().current_scene
@@ -127,8 +131,10 @@ func _spawn_projectile(
 	var user
 	if user_override:
 		user = user_override
-	else:
+	elif stats_comp:
 		user = stats_comp.user
+	else:
+		user = weapon  # Fallback when no stats_comp (e.g., player)
 	projectile.user = user
 
 	match spawn_location:
@@ -161,19 +167,35 @@ func override_pattern_for_next_shot(new_pattern: FirePattern):
 func _execute_burst_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance, targeting_comp: TargetingComponent):
 	var final_projectile_count = stats_comp.get_final_projectile_count()
 	# Get a target from the targeting component.
-	var target = targeting_comp.find_target(weapon.global_position, p_allegiance)	
+	var target = targeting_comp.find_target(weapon.global_position, p_allegiance)
 	if not target:
 		return
 	var base_direction = (target.global_position - weapon.global_position).normalized()
-	
+
 	# If the pattern is MIRRORED_FORWARD, it doubles the current projectile count (to fire behind).
 	if current_fire_pattern == FirePattern.MIRRORED_FORWARD:
 		final_projectile_count *= 2
-		
+
+	# Pre-fetch targets for RANDOM mode to avoid per-projectile queries
+	var prefetched_targets: Array = []
+	if current_fire_pattern == FirePattern.RANDOM:
+		prefetched_targets = targeting_comp.find_multiple_targets(weapon.global_position, p_allegiance, final_projectile_count)
+		if prefetched_targets.is_empty():
+			return
+
 	for i in range(final_projectile_count):
 		var fire_direction = base_direction
-		if current_fire_pattern == FirePattern.RANDOM or not is_instance_valid(target):
-			# Find new target each projectile
+		if current_fire_pattern == FirePattern.RANDOM:
+			# Use prefetched target (cycle through if fewer targets than projectiles)
+			if prefetched_targets.size() > 0:
+				var target_idx = i % prefetched_targets.size()
+				target = prefetched_targets[target_idx]
+				if is_instance_valid(target):
+					base_direction = (target.global_position - weapon.global_position).normalized()
+				else:
+					continue
+		elif not is_instance_valid(target):
+			# Fallback: find new target if current became invalid
 			target = targeting_comp.find_target(weapon.global_position, p_allegiance)
 			if not target:
 				return
@@ -189,16 +211,16 @@ func _execute_burst_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: P
 				fire_direction = fire_direction.rotated(PI)
 			if i % 2 == 0:
 				should_delay = false
-		
+
 		_spawn_projectile(p_stats, p_allegiance, fire_direction, weapon.global_position, null, target)
-		
-		# Delay burst
-		if i < final_projectile_count - 1 and burst_delay > 0 and should_delay:
+
+		# Delay burst (only if timer exists)
+		if i < final_projectile_count - 1 and burst_delay > 0 and should_delay and burst_delay_timer:
 			burst_delay_timer.wait_time = burst_delay
 			burst_delay_timer.start()
 			await burst_delay_timer.timeout
-			
-			
+
+
 	weapon.last_fire_direction = base_direction
 	
 func _execute_nova_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: Projectile.Allegiance):
@@ -206,9 +228,9 @@ func _execute_nova_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: Pr
 	for i in range(p_count):
 		var fire_direction = Vector2.RIGHT.rotated(angle_step * i)
 		_spawn_projectile(p_stats, p_allegiance, fire_direction)
-		
-		# Add burst delay to NOVA for a ripple effect.
-		if i < p_count - 1 and burst_delay > 0:
+
+		# Add burst delay to NOVA for a ripple effect (only if timer exists).
+		if i < p_count - 1 and burst_delay > 0 and burst_delay_timer:
 			burst_delay_timer.wait_time = burst_delay
 			burst_delay_timer.start()
 			await burst_delay_timer.timeout
@@ -231,13 +253,12 @@ func _execute_aoe_strike(target_pos: Vector2, p_stats: ProjectileStats, p_allegi
 		var warning = aoe_warning_scene.instantiate()
 		_current_scene.add_child(warning)
 		warning.global_position = target_pos
-		
-	# Configure and start our pause-respecting timer.
-	aoe_delay_timer.wait_time = aoe_delay
-	aoe_delay_timer.start()
-	
-	# Wait for the timer's timeout signal.
-	await aoe_delay_timer.timeout
-	
+
+	# Wait for AoE delay (only if timer exists).
+	if aoe_delay_timer:
+		aoe_delay_timer.wait_time = aoe_delay
+		aoe_delay_timer.start()
+		await aoe_delay_timer.timeout
+
 	# Spawn the configured "projectile" that will act as the explosion.
 	_spawn_projectile(p_stats, p_allegiance, Vector2.ZERO, target_pos)

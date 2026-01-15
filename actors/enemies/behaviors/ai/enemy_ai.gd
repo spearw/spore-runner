@@ -15,6 +15,10 @@ var proximity_radius: float = 100.0
 var _requested_state_node: EnemyBehavior = null
 var _requested_context: Dictionary = {}
 
+# Cached nearby allies (updated via signals instead of physics query)
+var _cached_nearby_allies: Array[Node2D] = []
+var _proximity_signals_connected: bool = false
+
 func _ready():
 	host = get_parent()
 	var library = get_node("BehaviorLibrary")
@@ -28,7 +32,13 @@ func _ready():
 	var proximity_shape = proximity_detector.get_node("CollisionShape2D")
 	proximity_shape.shape.radius = self.proximity_radius
 	self.proximity_detector.collision_mask = 1 << 1 # enemy_body
-	
+
+	# Connect proximity signals for cached ally tracking (avoids per-frame physics queries)
+	if not _proximity_signals_connected:
+		proximity_detector.body_entered.connect(_on_proximity_body_entered)
+		proximity_detector.body_exited.connect(_on_proximity_body_exited)
+		_proximity_signals_connected = true
+
 	anim_controller = host.get_node("AnimationController")
 	anim_controller.animation_lock_released.connect(_on_animation_lock_released)
 
@@ -92,8 +102,22 @@ func _process_state_change(is_finished=false):
 	if current_state.has_method("on_enter"):
 		current_state.on_enter(host, _requested_context)
 
-## Find nearby allies
+## Find nearby allies (uses cached list instead of physics query)
 func get_nearby_allies() -> Array[Node2D]:
-	var nearby_bodies = proximity_detector.get_overlapping_bodies()
+	# Filter cached allies to only include same-type enemies
 	var my_name = host.stats.display_name
-	return nearby_bodies.filter(func(body): return body != host and body.stats.display_name == my_name)
+	var allies: Array[Node2D] = []
+	for body in _cached_nearby_allies:
+		if is_instance_valid(body) and body != host:
+			if body.stats and body.stats.display_name == my_name:
+				allies.append(body)
+	return allies
+
+## Called when a body enters the proximity detector.
+func _on_proximity_body_entered(body: Node2D):
+	if body != host and body not in _cached_nearby_allies:
+		_cached_nearby_allies.append(body)
+
+## Called when a body exits the proximity detector.
+func _on_proximity_body_exited(body: Node2D):
+	_cached_nearby_allies.erase(body)

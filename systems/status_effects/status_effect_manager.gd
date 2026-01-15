@@ -6,16 +6,38 @@ extends Node
 # Key: status.id, Value: a dictionary containing the effect and its timer
 var active_statuses: Dictionary = {}
 var host: Node
+var _cached_modulate_color: Color = Color.WHITE  # Incrementally tracked modulate
+
+# Cached array of statuses that need per-frame processing (avoids dictionary iteration)
+var _processing_statuses: Array = []  # Array of {effect, source} dicts
+var _processing_cache_dirty: bool = false
 
 func _ready():
 	host = get_parent()
 
 func _physics_process(delta: float):
-	# Loop through all active statuses and call their process function.
-	for status_id in active_statuses.keys():
-		var status_instance = active_statuses[status_id]["effect"]
-		var source = active_statuses[status_id]["source"]
-		status_instance.on_process(self, delta, source)
+	# Rebuild processing cache if dirty
+	if _processing_cache_dirty:
+		_rebuild_processing_cache()
+
+	# Fast iteration over pre-cached array (no dictionary lookups)
+	for data in _processing_statuses:
+		data.effect.on_process(self, delta, data.source)
+
+## Rebuild the cached array of statuses for processing.
+## Only includes statuses with needs_processing=true.
+func _rebuild_processing_cache():
+	_processing_statuses.clear()
+	for status_id in active_statuses:
+		var status_data = active_statuses[status_id]
+		var effect = status_data["effect"]
+		# Only cache statuses that need per-frame processing
+		if effect.needs_processing:
+			_processing_statuses.append({
+				"effect": effect,
+				"source": status_data["source"]
+			})
+	_processing_cache_dirty = false
 
 func apply_status(status_resource: StatusEffect, source: Node):
 	if not status_resource: return
@@ -34,7 +56,8 @@ func apply_status(status_resource: StatusEffect, source: Node):
 		var duration_timer = Timer.new()
 		duration_timer.one_shot = true
 		duration_timer.wait_time = duration
-		duration_timer.timeout.connect(func(): _on_status_expired(status_instance.id, source))
+		# Use Callable.bind() instead of lambda to avoid signal memory leaks
+		duration_timer.timeout.connect(_on_status_expired.bind(status_instance.id, source))
 		add_child(duration_timer)
 		var vfx_instance = _apply_visuals(status_instance)
 		
@@ -44,7 +67,10 @@ func apply_status(status_resource: StatusEffect, source: Node):
 			"source": source,
 			"vfx_instance": vfx_instance
 		}
-		
+
+		# Mark cache dirty so _physics_process rebuilds it
+		_processing_cache_dirty = true
+
 		duration_timer.start()
 		status_instance.on_apply(self, source)
 		
@@ -56,11 +82,14 @@ func _on_status_expired(status_id: String, source):
 		var status_instance = active_statuses[status_id]["effect"]
 		var timer = active_statuses[status_id]["timer"]
 		var vfx_instance = active_statuses[status_id]["vfx_instance"]
-		_remove_visuals(	status_instance, vfx_instance)
-		
+		_remove_visuals(status_instance, vfx_instance)
+
 		active_statuses.erase(status_id)
 		timer.queue_free()
-		
+
+		# Mark cache dirty so _physics_process rebuilds it
+		_processing_cache_dirty = true
+
 		status_instance.on_expire(self, source)
 		
 func _apply_visuals(status_instance: StatusEffect):
@@ -73,8 +102,9 @@ func _apply_visuals(status_instance: StatusEffect):
 		vfx_instance.sprite_frames_resource = status_instance.vfx_sprite_frames
 		host.add_child(vfx_instance) # Attach the VFX
 	elif status_instance.modulate_color != Color.WHITE and host_sprite:
-		# Recalcuate modulation based on all active status effects.
-		host_sprite.modulate = host_sprite.modulate * status_instance.modulate_color
+		# O(1) incremental color update instead of O(n) recalculation
+		_cached_modulate_color = _cached_modulate_color * status_instance.modulate_color
+		host_sprite.modulate = _cached_modulate_color
 	return vfx_instance
 	
 func _remove_visuals(status_instance: StatusEffect, vfx_instance):
@@ -82,18 +112,25 @@ func _remove_visuals(status_instance: StatusEffect, vfx_instance):
 			# Remove vfx scene is it exists
 			vfx_instance.queue_free()
 		else:
-			# Unapply any color modulation
+			# Unapply color modulation by dividing out the removed color
 			var host_sprite = host.get_node_or_null("AnimatedSprite2D")
 			if host_sprite and status_instance.modulate_color != Color.WHITE:
-				# Recalcuate modulation based on all active status effects.
-				_recalculate_sprite_modulate(host_sprite)
-	
-func _recalculate_sprite_modulate(host_sprite):
-	if not host_sprite: return
-	
-	var final_color = Color.WHITE
+				# O(1) incremental removal: divide out the color being removed
+				var color = status_instance.modulate_color
+				# Safely divide (avoid division by zero)
+				if color.r > 0.001 and color.g > 0.001 and color.b > 0.001:
+					_cached_modulate_color.r /= color.r
+					_cached_modulate_color.g /= color.g
+					_cached_modulate_color.b /= color.b
+					_cached_modulate_color.a /= max(color.a, 0.001)
+				else:
+					# Fallback: full recalc if color has near-zero components
+					_recalculate_modulate_cache()
+				host_sprite.modulate = _cached_modulate_color
+
+## Recalculates the cached modulate color from scratch (fallback for edge cases).
+func _recalculate_modulate_cache():
+	_cached_modulate_color = Color.WHITE
 	for status_id in active_statuses:
 		var status_effect = active_statuses[status_id]["effect"]
-		final_color = final_color * status_effect.modulate_color
-	
-	host_sprite.modulate = final_color
+		_cached_modulate_color = _cached_modulate_color * status_effect.modulate_color

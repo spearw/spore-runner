@@ -4,6 +4,10 @@
 
 Fish Food is an underwater bullet-heaven roguelike emphasizing **thematic cohesion** through deck-character linking while maintaining mechanical depth via multiplicative scaling and intelligent encounter generation.
 
+### Technical Pillars
+1. **Data-Driven Content**: All weapons, enemies, artifacts, and upgrades must be creatable via .tres resources and scene inheritance WITHOUT writing new GDScript code.
+2. **Scalable Performance**: Architecture must handle 200+ enemies and projectiles simultaneously. See CLAUDE.md for optimization patterns.
+
 ---
 
 ## Upgrade & Deck System

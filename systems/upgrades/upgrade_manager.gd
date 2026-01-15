@@ -5,6 +5,10 @@ extends Node
 
 var active_upgrade_pool: Array[Upgrade] = []
 
+# Pre-computed rarity buckets for O(1) rarity lookup
+var _upgrade_buckets: Dictionary = {}  # rarity_enum -> Array of upgrades
+var _unlock_buckets: Dictionary = {}  # rarity_enum -> Array of UNLOCK upgrades (exact rarity match)
+
 var player_equipment: Node2D = null
 var player_artifacts: Node2D = null
 var player: Node2D = null
@@ -24,10 +28,17 @@ func _ready():
 func _build_active_upgrade_pool():
 	# Clear any old data.
 	active_upgrade_pool.clear()
-	
+	_upgrade_buckets.clear()
+	_unlock_buckets.clear()
+
+	# Initialize buckets for each rarity
+	for rarity_enum in Upgrade.Rarity.values():
+		_upgrade_buckets[rarity_enum] = []
+		_unlock_buckets[rarity_enum] = []
+
 	# Get the list of selected pack paths from persistent data.
 	var selected_pack_paths = CurrentRun.selected_pack_paths
-	
+
 	var pack_names = []
 	for pack_path in selected_pack_paths:
 		var pack_resource: UpgradePack = load(pack_path)
@@ -35,9 +46,22 @@ func _build_active_upgrade_pool():
 			# Add all upgrades from this pack into our active pool for this run.
 			active_upgrade_pool.append_array(pack_resource.upgrades)
 			pack_names.append(pack_resource.pack_name)
+
+			# Pre-compute rarity buckets for fast lookup
+			for upgrade in pack_resource.upgrades:
+				if upgrade.type == Upgrade.UpgradeType.UNLOCK_WEAPON or upgrade.type == Upgrade.UpgradeType.UNLOCK_ARTIFACT:
+					# UNLOCK types go in their exact rarity bucket
+					_unlock_buckets[upgrade.rarity].append(upgrade)
+				elif upgrade.type == Upgrade.UpgradeType.UPGRADE:
+					# UPGRADE types go in all buckets they support
+					for rarity_idx in range(upgrade.rarity_values.size()):
+						_upgrade_buckets[rarity_idx].append(upgrade)
+				elif upgrade.type == Upgrade.UpgradeType.TRANSFORMATION:
+					# Transformations go in their exact rarity bucket
+					_unlock_buckets[upgrade.rarity].append(upgrade)
 		else:
 			printerr("Failed to load UpgradePack at path: ", pack_path)
-			
+
 	Logs.add_message("UpgradeManager pool built for this run.")
 	Logs.add_message(["Packs added:", pack_names])
 	Logs.add_message(["Total upgrades available: ", active_upgrade_pool.size()])
@@ -97,23 +121,27 @@ func get_upgrade_choices(count: int) -> Array[Dictionary]:
 		# --- Weighted Rarity Selection ---
 		var chosen_rarity_enum = _get_random_rarity_tier()
 
-		var potential_upgrades
+		var potential_upgrades: Array = []
 		# Loop until pool filled.
-		while not potential_upgrades or potential_upgrades.is_empty():
+		var attempts = 0
+		while potential_upgrades.is_empty() and attempts < 10:
+			attempts += 1
 			# Avoid infinite loop with empty upgrade pool.
 			if filtered_pool.is_empty():
-				# TODO: Some reward? Current system should never run out of regular upgrades.
 				break
-			# Find all upgrades that are valid candidates for this rarity roll.
-			potential_upgrades = filtered_pool.filter(func(upg):
-				if upg.type == Upgrade.UpgradeType.UPGRADE:
-					# Check if the chosen rarity exists in the upgrade.
-					return upg.rarity_values.size() > chosen_rarity_enum
-				else: # For UNLOCK types
-					# For an UNLOCK, its base rarity must exactly match the rolled rarity.
-					# A common dagger unlock cannot be presented as Epic.
-					return upg.rarity == chosen_rarity_enum
-			)
+
+			# Use pre-computed buckets for O(1) lookup, then filter by inventory
+			var bucket_upgrades = _upgrade_buckets.get(chosen_rarity_enum, [])
+			var bucket_unlocks = _unlock_buckets.get(chosen_rarity_enum, [])
+
+			# Filter bucket results against current filtered_pool (inventory check)
+			for upg in bucket_upgrades:
+				if upg in filtered_pool:
+					potential_upgrades.append(upg)
+			for upg in bucket_unlocks:
+				if upg in filtered_pool:
+					potential_upgrades.append(upg)
+
 			# If no more rarities of this tier exist, downgrade 1 and try again
 			if potential_upgrades.is_empty():
 				if chosen_rarity_enum != 0:
@@ -121,7 +149,10 @@ func get_upgrade_choices(count: int) -> Array[Dictionary]:
 				else:
 					# If common rarity and does not exist, reroll.
 					chosen_rarity_enum = _get_random_rarity_tier()
-					
+
+		if potential_upgrades.is_empty():
+			break
+
 		var chosen_upgrade = potential_upgrades.pick_random()
 		
 		Logs.add_message(["Manager chose upgrade:", chosen_upgrade.id, "Rarity:", Upgrade.Rarity.keys()[chosen_rarity_enum]])

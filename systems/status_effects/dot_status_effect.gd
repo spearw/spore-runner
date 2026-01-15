@@ -12,6 +12,10 @@ extends StatusEffect
 # --- Runtime variables used by the manager ---
 var tick_timer: float = 0.0
 
+func _init():
+	# DoT effects need per-frame processing for tick timers
+	needs_processing = true
+
 # --- Overridden Functions ---
 ## Called once when Burning is first applied.
 func on_apply(manager: StatusEffectManager, source):

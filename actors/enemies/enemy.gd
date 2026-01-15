@@ -120,9 +120,9 @@ func _physics_process(delta: float) -> void:
 ## This virtual method is called by the parent Entity's `take_damage` function
 ## AFTER health has been reduced. We use it for enemy-specific visual feedback.
 func _on_take_damage(damage_taken: int, is_crit: bool, source_node: Node) -> void:
-	# Spawn a floating damage number if the scene is provided.
-	if damage_number_scene and damage_taken > 0:
-		var dmg_num_instance = damage_number_scene.instantiate()
+	# Spawn a floating damage number using pool for performance.
+	if damage_taken > 0:
+		var dmg_num_instance = DamageNumberPool.get_damage_number()
 		# Add to the main scene tree so it doesn't move with the enemy.
 		get_tree().current_scene.add_child(dmg_num_instance)
 		dmg_num_instance.start(damage_taken, self.global_position, is_crit)

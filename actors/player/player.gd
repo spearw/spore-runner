@@ -11,7 +11,6 @@ signal took_damage
 
 # --- Node References ---
 @onready var artifacts_node: Node = $Artifacts
-@onready var pickup_area_shape: CollisionShape2D = $PickupArea/CollisionShape2D
 @onready var proximity_detector: Area2D = $ProximityDetector
 @onready var player_targeting_component = $TargetingComponent
 @onready var player_fire_behavior_component = $FireBehaviorComponent
@@ -36,6 +35,7 @@ var _cached_move_speed: float = 0.0  # Cached move speed
 var _stats_dirty: bool = true  # Flag to recalculate stats
 var _proximity_update_timer: float = 0.0  # Timer for proximity updates
 const PROXIMITY_UPDATE_INTERVAL: float = 0.1  # Update proximity every 100ms
+var _artifacts_cache_connected: bool = false  # Track if artifact signals connected
 
 # Dictionary for tracking unique, levelable powers.
 var unlocked_powers: Dictionary = {}
@@ -250,10 +250,11 @@ func add_experience(amount: int, force_level = false) -> void:
 func apply_timed_bonus(stat_key: String, value: float, duration: float):
 	var current_bonus = timed_bonuses.get(stat_key, 0.0)
 	timed_bonuses[stat_key] = current_bonus + value
-	
+
+	# Use Callable.bind() instead of lambda to avoid signal memory leaks
 	var timer = get_tree().create_timer(duration)
-	timer.timeout.connect(func(): remove_timed_bonus(stat_key, value))
-	
+	timer.timeout.connect(remove_timed_bonus.bind(stat_key, value))
+
 	notify_stats_changed()
 
 ## Removes a temporary bonus. Called by the timer from apply_timed_bonus.
@@ -266,13 +267,30 @@ func remove_timed_bonus(stat_key: String, value: float):
 func notify_stats_changed():
 	# Invalidate stat cache
 	_stats_dirty = true
-	# Rebuild artifact cache (only when stats change, not every frame)
-	_cached_artifacts = artifacts_node.get_children()
+
+	# Connect to artifact child signals for automatic cache updates (once)
+	if not _artifacts_cache_connected and is_instance_valid(artifacts_node):
+		artifacts_node.child_entered_tree.connect(_on_artifact_added)
+		artifacts_node.child_exiting_tree.connect(_on_artifact_removed)
+		_artifacts_cache_connected = true
+		# Initial cache build
+		_cached_artifacts = artifacts_node.get_children()
 
 	stats_changed.emit()
 	proximity_detector.scale.x = 1 * get_stat("area_size")
 	proximity_detector.scale.y = 1 * get_stat("area_size")
 	self.scale = Vector2.ONE * get_stat("size")
+
+## Called when an artifact is added - updates cache incrementally.
+func _on_artifact_added(node: Node):
+	if node not in _cached_artifacts:
+		_cached_artifacts.append(node)
+	_stats_dirty = true
+
+## Called when an artifact is removed - updates cache incrementally.
+func _on_artifact_removed(node: Node):
+	_cached_artifacts.erase(node)
+	_stats_dirty = true
 	
 ## Sets the player's invulnerability state.
 func set_invulnerability(active: bool):

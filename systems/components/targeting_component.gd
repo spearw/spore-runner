@@ -83,3 +83,22 @@ func get_fire_direction(origin_pos: Vector2, fallback_direction: Vector2, weapon
 func set_targeting_mode_override(targeting_mode):
 	targeting_mode_override = targeting_mode
 	print("TargetingComponent: Mode has been locked to ", targeting_mode_override)
+
+## Batch-fetch multiple targets in a single call (avoids repeated candidate queries).
+## Returns an array of up to `count` targets, shuffled for variety.
+func find_multiple_targets(origin_pos: Vector2, weapon_allegiance: Projectile.Allegiance, count: int) -> Array:
+	var target_group = "enemies" if weapon_allegiance == Projectile.Allegiance.PLAYER else "player"
+	var candidates = TargetingUtils.get_candidates(target_group)
+
+	if candidates.is_empty():
+		return []
+
+	# Shuffle candidates for random distribution
+	var shuffled = candidates.duplicate()
+	shuffled.shuffle()
+
+	# Return up to `count` targets
+	if shuffled.size() <= count:
+		return shuffled
+	else:
+		return shuffled.slice(0, count)

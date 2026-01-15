@@ -30,9 +30,11 @@ func _on_body_entered(body: Node2D):
 			"enemy": body,
 			"weapon": get_parent().weapon,
 			"damage": damage,
-			"position": body.global_position
+			"position": body.global_position,
+			"is_crit": is_crit
 		}
-		Events.emit_signal("enemy_hit", hit_details, is_crit)
+		# Use batched hit queue instead of direct emit (reduces per-hit signal overhead)
+		Events.queue_enemy_hit(hit_details)
 		body.take_damage(damage, stats.armor_penetration, is_crit)
 		hit_targets.append(body)
 

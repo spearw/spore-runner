@@ -6,11 +6,36 @@ extends Node
 # Emitted when a treasure chest is collected.
 signal boss_reward_requested
 
-# TODO: is this performant to signal every enemy hit etc.?
+# Batched enemy_hit signal - emitted once per frame with all hits
+signal enemy_hit_batch(hits: Array)
+# Legacy single-hit signal (still available for simple use cases)
 signal enemy_hit(hit_details: Dictionary)
 signal status_applied_to_enemy(enemy_node, status_id)
 signal enemy_killed(enemy_node)
 signal magnet_collected(player_node)
+
+# --- Hit Batching System ---
+var _hit_queue: Array = []  # Queued hits for this frame
+var _batch_scheduled: bool = false  # Whether we've scheduled emission
+
+## Queue a hit to be emitted in batch at end of frame.
+func queue_enemy_hit(hit_details: Dictionary):
+	_hit_queue.append(hit_details)
+	if not _batch_scheduled:
+		_batch_scheduled = true
+		# Use call_deferred to emit all hits at end of frame
+		call_deferred("_flush_hit_batch")
+
+## Emit all queued hits as a batch, then clear.
+func _flush_hit_batch():
+	if _hit_queue.size() > 0:
+		# Emit batch signal for listeners that want all hits
+		enemy_hit_batch.emit(_hit_queue.duplicate())
+		# Also emit individual signals for backwards compatibility
+		for hit in _hit_queue:
+			enemy_hit.emit(hit)
+		_hit_queue.clear()
+	_batch_scheduled = false
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
