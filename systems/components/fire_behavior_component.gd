@@ -191,7 +191,7 @@ func _execute_burst_fire(p_count: int, p_stats: ProjectileStats, p_allegiance: P
 				var target_idx = i % prefetched_targets.size()
 				target = prefetched_targets[target_idx]
 				if is_instance_valid(target):
-					base_direction = (target.global_position - weapon.global_position).normalized()
+					fire_direction = (target.global_position - weapon.global_position).normalized()
 				else:
 					continue
 		elif not is_instance_valid(target):
