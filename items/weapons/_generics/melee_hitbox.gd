@@ -1,8 +1,6 @@
 ## melee_hitbox.gd
 extends Area2D
 
-const SPARK_SCENE = preload("res://items/weapons/spark/spark_projectile.tscn")
-
 var stats: ProjectileStats
 var allegiance: Projectile.Allegiance
 var user: Node2D  # Set by parent swing if available
@@ -46,7 +44,10 @@ func _on_body_entered(body: Node2D):
 			body.apply_knockback(stats.knockback_force, get_parent().global_position)
 
 		# SPARK Effect - Spawn sparks on hit
-		if stats.has_effect(WeaponTags.Effect.SPARK):
+		# Also triggers if user has Conductive artifact (all weapons spark)
+		var actual_user = user if is_instance_valid(user) else get_parent().user if "user" in get_parent() else null
+		var has_conductive = is_instance_valid(actual_user) and actual_user.has_method("get_stat") and actual_user.get_stat("has_conductive") > 0
+		if stats.has_effect(WeaponTags.Effect.SPARK) or has_conductive:
 			_apply_spark_effect(body)
 
 	if pierce_count != -1:
@@ -95,7 +96,7 @@ func _apply_spark_effect(hit_body: Node2D):
 		_create_spark(hit_body.global_position, target_enemy, spark_damage, spark_bounces, spark_range, spark_speed, spark_lifetime, actual_user, actual_weapon)
 
 func _create_spark(spawn_pos: Vector2, target_enemy: Node2D, dmg: int, bounces: int, range_val: float, spd: float, lifetime_val: float, spark_user: Node2D, spark_weapon: Node2D):
-	var spark = SPARK_SCENE.instantiate()
+	var spark = ProjectilePool.get_spark()
 
 	spark.allegiance = SparkProjectile.Allegiance.PLAYER if allegiance == Projectile.Allegiance.PLAYER else SparkProjectile.Allegiance.ENEMY
 	spark.user = spark_user

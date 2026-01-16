@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://conductiveunlock"]
+
+[ext_resource type="PackedScene" path="res://items/artifacts/lightning/conductive/ConductiveArtifact.tscn" id="1_scene"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_upgrade"]
+
+[resource]
+script = ExtResource("2_upgrade")
+id = "conductive_unlock"
+display_name = "Conductive"
+description = "All your weapons now spawn sparks on hit. Become a living lightning rod!"
+type = 1
+target_class_name = "ConductiveArtifact"
+scene_to_unlock = ExtResource("1_scene")
+rarity = 3
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

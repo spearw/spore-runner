@@ -21,7 +21,7 @@ var target: Node2D = null
 var user: Node2D = null
 var weapon: Node2D = null
 var bounces_remaining: int = 0
-var _hit_targets: Array = []
+var _hit_targets: Dictionary = {}  # Using Dictionary for O(1) lookup
 var _is_destroying: bool = false
 
 # --- Node References ---
@@ -70,8 +70,8 @@ func _on_body_entered(body: Node2D):
 	if not body.is_in_group(target_group):
 		return
 
-	# Skip if already hit this target
-	if body in _hit_targets:
+	# Skip if already hit this target (O(1) Dictionary lookup)
+	if _hit_targets.has(body):
 		return
 
 	# Deal damage
@@ -89,8 +89,8 @@ func _on_body_entered(body: Node2D):
 
 		body.take_damage(final_damage, 0.0, is_crit, self)
 
-	# Track this target
-	_hit_targets.append(body)
+	# Track this target (O(1) Dictionary insert)
+	_hit_targets[body] = true
 
 	# Try to bounce
 	bounces_remaining -= 1
@@ -118,7 +118,7 @@ func _find_next_target(from_position: Vector2) -> Node2D:
 	# Filter out already hit targets and out-of-range targets
 	var valid_candidates = []
 	for candidate in candidates:
-		if candidate in _hit_targets:
+		if _hit_targets.has(candidate):
 			continue
 		if not is_instance_valid(candidate):
 			continue
@@ -145,4 +145,20 @@ func _destroy():
 	if lifetime_timer:
 		lifetime_timer.stop()
 
-	call_deferred("queue_free")
+	# Return to pool instead of destroying
+	ProjectilePool.return_spark(self)
+
+## Resets spark state for pool reuse.
+func reset():
+	_is_destroying = false
+	_hit_targets.clear()
+	direction = Vector2.RIGHT
+	target = null
+	user = null
+	weapon = null
+	bounces_remaining = bounce_count
+
+	# Re-enable collision
+	if area2d:
+		area2d.monitoring = true
+		area2d.monitorable = true

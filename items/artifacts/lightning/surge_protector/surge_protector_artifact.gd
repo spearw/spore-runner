@@ -4,7 +4,6 @@
 class_name SurgeProtectorArtifact
 extends ArtifactBase
 
-const SPARK_SCENE = preload("res://items/weapons/spark/spark_projectile.tscn")
 const BASE_SPARK_COUNT: int = 5
 
 func on_equipped() -> void:
@@ -52,7 +51,7 @@ func _on_player_was_hit(_source_node: Node) -> void:
 		_spawn_spark(target, spark_damage, spark_bounces, spark_range, spark_speed, spark_lifetime)
 
 func _spawn_spark(target: Node2D, damage: int, bounces: int, range_val: float, speed: float, lifetime: float):
-	var spark = SPARK_SCENE.instantiate()
+	var spark = ProjectilePool.get_spark()
 
 	spark.allegiance = SparkProjectile.Allegiance.PLAYER
 	spark.user = user

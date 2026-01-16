@@ -3,8 +3,6 @@
 class_name Projectile
 extends Node2D
 
-const SPARK_SCENE = preload("res://items/weapons/spark/spark_projectile.tscn")
-
 # --- Allegiance ---
 enum Allegiance { PLAYER, ENEMY, NONE }
 var allegiance: Allegiance
@@ -229,7 +227,9 @@ func _apply_effect_tags(body: Node2D, damage_dealt: float):
 		_apply_lifesteal_effect(damage_dealt)
 
 	# SPARK Effect - Spawn spark projectiles on hit
-	if stats.has_effect(WeaponTags.Effect.SPARK):
+	# Also triggers if user has Conductive artifact (all weapons spark)
+	var has_conductive = is_instance_valid(user) and user.has_method("get_stat") and user.get_stat("has_conductive") > 0
+	if stats.has_effect(WeaponTags.Effect.SPARK) or has_conductive:
 		_apply_spark_effect(body)
 
 ## Creates and applies a DOT status effect based on registry data.
@@ -316,7 +316,7 @@ func _apply_spark_effect(hit_body: Node2D):
 		_create_spark(hit_body.global_position, target_enemy, spark_damage, spark_bounces, spark_range, spark_speed, spark_lifetime)
 
 func _create_spark(spawn_pos: Vector2, target_enemy: Node2D, dmg: int, bounces: int, range_val: float, spd: float, lifetime_val: float):
-	var spark = SPARK_SCENE.instantiate()
+	var spark = ProjectilePool.get_spark()
 
 	spark.allegiance = SparkProjectile.Allegiance.PLAYER if allegiance == Allegiance.PLAYER else SparkProjectile.Allegiance.ENEMY
 	spark.user = user

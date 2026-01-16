@@ -5,6 +5,7 @@
 extends Node
 
 const GENERIC_PROJECTILE_SCENE = preload("res://systems/projectiles/projectile.tscn")
+const SPARK_PROJECTILE_SCENE = preload("res://items/weapons/spark/spark_projectile.tscn")
 
 # Pool storage: Dictionary mapping scene path -> Array of inactive projectiles
 var _pools: Dictionary = {}
@@ -88,3 +89,15 @@ func get_pool_stats() -> Dictionary:
 	for scene_path in _pools.keys():
 		stats[scene_path] = _pools[scene_path].size()
 	return stats
+
+## Convenience method to get a spark projectile from the pool.
+func get_spark() -> Node:
+	var spark = get_projectile(SPARK_PROJECTILE_SCENE)
+	# Reset spark state for reuse
+	if spark.has_method("reset"):
+		spark.reset()
+	return spark
+
+## Convenience method to return a spark projectile to the pool.
+func return_spark(spark: Node) -> void:
+	return_projectile(spark, SPARK_PROJECTILE_SCENE)
