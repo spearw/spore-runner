@@ -42,6 +42,8 @@ var unlocked_powers: Dictionary = {}
 
 # --- Unique Ability Flags ---
 var can_redirect_projectiles: bool = false
+var has_grounding: bool = false  # Allows chains to bounce through player
+var grounding_damage_boost: float = 0.5  # Damage boost per player bounce (50%)
 
 # Base values for unique powers, allowing for scaling.
 var undaunted_knockback_base: float = 200.0
@@ -116,9 +118,12 @@ func _physics_process(delta: float) -> void:
 
 ## Overrides the parent `take_damage` to add player-specific logic like invulnerability.
 func take_damage(amount: int, armor_pen: float, is_crit: bool, source_node: Node = null) -> void:
+	# Emit player_was_hit BEFORE checking invulnerability (for Surge Protector etc.)
+	Events.player_was_hit.emit(source_node)
+
 	if is_invulnerable:
 		return
-		
+
 	# Call the parent method. It will handle the core logic: armor calculation,
 	# health reduction, emitting 'health_changed', and calling our `_on_take_damage` hook.
 	super.take_damage(amount, armor_pen, is_crit, source_node)
@@ -203,31 +208,62 @@ func get_stat(key: String):
 					luck *= artifact.get_luck_modifier()
 			return luck
 		"critical_hit_rate":
-			return stats.critical_chance * get_stat_multiplier(key)
+			var crit_rate = stats.critical_chance * get_stat_multiplier(key)
+			for artifact in _cached_artifacts:
+				if artifact.has_method("get_crit_chance_modifier"):
+					crit_rate *= artifact.get_crit_chance_modifier()
+			return crit_rate
 		"critical_hit_damage":
-			return stats.critical_damage * get_stat_multiplier(key)
+			var crit_dmg = stats.critical_damage * get_stat_multiplier(key)
+			for artifact in _cached_artifacts:
+				if artifact.has_method("get_crit_damage_modifier"):
+					crit_dmg *= artifact.get_crit_damage_modifier()
+			return crit_dmg
 		"damage_increase":
-			return get_stat_multiplier(key)
+			var damage = get_stat_multiplier(key)
+			for artifact in _cached_artifacts:
+				if artifact.has_method("get_damage_modifier"):
+					damage *= artifact.get_damage_modifier()
+			return damage
 		"firerate":
-			return get_stat_multiplier(key)
+			var firerate = get_stat_multiplier(key)
+			for artifact in _cached_artifacts:
+				if artifact.has_method("get_firerate_modifier"):
+					firerate *= artifact.get_firerate_modifier()
+			return firerate
 		"projectile_speed":
 			return get_stat_multiplier(key)
 		"area_size":
-			return get_stat_multiplier(key)
+			var area = get_stat_multiplier(key)
+			for artifact in _cached_artifacts:
+				if artifact.has_method("get_size_modifier"):
+					area *= artifact.get_size_modifier()
+			return area
 		"size":
-			return 1.0 # This can be expanded with artifacts or powers.
+			var size = 1.0
+			for artifact in _cached_artifacts:
+				if artifact.has_method("get_size_modifier"):
+					size *= artifact.get_size_modifier()
+			return size
 		"projectile_count_multiplier":
 			return stats.projectile_count_multiplier * get_stat_multiplier(key)
 		"armor":
-			# Armor is a flat stat, not multiplicative.
 			var permanent_bonus = GameData.data["permanent_stats"].get("armor", 0)
 			var in_run_bonus = in_run_bonuses.get("armor", 0)
 			var timed_bonus = timed_bonuses.get("armor", 0)
-			return stats.armor + permanent_bonus + in_run_bonus + timed_bonus
+			var base_armor = stats.armor + permanent_bonus + in_run_bonus + timed_bonus
+			for artifact in _cached_artifacts:
+				if artifact.has_method("get_armor_modifier"):
+					base_armor *= artifact.get_armor_modifier()
+			return base_armor
 		"max_health":
 			var permanent_bonus = GameData.data["permanent_stats"].get("max_health", 0)
 			var in_run_bonus = in_run_bonuses.get("max_health", 0)
-			return stats.max_health + permanent_bonus + in_run_bonus
+			var base_health = stats.max_health + permanent_bonus + in_run_bonus
+			for artifact in _cached_artifacts:
+				if artifact.has_method("get_max_health_modifier"):
+					base_health *= artifact.get_max_health_modifier()
+			return base_health
 		"dot_damage_bonus":
 			return get_stat_multiplier(key)
 		"dot_damage_tick_rate":
@@ -238,9 +274,27 @@ func get_stat(key: String):
 			return get_stat_multiplier(key)
 		"xp_multiplier":
 			return get_stat_multiplier(key)
+		"pickup_radius":
+			return stats.pickup_radius * get_stat_multiplier(key)
+		"projectile_count":
+			return get_stat_multiplier(key)
+		"spark_count_bonus":
+			return in_run_bonuses.get("spark_count_bonus", 0)
+		"spark_damage_bonus":
+			return 1.0 + in_run_bonuses.get("spark_damage_bonus", 0.0)
+		"spark_bounce_bonus":
+			return in_run_bonuses.get("spark_bounce_bonus", 0)
 		_:
 			printerr("get_stat: Requested unknown stat key: '", key, "'")
 			return 1.0
+
+## Returns the total additive projectile bonus from all artifacts (e.g., Tome of Duplication).
+func get_artifact_projectile_bonus() -> int:
+	var bonus = 0
+	for artifact in _cached_artifacts:
+		if artifact.has_method("get_projectile_bonus"):
+			bonus += artifact.get_projectile_bonus()
+	return bonus
 
 ## Adds experience to the player and handles leveling up.
 func add_experience(amount: int, force_level = false) -> void:
@@ -308,6 +362,10 @@ func set_invulnerability(active: bool):
 ## Activates or deactivates the projectile redirection ability.
 func set_redirect_ability(can_redirect: bool):
 	can_redirect_projectiles = can_redirect
+
+## Activates or deactivates the grounding ability (chains bounce through player).
+func set_grounding_ability(active: bool):
+	has_grounding = active
 
 ## Finds a power by its key, adds levels to it, and initializes it if it's new.
 func add_power_level(power_key: String, levels_to_add: int):

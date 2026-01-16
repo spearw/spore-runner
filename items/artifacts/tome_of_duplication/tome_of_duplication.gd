@@ -1,7 +1,7 @@
 ## tome_of_duplication.gd
 ## An artifact that grants extra projectiles to weapons.
 class_name TomeOfDuplicationArtifact
-extends Node
+extends ArtifactBase
 
 var projectile_bonus: int = 1
 

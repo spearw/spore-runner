@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cjj48hlcxmd0a"
+
+[deps]
+
+files=["res://docs/effects.ID.translation", "res://docs/effects.Category.translation", "res://docs/effects.Description.translation", "res://docs/effects.Default Values.translation"]
+
+source_file="res://docs/effects.csv"
+dest_files=["res://docs/effects.ID.translation", "res://docs/effects.Category.translation", "res://docs/effects.Description.translation", "res://docs/effects.Default Values.translation"]
+
+[params]
+
+compress=true
+delimiter=0

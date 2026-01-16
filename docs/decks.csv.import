@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b1l66by5082pl"
+
+[deps]
+
+files=["res://docs/decks.Theme.translation", "res://docs/decks.Unlock Cost.translation", "res://docs/decks.Upgrades.translation", "res://docs/decks.Weapons.translation", "res://docs/decks.Artifacts.translation", "res://docs/decks.Description.translation"]
+
+source_file="res://docs/decks.csv"
+dest_files=["res://docs/decks.Theme.translation", "res://docs/decks.Unlock Cost.translation", "res://docs/decks.Upgrades.translation", "res://docs/decks.Weapons.translation", "res://docs/decks.Artifacts.translation", "res://docs/decks.Description.translation"]
+
+[params]
+
+compress=true
+delimiter=0

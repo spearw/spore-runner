@@ -7,6 +7,6 @@ extends MovementBehavior
 func process_behavior(delta: float, host: CharacterBody2D) -> void:
 	if is_instance_valid(host.player_node):
 		var direction = (host.player_node.global_position - host.global_position).normalized()
-		host.velocity = direction * host.stats.move_speed
+		host.velocity = direction * host.get_effective_move_speed()
 	else:
 		host.velocity = Vector2.ZERO

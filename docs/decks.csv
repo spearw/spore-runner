@@ -1,0 +1,5 @@
+Name,Theme,Unlock Cost,Upgrades,Weapons,Artifacts,Description
+Core,General,0,11,0,0,Fundamentals - stat upgrades (damage/speed/crit/etc.)
+Fire,FIRE,100,19,4,3,DoT on hit with ignite chance - Flamethrower/Cinder Volley/Fireball Staff/Molotov
+Melee,PHYSICAL,100,19,4,3,High damage adjacency - Axe/Hammer/Shield/Spear
+Projectiles,PHYSICAL,0,0,0,0,Bullet hell (not implemented yet)

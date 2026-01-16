@@ -32,4 +32,4 @@ func process_behavior(delta: float, host: CharacterBody2D):
 		
 	# If not yet at the target, move towards it.
 	var direction = (target_position - host.global_position).normalized()
-	host.velocity = direction * host.stats.move_speed
+	host.velocity = direction * host.get_effective_move_speed()

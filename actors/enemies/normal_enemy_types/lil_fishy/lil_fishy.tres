@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("3_3rrc5")
 damage = 4
-armor_pen = 0
+armor_pen = 0.0
 face_movement_direction = false
 rotation_offset_degrees = 0.0
 is_flipped = false
@@ -18,6 +18,10 @@ weapon_scenes = Array[PackedScene]([])
 firerate = 4.0
 challenge_rating = 2.0
 loot_table = ExtResource("2_j5xxb")
+biome_tags = Array[int]([])
+type_tags = Array[int]([])
+size_tags = Array[int]([2])
+behavior_tags = Array[int]([])
 move_speed = 110.0
 display_name = "Lil Fishy"
 max_health = 20

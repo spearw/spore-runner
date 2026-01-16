@@ -35,6 +35,7 @@ func get_projectile(scene: PackedScene = GENERIC_PROJECTILE_SCENE) -> Node:
 	return scene.instantiate()
 
 ## Return a projectile to the pool for reuse.
+## Safe to call during physics callbacks - uses deferred removal.
 func return_projectile(projectile: Node, scene: PackedScene = GENERIC_PROJECTILE_SCENE) -> void:
 	var scene_path = scene.resource_path
 
@@ -46,18 +47,29 @@ func return_projectile(projectile: Node, scene: PackedScene = GENERIC_PROJECTILE
 
 	# Don't exceed max pool size
 	if pool.size() >= MAX_POOL_SIZE:
-		projectile.queue_free()
+		projectile.call_deferred("queue_free")
 		return
 
-	# Reset and deactivate projectile
+	# Reset and deactivate projectile immediately
 	projectile.set_process(false)
 	projectile.set_physics_process(false)
 	projectile.visible = false
 
-	# Remove from scene tree but don't free
-	if projectile.get_parent():
-		projectile.get_parent().remove_child(projectile)
+	# Defer the entire removal and pool addition to avoid physics callback issues
+	# The helper checks parent at execution time, not scheduling time
+	call_deferred("_deferred_return", projectile, pool)
 
+## Called deferred to safely remove projectile from scene tree and add to pool.
+func _deferred_return(projectile: Node, pool: Array) -> void:
+	if not is_instance_valid(projectile):
+		return
+
+	# Remove from parent if it has one (check at execution time)
+	var parent = projectile.get_parent()
+	if parent:
+		parent.remove_child(projectile)
+
+	# Add to pool
 	pool.append(projectile)
 
 ## Clear all pools (useful for scene transitions)

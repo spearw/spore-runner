@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://clightningswordweapon"]
+
+[ext_resource type="Script" uid="uid://b0g8wtar8xbcn" path="res://items/weapons/_generics/weapon.gd" id="1_weapon"]
+[ext_resource type="Resource" path="res://items/weapons/lightning_sword/lightning_sword_stats.tres" id="2_stats"]
+[ext_resource type="Script" uid="uid://5nf8qiekyyrw" path="res://systems/components/targeting_component.gd" id="3_targeting"]
+[ext_resource type="PackedScene" path="res://items/weapons/lightning_sword/lightning_sword_swing.tscn" id="4_swing"]
+[ext_resource type="PackedScene" uid="uid://bi2e3pkfcknbt" path="res://systems/components/weapon_stats_component.tscn" id="5_weaponstats"]
+[ext_resource type="PackedScene" uid="uid://c5vl748oixb2p" path="res://systems/components/fire_behavior_component.tscn" id="6_firebehavior"]
+
+[node name="LightningSwordWeapon" type="Node2D"]
+script = ExtResource("1_weapon")
+projectile_stats = ExtResource("2_stats")
+custom_projectile_scene = ExtResource("4_swing")
+base_fire_rate = 0.8
+themes = Array[int]([2])
+
+[node name="FireRateTimer" type="Timer" parent="."]
+wait_time = 0.8
+autostart = true
+
+[node name="TargetingComponent" type="Node" parent="."]
+script = ExtResource("3_targeting")
+
+[node name="WeaponStatsComponent" parent="." instance=ExtResource("5_weaponstats")]
+
+[node name="FireBehaviorComponent" parent="." instance=ExtResource("6_firebehavior")]
+spawn_location = 1

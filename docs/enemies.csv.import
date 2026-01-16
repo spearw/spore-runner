@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://d0gvh4cpe4ti4"
+
+[deps]
+
+files=["res://docs/enemies.Biome.translation", "res://docs/enemies.Type.translation", "res://docs/enemies.Size.translation", "res://docs/enemies.Behavior.translation", "res://docs/enemies.HP.translation", "res://docs/enemies.Damage.translation", "res://docs/enemies.Speed.translation", "res://docs/enemies.Notes.translation"]
+
+source_file="res://docs/enemies.csv"
+dest_files=["res://docs/enemies.Biome.translation", "res://docs/enemies.Type.translation", "res://docs/enemies.Size.translation", "res://docs/enemies.Behavior.translation", "res://docs/enemies.HP.translation", "res://docs/enemies.Damage.translation", "res://docs/enemies.Speed.translation", "res://docs/enemies.Notes.translation"]
+
+[params]
+
+compress=true
+delimiter=0

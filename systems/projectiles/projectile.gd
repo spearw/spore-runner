@@ -3,6 +3,8 @@
 class_name Projectile
 extends Node2D
 
+const SPARK_SCENE = preload("res://items/weapons/spark/spark_projectile.tscn")
+
 # --- Allegiance ---
 enum Allegiance { PLAYER, ENEMY, NONE }
 var allegiance: Allegiance
@@ -28,6 +30,7 @@ var status_chance = 0.0
 # --- Pooling Support ---
 var _is_pooled: bool = false  # Track if this projectile came from pool
 var _signals_connected: bool = false  # Track signal state for pooling
+var _is_destroying: bool = false  # Prevent double-destruction
 
 # --- Node References ---
 @onready var sprite: Sprite2D = $Area2D/Sprite2D
@@ -45,6 +48,11 @@ func _ready():
 ## Activate a pooled projectile (called instead of _ready for reused projectiles)
 func activate():
 	_is_pooled = true
+	_is_destroying = false
+	# Re-enable collision for reused projectiles
+	if area2d:
+		area2d.monitoring = true
+		area2d.monitorable = true
 	_initialize()
 
 func _initialize():
@@ -134,8 +142,14 @@ func _on_body_entered(body: Node2D):
 		return
 
 	# Valid target found - apply damage and knockback.
+	var damage_dealt = 0.0
 	if body.has_method("take_damage"):
-		_deal_damage(body)
+		damage_dealt = _deal_damage(body)
+
+	# Apply effect tags (pass damage dealt for lifesteal)
+	_apply_effect_tags(body, damage_dealt)
+
+	# Legacy status effect application (for backwards compatibility)
 	if stats.status_to_apply and body.has_node("StatusEffectManager"):
 		_apply_status(body)
 	if stats.knockback_force > 0 and body.has_method("apply_knockback"):
@@ -147,19 +161,33 @@ func _on_body_entered(body: Node2D):
 		if pierce_count <= 0:
 			_destroy()
 
-func _deal_damage(body: Node2D):
+func _deal_damage(body: Node2D) -> float:
 	var final_damage = damage
 	var is_crit = false
 
-	# Apply critical hit
-	if randf() < critical_hit_rate:
-		final_damage = damage * critical_hit_damage
+	# Apply critical hit (check CRIT_BOOST effect for bonus)
+	var crit_rate = critical_hit_rate
+	var crit_damage = critical_hit_damage
+	if stats.has_effect(WeaponTags.Effect.CRIT_BOOST):
+		var crit_data = stats.get_effect_data(WeaponTags.Effect.CRIT_BOOST)
+		crit_rate += crit_data.get("crit_chance_bonus", 0.0)
+		crit_damage += crit_data.get("crit_damage_bonus", 0.0)
+
+	if randf() < crit_rate:
+		final_damage = damage * crit_damage
 		is_crit = true
 
 	# Apply tag bonus damage vs enemy types
 	final_damage *= _calculate_tag_bonus(body)
 
-	body.take_damage(final_damage, stats.armor_penetration, is_crit, self)
+	# Apply ARMOR_PEN effect for bonus penetration
+	var armor_pen = stats.armor_penetration
+	if stats.has_effect(WeaponTags.Effect.ARMOR_PEN):
+		var pen_data = stats.get_effect_data(WeaponTags.Effect.ARMOR_PEN)
+		armor_pen = min(1.0, armor_pen + pen_data.get("penetration", 0.0))
+
+	body.take_damage(final_damage, armor_pen, is_crit, self)
+	return final_damage  # Return for lifesteal calculation
 
 ## Calculates bonus damage multiplier based on target's type tags.
 func _calculate_tag_bonus(target: Node2D) -> float:
@@ -179,6 +207,139 @@ func _calculate_tag_bonus(target: Node2D) -> float:
 func _apply_status(body: Node2D):
 	var status_manager = body.get_node("StatusEffectManager")
 	status_manager.apply_status(stats.status_to_apply, user)
+
+## Applies effect tag behaviors (DOT, SLOW, LIFESTEAL, etc.)
+func _apply_effect_tags(body: Node2D, damage_dealt: float):
+	if stats.effects.is_empty():
+		return
+
+	# Check status chance (affects DOT and SLOW application)
+	var apply_status_effects = randf() < status_chance
+
+	# DOT Effect - Apply damage over time
+	if apply_status_effects and stats.has_effect(WeaponTags.Effect.DOT):
+		_apply_dot_effect(body)
+
+	# SLOW Effect - Reduce movement speed
+	if apply_status_effects and stats.has_effect(WeaponTags.Effect.SLOW):
+		_apply_slow_effect(body)
+
+	# LIFESTEAL Effect - Heal user based on damage dealt
+	if stats.has_effect(WeaponTags.Effect.LIFESTEAL) and damage_dealt > 0:
+		_apply_lifesteal_effect(damage_dealt)
+
+	# SPARK Effect - Spawn spark projectiles on hit
+	if stats.has_effect(WeaponTags.Effect.SPARK):
+		_apply_spark_effect(body)
+
+## Creates and applies a DOT status effect based on registry data.
+func _apply_dot_effect(body: Node2D):
+	if not body.has_node("StatusEffectManager"):
+		return
+
+	var dot_data = stats.get_effect_data(WeaponTags.Effect.DOT)
+
+	# Create a DotStatusEffect instance with registry values
+	var dot_effect = DotStatusEffect.new()
+	dot_effect.id = "effect_dot"  # Standard ID for tag-based DOT
+	dot_effect.damage_per_tick = dot_data.get("damage_per_tick", 3.0)
+	dot_effect.time_between_ticks = dot_data.get("tick_rate", 0.5)
+	dot_effect.duration = dot_data.get("duration", 3.0)
+	dot_effect.modulate_color = Color(1.0, 0.6, 0.3)  # Orange tint for DOT
+
+	var status_manager = body.get_node("StatusEffectManager")
+	status_manager.apply_status(dot_effect, user)
+
+## Creates and applies a SLOW status effect based on registry data.
+func _apply_slow_effect(body: Node2D):
+	if not body.has_node("StatusEffectManager"):
+		return
+
+	var slow_data = stats.get_effect_data(WeaponTags.Effect.SLOW)
+
+	# Create a SlowStatusEffect instance with registry values
+	var slow_effect = SlowStatusEffect.new()
+	slow_effect.id = "effect_slow"  # Standard ID for tag-based slow
+	slow_effect.slow_percent = slow_data.get("slow_percent", 0.3)
+	slow_effect.duration = slow_data.get("duration", 2.0)
+	slow_effect.modulate_color = Color(0.5, 0.7, 1.0)  # Blue tint for slow
+
+	var status_manager = body.get_node("StatusEffectManager")
+	status_manager.apply_status(slow_effect, user)
+
+## Heals the user based on damage dealt.
+func _apply_lifesteal_effect(damage_dealt: float):
+	if not is_instance_valid(user) or not user.has_method("heal"):
+		return
+
+	var lifesteal_data = stats.get_effect_data(WeaponTags.Effect.LIFESTEAL)
+	var heal_percent = lifesteal_data.get("percent", 0.1)
+	var heal_amount = int(damage_dealt * heal_percent)
+
+	if heal_amount > 0:
+		user.heal(heal_amount)
+
+## Spawns spark projectiles on hit.
+func _apply_spark_effect(hit_body: Node2D):
+	if not is_instance_valid(user):
+		return
+
+	var spark_data = stats.get_effect_data(WeaponTags.Effect.SPARK)
+	var spark_count = spark_data.get("spark_count", 1)
+	var spark_damage = spark_data.get("spark_damage", 6)
+	var spark_bounces = spark_data.get("spark_bounces", 3)
+	var spark_range = spark_data.get("spark_range", 200.0)
+	var spark_speed = spark_data.get("spark_speed", 600.0)
+	var spark_lifetime = spark_data.get("spark_lifetime", 0.5)
+
+	# Apply player bonuses
+	if user.has_method("get_stat"):
+		spark_count += int(user.get_stat("spark_count_bonus")) if user.get_stat("spark_count_bonus") else 0
+		var damage_mult = user.get_stat("spark_damage_bonus") if user.get_stat("spark_damage_bonus") else 1.0
+		spark_damage = int(spark_damage * damage_mult)
+		spark_bounces += int(user.get_stat("spark_bounce_bonus")) if user.get_stat("spark_bounce_bonus") else 0
+
+	# Find enemies to target (excluding the one we just hit)
+	var candidates = TargetingUtils.get_candidates("enemies")
+	candidates = candidates.filter(func(c): return c != hit_body and is_instance_valid(c))
+
+	# Sort by distance to find closest targets
+	if not candidates.is_empty():
+		var hit_pos = hit_body.global_position
+		candidates.sort_custom(func(a, b):
+			return hit_pos.distance_squared_to(a.global_position) < hit_pos.distance_squared_to(b.global_position)
+		)
+
+	# Spawn sparks
+	for i in range(spark_count):
+		var target_enemy = candidates[i % candidates.size()] if not candidates.is_empty() else null
+		_create_spark(hit_body.global_position, target_enemy, spark_damage, spark_bounces, spark_range, spark_speed, spark_lifetime)
+
+func _create_spark(spawn_pos: Vector2, target_enemy: Node2D, dmg: int, bounces: int, range_val: float, spd: float, lifetime_val: float):
+	var spark = SPARK_SCENE.instantiate()
+
+	spark.allegiance = SparkProjectile.Allegiance.PLAYER if allegiance == Allegiance.PLAYER else SparkProjectile.Allegiance.ENEMY
+	spark.user = user
+	spark.weapon = weapon
+	spark.target = target_enemy
+	spark.base_damage = dmg
+	spark.bounce_count = bounces
+	spark.bounces_remaining = bounces
+	spark.bounce_range = range_val
+	spark.speed = spd
+	spark.lifetime = lifetime_val
+
+	spark.global_position = spawn_pos
+
+	# Aim at target if we have one, otherwise random direction
+	if is_instance_valid(target_enemy):
+		spark.direction = (target_enemy.global_position - spawn_pos).normalized()
+	else:
+		var random_angle = randf() * TAU
+		spark.direction = Vector2.from_angle(random_angle)
+	spark.rotation = spark.direction.angle()
+
+	get_tree().current_scene.add_child(spark)
 
 ## Calculates all final stats by querying the weapon's user.
 func _calculate_stats():
@@ -219,6 +380,16 @@ func _on_proximity_detected(body: Node2D):
 		proximity_detector.queue_free()
 
 func _destroy():
+	# Prevent double-destruction (can happen if projectile hits multiple enemies before cleanup)
+	if _is_destroying:
+		return
+	_is_destroying = true
+
+	# Disable collision immediately to prevent further physics callbacks
+	if area2d:
+		area2d.set_deferred("monitoring", false)
+		area2d.set_deferred("monitorable", false)
+
 	# Disconnect from global signals to prevent memory leaks
 	if stats and stats.can_retarget and Events.enemy_killed.is_connected(_on_any_enemy_killed):
 		Events.enemy_killed.disconnect(_on_any_enemy_killed)
@@ -233,20 +404,21 @@ func _destroy():
 		proximity_detector = null
 
 	# Only pool simple projectiles (no phasing, no retargeting - they have extra state)
+	# Pool handles deferred removal internally, safe to call during physics callbacks
 	if _is_pooled and stats and not stats.can_retarget and not stats.is_phasing:
 		# Reset state for reuse
 		target = null
 		has_redirected = false
 		ProjectilePool.return_projectile(self)
 	else:
-		queue_free()
+		call_deferred("queue_free")
 
 ## Called by the global "enemy_killed" signal.
 func _on_any_enemy_killed():
 	# This function runs when ANY enemy on the screen dies.
 
 	# First, check if our own target is the one that just died or is now invalid.
-	if target.is_dying:
+	if not is_instance_valid(target) or target.is_dying:
 		# Find a new target.
 		var target_group
 		if allegiance == Allegiance.PLAYER:

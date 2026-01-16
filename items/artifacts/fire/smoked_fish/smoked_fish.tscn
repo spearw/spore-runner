@@ -4,4 +4,3 @@
 
 [node name="SmokedFish" type="Node"]
 script = ExtResource("1_kpdvj")
-bonus_xp_multiplier = null

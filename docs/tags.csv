@@ -1,0 +1,33 @@
+Category,Name,ID,Description
+Theme,FIRE,0,Fire-themed weapons - typically paired with DOT
+Theme,ICE,1,Ice-themed weapons - typically paired with SLOW
+Theme,LIGHTNING,2,Lightning-themed - typically paired with CHAIN
+Theme,SALT,3,Salt/desiccation - bonus vs freshwater enemies
+Theme,NATURE,4,Nature/poison - typically paired with DOT
+Theme,ARCANE,5,Pure magic damage
+Theme,PHYSICAL,6,Non-elemental physical damage
+Biome,FRESHWATER,0,Rivers and lakes
+Biome,SALTWATER,1,Ocean and sea
+Biome,DEEP,2,Deep ocean / abyss
+Biome,CAVE,3,Underwater caves
+Biome,REEF,4,Coral reefs
+Biome,TROPICAL,5,Tropical waters
+Biome,ARCTIC,6,Cold waters
+Type,FISH,0,Standard fish enemies
+Type,JELLYFISH,1,Jellyfish and cnidarians
+Type,CRUSTACEAN,2,Crabs and lobsters
+Type,SLUG,3,Sea slugs and nudibranchs
+Type,CEPHALOPOD,4,Octopi and squid
+Type,MAMMAL,5,Dolphins and whales
+Type,PLANT,6,Anemones and seaweed
+Size,TINY,0,HP x0.4 | DMG x0.4 | SPD x1.3 | Scale 0.6
+Size,SMALL,1,HP x0.7 | DMG x0.7 | SPD x1.15 | Scale 0.8
+Size,MEDIUM,2,HP x1.0 | DMG x1.0 | SPD x1.0 | Scale 1.0
+Size,LARGE,3,HP x1.6 | DMG x1.3 | SPD x0.8 | Scale 1.3
+Size,BOSS,4,HP x4.0 | DMG x2.0 | SPD x0.6 | Scale 1.8
+Behavior,SWARM,0,Groups together attacks in numbers
+Behavior,RANGED,1,Attacks from distance
+Behavior,ARMORED,2,Has damage resistance
+Behavior,FAST,3,High movement speed
+Behavior,TANK,4,High health slow movement
+Behavior,EVASIVE,5,Dodges or phases through attacks

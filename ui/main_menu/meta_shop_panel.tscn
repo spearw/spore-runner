@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://ciwex3y87jrg8"]
+[gd_scene load_steps=17 format=3 uid="uid://ciwex3y87jrg8"]
 
 [ext_resource type="Script" uid="uid://dymyox16a5cje" path="res://ui/main_menu/meta_shop_panel.gd" id="1_script"]
+[ext_resource type="Resource" uid="uid://45e0tpblxsns" path="res://systems/global/lists/master_character_list.tres" id="2_charlist"]
+[ext_resource type="Resource" uid="uid://d5bu6epgfgbw" path="res://systems/global/lists/master_pack_list.tres" id="3_packlist"]
+[ext_resource type="Script" uid="uid://lh323ejqh8v0" path="res://systems/metaprogression/meta_upgrade.gd" id="4_6kb6b"]
+[ext_resource type="PackedScene" uid="uid://rxae3e4j0ebi" path="res://ui/main_menu/unlock_button.tscn" id="4_unlockbtn"]
+[ext_resource type="PackedScene" uid="uid://djk8bwt6fg0ae" path="res://ui/main_menu/meta_upgrade_button.tscn" id="5_upgradebtn"]
+[ext_resource type="Resource" uid="uid://cyxkh7fkxypuq" path="res://systems/metaprogression/upgrades/meta_move_speed.tres" id="6_movespeed"]
+[ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_damage.tres" id="7_damage"]
+[ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_firerate.tres" id="8_firerate"]
+[ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_crit_chance.tres" id="9_critchance"]
+[ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_crit_damage.tres" id="10_critdmg"]
+[ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_armor.tres" id="11_armor"]
+[ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_max_health.tres" id="12_health"]
+[ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_luck.tres" id="13_luck"]
+[ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_pickup_radius.tres" id="14_pickup"]
+[ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_xp.tres" id="15_xp"]
 
 [node name="MetaShopPanel" type="PanelContainer"]
 anchors_preset = 8
@@ -15,6 +30,11 @@ offset_bottom = 295.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
+character_list = ExtResource("2_charlist")
+pack_list = ExtResource("3_packlist")
+meta_upgrades = Array[ExtResource("4_6kb6b")]([ExtResource("6_movespeed"), ExtResource("7_damage"), ExtResource("8_firerate"), ExtResource("9_critchance"), ExtResource("10_critdmg"), ExtResource("11_armor"), ExtResource("12_health"), ExtResource("13_luck"), ExtResource("14_pickup"), ExtResource("15_xp")])
+unlock_button_scene = ExtResource("4_unlockbtn")
+meta_upgrade_button_scene = ExtResource("5_upgradebtn")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

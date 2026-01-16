@@ -1,0 +1,12 @@
+Name,Biome,Type,Size,Behavior,HP,Damage,Speed,Notes
+Lil Fishy,FRESHWATER,FISH,SMALL,SWARM,20,4,110,Basic chaser enemy
+Fish,FRESHWATER,FISH,LARGE,SWARM,150,20,90,Horde behavior - seeks allies
+Pike,FRESHWATER,FISH,LARGE,FAST,200,15,130,Fast aggressive chaser
+Jelly,SALTWATER,JELLYFISH,TINY,SWARM,8,5,120,Fragile swarm enemy
+Seahorse,REEF,FISH,SMALL,RANGED,16,5,200,Shoots daggers
+Noodle Boy,DEEP,JELLYFISH,TINY,SWARM,4,5,160,Horde behavior jellyfish
+Bonk Boy,REEF,PLANT,MEDIUM,ARMORED/TANK,80,50,80,Sea anemone - has armor and poison cloud
+Invisi Jelly,DEEP,JELLYFISH,SMALL,EVASIVE,18,10,110,Has armor penetration
+Comb Jelly,DEEP,JELLYFISH,LARGE,ARMORED/TANK,200,25,40,Heavy armor (10) shoots spike ring
+Garden Eel,REEF,FISH,SMALL,RANGED/FAST,10,5,250,Very fast skirmisher with bubble shots
+Golem Boss,DEEP,CRUSTACEAN,BOSS,ARMORED/TANK,2000,25,40,Boss crab - spike ring and meteors

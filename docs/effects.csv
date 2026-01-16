@@ -1,0 +1,13 @@
+Effect,ID,Category,Description,Default Values
+DOT,0,Damage,Damage over time (burn/poison),damage_per_tick: 3.0 | tick_rate: 0.5 | duration: 3.0
+SLOW,1,Damage,Reduces enemy movement speed,slow_percent: 0.3 | duration: 2.0
+CHAIN,2,Damage,Bounces to nearby enemies,chain_count: 2 | chain_range: 150 | damage_falloff: 0.8
+PIERCE,3,Damage,Passes through enemies,pierce_count: 1
+AOE,4,Damage,Area of effect damage,radius: 50 | falloff: true
+KNOCKBACK,5,Damage,Pushes enemies away,force: 200
+HOMING,6,Projectile,Tracks targets,strength: 5.0 | acquire_range: 200
+BURST,7,Projectile,Multiple projectiles per shot,count: 3 | spread_angle: 15
+EXPLOSIVE,8,Projectile,Explodes on impact,explosion_radius: 75 | explosion_damage_mult: 0.5
+LIFESTEAL,9,Special,Heals user on hit,percent: 0.1
+ARMOR_PEN,10,Special,Ignores armor,penetration: 0.5
+CRIT_BOOST,11,Special,Increased crit chance/damage,crit_chance_bonus: 0.1 | crit_damage_bonus: 0.25

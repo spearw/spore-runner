@@ -1,0 +1,11 @@
+Name,Stat Key,Effect Per Level,Base Cost,Scaling,Max Level,Notes
+Swiftness,move_speed,+2% move speed,100,1.5x,10,Multiplicative bonus
+Power,damage_increase,+3% damage,100,1.5x,10,Affects all damage
+Haste,firerate,+2% attack speed,100,1.5x,10,Faster weapon cooldowns
+Precision,critical_hit_rate,+1% crit chance,150,1.6x,10,Stacks with weapon crit
+Brutality,critical_hit_damage,+5% crit damage,150,1.6x,10,Multiplies crit multiplier
+Toughness,armor,+1 armor,200,1.8x,5,Flat damage reduction
+Vitality,max_health,+10 max HP,100,1.4x,10,Flat health bonus
+Fortune,luck,+5% luck,150,1.7x,10,Better upgrade rarities
+Magnetism,pickup_radius,+10% pickup radius,75,1.3x,10,Collect items from farther
+Wisdom,xp_multiplier,+5% XP gained,100,1.5x,10,Faster leveling

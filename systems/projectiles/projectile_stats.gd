@@ -28,6 +28,24 @@ var can_retarget: bool = false
 # Dictionary mapping EnemyTags.Type -> float bonus (e.g., {EnemyTags.Type.FISH: 0.5} = +50% vs fish)
 @export var bonus_vs_types: Dictionary = {}
 
+# --- Effect Tags (mechanical behaviors) ---
+# Which effects this projectile has (DOT, PIERCE, AOE, etc.)
+@export var effects: Array[WeaponTags.Effect] = []
+# Override specific effect parameters (merged with defaults from WeaponTagRegistry)
+# Example: {WeaponTags.Effect.DOT: {"damage_per_tick": 8}} to override just DOT damage
+@export var effect_overrides: Dictionary = {}
+
+## Helper to check if this projectile has a specific effect.
+func has_effect(effect: WeaponTags.Effect) -> bool:
+	return effect in effects
+
+## Gets merged effect data (defaults + overrides) for a specific effect.
+func get_effect_data(effect: WeaponTags.Effect) -> Dictionary:
+	if not has_effect(effect):
+		return {}
+	var overrides = effect_overrides.get(effect, {})
+	return WeaponTagRegistry.get_effect_data(effect, overrides)
+
 # --- Visuals ---
 @export var texture: Texture2D
 @export var scale: Vector2 = Vector2(1.0, 1.0)

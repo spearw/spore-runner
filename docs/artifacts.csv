@@ -1,0 +1,9 @@
+Name,Deck,Type,Effect,Notes
+Tome of Duplication,Core,Stat,+1 projectile to all weapons,Additive bonus before multipliers
+Swift Bracer,Core,Stat,20% faster fire rate,Multiplicative (0.8x fire rate timer)
+Pyrophobia,Fire,Event,Bonus damage to burning enemies,Scales with DoT upgrades
+Flaming Touch,Fire,Event,Ignited enemies spread fire aura,Creates chain ignition
+Smoked Fish,Fire,Event,+50% bonus XP from burning kills,Synergizes with fire weapons
+Goliath,Melee,Scaling,Bonuses based on bonus HP,Gets stronger with max health upgrades
+Bloodlust,Melee,Event,Cooldown reduction on kills,Luck-scaled proc chance
+Redirect,Melee,Ability,Allows redirecting projectiles,Active ability for close-range builds

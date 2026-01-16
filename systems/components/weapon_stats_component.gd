@@ -40,6 +40,9 @@ func get_final_projectile_count() -> int:
 
 	var final_count = weapon.base_projectile_count
 	if is_instance_valid(user) and user.has_method("get_stat"):
+		# Add artifact bonuses (e.g., Tome of Duplication) before multiplying
+		if user.has_method("get_artifact_projectile_bonus"):
+			final_count += user.get_artifact_projectile_bonus()
 		final_count = final_count * user.get_stat("projectile_count_multiplier")
 	return final_count
 	

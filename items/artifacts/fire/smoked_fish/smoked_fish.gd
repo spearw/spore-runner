@@ -1,17 +1,18 @@
 ## smoked_fish_artifact.gd
 ## An artifact that grants bonus XP from enemies that die while on fire.
 class_name SmokedFishArtifact
-extends Node
+extends ArtifactBase
 
 # The EXTRA XP multiplier to apply. 0.5 means +50%.
 @export var bonus_xp_multiplier: float = 0.5
 
-# This reference is set by the UpgradeManager when the artifact is equipped.
-var user: Node = null
-
-func _ready():
+func on_equipped() -> void:
 	# Listen for the global signal that announces any enemy's death.
 	Events.enemy_killed.connect(_on_enemy_killed)
+
+func on_unequipped() -> void:
+	if Events.enemy_killed.is_connected(_on_enemy_killed):
+		Events.enemy_killed.disconnect(_on_enemy_killed)
 
 ## Called by the global "enemy_killed" signal.
 func _on_enemy_killed(enemy_node: Node):

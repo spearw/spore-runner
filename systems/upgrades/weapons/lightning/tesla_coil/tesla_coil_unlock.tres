@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://xqp10dgv81t"]
+
+[ext_resource type="PackedScene" path="res://items/weapons/tesla_coil/tesla_coil.tscn" id="1_scene"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_upgrade"]
+
+[resource]
+script = ExtResource("2_upgrade")
+id = "tesla_coil_unlock"
+display_name = "Tesla Coil"
+description = "Slow but powerful sparks that bounce to many enemies."
+type = 0
+target_class_name = "Weapon"
+scene_to_unlock = ExtResource("1_scene")
+rarity = 2
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

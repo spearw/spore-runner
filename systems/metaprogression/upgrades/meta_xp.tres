@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MetaUpgrade" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://lh323ejqh8v0" path="res://systems/metaprogression/meta_upgrade.gd" id="1_leojt"]
+
+[resource]
+script = ExtResource("1_leojt")
+stat_key = "xp_multiplier"
+display_name = "Wisdom"
+description = "Permanently increases XP gained by 5% per level."
+base_cost = 100
+cost_scaling_factor = 1.5
+max_level = 10
+value_per_level = 0.05
+metadata/_custom_type_script = "uid://lh323ejqh8v0"

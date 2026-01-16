@@ -13,6 +13,8 @@ signal enemy_hit(hit_details: Dictionary)
 signal status_applied_to_enemy(enemy_node, status_id)
 signal enemy_killed(enemy_node)
 signal magnet_collected(player_node)
+signal player_was_hit(source_node)  # Emitted when player is hit (before armor calculation)
+signal chain_kill(position: Vector2, damage: float)  # Emitted when enemy killed by chain projectile
 
 # --- Hit Batching System ---
 var _hit_queue: Array = []  # Queued hits for this frame

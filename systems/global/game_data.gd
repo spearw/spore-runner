@@ -9,6 +9,8 @@ const SAVE_PATH = "user://game_data.save"
 # Signals
 signal unlocked_characters_changed
 signal unlocked_packs_changed
+signal souls_changed(new_total: int)
+signal permanent_stats_changed
 
 # --- Data To Save ---
 # We use a dictionary to hold all our data. This makes saving/loading easy.
@@ -21,8 +23,16 @@ var starter_data = {
 	# A list of resource paths for all unlocked upgrade packs.
 	"unlocked_pack_paths": ["res://systems/upgrades/packs/core_pack.tres"],
 	"permanent_stats": {
-		"move_speed_bonus": 0.0,
-		"luck_bonus": 0.0,
+		"move_speed": 0.0,
+		"damage_increase": 0.0,
+		"firerate": 0.0,
+		"critical_hit_rate": 0.0,
+		"critical_hit_damage": 0.0,
+		"armor": 0,
+		"max_health": 0,
+		"luck": 0.0,
+		"pickup_radius": 0.0,
+		"xp_multiplier": 0.0,
 	}
 }
 var data = starter_data.duplicate()
@@ -34,7 +44,36 @@ func _ready():
 func add_souls(amount: int):
 	data["total_souls"] += amount
 	Logs.add_message(["Souls collected! Total: ", data["total_souls"]])
-	# TODO: emit a signal here for the UI to update.
+	souls_changed.emit(data["total_souls"])
+
+func spend_souls(amount: int) -> bool:
+	if data["total_souls"] >= amount:
+		data["total_souls"] -= amount
+		souls_changed.emit(data["total_souls"])
+		return true
+	return false
+
+func get_souls() -> int:
+	return data["total_souls"]
+
+## Upgrades a permanent stat by the given amount.
+func upgrade_permanent_stat(stat_key: String, amount: float):
+	if not data["permanent_stats"].has(stat_key):
+		data["permanent_stats"][stat_key] = 0.0
+	data["permanent_stats"][stat_key] += amount
+	permanent_stats_changed.emit()
+	Logs.add_message(["Permanent stat upgraded: ", stat_key, " +", amount])
+
+## Gets the current value of a permanent stat.
+func get_permanent_stat(stat_key: String) -> float:
+	return data["permanent_stats"].get(stat_key, 0.0)
+
+## Gets the current level of a permanent stat upgrade (for MetaUpgrade system).
+func get_permanent_stat_level(stat_key: String, value_per_level: float) -> int:
+	var current_value = get_permanent_stat(stat_key)
+	if value_per_level <= 0:
+		return 0
+	return int(current_value / value_per_level)
 
 ## Sets the character to be used for the next run.
 ## @param character_data_path: String - The resource path of the PlayerStats .tres file.

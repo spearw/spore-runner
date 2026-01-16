@@ -20,27 +20,35 @@ func set_upgrade_data(data: MetaUpgrade):
 	update_display()
 
 func update_display():
-	var current_level = GameData.data["permanent_stats"].get(upgrade_data.stat_key, 0) / upgrade_data.value_per_level
+	if not upgrade_data:
+		return
+	var current_level = get_current_level()
 	var cost = calculate_cost(current_level)
-	
+	var is_maxed = current_level >= upgrade_data.max_level
+
 	name_label.text = upgrade_data.display_name
 	desc_label.text = upgrade_data.description
 	level_label.text = "Level %d / %d" % [current_level, upgrade_data.max_level]
-	cost_label.text = "Cost: %d Souls" % cost
-	
-	purchase_button.disabled = GameData.data["total_souls"] < cost or current_level >= upgrade_data.max_level
+
+	if is_maxed:
+		cost_label.text = "MAXED"
+	else:
+		cost_label.text = "Cost: %d Souls" % cost
+
+	purchase_button.disabled = GameData.get_souls() < cost or is_maxed
+
+func get_current_level() -> int:
+	return GameData.get_permanent_stat_level(upgrade_data.stat_key, upgrade_data.value_per_level)
 
 func calculate_cost(current_level: int) -> int:
 	return floori(upgrade_data.base_cost * pow(upgrade_data.cost_scaling_factor, current_level))
 
 func _on_purchase_button_pressed():
-	var current_level = GameData.data["permanent_stats"].get(upgrade_data.stat_key, 0) / upgrade_data.value_per_level
+	var current_level = get_current_level()
 	var cost = calculate_cost(current_level)
-	
-	if GameData.data["total_souls"] >= cost:
-		GameData.data["total_souls"] -= cost
-		GameData.data["permanent_stats"][upgrade_data.stat_key] += upgrade_data.value_per_level
-		Logs.add_message(["Purchased '%s'. New value: %s" % [upgrade_data.display_name, GameData.data["permanent_stats"][upgrade_data.stat_key]]])
+
+	if GameData.spend_souls(cost):
+		GameData.upgrade_permanent_stat(upgrade_data.stat_key, upgrade_data.value_per_level)
+		GameData.save_data()
 		update_display()
-		# We need to tell the main menu to update the soul count and other buttons
 		purchased_upgrade.emit()

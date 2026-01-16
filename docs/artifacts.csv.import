@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cormslksoj2f6"
+
+[deps]
+
+files=["res://docs/artifacts.Deck.translation", "res://docs/artifacts.Type.translation", "res://docs/artifacts.Effect.translation", "res://docs/artifacts.Notes.translation"]
+
+source_file="res://docs/artifacts.csv"
+dest_files=["res://docs/artifacts.Deck.translation", "res://docs/artifacts.Type.translation", "res://docs/artifacts.Effect.translation", "res://docs/artifacts.Notes.translation"]
+
+[params]
+
+compress=true
+delimiter=0

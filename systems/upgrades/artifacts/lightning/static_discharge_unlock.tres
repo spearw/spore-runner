@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://b7srv8d3unwc8"]
+
+[ext_resource type="PackedScene" path="res://items/artifacts/lightning/static_discharge/StaticDischargeArtifact.tscn" id="1_scene"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_upgrade"]
+
+[resource]
+script = ExtResource("2_upgrade")
+id = "static_discharge_unlock"
+display_name = "Static Discharge"
+description = "Enemies killed by chain lightning explode, dealing 30% damage to nearby enemies."
+type = 1
+target_class_name = "StaticDischargeArtifact"
+scene_to_unlock = ExtResource("1_scene")
+rarity = 4
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

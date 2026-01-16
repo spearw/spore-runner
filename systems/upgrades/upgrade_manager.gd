@@ -215,6 +215,9 @@ func apply_upgrade(upgrade_package: Dictionary) -> void:
 				if "user" in new_artifact:
 					new_artifact.user = self.player
 				player_artifacts.add_child(new_artifact)
+				# Call on_equipped after artifact is in the tree and has user set
+				if new_artifact.has_method("on_equipped"):
+					new_artifact.on_equipped()
 			else:
 				printerr("Unlock upgrade '%s' is missing a scene!" % upgrade.id)
 		Upgrade.UpgradeType.TRANSFORMATION:

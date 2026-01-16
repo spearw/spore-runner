@@ -29,4 +29,4 @@ func process_behavior(delta: float, host: CharacterBody2D):
 	# Combine them.
 	var final_direction = away_direction.lerp(strafe_vector, strafe_intensity).normalized()
 	# Set velocity.
-	host.velocity = final_direction * host.stats.move_speed
+	host.velocity = final_direction * host.get_effective_move_speed()

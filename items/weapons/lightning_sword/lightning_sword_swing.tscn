@@ -1,0 +1,109 @@
+[gd_scene load_steps=8 format=3 uid="uid://uoxe2jknolkq"]
+
+[ext_resource type="Script" uid="uid://bmtkhypyuadvd" path="res://items/weapons/_generics/melee_swing.gd" id="1_swing"]
+[ext_resource type="Script" uid="uid://c8kisw0c3au5a" path="res://items/weapons/_generics/melee_hitbox.gd" id="2_hitbox"]
+[ext_resource type="Texture2D" uid="uid://tp5pteuymubv" path="res://items/weapons/lightning_sword/lightning_sword.png" id="3_texture"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sword"]
+radius = 10.0001
+height = 74.0
+
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5708]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hitbox:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_swing"]
+resource_name = "swing"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-1.5708, 0.0, 1.5708]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sword"]
+_data = {
+&"RESET": SubResource("Animation_reset"),
+&"swing": SubResource("Animation_swing")
+}
+
+[node name="LightningSwordSwing" type="Node2D"]
+script = ExtResource("1_swing")
+
+[node name="Hitbox" type="Area2D" parent="."]
+rotation = -1.5708
+scale = Vector2(2, 2)
+script = ExtResource("2_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(39.5, 0.000143021)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_sword")
+
+[node name="Sprite2D" type="Sprite2D" parent="Hitbox"]
+position = Vector2(40, -0.499855)
+rotation = 2.3178
+scale = Vector2(0.979002, 0.947163)
+texture = ExtResource("3_texture")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_sword")
+}
+autoplay = "RESET"
+
+[node name="LifetimeTimer" type="Timer" parent="."]

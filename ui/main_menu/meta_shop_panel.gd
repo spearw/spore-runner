@@ -49,6 +49,7 @@ func _ready():
 	# Connect to GameData signals for refreshing
 	GameData.unlocked_characters_changed.connect(_refresh_characters)
 	GameData.unlocked_packs_changed.connect(_refresh_packs)
+	GameData.souls_changed.connect(_on_souls_changed)
 
 	# Show stats tab by default
 	_on_stats_tab_pressed()
@@ -174,8 +175,15 @@ func _refresh_characters():
 func _refresh_packs():
 	_populate_packs()
 
+func _on_souls_changed(_new_total: int):
+	_update_souls_display()
+	_refresh_all_buttons()
+
 func _refresh_all_buttons():
-	# Update affordability on all visible unlock buttons
+	# Update affordability on all visible buttons
+	for button in stats_grid.get_children():
+		if button.has_method("update_display"):
+			button.update_display()
 	for button in characters_grid.get_children():
 		if button.has_method("update_button_state"):
 			button.update_button_state()

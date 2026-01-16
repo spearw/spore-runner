@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://07xkheefd1rh"
+
+[deps]
+
+files=["res://docs/meta_upgrades.Stat Key.translation", "res://docs/meta_upgrades.Effect Per Level.translation", "res://docs/meta_upgrades.Base Cost.translation", "res://docs/meta_upgrades.Scaling.translation", "res://docs/meta_upgrades.Max Level.translation", "res://docs/meta_upgrades.Notes.translation"]
+
+source_file="res://docs/meta_upgrades.csv"
+dest_files=["res://docs/meta_upgrades.Stat Key.translation", "res://docs/meta_upgrades.Effect Per Level.translation", "res://docs/meta_upgrades.Base Cost.translation", "res://docs/meta_upgrades.Scaling.translation", "res://docs/meta_upgrades.Max Level.translation", "res://docs/meta_upgrades.Notes.translation"]
+
+[params]
+
+compress=true
+delimiter=0

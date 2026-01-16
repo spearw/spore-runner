@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=3 format=3 uid="uid://cia238lfi785k"]
+
+[ext_resource type="Script" uid="uid://dm4u2phuyptno" path="res://systems/projectiles/projectile_stats.gd" id="1_stats"]
+[ext_resource type="Texture2D" uid="uid://cjhuc2ggq2dov" path="res://items/weapons/storm_staff/storm.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_stats")
+damage = 20
+speed = 350.0
+lifetime = 2.5
+pierce = 0
+knockback_force = 80.0
+armor_penetration = 0.0
+critical_hit_rate = 0.08
+critical_hit_damage = 1.75
+homing_strength = 2.0
+is_scaling = true
+status_chance = 1.0
+bonus_vs_types = {}
+effects = Array[int]([4, 5, 12])
+effect_overrides = {
+4: {
+"radius": 40.0
+}
+}
+texture = ExtResource("2_texture")
+scale = Vector2(1.2, 1.2)
+modulation = Color(0.7, 0.8, 1, 1)
+metadata/_custom_type_script = "uid://dm4u2phuyptno"

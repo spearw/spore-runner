@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_leojt")
-stat_key = "move_speed_bonus"
+stat_key = "move_speed"
 display_name = "Swiftness"
 description = "Permanently increases movement speed by 2% per level."
 base_cost = 100

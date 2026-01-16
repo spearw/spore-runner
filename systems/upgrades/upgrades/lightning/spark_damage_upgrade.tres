@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_upgrade"]
+
+[resource]
+script = ExtResource("1_upgrade")
+id = "spark_damage"
+display_name = "Overload"
+description = "Sparks deal increased damage."
+type = 2
+target_class_name = "Player"
+rarity = 0
+key = "spark_damage_bonus"
+modifier_type = 0
+rarity_values = Array[float]([0.15, 0.25, 0.35, 0.50])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

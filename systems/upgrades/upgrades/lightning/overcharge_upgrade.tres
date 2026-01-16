@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="1_upgrade"]
+
+[resource]
+script = ExtResource("1_upgrade")
+id = "overcharge"
+display_name = "Overcharge"
+description = "Increases critical hit chance and damage."
+type = 2
+target_class_name = "Player"
+rarity = 1
+key = "critical_hit_rate"
+modifier_type = 0
+rarity_values = Array[float]([0.05, 0.08, 0.12, 0.15])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

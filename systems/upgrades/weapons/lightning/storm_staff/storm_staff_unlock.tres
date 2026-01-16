@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://dn3h43rpx4ehr"]
+
+[ext_resource type="PackedScene" path="res://items/weapons/storm_staff/storm_staff.tscn" id="1_scene"]
+[ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_upgrade"]
+
+[resource]
+script = ExtResource("2_upgrade")
+id = "storm_staff_unlock"
+display_name = "Storm Staff"
+description = "Releases a burst of fast sparks that scatter across enemies."
+type = 0
+target_class_name = "Weapon"
+scene_to_unlock = ExtResource("1_scene")
+rarity = 3
+key = ""
+modifier_type = 1
+rarity_values = Array[float]([])
+metadata/_custom_type_script = "uid://d0ibxieicws6j"

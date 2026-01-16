@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=2 format=3 uid="uid://uoxe2jknldq3"]
+
+[ext_resource type="Script" uid="uid://dm4u2phuyptno" path="res://systems/projectiles/projectile_stats.gd" id="1_stats"]
+
+[resource]
+script = ExtResource("1_stats")
+damage = 10
+speed = 0.0
+lifetime = 0.2
+pierce = -1
+knockback_force = 100.0
+armor_penetration = 0.1
+critical_hit_rate = 0.15
+critical_hit_damage = 1.5
+homing_strength = 0.0
+is_scaling = false
+status_chance = 1.0
+bonus_vs_types = {}
+effects = Array[int]([12])
+effect_overrides = {}
+scale = Vector2(3, 2.5)
+modulation = Color(0.7, 0.85, 1, 1)
+metadata/_custom_type_script = "uid://dm4u2phuyptno"

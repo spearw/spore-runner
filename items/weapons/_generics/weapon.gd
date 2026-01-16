@@ -8,7 +8,10 @@ extends Node2D
 # This optionally overrides the generic projectile scene with a custom one.
 @export var custom_projectile_scene: PackedScene
 @export var base_projectile_count: int = 1
-@export var base_fire_rate: float = 2;
+@export var base_fire_rate: float = 2
+
+# --- DamageType Tags (weapon identity for synergies/artifacts) ---
+@export var themes: Array[WeaponTags.DamageType] = []
 
 # --- State ---
 var last_fire_direction: Vector2 = Vector2.RIGHT
@@ -23,7 +26,8 @@ var is_transformed: bool = false
 func _ready():
 	# Create unique instance for this weapon.
 	projectile_stats = projectile_stats.duplicate(true)
-	fire_rate_timer.timeout.connect(_on_fire_rate_timer_timeout)
+	if not fire_rate_timer.timeout.is_connected(_on_fire_rate_timer_timeout):
+		fire_rate_timer.timeout.connect(_on_fire_rate_timer_timeout)
 
 	# Connect to user's stats_changed signal when available (deferred to ensure stats_component is ready)
 	call_deferred("_connect_to_user_stats")

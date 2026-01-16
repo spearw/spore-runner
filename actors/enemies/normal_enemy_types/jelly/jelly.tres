@@ -7,17 +7,21 @@
 
 [resource]
 script = ExtResource("3_x55ge")
-speed = 120.0
 damage = 5
-armor_pen = 0
+armor_pen = 0.0
 face_movement_direction = true
 rotation_offset_degrees = 145.0
 is_flipped = false
 default_behavior_name = "chasebehavior"
 ai_scene = ExtResource("1_jiq38")
 weapon_scenes = Array[PackedScene]([])
+firerate = 4.0
 challenge_rating = 0.5
 loot_table = ExtResource("2_jiq38")
+biome_tags = Array[int]([])
+type_tags = Array[int]([])
+size_tags = Array[int]([2])
+behavior_tags = Array[int]([])
 move_speed = 120.0
 display_name = "Jelly"
 max_health = 8

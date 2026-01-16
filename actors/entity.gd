@@ -17,6 +17,7 @@ var current_health: int
 var max_health: int
 var knockback_velocity: Vector2 = Vector2.ZERO
 var is_dying: bool = false
+var _speed_modifiers: Dictionary = {}  # id -> multiplier (for slow effects)
    
 
 ## Initializes the entity using its stats resource.
@@ -98,3 +99,23 @@ func _on_take_damage(damage_taken: int, is_crit: bool, source_node: Node):
 ## A "hook" for subclasses to react to health changes.
 func _on_health_changed(current: int, max_val: int):
 	pass # Enemy will use this to update its health bar.
+
+# --- Speed Modifier Methods ---
+
+## Applies a speed modifier with a unique ID.
+## @param id: Unique identifier for this modifier (so it can be removed).
+## @param multiplier: Speed multiplier (0.7 = 30% slow, 1.0 = normal).
+func apply_speed_modifier(id: String, multiplier: float) -> void:
+	_speed_modifiers[id] = multiplier
+
+## Removes a speed modifier by ID.
+func remove_speed_modifier(id: String) -> void:
+	_speed_modifiers.erase(id)
+
+## Gets the effective move speed after all modifiers.
+## Subclasses should use this instead of stats.move_speed directly.
+func get_effective_move_speed() -> float:
+	var speed = stats.move_speed
+	for modifier in _speed_modifiers.values():
+		speed *= modifier
+	return speed

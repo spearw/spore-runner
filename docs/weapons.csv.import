@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cmf6memp8xvt4"
+
+[deps]
+
+files=["res://docs/weapons.Theme.translation", "res://docs/weapons.Effects.translation", "res://docs/weapons.Damage.translation", "res://docs/weapons.Fire Rate.translation", "res://docs/weapons.Notes.translation"]
+
+source_file="res://docs/weapons.csv"
+dest_files=["res://docs/weapons.Theme.translation", "res://docs/weapons.Effects.translation", "res://docs/weapons.Damage.translation", "res://docs/weapons.Fire Rate.translation", "res://docs/weapons.Notes.translation"]
+
+[params]
+
+compress=true
+delimiter=0
