@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://conductiveunlock"]
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://bu1yvy1n4u5qg"]
 
 [ext_resource type="PackedScene" path="res://items/artifacts/lightning/conductive/ConductiveArtifact.tscn" id="1_scene"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/upgrade.gd" id="2_upgrade"]

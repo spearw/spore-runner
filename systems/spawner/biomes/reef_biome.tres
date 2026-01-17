@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BiomeDefinition" load_steps=2 format=3 uid="uid://creefbiome01"]
+
+[ext_resource type="Script" uid="uid://cbiomedef001" path="res://systems/spawner/biome_definition.gd" id="1_biome"]
+
+[resource]
+script = ExtResource("1_biome")
+display_name = "Coral Reef"
+biome_tag = 4
+description = "A vibrant coral reef with fast ranged attackers and armored anemones. High mobility helps here!"
+background_color = Color(0.15, 0.1, 0.08, 1)

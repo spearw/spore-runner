@@ -81,16 +81,17 @@ func _physics_process(delta: float) -> void:
 		if is_instance_valid(behavior):
 			behavior.process_behavior(delta, self)
 
-		# Update sprite orientation based on stats.
-		if stats.face_movement_direction:
-			if velocity.length() > 0.1:
-				var rotation_offset_radians = deg_to_rad(stats.rotation_offset_degrees)
-				animated_sprite.rotation = velocity.angle() + rotation_offset_radians
-		else:
-			# Flip sprite horizontally to face movement direction.
-			if abs(velocity.x) > 0.1:
-				animated_sprite.flip_h = (velocity.x < 0) if not stats.is_flipped else (velocity.x > 0)
-			
+		# Update sprite orientation based on stats (skip if off-screen for performance).
+		if is_on_screen:
+			if stats.face_movement_direction:
+				if velocity.length() > 0.1:
+					var rotation_offset_radians = deg_to_rad(stats.rotation_offset_degrees)
+					animated_sprite.rotation = velocity.angle() + rotation_offset_radians
+			else:
+				# Flip sprite horizontally to face movement direction.
+				if abs(velocity.x) > 0.1:
+					animated_sprite.flip_h = (velocity.x < 0) if not stats.is_flipped else (velocity.x > 0)
+
 		# Check for collision with the player to deal contact damage.
 		if can_deal_damage:
 			for i in range(get_slide_collision_count()):
@@ -149,7 +150,8 @@ func die() -> void:
 	# Start a short timer to allow death effects to play out.
 	death_timer.wait_time = 0.3
 	death_timer.one_shot = true
-	death_timer.timeout.connect(finalize_death)
+	if not death_timer.timeout.is_connected(finalize_death):
+		death_timer.timeout.connect(finalize_death)
 	death_timer.start()
 
 # --- Enemy-Specific Methods ---
@@ -163,6 +165,9 @@ func finalize_death() -> void:
 
 ## Tells all equipped weapons to fire.
 func fire_weapons() -> void:
+	# Don't fire weapons when off-screen (saves projectile spawning)
+	if not is_on_screen:
+		return
 	for weapon in _cached_weapons:
 		if is_instance_valid(weapon) and weapon.has_method("fire"):
 			weapon.fire()
@@ -170,9 +175,15 @@ func fire_weapons() -> void:
 ## Temporarily overrides the enemy's AI behavior.
 func override_behavior(new_state_name: String, duration: float, context: Dictionary = {}) -> void:
 	if is_instance_valid(ai):
-		ai.set_state_by_name(new_state_name, context) 
+		ai.set_state_by_name(new_state_name, context)
 		if duration > 0:
-			get_tree().create_timer(duration).timeout.connect(ai.restore_default_state)
+			# Use a safe callback to prevent calling methods on freed nodes
+			get_tree().create_timer(duration).timeout.connect(_restore_ai_state_safe)
+
+## Safe wrapper that checks if AI is still valid before restoring state.
+func _restore_ai_state_safe() -> void:
+	if is_instance_valid(ai) and not is_dying:
+		ai.restore_default_state()
 
 ## Updates the health bar's visual state.
 func update_health_bar(current: int, max_val: int) -> void:
@@ -185,9 +196,15 @@ func update_health_bar(current: int, max_val: int) -> void:
 
 func _on_screen_entered() -> void:
 	is_on_screen = true
+	# Resume animations when visible
+	if is_instance_valid(animated_sprite):
+		animated_sprite.speed_scale = 1.0
 
 func _on_screen_exited() -> void:
 	is_on_screen = false
+	# Pause animations when off-screen (saves CPU/GPU)
+	if is_instance_valid(animated_sprite):
+		animated_sprite.speed_scale = 0.0
 
 ## Resets the contact damage cooldown.
 func _on_damage_cooldown_timer_timeout() -> void:

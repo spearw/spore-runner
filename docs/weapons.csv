@@ -1,19 +1,20 @@
-Name,Theme,Effects,Damage,Fire Rate,Notes
-Fireball Staff,FIRE,"DOT, HOMING, EXPLOSIVE",10,5.0,Explodes on death with burning AOE
-Flamethrower,FIRE,"DOT, PIERCE",1,rapid,Short range continuous flame
-Molotov Cocktail,FIRE,"DOT, AOE, EXPLOSIVE",1,3.0,Creates ground fire on impact
-Cinder Volley,FIRE,"DOT, HOMING, BURST",6,5.0,Multiple homing fire projectiles
-Poison Cloud,NATURE,"DOT, AOE",0,6.0,Spawns lingering poison cloud
-Warhammer,PHYSICAL,"PIERCE, AOE, KNOCKBACK, ARMOR_PEN",10,5.0,Melee swing with shockwave
-Spike Ring,PHYSICAL,BURST,15,4.0,Fires 8 spikes in a ring
-Spear,PHYSICAL,"PIERCE, KNOCKBACK, ARMOR_PEN",15,1.5,Melee thrust with infinite pierce
-Dagger,PHYSICAL,CRIT_BOOST,10,1.5,High crit chance (15%)
-Axe,PHYSICAL,"PIERCE, KNOCKBACK, CRIT_BOOST",14,1.0,Melee swing with high crit (30%)
-Shotgun,PHYSICAL,"PIERCE, KNOCKBACK, BURST",6,4.0,10 pellets in spread pattern
-Shield,PHYSICAL,"PIERCE, KNOCKBACK",10,10.0,Orbiting shield bash
-Meteor,FIRE,"AOE, EXPLOSIVE",50,10.0,Delayed AOE strike with warning
-Bubble Bullet,ARCANE,"SLOW, KNOCKBACK, HOMING",6,2.0,Slow-moving homing bubbles
-Chain Lightning,LIGHTNING,"CHAIN, KNOCKBACK",12,1.5,Bounces between up to 3 enemies
-Tesla Coil,LIGHTNING,CHAIN,8,2.5,Homing bolts chain to 4 enemies with extended range
-Storm Staff,LIGHTNING,"CHAIN, AOE, KNOCKBACK",20,4.0,Powerful lightning with AOE and 3 chains
-Spark Dagger,LIGHTNING,"CHAIN, CRIT_BOOST, PIERCE",6,0.8,Fast daggers with chain and high crit
+Weapon,Category,Deck,Damage,Fire Rate (s),Speed,Range (px),Homing,Pierce,Proj Count,Crit %,Crit Bonus,Armor Pen,Base DPS,Crit DPS,Spark DPS,Secondary DPS,Single Target DPS,Multi Target DPS (5),Notes
+Axe,Melee,Core,14,1.0,0,melee,0,-1,1,30%,+100%,20%,14.0,18.2,0,0,18.2,54.6,Large swing arc
+Spear,Melee,Core,10,1.5,0,melee,0,-1,1,5%,+50%,20%,6.7,6.8,0,0,6.8,20.5,Long reach fast poke
+Warhammer,Melee,Core,10,5.0,0,melee,0,-1,1,5%,+150%,60%,2.0,2.2,0,2.0,4.2,16.0,Shockwave: +10dmg 100% armor pen
+Shield,Melee,Core,10,orbit,0,orbit,0,5,1,5%,+50%,0%,varies,varies,0,0,varies,varies,Permanent orbit knockback 300
+Lightning Sword,Melee,Lightning,10,0.8,0,melee,0,-1,1,15%,+150%,10%,12.5,15.3,22.5,0,37.8,60.0,SPARK effect
+Dagger,Ranged,Core,10,1.5,400,2000,0,0,1,15%,+50%,0%,6.7,7.2,0,0,7.2,7.2,Single target only
+Spark Dagger,Ranged,Lightning,6,0.8,600,600,0,1,1,15%,+200%,0%,7.5,9.8,22.5,0,32.3,45.0,SPARK + CRIT_BOOST
+Shotgun,Ranged,Core,6,4.0,400,400,0,1,10,5%,+50%,0%,15.0,15.4,0,0,15.4,30.8,Short range spread
+Spike Ring,Ranged,Core,15,4.0,250,1000,0,0,8,5%,+50%,0%,30.0,30.8,0,0,30.8,30.8,Radiates outward
+Chain Lightning,Ranged,Lightning,12,1.5,400,600,5,0,1,5%,+150%,0%,8.0,8.5,12.0,0,20.5,35.0,HOMING + SPARK
+Tesla Coil,Ranged,Lightning,8,2.5,500,1000,3,0,1,5%,+150%,0%,3.2,3.5,7.2,0,10.7,20.0,SPARK medium tracking
+Storm Staff,Ranged,Lightning,20,3.0,350,875,2,0,1,8%,+175%,0%,6.7,7.4,6.0,0,13.4,25.0,AOE(40) + HOMING + SPARK
+Flamethrower,Ranged,Fire,1,5.0,500,400,0,2,8,1%,+100%,50%,1.6,1.6,0,16.0,17.6,50.0,8 proj pierce 2 + Burning
+Cinder Volley,Ranged,Fire,6,5.0,800,3200,10,0,3,5%,+50%,0%,3.6,3.8,0,6.0,9.8,20.0,Strong homing + Burning
+Molotov,Ranged,Fire,1,3.0,250,250,0,0,1,5%,+50%,0%,0.3,0.3,0,18.7,19.0,60.0,Ground fire: 1dmg/0.3s for 5s + Burning
+Fireball Staff,Ranged,Fire,10,5.0,200,500,2,0,1,5%,+50%,0%,2.0,2.1,0,7.0,9.1,30.0,Explosion: 25dmg inf pierce 50% armor pen
+Meteor,Ranged,Fire,50,10.0,aoe,aoe,0,aoe,3,5%,+50%,0%,15.0,15.4,0,6.0,21.4,50.0,AOE explosion + Burning
+Poison Cloud,Ranged,Poison,0,6.0,instant,aoe,0,0,1,5%,+50%,0%,0,0,0,11.0,11.0,40.0,Ground: 3dmg/0.3s for 12s + Poison
+Bubble Bullet,Ranged,NPC,6,2.0,175,612,0.5,0,1,0%,+0%,0%,3.0,3.0,0,0,3.0,3.0,NPC weapon - intentionally weak

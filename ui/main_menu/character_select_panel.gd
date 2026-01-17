@@ -22,22 +22,31 @@ extends Control
 
 @onready var pack_grid: GridContainer = $HBoxContainer/PacksContainer/GridContainer
 
+# Biomes
+@export var all_biomes: BiomeList
+@export var biome_button_scene: PackedScene
+
+@onready var biome_grid: GridContainer = $HBoxContainer/BiomesContainer/GridContainer
 
 var selected_character: PlayerStats
 var selected_packs: Array[UpgradePackButton] = []
+var selected_biome_button: BiomeButton = null
 
 func _ready():
 	GameData.unlocked_characters_changed.connect(populate_character_grid)
 	populate_character_grid()
-	
+
 	# Select current character initially
 	var default_char_path = GameData.data["selected_character_path"]
 	var default_char_data = load(default_char_path)
 	update_details_panel(default_char_data)
-	
+
 	# Populate packs
 	GameData.unlocked_packs_changed.connect(populate_pack_grid)
 	populate_pack_grid()
+
+	# Populate biomes
+	populate_biome_grid()
 	
 
 func populate_character_grid():
@@ -59,11 +68,12 @@ func update_details_panel(char_data: PlayerStats):
 func _on_select_and_start_button_pressed():
 	# Save selected character to persisted data
 	GameData.set_selected_character(selected_character.resource_path)
-	
+
 	# Populate current run data singleton
 	CurrentRun.selected_character = self.selected_character
 	CurrentRun.selected_pack_paths = get_currently_selected_pack_paths_from_ui()
-	
+	CurrentRun.selected_biome = get_selected_biome()
+
 	# Change scene to game world.
 	get_tree().change_scene_to_file("res://world/world.tscn")
 
@@ -109,3 +119,40 @@ func get_currently_selected_pack_paths_from_ui() -> Array[String]:
 	for button in selected_packs:
 		paths.append(button.pack_data.resource_path)
 	return paths
+
+# --- Biome Selection ---
+
+func populate_biome_grid():
+	if not biome_grid or not all_biomes or not biome_button_scene:
+		return
+
+	for child in biome_grid.get_children():
+		child.queue_free()
+
+	# For now, all biomes are unlocked (can add unlock system later)
+	for biome_data in all_biomes.biomes:
+		var button: BiomeButton = biome_button_scene.instantiate()
+		button.set_biome_data(biome_data, true)  # All unlocked for now
+		button.biome_selected.connect(_on_biome_selected)
+		biome_grid.add_child(button)
+
+		# Select first biome by default
+		if selected_biome_button == null:
+			_select_biome_button(button)
+
+func _on_biome_selected(button_instance: BiomeButton):
+	_select_biome_button(button_instance)
+
+func _select_biome_button(button: BiomeButton):
+	# Deselect previous
+	if selected_biome_button:
+		selected_biome_button.set_selected(false)
+
+	# Select new
+	selected_biome_button = button
+	selected_biome_button.set_selected(true)
+
+func get_selected_biome() -> BiomeDefinition:
+	if selected_biome_button:
+		return selected_biome_button.biome_data
+	return null

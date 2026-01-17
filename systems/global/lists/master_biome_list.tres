@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BiomeList" load_steps=7 format=3 uid="uid://cmasterbiome1"]
+
+[ext_resource type="Script" path="res://systems/global/lists/biome_list.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://cbiomedef001" path="res://systems/spawner/biome_definition.gd" id="2_biomedef"]
+[ext_resource type="Resource" uid="uid://cfreshwater01" path="res://systems/spawner/biomes/freshwater_biome.tres" id="3_freshwater"]
+[ext_resource type="Resource" uid="uid://csaltwater001" path="res://systems/spawner/biomes/saltwater_biome.tres" id="4_saltwater"]
+[ext_resource type="Resource" uid="uid://cdeepbiome01" path="res://systems/spawner/biomes/deep_biome.tres" id="5_deep"]
+[ext_resource type="Resource" uid="uid://creefbiome01" path="res://systems/spawner/biomes/reef_biome.tres" id="6_reef"]
+
+[resource]
+script = ExtResource("1_script")
+biomes = Array[ExtResource("2_biomedef")]([ExtResource("3_freshwater"), ExtResource("4_saltwater"), ExtResource("5_deep"), ExtResource("6_reef")])

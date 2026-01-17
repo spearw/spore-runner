@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BiomeDefinition" load_steps=2 format=3 uid="uid://cfreshwater01"]
+
+[ext_resource type="Script" uid="uid://cbiomedef001" path="res://systems/spawner/biome_definition.gd" id="1_biome"]
+
+[resource]
+script = ExtResource("1_biome")
+display_name = "Freshwater Lake"
+biome_tag = 0
+description = "A calm freshwater lake teeming with fish. Enemies here swarm and chase in packs. Watch out for the fast Pike!"
+background_color = Color(0.08, 0.15, 0.12, 1)

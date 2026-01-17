@@ -37,11 +37,11 @@ enum Size {
 
 ## Behavior tags - combat role (for counter-spawning AI)
 enum Behavior {
-	SWARM,      # Lots of weak enemies
+	SWARM,      # Direct chase (Enemy AI)
 	RANGED,     # Shoots projectiles
 	ARMORED,    # High armor
 	FAST,       # High speed
-	TANK,       # High HP
+	HORDE,      # Groups with allies before attacking (Horde AI)
 	EVASIVE,    # Hard to hit
 }
 

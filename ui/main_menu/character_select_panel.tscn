@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://7rvo0dymjiq3"]
+[gd_scene load_steps=8 format=3 uid="uid://7rvo0dymjiq3"]
 
 [ext_resource type="Script" uid="uid://dojlwwgiwn6o6" path="res://ui/main_menu/character_select_panel.gd" id="1_vs8pe"]
 [ext_resource type="Resource" uid="uid://45e0tpblxsns" path="res://systems/global/lists/master_character_list.tres" id="2_hv0rl"]
 [ext_resource type="PackedScene" uid="uid://0rkl7hhg0sdp" path="res://ui/main_menu/character_button.tscn" id="4_i4rnc"]
 [ext_resource type="Resource" uid="uid://d5bu6epgfgbw" path="res://systems/global/lists/master_pack_list.tres" id="4_ldqag"]
 [ext_resource type="PackedScene" uid="uid://d1vkjj3tcx30h" path="res://ui/main_menu/upgrade_pack_button.tscn" id="7_ykukb"]
+[ext_resource type="Resource" uid="uid://cmasterbiome1" path="res://systems/global/lists/master_biome_list.tres" id="8_biomes"]
+[ext_resource type="PackedScene" uid="uid://cbiomebtnscn" path="res://ui/main_menu/biome_button.tscn" id="9_biomebtn"]
 
 [node name="CharacterSelectPanel" type="Control"]
 layout_mode = 3
@@ -18,6 +20,8 @@ character_list = ExtResource("2_hv0rl")
 character_button_scene = ExtResource("4_i4rnc")
 all_packs = ExtResource("4_ldqag")
 upgrade_pack_button_scene = ExtResource("7_ykukb")
+all_biomes = ExtResource("8_biomes")
+biome_button_scene = ExtResource("9_biomebtn")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -71,6 +75,17 @@ text = "Select Packs:"
 
 [node name="GridContainer" type="GridContainer" parent="HBoxContainer/PacksContainer"]
 layout_mode = 2
+
+[node name="BiomesContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/BiomesContainer"]
+layout_mode = 2
+text = "Select Biome:"
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/BiomesContainer"]
+layout_mode = 2
+columns = 2
 
 [connection signal="pressed" from="HBoxContainer/CharactersContainer/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CharactersContainer/VBoxContainer/HBoxContainer/SelectAndStartButton" to="." method="_on_select_and_start_button_pressed"]

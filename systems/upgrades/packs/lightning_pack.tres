@@ -9,7 +9,7 @@
 [ext_resource type="Resource" uid="uid://cthtnn8kxephd" path="res://systems/upgrades/artifacts/lightning/grounding_unlock.tres" id="7_grounding"]
 [ext_resource type="Resource" path="res://systems/upgrades/artifacts/lightning/surge_protector_unlock.tres" id="8_surgeprotector"]
 [ext_resource type="Resource" uid="uid://b7srv8d3unwc8" path="res://systems/upgrades/artifacts/lightning/static_discharge_unlock.tres" id="9_staticdischarge"]
-[ext_resource type="Resource" path="res://systems/upgrades/artifacts/lightning/conductive_unlock.tres" id="10_conductive"]
+[ext_resource type="Resource" uid="uid://bu1yvy1n4u5qg" path="res://systems/upgrades/artifacts/lightning/conductive_unlock.tres" id="10_conductive"]
 [ext_resource type="Resource" path="res://systems/upgrades/upgrades/lightning/spark_count_upgrade.tres" id="11_sparkcount"]
 [ext_resource type="Resource" path="res://systems/upgrades/upgrades/lightning/spark_damage_upgrade.tres" id="12_sparkdamage"]
 [ext_resource type="Resource" uid="uid://bgh2jppjw1r77" path="res://systems/upgrades/upgrades/lightning/conductivity_upgrade.tres" id="13_conductivity"]

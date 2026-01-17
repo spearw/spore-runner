@@ -8,3 +8,6 @@ var selected_character: PlayerStats = null
 
 # The list of resource paths for the packs chosen for this specific run.
 var selected_pack_paths: Array[String] = []
+
+# The biome selected for this run (affects enemy spawning).
+var selected_biome: BiomeDefinition = null

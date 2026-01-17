@@ -19,8 +19,14 @@ var is_game_over: bool = false
 # Hud
 @onready var hud: CanvasLayer = $HUD
 
+# Background
+@onready var background_sprite: Sprite2D = $ParallaxBackground/ParallaxLayer/Sprite2D
+
 ## Called once when the node enters the scene tree.
 func _ready() -> void:
+	# Apply biome background color
+	_apply_biome_visuals()
+
 	# Check if a character was selected for the current run.
 	if CurrentRun.selected_character:
 		# Instance our generic player scene.
@@ -82,4 +88,9 @@ func win_game():
 	# We can create a victory screen later.
 	# For now, just pause the tree.
 	#get_tree().paused = true
+
+## Applies visual changes based on the selected biome.
+func _apply_biome_visuals():
+	if CurrentRun.selected_biome and background_sprite:
+		background_sprite.modulate = CurrentRun.selected_biome.background_color
 	

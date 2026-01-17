@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BiomeDefinition" load_steps=2 format=3 uid="uid://csaltwater001"]
+
+[ext_resource type="Script" uid="uid://cbiomedef001" path="res://systems/spawner/biome_definition.gd" id="1_biome"]
+
+[resource]
+script = ExtResource("1_biome")
+display_name = "Saltwater Shallows"
+biome_tag = 1
+description = "Open saltwater teeming with jellyfish. Fragile but numerous enemies swarm in waves."
+background_color = Color(0.1, 0.14, 0.18, 1)

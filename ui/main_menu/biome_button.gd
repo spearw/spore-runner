@@ -1,0 +1,65 @@
+## biome_button.gd
+## A button for selecting a BiomeDefinition in the pre-run screen.
+class_name BiomeButton
+extends PanelContainer
+
+# Signal to notify the parent when this biome is selected.
+signal biome_selected(button_instance)
+
+@onready var name_label: Label = $VBoxContainer/NameLabel
+@onready var description_label: Label = $VBoxContainer/DescriptionLabel
+@onready var select_button: Button = $SelectButton
+
+var biome_data: BiomeDefinition
+var is_unlocked: bool = false
+var _is_selected: bool = false
+
+func _ready():
+	update_display()
+	select_button.pressed.connect(_on_button_pressed)
+
+func set_biome_data(data: BiomeDefinition, unlocked: bool):
+	self.biome_data = data
+	self.is_unlocked = unlocked
+
+func update_display():
+	if not is_node_ready():
+		return
+
+	name_label.text = biome_data.display_name if is_unlocked else "LOCKED"
+	description_label.text = biome_data.description if is_unlocked else ""
+
+	if is_unlocked:
+		self.modulate = Color.WHITE
+		select_button.disabled = false
+	else:
+		self.modulate = Color.DARK_GRAY
+		select_button.disabled = true
+
+	_update_selected_visual()
+
+## Public property to get the selection state.
+func is_selected() -> bool:
+	return _is_selected
+
+## Public method to set the selection state from the parent.
+func set_selected(value: bool):
+	_is_selected = value
+	_update_selected_visual()
+
+func _update_selected_visual():
+	if not is_node_ready():
+		return
+
+	if _is_selected:
+		# Highlight selected biome
+		self.self_modulate = Color(0.3, 0.6, 1.0, 1.0)  # Light blue tint
+		select_button.text = "SELECTED"
+	else:
+		self.self_modulate = Color.WHITE
+		select_button.text = "SELECT"
+
+## Internal signal handler.
+func _on_button_pressed():
+	if is_unlocked:
+		biome_selected.emit(self)

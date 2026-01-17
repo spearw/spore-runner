@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbiomebtnscn"]
+
+[ext_resource type="Script" uid="uid://cbiomebtn0001" path="res://ui/main_menu/biome_button.gd" id="1_script"]
+
+[node name="BiomeButton" type="PanelContainer"]
+custom_minimum_size = Vector2(200, 80)
+offset_right = 200.0
+offset_bottom = 80.0
+script = ExtResource("1_script")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Biome Name"
+horizontal_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Description text goes here"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_vertical = 8
+text = "SELECT"

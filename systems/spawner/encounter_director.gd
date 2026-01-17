@@ -8,6 +8,7 @@ extends Node
 @export var difficulty_curve: Curve
 @export var encounter_sets: Array[EncounterSet]
 @export var spawn_radius: float = 1200.0
+@export var encounter_config: EncounterConfig  ## Tag-based weighting (overrides biome config)
 
 @onready var spawn_pulse_timer: Timer = $Timer
 
@@ -15,10 +16,11 @@ extends Node
 var run_timer: float = 0.0
 var budget_accumulator: float = 0.0
 var player_node: Node2D
+var active_biome: BiomeDefinition  ## Set from CurrentRun at start
 
 
 # --- THREAT TRACKING ---
-# Key: Behavior Class Name (String), Value: Total Challenge Rating on screen (float)
+# Key: EnemyTags.Behavior enum value, Value: Total Challenge Rating on screen (float)
 var current_threat: Dictionary = {}
 # A list of all encounter sets, which will shrink as they are processed.
 var pending_encounter_sets: Array[EncounterSet]
@@ -32,8 +34,16 @@ func _ready():
 		printerr("DynamicSpawner is not fully configured! Disabling.")
 		set_physics_process(false)
 		return
-	
+
 	player_node = get_tree().get_first_node_in_group("player")
+
+	# Get biome from CurrentRun (if set)
+	active_biome = CurrentRun.selected_biome
+
+	# Use biome's encounter_config if no override is set
+	if not encounter_config and active_biome and active_biome.encounter_config:
+		encounter_config = active_biome.encounter_config
+
 	# In the future, get this from GameData:
 	# threat_level = GameData.data["permanent_stats"].get("threat_level", 1.0)
 	spawn_pulse_timer.timeout.connect(_on_spawn_pulse_timer_timeout)
@@ -84,54 +94,63 @@ func _on_spawn_pulse_timer_timeout():
 
 
 ## Gathers all enemies from EncounterSets that are active at the current run_timer.
+## If a biome is selected, filters to only enemies matching that biome.
 func _get_currently_available_enemies() -> Array[EnemyStats]:
 	var available: Array[EnemyStats] = []
 	for encounter_set in encounter_sets:
 		var is_active = run_timer >= encounter_set.time_start and \
 						(encounter_set.time_end == -1 or run_timer < encounter_set.time_end)
-		
+
 		if is_active:
 			available.append_array(encounter_set.enemies)
-			
+
+	# Filter by biome if one is selected
+	if active_biome:
+		available = available.filter(func(es): return active_biome.can_enemy_spawn(es))
+
 	return available
 
-## Selects a an enemy from the pool, weighted towards the lowest CR value active.
+## Selects an enemy from the pool, weighted by EncounterConfig tags.
 func _pick_theme_enemy(pool: Array[EnemyStats], budget: float) -> EnemyStats:
 	var affordable_pool = pool.filter(func(es): return es.challenge_rating <= budget)
 	if affordable_pool.is_empty(): return null
 
-	# Find the behavior with the lowest total CR currently on screen.
-	var lowest_cr = INF
-	var least_represented_behavior = ""
-	# We need a list of all unique behaviors in the affordable pool
-	var affordable_behaviors = {}
-	# TODO: Refactor to use tags
-	#for enemy_stat in affordable_pool:
-		#var behavior_scene = enemy_stat.behavior_scene.instantiate()
-		#var behavior_class = behavior_scene.get_class()
-		#behavior_scene.queue_free()
-		#affordable_behaviors[behavior_class] = true
-#
-	#for behavior_class in affordable_behaviors:
-		#var current_cr = current_threat.get(behavior_class, 0.0)
-		#if current_cr < lowest_cr:
-			#lowest_cr = current_cr
-			#least_represented_behavior = behavior_class
-			#
-	## Now, filter our affordable pool to only enemies that have that least-represented behavior.
-	#var priority_pool = affordable_pool.filter(func(es):
-		#var behavior_scene = es.behavior_scene.instantiate()
-		#var behavior_class = behavior_scene.get_class()
-		#behavior_scene.queue_free()
-		#return behavior_class == least_represented_behavior
-	#)
-	
-	# If for some reason our priority pool is empty, fall back to the affordable pool.
-	#if priority_pool.is_empty():
-		#priority_pool = affordable_pool
-		
-	# Finally, pick a random enemy from the high-priority list.
-	return affordable_pool.pick_random()
+	# If no encounter_config, fall back to unweighted random selection
+	if not encounter_config:
+		return affordable_pool.pick_random()
+
+	# Build weighted selection based on tag weights
+	return _pick_weighted_enemy(affordable_pool)
+
+
+## Picks an enemy from the pool using EncounterConfig tag weights.
+func _pick_weighted_enemy(pool: Array[EnemyStats]) -> EnemyStats:
+	if pool.is_empty(): return null
+	if not encounter_config:
+		return pool.pick_random()
+
+	# Calculate weights for each enemy
+	var weighted_enemies: Array = []
+	var total_weight = 0.0
+
+	for enemy_stats in pool:
+		var weight = encounter_config.calculate_enemy_weight(enemy_stats)
+		total_weight += weight
+		weighted_enemies.append({"stats": enemy_stats, "weight": weight})
+
+	# If all weights are zero, fall back to random
+	if total_weight <= 0:
+		return pool.pick_random()
+
+	# Weighted random selection
+	var roll = randf() * total_weight
+	var cumulative = 0.0
+	for entry in weighted_enemies:
+		cumulative += entry.weight
+		if roll <= cumulative:
+			return entry.stats
+
+	return pool[0]
 
 ## Instantiates and positions a single enemy.
 func spawn_enemy(stats: EnemyStats):
@@ -155,12 +174,14 @@ func spawn_enemy(stats: EnemyStats):
 	enemy_instance.died.connect(_on_enemy_died)
 	_update_threat_ledger(stats, 1)
 
-## Picks a random size from the enemy's allowed sizes and returns scaled stats.
+## Picks a size from the enemy's allowed sizes (weighted by EncounterConfig) and returns scaled stats.
 ## Returns a Dictionary with "stats" (duplicated & scaled), "size" (chosen size), "visual_scale" (float).
 func _apply_size_scaling(base_stats: EnemyStats) -> Dictionary:
-	# Pick random size from allowed sizes (default to MEDIUM if empty)
+	# Pick size using EncounterConfig weights, or random if no config
 	var chosen_size = EnemyTags.Size.MEDIUM
-	if not base_stats.size_tags.is_empty():
+	if encounter_config:
+		chosen_size = encounter_config.pick_weighted_size(base_stats)
+	elif not base_stats.size_tags.is_empty():
 		chosen_size = base_stats.size_tags.pick_random()
 
 	var multipliers = EnemyTags.get_size_multipliers(chosen_size)
@@ -190,23 +211,13 @@ func _apply_size_scaling(base_stats: EnemyStats) -> Dictionary:
 func _on_enemy_died(enemy_stats: EnemyStats):
 	_update_threat_ledger(enemy_stats, -1)
 	
-## Helper function to modify our internal threat tally.
+## Helper function to modify our internal threat tally using behavior tags.
 func _update_threat_ledger(enemy_stats: EnemyStats, multiplier: int):
-	#TODO: Update this function with tags
-	return
-	if not enemy_stats.behavior_scene: return
-	
-	# We need to get the class name from the behavior scene.
-	# This is a bit tricky, but we only do it once per spawn/death.
-	var behavior_instance = enemy_stats.behavior_scene.instantiate()
-	var behavior_class = behavior_instance.get_class()
-	behavior_instance.queue_free() # Clean up the temporary instance
-	
-	var current_cr = current_threat.get(behavior_class, 0.0)
-	var cr_change = enemy_stats.challenge_rating * multiplier
-	current_threat[behavior_class] = current_cr + cr_change
-	
-	# Logs.add_message(["Threat updated: ", on_screen_threat])
+	# Track threat by behavior tags
+	for tag in enemy_stats.behavior_tags:
+		var current_cr = current_threat.get(tag, 0.0)
+		var cr_change = enemy_stats.challenge_rating * multiplier
+		current_threat[tag] = max(0.0, current_cr + cr_change)
 
 func _on_timer_timeout() -> void:
 	pass # Replace with function body.

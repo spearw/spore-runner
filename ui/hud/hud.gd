@@ -43,11 +43,11 @@ func _on_player_health_changed(current_health: int, max_health: int):
 func _on_player_took_damage():
 	if tween:
 		tween.kill() # Abort the previous animation.
-	tween = create_tween() 
-	
-	damage_flash.color.a = 0.4 
-	damage_flash.modulate.a = 0.4 
-	
+	tween = create_tween()
+
+	# Only animate modulate.a (color.a should stay at 1.0 in the scene)
+	damage_flash.modulate.a = 0.4
+
 	# Create the tween to animate it to zero.
 	tween.tween_property(damage_flash, "modulate:a", 0.0, 0.3)\
 		.set_trans(Tween.TRANS_SINE)

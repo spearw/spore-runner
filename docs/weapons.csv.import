@@ -6,10 +6,10 @@ uid="uid://cmf6memp8xvt4"
 
 [deps]
 
-files=["res://docs/weapons.Theme.translation", "res://docs/weapons.Effects.translation", "res://docs/weapons.Damage.translation", "res://docs/weapons.Fire Rate.translation", "res://docs/weapons.Notes.translation"]
+files=["res://docs/weapons.Category.translation", "res://docs/weapons.Deck.translation", "res://docs/weapons.Damage.translation", "res://docs/weapons.Fire Rate (s).translation", "res://docs/weapons.Speed.translation", "res://docs/weapons.Range (px).translation", "res://docs/weapons.Homing.translation", "res://docs/weapons.Pierce.translation", "res://docs/weapons.Proj Count.translation", "res://docs/weapons.Crit %.translation", "res://docs/weapons.Crit Bonus.translation", "res://docs/weapons.Armor Pen.translation", "res://docs/weapons.Base DPS.translation", "res://docs/weapons.Crit DPS.translation", "res://docs/weapons.Spark DPS.translation", "res://docs/weapons.Secondary DPS.translation", "res://docs/weapons.Single Target DPS.translation", "res://docs/weapons.Multi Target DPS (5).translation", "res://docs/weapons.Notes.translation"]
 
 source_file="res://docs/weapons.csv"
-dest_files=["res://docs/weapons.Theme.translation", "res://docs/weapons.Effects.translation", "res://docs/weapons.Damage.translation", "res://docs/weapons.Fire Rate.translation", "res://docs/weapons.Notes.translation"]
+dest_files=["res://docs/weapons.Category.translation", "res://docs/weapons.Deck.translation", "res://docs/weapons.Damage.translation", "res://docs/weapons.Fire Rate (s).translation", "res://docs/weapons.Speed.translation", "res://docs/weapons.Range (px).translation", "res://docs/weapons.Homing.translation", "res://docs/weapons.Pierce.translation", "res://docs/weapons.Proj Count.translation", "res://docs/weapons.Crit %.translation", "res://docs/weapons.Crit Bonus.translation", "res://docs/weapons.Armor Pen.translation", "res://docs/weapons.Base DPS.translation", "res://docs/weapons.Crit DPS.translation", "res://docs/weapons.Spark DPS.translation", "res://docs/weapons.Secondary DPS.translation", "res://docs/weapons.Single Target DPS.translation", "res://docs/weapons.Multi Target DPS (5).translation", "res://docs/weapons.Notes.translation"]
 
 [params]
 
