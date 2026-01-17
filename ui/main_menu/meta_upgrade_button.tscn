@@ -2,17 +2,12 @@
 
 [ext_resource type="Script" uid="uid://csmnmrkgwocyc" path="res://ui/main_menu/meta_upgrade_button.gd" id="1_hrpco"]
 
-[node name="MetaUpgradeButton" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 104.0
+[node name="MetaUpgradeButton" type="PanelContainer"]
+custom_minimum_size = Vector2(200, 120)
 script = ExtResource("1_hrpco")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-offset_right = 40.0
-offset_bottom = 104.0
 
 [node name="NameLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2

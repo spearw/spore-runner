@@ -14,7 +14,7 @@
 [ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_armor.tres" id="11_armor"]
 [ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_max_health.tres" id="12_health"]
 [ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_luck.tres" id="13_luck"]
-[ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_pickup_radius.tres" id="14_pickup"]
+[ext_resource type="Resource" uid="uid://jnefxjqeee8f" path="res://systems/metaprogression/upgrades/meta_pickup_radius.tres" id="14_pickup"]
 [ext_resource type="Resource" path="res://systems/metaprogression/upgrades/meta_xp.tres" id="15_xp"]
 
 [node name="MetaShopPanel" type="PanelContainer"]
@@ -32,7 +32,7 @@ grow_vertical = 2
 script = ExtResource("1_script")
 character_list = ExtResource("2_charlist")
 pack_list = ExtResource("3_packlist")
-meta_upgrades = Array[ExtResource("4_6kb6b")]([ExtResource("6_movespeed"), ExtResource("7_damage"), ExtResource("8_firerate"), ExtResource("9_critchance"), ExtResource("10_critdmg"), ExtResource("11_armor"), ExtResource("12_health"), ExtResource("13_luck"), ExtResource("14_pickup"), ExtResource("15_xp")])
+meta_upgrades = Array[ExtResource("4_6kb6b")]([ExtResource("11_armor"), ExtResource("9_critchance"), ExtResource("10_critdmg"), ExtResource("7_damage"), ExtResource("8_firerate"), ExtResource("13_luck"), ExtResource("12_health"), ExtResource("6_movespeed"), ExtResource("14_pickup"), ExtResource("15_xp")])
 unlock_button_scene = ExtResource("4_unlockbtn")
 meta_upgrade_button_scene = ExtResource("5_upgradebtn")
 
@@ -82,6 +82,7 @@ size_flags_vertical = 3
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer/StatsContent/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 columns = 2
 
 [node name="BackButton" type="Button" parent="VBoxContainer/StatsContent"]

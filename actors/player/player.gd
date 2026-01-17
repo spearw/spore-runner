@@ -339,6 +339,7 @@ func notify_stats_changed():
 		_cached_artifacts = artifacts_node.get_children()
 
 	stats_changed.emit()
+	# Area size affects both weapon AoE and pickup radius
 	proximity_detector.scale.x = 1 * get_stat("area_size")
 	proximity_detector.scale.y = 1 * get_stat("area_size")
 	self.scale = Vector2.ONE * get_stat("size")

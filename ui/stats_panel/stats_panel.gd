@@ -55,7 +55,7 @@ func refresh_all_stats():
 func _refresh_player_stats():
 	move_speed_label.text = "Move Speed: %.0f" % player.get_stat("move_speed")
 	luck_label.text = "Luck: %.2f" % player.get_stat("luck")
-	pickup_radius_label.text = "Pickup Size: %.0f" % player.get_stat("pickup_radius")
+	pickup_radius_label.text = "Pickup/AoE Size: %.0f%%" % (100 * player.get_stat("area_size"))
 	critical_chance_label.text = "Critical Hit Rate: %.0f%%" % (100 * player.get_stat("critical_hit_rate"))
 	critical_damage_label.text = "Critical Hit Damage: %.0f%%" % (100 * player.get_stat("critical_hit_damage"))
 	damage_increase_label.text = "Damage Increase: %.0f%%" % (100 * player.get_stat("damage_increase") - 100)

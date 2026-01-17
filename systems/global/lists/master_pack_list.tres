@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://c7go0mrrcgyyi" path="res://systems/upgrades/packs/melee_pack.tres" id="3_6gl76"]
 [ext_resource type="Resource" uid="uid://dy0thirxxtsv" path="res://systems/upgrades/packs/fire_pack.tres" id="4_6gl76"]
 [ext_resource type="Resource" uid="uid://bc8pfntixt6we" path="res://systems/upgrades/packs/test_pack.tres" id="4_wqteb"]
-[ext_resource type="Resource" path="res://systems/upgrades/packs/lightning_pack.tres" id="5_lightning"]
+[ext_resource type="Resource" uid="uid://bocg4md8mrsy6" path="res://systems/upgrades/packs/lightning_pack.tres" id="5_lightning"]
 
 [resource]
 script = ExtResource("2_pjtqk")

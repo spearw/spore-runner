@@ -1,6 +1,6 @@
 ## meta_upgrade_button.gd
 class_name MetaUpgradeButton
-extends Control
+extends PanelContainer
 
 var upgrade_data: MetaUpgrade
 @onready var name_label: Label = $VBoxContainer/NameLabel

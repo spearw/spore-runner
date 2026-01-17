@@ -31,7 +31,7 @@ var starter_data = {
 		"armor": 0,
 		"max_health": 0,
 		"luck": 0.0,
-		"pickup_radius": 0.0,
+		"area_size": 0.0,
 		"xp_multiplier": 0.0,
 	}
 }

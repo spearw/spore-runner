@@ -1,14 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://d1dg35wer2lxb"]
+[gd_scene load_steps=4 format=3 uid="uid://d1dg35wer2lxb"]
 
 [ext_resource type="Script" uid="uid://cseb2o7bc5spi" path="res://ui/main_menu/main_menu.gd" id="1_uhj5c"]
 [ext_resource type="PackedScene" uid="uid://ciwex3y87jrg8" path="res://ui/main_menu/meta_shop_panel.tscn" id="2_metashop"]
-[ext_resource type="Resource" uid="uid://45e0tpblxsns" path="res://systems/global/lists/master_character_list.tres" id="3_charlist"]
-[ext_resource type="Resource" uid="uid://d5bu6epgfgbw" path="res://systems/global/lists/master_pack_list.tres" id="4_packlist"]
-[ext_resource type="Resource" uid="uid://cyxkh7fkxypuq" path="res://systems/metaprogression/upgrades/meta_move_speed.tres" id="5_metaspeed"]
-[ext_resource type="PackedScene" uid="uid://rxae3e4j0ebi" path="res://ui/main_menu/unlock_button.tscn" id="6_unlockbtn"]
-[ext_resource type="PackedScene" uid="uid://djk8bwt6fg0ae" path="res://ui/main_menu/meta_upgrade_button.tscn" id="7_metabtn"]
 [ext_resource type="PackedScene" uid="uid://7rvo0dymjiq3" path="res://ui/main_menu/character_select_panel.tscn" id="8_charselect"]
-[ext_resource type="Script" uid="uid://lh323ejqh8v0" path="res://systems/metaprogression/meta_upgrade.gd" id="9_metaupgrade"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -42,11 +36,16 @@ text = "Quit"
 visible = false
 layout_mode = 0
 anchors_preset = 0
-character_list = ExtResource("3_charlist")
-pack_list = ExtResource("4_packlist")
-meta_upgrades = Array[ExtResource("9_metaupgrade")]([ExtResource("5_metaspeed")])
-unlock_button_scene = ExtResource("6_unlockbtn")
-meta_upgrade_button_scene = ExtResource("7_metabtn")
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 660.0
+offset_bottom = 590.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="CharacterSelectPanel" parent="." instance=ExtResource("8_charselect")]
 visible = false

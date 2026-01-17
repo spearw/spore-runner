@@ -114,6 +114,8 @@ func _populate_stats():
 		return
 
 	for upgrade_data in meta_upgrades:
+		if not upgrade_data:
+			continue
 		var button_instance = meta_upgrade_button_scene.instantiate()
 		stats_grid.add_child(button_instance)
 		button_instance.set_upgrade_data(upgrade_data)
