@@ -13,39 +13,73 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_uhj5c")
 
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.1, 0.14, 1)
+
 [node name="MainMenuButtons" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 830.0
-offset_top = 187.0
-offset_right = 1054.0
-offset_bottom = 288.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -140.0
+offset_right = 150.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="MainMenuButtons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "Fish Food"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="MainMenuButtons"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
 
 [node name="StartRunButton" type="Button" parent="MainMenuButtons"]
+custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Start Run"
 
 [node name="MetaShopButton" type="Button" parent="MainMenuButtons"]
+custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
-text = "Open Shop"
+theme_override_font_sizes/font_size = 20
+text = "Meta Shop"
 
 [node name="QuitButton" type="Button" parent="MainMenuButtons"]
+custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Quit"
+
+[node name="VersionLabel" type="Label" parent="MainMenuButtons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.55, 1)
+theme_override_font_sizes/font_size = 12
+text = "v0.1 - Early Development"
+horizontal_alignment = 1
 
 [node name="MetaShopPanel" parent="." instance=ExtResource("2_metashop")]
 visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 660.0
-offset_bottom = 590.0
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 1
+offset_left = -380.0
+offset_top = -340.0
+offset_right = 380.0
+offset_bottom = 340.0
 
 [node name="CharacterSelectPanel" parent="." instance=ExtResource("8_charselect")]
 visible = false

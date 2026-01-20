@@ -6,9 +6,10 @@ extends PanelContainer
 # Signal to notify the parent when this biome is selected.
 signal biome_selected(button_instance)
 
-@onready var name_label: Label = $VBoxContainer/NameLabel
-@onready var description_label: Label = $VBoxContainer/DescriptionLabel
+@onready var name_label: Label = $MarginContainer/VBoxContainer/NameLabel
+@onready var description_label: Label = $MarginContainer/VBoxContainer/DescriptionLabel
 @onready var select_button: Button = $SelectButton
+@onready var selection_border: Panel = $SelectionBorder
 
 var biome_data: BiomeDefinition
 var is_unlocked: bool = false
@@ -48,16 +49,9 @@ func set_selected(value: bool):
 	_update_selected_visual()
 
 func _update_selected_visual():
-	if not is_node_ready():
+	if not is_instance_valid(selection_border):
 		return
-
-	if _is_selected:
-		# Highlight selected biome
-		self.self_modulate = Color(0.3, 0.6, 1.0, 1.0)  # Light blue tint
-		select_button.text = "SELECTED"
-	else:
-		self.self_modulate = Color.WHITE
-		select_button.text = "SELECT"
+	selection_border.visible = _is_selected
 
 ## Internal signal handler.
 func _on_button_pressed():

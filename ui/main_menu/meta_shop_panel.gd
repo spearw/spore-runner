@@ -11,29 +11,29 @@ signal back_pressed
 @export var meta_upgrade_button_scene: PackedScene
 
 # Tab buttons
-@onready var stats_tab_button: Button = $VBoxContainer/TabBar/StatsButton
-@onready var characters_tab_button: Button = $VBoxContainer/TabBar/CharactersButton
-@onready var packs_tab_button: Button = $VBoxContainer/TabBar/PacksButton
+@onready var stats_tab_button: Button = $MarginContainer/VBoxContainer/TabBar/StatsButton
+@onready var characters_tab_button: Button = $MarginContainer/VBoxContainer/TabBar/CharactersButton
+@onready var packs_tab_button: Button = $MarginContainer/VBoxContainer/TabBar/PacksButton
 
 # Content containers
-@onready var stats_content: VBoxContainer = $VBoxContainer/StatsContent
-@onready var characters_content: VBoxContainer = $VBoxContainer/CharactersContent
-@onready var packs_content: VBoxContainer = $VBoxContainer/PacksContent
+@onready var stats_content: VBoxContainer = $MarginContainer/VBoxContainer/StatsContent
+@onready var characters_content: VBoxContainer = $MarginContainer/VBoxContainer/CharactersContent
+@onready var packs_content: VBoxContainer = $MarginContainer/VBoxContainer/PacksContent
 
 # Grids for each tab (inside ScrollContainers)
-@onready var stats_grid: GridContainer = $VBoxContainer/StatsContent/ScrollContainer/GridContainer
-@onready var characters_grid: GridContainer = $VBoxContainer/CharactersContent/ScrollContainer/GridContainer
-@onready var packs_grid: GridContainer = $VBoxContainer/PacksContent/ScrollContainer/GridContainer
+@onready var stats_grid: GridContainer = $MarginContainer/VBoxContainer/StatsContent/ScrollContainer/GridContainer
+@onready var characters_grid: GridContainer = $MarginContainer/VBoxContainer/CharactersContent/ScrollContainer/GridContainer
+@onready var packs_grid: GridContainer = $MarginContainer/VBoxContainer/PacksContent/ScrollContainer/GridContainer
 
-# Souls labels for each tab
-@onready var stats_souls_label: Label = $VBoxContainer/StatsContent/SoulsCount
-@onready var characters_souls_label: Label = $VBoxContainer/CharactersContent/SoulsCount
-@onready var packs_souls_label: Label = $VBoxContainer/PacksContent/SoulsCount
+# Souls labels for each tab (now in HeaderContainer)
+@onready var stats_souls_label: Label = $MarginContainer/VBoxContainer/StatsContent/HeaderContainer/SoulsCount
+@onready var characters_souls_label: Label = $MarginContainer/VBoxContainer/CharactersContent/HeaderContainer/SoulsCount
+@onready var packs_souls_label: Label = $MarginContainer/VBoxContainer/PacksContent/HeaderContainer/SoulsCount
 
 # Back buttons
-@onready var stats_back_button: Button = $VBoxContainer/StatsContent/BackButton
-@onready var characters_back_button: Button = $VBoxContainer/CharactersContent/BackButton
-@onready var packs_back_button: Button = $VBoxContainer/PacksContent/BackButton
+@onready var stats_back_button: Button = $MarginContainer/VBoxContainer/StatsContent/BackButton
+@onready var characters_back_button: Button = $MarginContainer/VBoxContainer/CharactersContent/BackButton
+@onready var packs_back_button: Button = $MarginContainer/VBoxContainer/PacksContent/BackButton
 
 func _ready():
 	# Connect tab buttons
@@ -75,6 +75,11 @@ func _show_tab(tab_name: String):
 	stats_content.hide()
 	characters_content.hide()
 	packs_content.hide()
+
+	# Update toggle button states
+	stats_tab_button.button_pressed = (tab_name == "stats")
+	characters_tab_button.button_pressed = (tab_name == "characters")
+	packs_tab_button.button_pressed = (tab_name == "packs")
 
 	match tab_name:
 		"stats":

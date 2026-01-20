@@ -3,11 +3,11 @@ class_name MetaUpgradeButton
 extends PanelContainer
 
 var upgrade_data: MetaUpgrade
-@onready var name_label: Label = $VBoxContainer/NameLabel
-@onready var desc_label: Label = $VBoxContainer/DescriptionLabel
-@onready var level_label: Label = $VBoxContainer/LevelLabel
-@onready var cost_label: Label = $VBoxContainer/CostLabel
-@onready var purchase_button: Button = $VBoxContainer/PurchaseButton
+@onready var name_label: Label = $MarginContainer/VBoxContainer/NameLabel
+@onready var desc_label: Label = $MarginContainer/VBoxContainer/DescriptionLabel
+@onready var level_label: Label = $MarginContainer/VBoxContainer/BottomRow/LevelLabel
+@onready var cost_label: Label = $MarginContainer/VBoxContainer/BottomRow/CostLabel
+@onready var purchase_button: Button = $MarginContainer/VBoxContainer/PurchaseButton
 
 # Signals
 signal purchased_upgrade

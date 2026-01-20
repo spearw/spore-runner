@@ -23,10 +23,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -330.0
-offset_top = -295.0
-offset_right = 330.0
-offset_bottom = 295.0
+offset_left = -360.0
+offset_top = -320.0
+offset_right = 360.0
+offset_bottom = 320.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
@@ -36,109 +36,162 @@ meta_upgrades = Array[ExtResource("4_6kb6b")]([ExtResource("11_armor"), ExtResou
 unlock_button_scene = ExtResource("4_unlockbtn")
 meta_upgrade_button_scene = ExtResource("5_upgradebtn")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
 text = "Meta Shop"
 horizontal_alignment = 1
 
-[node name="TabBar" type="HBoxContainer" parent="VBoxContainer"]
+[node name="TabBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 4
 
-[node name="StatsButton" type="Button" parent="VBoxContainer/TabBar"]
+[node name="StatsButton" type="Button" parent="MarginContainer/VBoxContainer/TabBar"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_pressed = true
 text = "Stats"
 
-[node name="CharactersButton" type="Button" parent="VBoxContainer/TabBar"]
+[node name="CharactersButton" type="Button" parent="MarginContainer/VBoxContainer/TabBar"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
 text = "Characters"
 
-[node name="PacksButton" type="Button" parent="VBoxContainer/TabBar"]
+[node name="PacksButton" type="Button" parent="MarginContainer/VBoxContainer/TabBar"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
 text = "Packs"
 
-[node name="StatsContent" type="VBoxContainer" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="StatsContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 8
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer/StatsContent"]
+[node name="HeaderContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatsContent"]
 layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/StatsContent/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
 text = "Stat Upgrades"
-horizontal_alignment = 1
 
-[node name="SoulsCount" type="Label" parent="VBoxContainer/StatsContent"]
+[node name="SoulsCount" type="Label" parent="MarginContainer/VBoxContainer/StatsContent/HeaderContainer"]
 layout_mode = 2
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/StatsContent"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/StatsContent"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/StatsContent/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/StatsContent/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
 columns = 2
 
-[node name="BackButton" type="Button" parent="VBoxContainer/StatsContent"]
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/StatsContent"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Back"
 
-[node name="CharactersContent" type="VBoxContainer" parent="VBoxContainer"]
+[node name="CharactersContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 8
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer/CharactersContent"]
+[node name="HeaderContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CharactersContent"]
 layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/CharactersContent/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
 text = "Character Unlocks"
-horizontal_alignment = 1
 
-[node name="SoulsCount" type="Label" parent="VBoxContainer/CharactersContent"]
+[node name="SoulsCount" type="Label" parent="MarginContainer/VBoxContainer/CharactersContent/HeaderContainer"]
 layout_mode = 2
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/CharactersContent"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/CharactersContent"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/CharactersContent/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/CharactersContent/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
 columns = 3
 
-[node name="BackButton" type="Button" parent="VBoxContainer/CharactersContent"]
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/CharactersContent"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Back"
 
-[node name="PacksContent" type="VBoxContainer" parent="VBoxContainer"]
+[node name="PacksContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 8
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer/PacksContent"]
+[node name="HeaderContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PacksContent"]
 layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/PacksContent/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
 text = "Pack Unlocks"
-horizontal_alignment = 1
 
-[node name="SoulsCount" type="Label" parent="VBoxContainer/PacksContent"]
+[node name="SoulsCount" type="Label" parent="MarginContainer/VBoxContainer/PacksContent/HeaderContainer"]
 layout_mode = 2
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/PacksContent"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/PacksContent"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/PacksContent/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/PacksContent/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
 columns = 2
 
-[node name="BackButton" type="Button" parent="VBoxContainer/PacksContent"]
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/PacksContent"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Back"

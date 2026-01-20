@@ -1,30 +1,58 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbiomebtnscn"]
+[gd_scene load_steps=3 format=3 uid="uid://cbiomebtnscn"]
 
 [ext_resource type="Script" uid="uid://cbiomebtn0001" path="res://ui/main_menu/biome_button.gd" id="1_script"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_selection"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.4, 1)
+corner_radius_left_top = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_left_bottom = 4
+
 [node name="BiomeButton" type="PanelContainer"]
-custom_minimum_size = Vector2(200, 80)
-offset_right = 200.0
-offset_bottom = 80.0
+custom_minimum_size = Vector2(160, 140)
 script = ExtResource("1_script")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="SelectionBorder" type="Panel" parent="."]
+visible = false
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_selection")
 
-[node name="NameLabel" type="Label" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
 theme_override_font_sizes/font_size = 16
 text = "Biome Name"
 horizontal_alignment = 1
 
-[node name="DescriptionLabel" type="Label" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.7, 0.7, 0.75, 1)
+theme_override_font_sizes/font_size = 11
 text = "Description text goes here"
 horizontal_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="SelectButton" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-size_flags_vertical = 8
-text = "SELECT"

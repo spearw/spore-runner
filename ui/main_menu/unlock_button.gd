@@ -7,10 +7,10 @@ signal unlock_purchased(resource_path: String)
 var unlock_data: Resource
 var unlock_cost: int = 100
 
-@onready var icon_rect: TextureRect = $VBoxContainer/TextureRect
-@onready var name_label: Label = $VBoxContainer/NameLabel
-@onready var cost_label: Label = $VBoxContainer/CostLabel
-@onready var purchase_button: Button = $VBoxContainer/PurchaseButton
+@onready var icon_rect: TextureRect = $MarginContainer/VBoxContainer/TextureRect
+@onready var name_label: Label = $MarginContainer/VBoxContainer/NameLabel
+@onready var cost_label: Label = $MarginContainer/VBoxContainer/CostLabel
+@onready var purchase_button: Button = $MarginContainer/VBoxContainer/PurchaseButton
 
 func _ready():
 	purchase_button.pressed.connect(_on_purchase_button_pressed)
