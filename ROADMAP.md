@@ -67,7 +67,48 @@ Level Tags: [freshwater, cave] → weights freshwater enemies higher
 
 ### Tag-Based Mechanics (Future)
 - **Weapon bonuses**: "Salt" weapon deals bonus damage to "freshwater" or "slug" tagged enemies
-- **Hard mode countering**: System reads player upgrade tags and weights enemy spawns to counter, preventing repetitive strategies
+- **Difficulty-based counter-spawning**: See Difficulty System section below
+
+### Encounter Configs
+Encounter configs are randomly selected at run start and shown to the player via a banner. They weight enemy spawns without changing which enemies CAN spawn (that's the biome's job).
+
+**Architecture:**
+- **Biome** = hard filter (which enemies CAN spawn)
+- **EncounterConfig** = soft weights (which enemies are MORE LIKELY)
+- **Points curve** = difficulty scaling over time
+- **Randomness** = variety within weighted selection
+
+**Current Configs:**
+- `swarm_tiny_small_config` → "Swarm Infestation" - Large groups of small enemies
+- `armored_large_config` → "Armored Assault" - Heavily armored foes
+- `ranged_evasive_config` → "Ranged Barrage" - Enemies attack from distance
+- `large_slow_config` → "Slow Horrors" - Slow but deadly creatures
+
+---
+
+## Difficulty System (Future)
+
+### Overview
+Difficulty modes that dynamically adjust encounter weights based on the player's build.
+
+### EASY Mode
+- Analyzes player's selected upgrades, weapons, and artifacts
+- Identifies tags the player is strong against
+- **Increases** spawn weight for enemies the player counters well
+- Makes runs feel powerful and rewarding for new players
+
+### HARD Mode
+- Analyzes player's selected upgrades, weapons, and artifacts
+- Identifies tags the player is weak against
+- **Increases** spawn weight for enemies that counter the player's build
+- Prevents repetitive "solved" strategies
+- Forces adaptation and build variety
+
+### Implementation Notes
+- `EncounterDirector` already tracks `current_threat` by behavior tags
+- Need to add: player build tag analysis
+- Need to add: dynamic weight adjustment based on difficulty mode
+- Configs remain the base; difficulty mode applies a multiplier layer on top
 
 ---
 
@@ -99,19 +140,22 @@ damage_taken = max(0, damage - armor)
 - [x] Meta shop with tabs (Stats, Characters, Packs)
 - [x] Multiple characters and weapons
 - [x] Status effects and projectile variants
+- [x] Enemy tag system (biome, type, size, behavior tags)
+- [x] Biome-based enemy pool filtering
+- [x] Encounter config system with random selection at run start
 
 ### In Progress
-- [ ] Tag system for enemies
 - [ ] Character-deck exclusive linking
 - [ ] Secondary deck selection UI
+- [ ] Encounter config banner UI (show selected config to player)
 
 ### Planned
-- [ ] Hard mode with counter-spawning AI
+- [ ] Difficulty-based counter-spawning (EASY/HARD modes)
+- [ ] Weapon bonuses vs enemy type tags
 - [ ] Armor/penetration stat implementation
 - [ ] Weapon transformation system (upgrade paths)
 - [ ] More artifacts with unique effects
 - [ ] World events system
-- [ ] Biome-specific encounter weighting
 
 ---
 
