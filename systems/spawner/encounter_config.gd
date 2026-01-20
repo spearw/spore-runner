@@ -4,6 +4,12 @@
 class_name EncounterConfig
 extends Resource
 
+## Display name shown to players (e.g., "Swarm Infestation").
+@export var display_name: String = ""
+
+## Description shown to players (e.g., "Large groups of small enemies").
+@export var description: String = ""
+
 ## Biome weights - enemies with matching biome tags get higher spawn priority.
 ## Dictionary mapping EnemyTags.Biome -> float weight (default 1.0)
 ## Example: {EnemyTags.Biome.FRESHWATER: 2.0, EnemyTags.Biome.CAVE: 1.5}

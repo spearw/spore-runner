@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EncounterConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://systems/spawner/encounter_config.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Swarm Infestation"
+description = "Large groups of small enemies"
+biome_weights = {}
+type_weights = {}
+behavior_weights = {
+	0: 2.0
+}
+size_weights = {
+	0: 1.5,
+	1: 1.5,
+	2: 0.7,
+	3: 0.5
+}

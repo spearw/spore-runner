@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EncounterConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://systems/spawner/encounter_config.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Armored Assault"
+description = "Heavily armored foes"
+biome_weights = {}
+type_weights = {
+	2: 1.5
+}
+behavior_weights = {
+	2: 2.0
+}
+size_weights = {
+	2: 1.0,
+	3: 1.8
+}

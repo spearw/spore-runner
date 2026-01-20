@@ -40,9 +40,14 @@ func _ready():
 	# Get biome from CurrentRun (if set)
 	active_biome = CurrentRun.selected_biome
 
-	# Use biome's encounter_config if no override is set
-	if not encounter_config and active_biome and active_biome.encounter_config:
+	# Get encounter config - priority: CurrentRun > @export override > biome default
+	if CurrentRun.selected_encounter_config:
+		encounter_config = CurrentRun.selected_encounter_config
+	elif not encounter_config and active_biome and active_biome.encounter_config:
 		encounter_config = active_biome.encounter_config
+
+	if encounter_config:
+		Logs.add_message("Encounter Config: %s" % encounter_config.display_name)
 
 	# In the future, get this from GameData:
 	# threat_level = GameData.data["permanent_stats"].get("threat_level", 1.0)

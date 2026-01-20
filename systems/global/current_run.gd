@@ -11,3 +11,6 @@ var selected_pack_paths: Array[String] = []
 
 # The biome selected for this run (affects enemy spawning).
 var selected_biome: BiomeDefinition = null
+
+# The encounter config for this run (affects enemy spawn weighting).
+var selected_encounter_config: EncounterConfig = null
