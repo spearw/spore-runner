@@ -294,6 +294,12 @@ category relative to the other weapons**. That takes a double normalization:
 # analyzer alone: godot --headless --path . -s res://balance_sweep_analyze.gd -- --csv=bench_results/sweep.csv
 ```
 
+**Enemy-only weapons** (`systems/upgrades/weapons/enemy/` — the eel's bubble bullet, etc.) are
+swept for visibility but are **not part of the player field**: the analyzer marks them `[enemy]`
+and keeps them out of the medians and every proposal, and `deck_link_verify` enforces that no
+draftable deck carries one. They are unique to their creatures and owe no balance to player
+weapons (user law, Jul 2026).
+
 **The harness proposes; it never writes the grid.** Hand-review every entry — feel is law.
 
 **Columns it can fill today:** baseline + the armor ladder (clean, frozen, ~3% noise), plus — behind

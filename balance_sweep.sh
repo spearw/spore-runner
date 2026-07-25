@@ -18,6 +18,10 @@
 ##   - fast/evasive/ranged are BLOCKED until chase-and-recycle motion lands (the bench overrides AI,
 ##     and the orbit model measured speed backwards).
 ##
+## Enemy-only weapons (weapons/enemy/, e.g. the eel's bubble bullet) are swept too -- knowing what
+## the creatures actually deal is useful -- but the analyzer keeps them out of the player field's
+## medians and proposals. They owe no balance to player weapons.
+##
 ## The harness PROPOSES; it never writes the grid. Feel is law -- proposals get hand-reviewed.
 set -u
 GODOT="${GODOT:-C:/Godot/Godot_v4.4.1-stable_win64_console.exe}"

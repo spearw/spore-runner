@@ -152,8 +152,21 @@ func _ready() -> void:
 	print("DECKLINK coverage: health_floor=%s armor_decks=%s missing_stats=%s" % [
 		str(health_ok), str(armor_decks), str(missing_stats)])
 
+	# --- 6. Enemy-weapon quarantine (user law, Jul 2026): weapons under weapons/enemy/ belong to
+	# the creatures, are UNIQUE to them, and owe players nothing -- no draftable deck may carry
+	# one. (The parked test/npc decks are exempt: they are not draftable in the first place.)
+	var leaked: Array = []
+	for deck in master:
+		if deck.id in ["test", "npc"]:
+			continue
+		for u in deck.upgrades:
+			if u != null and "/weapons/enemy/" in u.resource_path:
+				leaked.append("%s in %s" % [u.id, deck.id])
+	var quarantine_ok: bool = leaked.is_empty()
+	print("DECKLINK enemy_quarantine: leaked=%s ok=%s" % [str(leaked), str(quarantine_ok)])
+
 	var pass_all: bool = comp_ok and starter_ok and starter_none_ok and identity_ok \
 		and granted_ok and ember_alive_ok and content_ok \
-		and health_ok and armor_ok and missing_stats.is_empty()
+		and health_ok and armor_ok and missing_stats.is_empty() and quarantine_ok
 	print("DECKLINK RESULT=%s" % ("PASS" if pass_all else "FAIL"))
 	get_tree().quit()

@@ -32,6 +32,13 @@ const MEDIAN_FLOOR := 0.01  # a column median this low means most of the field i
 ## overkill waste is a balance fact, not a counter-grid axis.
 const COLUMN_BEHAVIOR := {"armor10": "ARMORED", "armor25": "ARMORED", "mortal_regen": "REGENERATOR"}
 
+## Enemy-only weapons (the garden eel's bubble bullet, etc.) live under weapons/enemy/ and are
+## never draftable (deck_link_verify enforces it). They stay in the sweep for visibility -- how
+## hard does the eel actually hit? -- but they are not part of the player field: excluded from the
+## column medians every Z divides by, and from every grid proposal. They owe no balance to player
+## weapons (user call, Jul 2026).
+const ENEMY_DIR := "/weapons/enemy/"
+
 func _ready() -> void:
 	var csv_path := "bench_results/sweep.csv"
 	for arg in OS.get_cmdline_user_args():
@@ -79,7 +86,7 @@ func _ready() -> void:
 	for a in columns:
 		var vals: Array = []
 		for w in r:
-			if r[w][a] >= 0.0:
+			if r[w][a] >= 0.0 and not ENEMY_DIR in w:
 				vals.append(r[w][a])
 		medians[a] = _median(vals)
 	var z: Dictionary = {}
@@ -99,7 +106,9 @@ func _ready() -> void:
 	var weapon_names: Array = r.keys()
 	weapon_names.sort()
 	for w in weapon_names:
-		var row := "%-36s %8.1f" % [w.get_file().replace("_unlock.tres", ""), dps[w]["baseline"]]
+		var label: String = w.get_file().replace("_unlock.tres", "") \
+			+ (" [enemy]" if ENEMY_DIR in w else "")
+		var row := "%-36s %8.1f" % [label, dps[w]["baseline"]]
 		for a in columns:
 			row += " %10.2f %6.2f" % [r[w][a], z[w][a]]
 		print(row)
@@ -124,6 +133,8 @@ func _ready() -> void:
 		SQUASH_LO, SQUASH_HI, str(usable_columns)])
 	var tag_z: Dictionary = {}  # tag name -> Array of per-weapon mean Z vs ARMORED
 	for w in weapon_names:
+		if ENEMY_DIR in w:
+			continue  # enemy weapons propose nothing -- players can never hold them
 		var zs: Array = []
 		for a in usable_columns:
 			if z[w][a] >= 0.0:
@@ -172,7 +183,7 @@ func _ready() -> void:
 		print("PROPOSED GRID ENTRIES vs %s (from %s, kills/sec vs mortal_baseline):" % [behavior_name, a])
 		var col_tag_z: Dictionary = {}
 		for w in weapon_names:
-			if not z.has(w) or z[w].get(a, -1.0) < 0.0:
+			if ENEMY_DIR in w or not z.has(w) or z[w].get(a, -1.0) < 0.0:
 				continue
 			var wz: float = z[w][a]
 			for tag in _weapon_tags(w):

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cvcnhdf5np0ln" path="res://systems/upgrades/packs/upgrade_pack.gd" id="1_pk"]
 [ext_resource type="Script" uid="uid://d0ibxieicws6j" path="res://systems/upgrades/Upgrade.gd" id="2_upg"]
-[ext_resource type="Resource" uid="uid://b5wxxftjvab7e" path="res://systems/upgrades/weapons/bubble_bullet_unlock.tres" id="3_bub"]
+[ext_resource type="Resource" uid="uid://b5wxxftjvab7e" path="res://systems/upgrades/weapons/enemy/bubble_bullet_unlock.tres" id="3_bub"]
 
 [resource]
 script = ExtResource("1_pk")
