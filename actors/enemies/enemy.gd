@@ -91,6 +91,8 @@ func _physics_process(delta: float) -> void:
 			behavior.process_behavior(delta, self)
 
 		_blocked_clink_cooldown -= delta
+		# Decays here (not in tick_regen) so mended-but-non-regenerating enemies throttle too.
+		_regen_pulse_cooldown -= delta
 		# Venom stack pips: a "***" row under the health bar, updated only when the count moves.
 		if is_on_screen:
 			_update_stack_pips()
@@ -205,16 +207,38 @@ func tick_regen(delta: float) -> void:
 	if is_dying or stats.regen_per_sec <= 0.0 or current_health >= stats.max_health:
 		return
 	_regen_accum += stats.regen_per_sec * delta
-	_regen_pulse_cooldown -= delta
 	if _regen_accum >= 1.0:
 		var whole := int(_regen_accum)
 		_regen_accum -= whole
 		heal(whole)
-		if _regen_pulse_cooldown <= 0.0 and is_on_screen:
-			_regen_pulse_cooldown = 1.0
-			var tween := create_tween()
-			tween.tween_property(self, "modulate", Color(0.6, 1.5, 0.6, 1.0), 0.15)
-			tween.tween_property(self, "modulate", stats.modulate, 0.25)
+		flash_heal()
+
+## The green heal pulse, throttled to once a second -- one visual language for healing, shared by
+## self-regeneration and the Cleaner Wrasse's mending.
+func flash_heal() -> void:
+	if _regen_pulse_cooldown > 0.0 or not is_on_screen:
+		return
+	_regen_pulse_cooldown = 1.0
+	var tween := create_tween()
+	tween.tween_property(self, "modulate", Color(0.6, 1.5, 0.6, 1.0), 0.15)
+	tween.tween_property(self, "modulate", stats.modulate, 0.25)
+
+## Healing, through the festering filter (Festering Wounds, Venom artifact): each poison stack on
+## this enemy suppresses a fifth of every heal, and at max stacks wounds cannot close at all. One
+## choke point covers self-regeneration, the wrasse's mending, and any future heal.
+func heal(amount: int) -> void:
+	if amount > 0 and is_instance_valid(player_node) and player_node.has_method("get_stat"):
+		var per_stack: float = player_node.get_stat("fester_per_stack")
+		if per_stack > 0.0:
+			amount = int(round(amount * maxf(0.0, 1.0 - per_stack * _poison_stacks())))
+	super.heal(amount)
+
+func _poison_stacks() -> int:
+	var manager = get_node_or_null("StatusEffectManager")
+	if manager == null or not manager.active_statuses.has("poison"):
+		return 0
+	var effect = manager.active_statuses["poison"]["effect"]
+	return effect.stacks if "stacks" in effect else 1
 
 ## Tells all equipped weapons to fire.
 func fire_weapons() -> void:

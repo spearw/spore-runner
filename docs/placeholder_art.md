@@ -39,6 +39,7 @@ the AnimationController guards every name with has_animation).
 | `boss_types/anglerfish/anglerfish_photo.png` | The Anglerfish (secret boss) | Plate cutout: Commons *Melanocetus murrayi* (public domain; grayscale source converted to RGB via PowerShell System.Drawing -- Godot's JPEG loader rejects grayscale) |
 | `boss_types/anglerfish/anglerfish_lure.tscn` (reuses `loot_basket.png` + warning glow) | The false-chest lure | Reused chest art on purpose (the lie needs the real chest's look) but wants a bespoke dangling-lure sprite |
 | `normal_enemy_types/sea_star/sea_star_photo.png` | Sea Star (regenerator enemy) | Plate cutout: FMIB 51230 *Asterias forbesii* (public domain; grayscale converted via System.Drawing) |
+| `normal_enemy_types/cleaner_wrasse/cleaner_wrasse_photo.png` | Cleaner Wrasse (mender elite) | Photo cutout: Commons "Bluestreak cleaner wrasse (Labroides dimidiatus).jpg" (CC BY 2.0, attribution required; leftover coral fragments around the edges -- extra-obviously a placeholder) |
 | `boss_types/golem/` + `actors/enemies/unused_sprites/` | Nothing (legacy) | Old pixellab generations; superseded, safe to delete in an art cleanup |
 
 Wife-made pixel sprites (the normal enemy roster, player characters, most weapon art) are final

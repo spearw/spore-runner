@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://btendbehavior001"]
+
+[ext_resource type="Script" path="res://actors/enemies/behaviors/behaviors/tend/tend_behavior.gd" id="1_tend"]
+
+[node name="TendBehavior" type="Node"]
+script = ExtResource("1_tend")

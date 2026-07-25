@@ -13,6 +13,11 @@ extends Node
 var autosave_on_boss_kill := true
 
 func _ready() -> void:
+	# Headless = a verifier, bench or sweep, never a player. Without this, any headless run that
+	# kills a boss (boss_verify does) writes phantom discoveries into the REAL save -- which is
+	# exactly how The Quillmother got "beaten x2" on a save nobody played.
+	if DisplayServer.get_name() == "headless":
+		autosave_on_boss_kill = false
 	Events.enemy_killed.connect(_on_enemy_killed)
 	Events.boss_spawned.connect(_on_boss_spawned)
 	Events.boss_killed.connect(_on_boss_killed)

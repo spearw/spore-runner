@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=4 format=3]
+
+[ext_resource type="Script" uid="uid://b7tpycat8da2s" path="res://actors/enemies/enemy_stats.gd" id="1_cw"]
+[ext_resource type="PackedScene" uid="uid://bmenderai0000001" path="res://actors/enemies/behaviors/ai/mender_ai/mender_ai.tscn" id="2_cw"]
+[ext_resource type="SpriteFrames" path="res://actors/enemies/normal_enemy_types/cleaner_wrasse/cleaner_wrasse_frames.tres" id="3_cw"]
+
+[resource]
+script = ExtResource("1_cw")
+damage = 5
+armor_pen = 0.0
+regen_per_sec = 0.0
+face_movement_direction = false
+rotation_offset_degrees = 0.0
+is_flipped = true
+default_behavior_name = "tendbehavior"
+ai_scene = ExtResource("2_cw")
+weapon_scenes = Array[PackedScene]([])
+firerate = 4.0
+challenge_rating = 6.0
+biome_tags = Array[int]([4])
+type_tags = Array[int]([0])
+size_tags = Array[int]([2])
+behavior_tags = Array[int]([5, 6])
+move_speed = 120.0
+display_name = "Cleaner Wrasse"
+max_health = 120
+armor = 0
+sprite_frames = ExtResource("3_cw")
+modulate = Color(1, 1, 1, 1)
+scale = Vector2(0.9, 0.9)
+metadata/_custom_type_script = "uid://b7tpycat8da2s"
